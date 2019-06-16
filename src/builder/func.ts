@@ -1,11 +1,7 @@
 import * as Util from "../util/util";
 import { FuncTypes, DialectTypes } from "../constant/enum";
-import { KeyValueStr } from "../constant/interface";
+import { FuncInfo } from "../constant/interface";
 import Safe from "./safe";
-
-export interface FuncInfo {
-    query: string;
-}
 
 class Func extends Safe {
     constructor(dialectType: DialectTypes) {
@@ -25,7 +21,7 @@ class Func extends Safe {
             ? this.safeKey(fieldStr)
             : fieldStr;
         const funcInfo: FuncInfo = {
-            query: `${func}(${safeField})`
+            funcFeild: `${func}(${safeField})`
         };
         return funcInfo;
     }

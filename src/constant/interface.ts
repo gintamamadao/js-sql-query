@@ -34,5 +34,5 @@ export interface FieldData {
     [propName: string]: string | number;
 }
 export interface FuncInfo {
-    query: string;
+    funcFeild: string;
 }

@@ -34,6 +34,14 @@ const selectFn5 = () =>
         .table("table1")
         .fields("field1", builder.func.count("field2")).query;
 
+const select6 = "SELECT `field1`, COUNT(`field2`) FROM `table1`";
+const selectFn6 = () =>
+    builder
+        .select()
+        .table("table1")
+        .fields("field1")
+        .funcFeilds(builder.func.count("field2")).query;
+
 test(`select1: ${select1}`, () => {
     expect(selectFn1()).toBe(select1);
 });
@@ -52,4 +60,8 @@ test(`select4: ${select4}`, () => {
 
 test(`select5: ${select5}`, () => {
     expect(selectFn5()).toBe(select5);
+});
+
+test(`select6: ${select6}`, () => {
+    expect(selectFn6()).toBe(select6);
 });

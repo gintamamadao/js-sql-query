@@ -44,18 +44,14 @@ export function safeToObj<T>(o: T): T {
     return Object.prototype.toString.apply(o) === "[object Object]" ? o : <T>{};
 }
 
-export function argStrArrTrans(
-    str: string[] | string,
-    otherStr: string[]
-): string[] {
-    let args: string[] = [];
-    if (isArray(str)) {
-        args = <string[]>str;
-    }
-    if (isString(str)) {
-        otherStr = safeToArr(otherStr);
-        otherStr.unshift(<string>str);
-        args = otherStr;
+export function argStrArrTrans(arg: any, otherArgs: any[]): any[] {
+    let args: any[] = [];
+    if (isArray(arg)) {
+        args = arg;
+    } else {
+        otherArgs = safeToArr(otherArgs);
+        otherArgs.unshift(arg);
+        args = otherArgs;
     }
     return args;
 }

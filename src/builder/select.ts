@@ -1,6 +1,6 @@
 import * as Util from "../util/util";
 import Combine from "./combine";
-import { KeyValueStr } from "../constant/interface";
+import { KeyValueStr, FuncInfo } from "../constant/interface";
 import { QueryTypes, DialectTypes } from "../constant/enum";
 
 class Select extends Combine {
@@ -14,15 +14,31 @@ class Select extends Combine {
         this.dialectType = dialectType;
     }
 
-    fields(firstField: string[] | string, ...otherFields: string[]) {
-        const selectFields: string[] = Util.safeToArr(this.selectFields);
-        const argFields: string[] = Util.argStrArrTrans(
-            firstField,
-            otherFields
-        );
-        const result = [].concat(selectFields, argFields);
-        this.selectFields = Array.from(new Set(result));
-        if (result.includes("*")) {
+    fields(arg: any, ...otherArgs: any[]) {
+        let selectFields: string[] = Util.safeToArr(this.selectFields);
+        const combineFuncs: FuncInfo[] = Util.safeToArr(this.combineFuncs);
+        const args: any[] = Util.argStrArrTrans(arg, otherArgs);
+        const fields: string[] = [];
+        const funcs: FuncInfo[] = [];
+        for (let item of args) {
+            if (
+                Util.isNotEmptyObj(item) &&
+                Util.isNotEmptyStr(item.funcFeild)
+            ) {
+                funcs.push(item);
+                continue;
+            }
+
+            if (Util.isNotEmptyStr(item)) {
+                fields.push(item);
+                continue;
+            }
+        }
+        selectFields = selectFields.concat(fields);
+        selectFields = Array.from(new Set(selectFields));
+        this.selectFields = selectFields;
+        this.combineFuncs = combineFuncs.concat(funcs);
+        if (this.selectFields.includes("*")) {
             this.selectFields = [];
         }
         return this;
@@ -55,7 +71,7 @@ class Select extends Combine {
 
     protected formatFieldStr(): string {
         const fields: string[] = this.formatFields();
-        const funcs: string[] = Util.safeToArr(this.combineFuncs);
+        const funcs: string[] = this.formatFuncs();
         let result: string;
         if (fields.length > 0 || funcs.length > 0) {
             result = [].concat(fields, funcs).join(", ");

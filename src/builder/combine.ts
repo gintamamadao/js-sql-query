@@ -1,31 +1,35 @@
 import Having from "./having";
 import Func from "./func";
 import * as Util from "../util/util";
+import { FuncInfo } from "../constant/interface";
 import { DialectTypes } from "../constant/enum";
 
 class Combine extends Having {
-    protected combineFuncs: string[];
+    protected combineFuncs: FuncInfo[];
     protected funcInstance: Func;
-    protected groupByField: string;
+    protected groupByFields: string[];
     constructor() {
         super();
         this.combineFuncs = [];
     }
 
     protected groupBuild(query: string): string {
-        const field: string = this.groupByField;
-        if (!Util.isNotEmptyStr(field)) {
+        const fields: string[] = this.groupByFields;
+        if (!Util.isNotEmptyArr(fields)) {
             return query;
         }
-        query = `${query} GROUP BY ${field}`;
+        const fieldsStr: string = fields.join(", ");
+        query = `${query} GROUP BY ${fieldsStr}`;
         return query;
     }
 
-    groupBy(field: string) {
-        if (!Util.isNotEmptyStr(field)) {
+    groupBy(...fields: string[]) {
+        let groupByFields: string[] = Util.safeToArr(this.groupByFields);
+        if (!Util.isNotEmptyArr(fields)) {
             throw new Error("Illegal Field");
         }
-        this.groupByField = field;
+        groupByFields = groupByFields.concat(fields);
+        this.groupByFields = Array.from(new Set(groupByFields));
         return this;
     }
 
@@ -39,139 +43,165 @@ class Combine extends Having {
         return func;
     }
 
-    protected funcs(funcField: string) {
-        let combineFuncs: string[] = Util.safeToArr(this.combineFuncs);
-        if (Util.isNotEmptyStr(funcField)) {
-            combineFuncs.push(funcField);
+    protected formatFuncs(): string[] {
+        const combineFuncs: FuncInfo[] = Util.safeToArr(this.combineFuncs);
+        let funcs: string[] = [];
+        for (const info of combineFuncs) {
+            if (
+                !Util.isNotEmptyObj(info) ||
+                !Util.isNotEmptyStr(info.funcFeild)
+            ) {
+                throw new Error("Illegal Func Feild");
+            }
+            const funcFeild: string = info.funcFeild;
+            funcs.push(funcFeild);
         }
-        combineFuncs = Array.from(new Set(combineFuncs));
+        funcs = Array.from(new Set(funcs));
+        return funcs;
+    }
+
+    protected funcsCache(funcInfo: FuncInfo) {
+        let combineFuncs: FuncInfo[] = Util.safeToArr(this.combineFuncs);
+        if (
+            Util.isNotEmptyObj(funcInfo) &&
+            Util.isNotEmptyStr(funcInfo.funcFeild)
+        ) {
+            combineFuncs.push(funcInfo);
+        }
         this.combineFuncs = combineFuncs;
         return this;
     }
 
+    funcFeilds(...funcInfos: FuncInfo[]) {
+        for (let info of funcInfos) {
+            this.funcsCache(info);
+        }
+        return this;
+    }
+
     count(field?: number | string) {
-        const funcField: string = this.getFuncCase().count(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().count(field);
+        return this.funcsCache(funcInfo);
     }
 
     sum(field?: number | string) {
-        const funcField: string = this.getFuncCase().sum(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().sum(field);
+        return this.funcsCache(funcInfo);
     }
 
     max(field?: number | string) {
-        const funcField: string = this.getFuncCase().max(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().max(field);
+        return this.funcsCache(funcInfo);
     }
 
     min(field?: number | string) {
-        const funcField: string = this.getFuncCase().min(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().min(field);
+        return this.funcsCache(funcInfo);
     }
 
     avg(field?: number | string) {
-        const funcField: string = this.getFuncCase().avg(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().avg(field);
+        return this.funcsCache(funcInfo);
     }
 
     abs(field?: number | string) {
-        const funcField: string = this.getFuncCase().abs(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().abs(field);
+        return this.funcsCache(funcInfo);
     }
 
     ceil(field?: number | string) {
-        const funcField: string = this.getFuncCase().ceil(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().ceil(field);
+        return this.funcsCache(funcInfo);
     }
 
     floor(field?: number | string) {
-        const funcField: string = this.getFuncCase().floor(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().floor(field);
+        return this.funcsCache(funcInfo);
     }
 
     round(field?: number | string) {
-        const funcField: string = this.getFuncCase().round(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().round(field);
+        return this.funcsCache(funcInfo);
     }
 
     log(field?: number | string) {
-        const funcField: string = this.getFuncCase().log(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().log(field);
+        return this.funcsCache(funcInfo);
     }
 
     log2(field?: number | string) {
-        const funcField: string = this.getFuncCase().log2(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().log2(field);
+        return this.funcsCache(funcInfo);
     }
 
     exp(field?: number | string) {
-        const funcField: string = this.getFuncCase().exp(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().exp(field);
+        return this.funcsCache(funcInfo);
     }
 
     power(field?: number | string) {
-        const funcField: string = this.getFuncCase().power(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().power(field);
+        return this.funcsCache(funcInfo);
     }
 
     acos(field?: number | string) {
-        const funcField: string = this.getFuncCase().acos(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().acos(field);
+        return this.funcsCache(funcInfo);
     }
 
     asin(field?: number | string) {
-        const funcField: string = this.getFuncCase().asin(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().asin(field);
+        return this.funcsCache(funcInfo);
     }
 
     atan(field?: number | string) {
-        const funcField: string = this.getFuncCase().atan(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().atan(field);
+        return this.funcsCache(funcInfo);
     }
 
     cos(field?: number | string) {
-        const funcField: string = this.getFuncCase().cos(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().cos(field);
+        return this.funcsCache(funcInfo);
     }
 
     sin(field?: number | string) {
-        const funcField: string = this.getFuncCase().sin(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().sin(field);
+        return this.funcsCache(funcInfo);
     }
 
     tan(field?: number | string) {
-        const funcField: string = this.getFuncCase().tan(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().tan(field);
+        return this.funcsCache(funcInfo);
     }
 
     conv(field?: number | string) {
-        const funcField: string = this.getFuncCase().conv(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().conv(field);
+        return this.funcsCache(funcInfo);
     }
 
     random(field?: number | string) {
-        const funcField: string = this.getFuncCase().random(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().random(field);
+        return this.funcsCache(funcInfo);
     }
 
     rand(field?: number | string) {
-        const funcField: string = this.getFuncCase().rand(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().rand(field);
+        return this.funcsCache(funcInfo);
     }
 
     radians(field?: number | string) {
-        const funcField: string = this.getFuncCase().radians(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().radians(field);
+        return this.funcsCache(funcInfo);
     }
 
     degrees(field?: number | string) {
-        const funcField: string = this.getFuncCase().degrees(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().degrees(field);
+        return this.funcsCache(funcInfo);
     }
 
     distinct(field?: number | string) {
-        const funcField: string = this.getFuncCase().distinct(field);
-        return this.funcs(funcField);
+        const funcInfo: FuncInfo = this.getFuncCase().distinct(field);
+        return this.funcsCache(funcInfo);
     }
 }
 
