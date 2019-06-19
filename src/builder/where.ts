@@ -21,13 +21,13 @@ class Where extends Query {
         return this;
     }
 
-    where$InEqual(data: TermData) {
-        this.getTermCase(TERM_NAME).inEqual(data);
+    where$In(data: TermData) {
+        this.getTermCase(TERM_NAME).in(data);
         return this;
     }
 
-    where$NotInEqual(data: TermData) {
-        this.getTermCase(TERM_NAME).notInEqual(data);
+    where$NotIn(data: TermData) {
+        this.getTermCase(TERM_NAME).notIn(data);
         return this;
     }
 
@@ -81,13 +81,13 @@ class Where extends Query {
         return this;
     }
 
-    where$OrInEqual(data: TermData) {
-        this.getTermCase(TERM_NAME).orInEqual(data);
+    where$OrIn(data: TermData) {
+        this.getTermCase(TERM_NAME).orIn(data);
         return this;
     }
 
-    where$OrNotInEqual(data: TermData) {
-        this.getTermCase(TERM_NAME).orNotInEqual(data);
+    where$OrNotIn(data: TermData) {
+        this.getTermCase(TERM_NAME).orNotIn(data);
         return this;
     }
 

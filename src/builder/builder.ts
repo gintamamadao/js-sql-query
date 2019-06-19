@@ -9,10 +9,10 @@ import * as Util from "../util/util";
 import { QueryTypes, DialectTypes, WidgetTypes } from "../constant/enum";
 
 class Builder {
-    private dialectType: DialectTypes;
+    protected dialectType: DialectTypes;
     public queryStore: string[];
-    private queryTable: string;
-    private func: Func;
+    protected queryTable: string;
+    public func: Func;
     constructor(dialectType?: DialectTypes) {
         this.dialectType = dialectType || DialectTypes.mysql;
         this.func = new Func(this.dialectType);
@@ -39,10 +39,9 @@ class Builder {
         return this.queryInstance(QueryTypes.replace);
     }
 
-    term() {
+    get term() {
         return this.widgetInstance(WidgetTypes.term);
     }
-
     queryInstance(type: QueryTypes) {
         const dialectType: DialectTypes = this.dialectType;
         const queryTable: string = this.queryTable;

@@ -20,13 +20,13 @@ class Having extends Where {
         return this;
     }
 
-    having$InEqual(data: TermData) {
-        this.getTermCase(TERM_NAME).inEqual(data);
+    having$In(data: TermData) {
+        this.getTermCase(TERM_NAME).in(data);
         return this;
     }
 
-    having$NotInEqual(data: TermData) {
-        this.getTermCase(TERM_NAME).notInEqual(data);
+    having$NotIn(data: TermData) {
+        this.getTermCase(TERM_NAME).notIn(data);
         return this;
     }
 
@@ -80,13 +80,13 @@ class Having extends Where {
         return this;
     }
 
-    having$OrInEqual(data: TermData) {
-        this.getTermCase(TERM_NAME).orInEqual(data);
+    having$OrIn(data: TermData) {
+        this.getTermCase(TERM_NAME).orIn(data);
         return this;
     }
 
-    having$OrNotInEqual(data: TermData) {
-        this.getTermCase(TERM_NAME).orNotInEqual(data);
+    having$OrNotIn(data: TermData) {
+        this.getTermCase(TERM_NAME).orNotIn(data);
         return this;
     }
 

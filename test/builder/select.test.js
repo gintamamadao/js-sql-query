@@ -16,6 +16,7 @@ test(`SELECT_1: ${SELECT_1}`, () => {
     expect(select$1TestFn$1()).toBe(SELECT_1);
     expect(select$1TestFn$2()).toBe(SELECT_1);
     expect(select$1TestFn$3()).toBe(SELECT_1);
+    expect(select$1TestFn$4()).toBe(SELECT_1);
 });
 
 test(`SELECT_2: ${SELECT_2}`, () => {
@@ -60,6 +61,12 @@ const select$1TestFn$2 = () =>
         .fields("*").query;
 
 const select$1TestFn$3 = () =>
+    builder
+        .table("table1")
+        .select()
+        .fields("*").query;
+
+const select$1TestFn$4 = () =>
     builder
         .select()
         .table("table1")
