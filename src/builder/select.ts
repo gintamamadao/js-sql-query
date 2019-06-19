@@ -1,6 +1,6 @@
 import * as Util from "../util/util";
 import Combine from "./combine";
-import { KeyValueStr, FuncInfo } from "../constant/interface";
+import { KeyValueStr } from "../constant/interface";
 import { QueryTypes, DialectTypes } from "../constant/enum";
 
 class Select extends Combine {
@@ -14,51 +14,12 @@ class Select extends Combine {
         this.dialectType = dialectType;
     }
 
-    fields(arg: any, ...otherArgs: any[]) {
-        let selectFields: string[] = Util.safeToArr(this.selectFields);
-        const combineFuncs: FuncInfo[] = Util.safeToArr(this.combineFuncs);
-        const args: any[] = Util.argStrArrTrans(arg, otherArgs);
-        const fields: string[] = [];
-        const funcs: FuncInfo[] = [];
-        for (let item of args) {
-            if (
-                Util.isNotEmptyObj(item) &&
-                Util.isNotEmptyStr(item.funcFeild)
-            ) {
-                funcs.push(item);
-                continue;
-            }
-
-            if (Util.isNotEmptyStr(item)) {
-                fields.push(item);
-                continue;
-            }
-        }
-        selectFields = selectFields.concat(fields);
-        selectFields = Array.from(new Set(selectFields));
-        this.selectFields = selectFields;
-        this.combineFuncs = combineFuncs.concat(funcs);
-        if (this.selectFields.includes("*")) {
-            this.selectFields = [];
-        }
-        return this;
-    }
-
-    asMap(map: KeyValueStr) {
-        let asMap: KeyValueStr = this.fieldsAsMap;
-        if (Util.isNotEmptyObj(map)) {
-            asMap = Object.assign({}, asMap, map);
-        }
-        this.fieldsAsMap = asMap;
-        return this;
-    }
-
     protected formatFields(): string[] {
         const fields: string[] = Util.safeToArr(this.selectFields);
         const asMap: KeyValueStr = Util.safeToObj(this.fieldsAsMap);
         const result: string[] = [];
         for (const field of fields) {
-            const safeField = this.safeKey(field);
+            const safeField = field !== "*" ? this.safeKey(field) : "*";
             if (Util.isNotEmptyStr(asMap[field])) {
                 const safeAsField = this.safeKey(asMap[field]);
                 result.push(`${safeField} AS ${safeAsField}`);
@@ -93,6 +54,33 @@ class Select extends Combine {
         query = this.orderBuild(query);
         query = this.limitBuild(query);
         return query;
+    }
+
+    fields(arg: any, ...otherArgs: any[]) {
+        const selectFields: string[] = Util.safeToArr(this.selectFields);
+        const args: any[] = Util.argStrArrTrans(arg, otherArgs);
+        const fields: string[] = [];
+        for (const item of args) {
+            if (Util.isNotEmptyObj(item)) {
+                this.funcFeilds(item);
+                continue;
+            }
+            fields.push(item);
+        }
+        this.selectFields = Array.from(new Set(selectFields.concat(fields)));
+        if (this.selectFields.includes("*")) {
+            this.selectFields = ["*"];
+        }
+        return this;
+    }
+
+    asFieldMap(map: KeyValueStr) {
+        let asMap: KeyValueStr = this.fieldsAsMap;
+        if (Util.isNotEmptyObj(map)) {
+            asMap = Object.assign({}, asMap, map);
+        }
+        this.fieldsAsMap = asMap;
+        return this;
     }
 
     limit(offset: number, step?: number) {

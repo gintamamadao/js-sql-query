@@ -2,66 +2,215 @@ const { Builder } = require("../../dist/js-sql-query");
 
 const builder = new Builder();
 
-const select1 = "SELECT * FROM `table1`";
-const selectFn1 = () => builder.select().table("table1").query;
+const SELECT_1 = "SELECT * FROM `table1`";
+const SELECT_2 = "SELECT `field1`, `field2` FROM `table1`";
+const SELECT_3 = "SELECT `field1`, COUNT(`field2`) FROM `table1`";
+const SELECT_4 =
+    "SELECT `field1`, COUNT(`field2`), SUM(`field3`) FROM `table1`";
+const SELECT_5 =
+    "SELECT `field1`, COUNT(`field2`) FROM `table1` GROUP BY `field2`";
+const SELECT_6 =
+    "SELECT `field1`, COUNT(`field2`) FROM `table1` GROUP BY `field2`, `field3`";
 
-const select2 = "SELECT `field1`, `field2` FROM `table1`";
-const selectFn2 = () =>
+test(`SELECT_1: ${SELECT_1}`, () => {
+    expect(select$1TestFn$1()).toBe(SELECT_1);
+    expect(select$1TestFn$2()).toBe(SELECT_1);
+    expect(select$1TestFn$3()).toBe(SELECT_1);
+});
+
+test(`SELECT_2: ${SELECT_2}`, () => {
+    expect(select$2TestFn$1()).toBe(SELECT_2);
+    expect(select$2TestFn$2()).toBe(SELECT_2);
+    expect(select$2TestFn$3()).toBe(SELECT_2);
+});
+
+test(`SELECT_3: ${SELECT_3}`, () => {
+    expect(select$3TestFn$1()).toBe(SELECT_3);
+    expect(select$3TestFn$2()).toBe(SELECT_3);
+    expect(select$3TestFn$3()).toBe(SELECT_3);
+    expect(select$3TestFn$4()).toBe(SELECT_3);
+    expect(select$3TestFn$5()).toBe(SELECT_3);
+});
+
+test(`SELECT_4: ${SELECT_4}`, () => {
+    expect(select$4TestFn$1()).toBe(SELECT_4);
+    expect(select$4TestFn$2()).toBe(SELECT_4);
+    expect(select$4TestFn$3()).toBe(SELECT_4);
+    expect(select$4TestFn$4()).toBe(SELECT_4);
+    expect(select$4TestFn$5()).toBe(SELECT_4);
+    expect(select$4TestFn$6()).toBe(SELECT_4);
+    expect(select$4TestFn$7()).toBe(SELECT_4);
+});
+
+test(`SELECT_5: ${SELECT_5}`, () => {
+    expect(select$5TestFn$1()).toBe(SELECT_5);
+});
+
+test(`SELECT_6: ${SELECT_6}`, () => {
+    expect(select$6TestFn$1()).toBe(SELECT_6);
+    expect(select$6TestFn$2()).toBe(SELECT_6);
+});
+
+const select$1TestFn$1 = () => builder.select().table("table1").query;
+
+const select$1TestFn$2 = () =>
+    builder
+        .select()
+        .table("table1")
+        .fields("*").query;
+
+const select$1TestFn$3 = () =>
+    builder
+        .select()
+        .table("table1")
+        .fields("field1")
+        .fields("*").query;
+
+const select$2TestFn$1 = () =>
     builder
         .select()
         .table("table1")
         .fields("field1", "field2").query;
 
-const select3 = "SELECT `field1`, `field2` FROM `table1`";
-const selectFn3 = () =>
+const select$2TestFn$2 = () =>
+    builder
+        .select()
+        .table("table1")
+        .fields("field1")
+        .fields("field2").query;
+
+const select$2TestFn$3 = () =>
     builder
         .select()
         .table("table1")
         .fields(["field1", "field2"]).query;
 
-const select4 = "SELECT `field1`, COUNT(`field2`) FROM `table1`";
-const selectFn4 = () =>
+const select$3TestFn$1 = () =>
     builder
         .select()
         .table("table1")
         .fields("field1")
         .count("field2").query;
 
-const select5 = "SELECT `field1`, COUNT(`field2`) FROM `table1`";
-const selectFn5 = () =>
+const select$3TestFn$2 = () =>
     builder
         .select()
         .table("table1")
-        .fields("field1", builder.func.count("field2")).query;
+        .fields("field1")
+        .fields(builder.func.count("field2")).query;
 
-const select6 = "SELECT `field1`, COUNT(`field2`) FROM `table1`";
-const selectFn6 = () =>
+const select$3TestFn$3 = () =>
+    builder
+        .select()
+        .table("table1")
+        .fields("field1")
+        .fields({ func: "count", field: "field2" }).query;
+
+const select$3TestFn$4 = () =>
     builder
         .select()
         .table("table1")
         .fields("field1")
         .funcFeilds(builder.func.count("field2")).query;
 
-test(`select1: ${select1}`, () => {
-    expect(selectFn1()).toBe(select1);
-});
+const select$3TestFn$5 = () =>
+    builder
+        .select()
+        .table("table1")
+        .fields("field1")
+        .funcFeilds({ func: "count", field: "field2" }).query;
 
-test(`select2: ${select2}`, () => {
-    expect(selectFn2()).toBe(select2);
-});
+const select$4TestFn$1 = () =>
+    builder
+        .select()
+        .table("table1")
+        .fields("field1")
+        .count("field2")
+        .sum("field3").query;
 
-test(`select3: ${select3}`, () => {
-    expect(selectFn3()).toBe(select3);
-});
+const select$4TestFn$2 = () =>
+    builder
+        .select()
+        .table("table1")
+        .fields("field1", builder.func.count("field2"), {
+            func: "sum",
+            field: "field3"
+        }).query;
 
-test(`select4: ${select4}`, () => {
-    expect(selectFn4()).toBe(select4);
-});
+const select$4TestFn$3 = () =>
+    builder
+        .select()
+        .table("table1")
+        .fields("field1")
+        .funcFeilds(
+            { func: "count", field: "field2" },
+            { func: "sum", field: "field3" }
+        ).query;
 
-test(`select5: ${select5}`, () => {
-    expect(selectFn5()).toBe(select5);
-});
+const select$4TestFn$4 = () =>
+    builder
+        .select()
+        .table("table1")
+        .fields("field1")
+        .funcFeilds(builder.func.count("field2"), {
+            func: "sum",
+            field: "field3"
+        }).query;
 
-test(`select6: ${select6}`, () => {
-    expect(selectFn6()).toBe(select6);
-});
+const select$4TestFn$5 = () =>
+    builder
+        .select()
+        .table("table1")
+        .fields("field1")
+        .funcFeilds(builder.func.count("field2"))
+        .funcFeilds({
+            func: "sum",
+            field: "field3"
+        }).query;
+
+const select$4TestFn$6 = () =>
+    builder
+        .select()
+        .table("table1")
+        .fields("field1")
+        .count("field2")
+        .funcFeilds({
+            func: "sum",
+            field: "field3"
+        }).query;
+
+const select$4TestFn$7 = () =>
+    builder
+        .select()
+        .table("table1")
+        .fields("field1")
+        .fields(builder.func.count("field2"))
+        .funcFeilds({
+            func: "sum",
+            field: "field3"
+        }).query;
+
+const select$5TestFn$1 = () =>
+    builder
+        .select()
+        .table("table1")
+        .fields("field1")
+        .count("field2")
+        .groupBy("field2").query;
+
+const select$6TestFn$1 = () =>
+    builder
+        .select()
+        .table("table1")
+        .fields("field1")
+        .count("field2")
+        .groupBy("field2", "field3").query;
+
+const select$6TestFn$2 = () =>
+    builder
+        .select()
+        .table("table1")
+        .fields("field1")
+        .count("field2")
+        .groupBy("field2")
+        .groupBy("field3").query;

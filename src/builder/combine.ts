@@ -4,6 +4,11 @@ import * as Util from "../util/util";
 import { FuncInfo } from "../constant/interface";
 import { DialectTypes } from "../constant/enum";
 
+interface FuncInput {
+    func: string;
+    field: string | number;
+}
+
 class Combine extends Having {
     protected combineFuncs: FuncInfo[];
     protected funcInstance: Func;
@@ -18,7 +23,9 @@ class Combine extends Having {
         if (!Util.isNotEmptyArr(fields)) {
             return query;
         }
-        const fieldsStr: string = fields.join(", ");
+        const fieldsStr: string = fields
+            .map(field => this.safeKey(field))
+            .join(", ");
         query = `${query} GROUP BY ${fieldsStr}`;
         return query;
     }
@@ -61,7 +68,7 @@ class Combine extends Having {
     }
 
     protected funcsCache(funcInfo: FuncInfo) {
-        let combineFuncs: FuncInfo[] = Util.safeToArr(this.combineFuncs);
+        const combineFuncs: FuncInfo[] = Util.safeToArr(this.combineFuncs);
         if (
             Util.isNotEmptyObj(funcInfo) &&
             Util.isNotEmptyStr(funcInfo.funcFeild)
@@ -72,9 +79,21 @@ class Combine extends Having {
         return this;
     }
 
-    funcFeilds(...funcInfos: FuncInfo[]) {
+    funcFeilds(...funcInfos: FuncInfo[] | FuncInput[]) {
         for (let info of funcInfos) {
-            this.funcsCache(info);
+            info = Util.safeToObj(info);
+            let saveInfo: FuncInfo = <FuncInfo>info;
+            const func: string = (<FuncInput>info).func;
+            const field: string | number = (<FuncInput>info).field;
+            const funcCase = this.getFuncCase();
+            if (
+                Util.isNotEmptyStr(func) &&
+                Util.isFunction(funcCase[func]) &&
+                !Util.isUndefinedNull(field)
+            ) {
+                saveInfo = funcCase[func].call(funcCase, field);
+            }
+            this.funcsCache(saveInfo);
         }
         return this;
     }
