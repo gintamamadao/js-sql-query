@@ -35,6 +35,8 @@ const HAVING_19 =
 
 test(`HAVING_1: ${HAVING_1}`, () => {
     expect(having$1TestFn$1()).toBe(HAVING_1);
+    expect(having$1TestFn$2()).toBe(HAVING_1);
+    expect(having$1TestFn$3()).toBe(HAVING_1);
 });
 
 test(`HAVING_2: ${HAVING_2}`, () => {
@@ -118,6 +120,22 @@ const having$1TestFn$1 = () =>
         .having$Equal({
             field1: "value1"
         }).query;
+
+const having$1TestFn$2 = () =>
+    builder
+        .select()
+        .table("table1")
+        .having(() => "`field1` = 'value1'").query;
+
+const having$1TestFn$3 = () =>
+    builder
+        .select()
+        .table("table1")
+        .having(() =>
+            builder.term.equal({
+                field1: "value1"
+            })
+        ).query;
 
 const having$2TestFn$1 = () =>
     builder

@@ -1,5 +1,6 @@
 import * as Util from "../util/util";
 import { QueryTypes, DialectTypes } from "../constant/enum";
+import { FieldOrder } from "../constant/interface";
 import Safe from "./safe";
 import Limit from "./limit";
 import Order from "./order";
@@ -58,6 +59,16 @@ class Query extends Safe {
 
     ascBy(firstField: string[] | string, ...otherFields: string[]) {
         this.getOrderCase().ascBy(firstField, otherFields);
+        return this;
+    }
+
+    orderField(data: FieldOrder) {
+        this.getOrderCase().orderField(data);
+        return this;
+    }
+
+    order(sql: string | Function) {
+        this.getOrderCase().order(sql);
         return this;
     }
 

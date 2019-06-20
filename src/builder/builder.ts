@@ -5,6 +5,7 @@ import Delete from "./delete";
 import Replace from "./replace";
 import Term from "./term";
 import Func from "./func";
+import Order from "./order";
 import * as Util from "../util/util";
 import { QueryTypes, DialectTypes, WidgetTypes } from "../constant/enum";
 
@@ -12,10 +13,8 @@ class Builder {
     protected dialectType: DialectTypes;
     public queryStore: string[];
     protected queryTable: string;
-    public func: Func;
     constructor(dialectType?: DialectTypes) {
         this.dialectType = dialectType || DialectTypes.mysql;
-        this.func = new Func(this.dialectType);
         this.queryStore = [];
     }
 
@@ -39,9 +38,18 @@ class Builder {
         return this.queryInstance(QueryTypes.replace);
     }
 
+    get func() {
+        return this.widgetInstance(WidgetTypes.func);
+    }
+
     get term() {
         return this.widgetInstance(WidgetTypes.term);
     }
+
+    get order() {
+        return this.widgetInstance(WidgetTypes.order);
+    }
+
     queryInstance(type: QueryTypes) {
         const dialectType: DialectTypes = this.dialectType;
         const queryTable: string = this.queryTable;
@@ -73,8 +81,14 @@ class Builder {
         const dialectType: DialectTypes = this.dialectType;
         let instance: any = {};
         switch (type) {
+            case WidgetTypes.func:
+                instance = new Func(dialectType);
+                break;
             case WidgetTypes.term:
                 instance = new Term(dialectType);
+                break;
+            case WidgetTypes.order:
+                instance = new Order(dialectType);
                 break;
         }
         return instance;

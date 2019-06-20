@@ -40,7 +40,7 @@ class Safe {
 
     protected manualSql(sql: string | Function, key: string) {
         if (!Util.isNotEmptyStr(sql) && !Util.isFunction(sql)) {
-            throw new Error(`Illegal ${key} Sql`);
+            throw new Error("Illegal Sql Type, Need String or Function");
         }
         this[key] = sql;
     }

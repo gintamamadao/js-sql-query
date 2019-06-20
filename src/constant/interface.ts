@@ -1,4 +1,4 @@
-import { TermSign, TermLogic } from "./enum";
+import { TermSign, TermLogic, OrderTypes } from "./enum";
 export interface KeyValueStr {
     [propName: string]: string;
 }
@@ -35,4 +35,13 @@ export interface FieldData {
 }
 export interface FuncInfo {
     funcFeild: string;
+}
+
+export interface OrderInfo {
+    field: string;
+    type: OrderTypes;
+    list?: string[];
+}
+export interface FieldOrder {
+    [propName: string]: string[];
 }

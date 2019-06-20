@@ -35,6 +35,8 @@ const WHERE_19 =
 
 test(`WHERE_1: ${WHERE_1}`, () => {
     expect(where$1TestFn$1()).toBe(WHERE_1);
+    expect(where$1TestFn$2()).toBe(WHERE_1);
+    expect(where$1TestFn$3()).toBe(WHERE_1);
 });
 
 test(`WHERE_2: ${WHERE_2}`, () => {
@@ -118,6 +120,22 @@ const where$1TestFn$1 = () =>
         .where$Equal({
             field1: "value1"
         }).query;
+
+const where$1TestFn$2 = () =>
+    builder
+        .select()
+        .table("table1")
+        .where(() => "`field1` = 'value1'").query;
+
+const where$1TestFn$3 = () =>
+    builder
+        .select()
+        .table("table1")
+        .where(() =>
+            builder.term.equal({
+                field1: "value1"
+            })
+        ).query;
 
 const where$2TestFn$1 = () =>
     builder

@@ -64,7 +64,8 @@ export enum TermSign {
 
 export enum OrderTypes {
     desc = "DESC",
-    asc = "ASC"
+    asc = "ASC",
+    field = "FIELD"
 }
 
 export enum UpdateTypes {
@@ -74,5 +75,7 @@ export enum UpdateTypes {
 }
 
 export enum WidgetTypes {
-    term = "TERM"
+    func = "FUNC",
+    term = "TERM",
+    order = "ORDER"
 }
