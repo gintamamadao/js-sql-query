@@ -28,10 +28,10 @@ class Insert extends Query {
         return this;
     }
 
-    fields(fields: string[]) {
-        fields = Util.safeToArr(fields);
+    fields(arg: any, ...otherArgs: any[]) {
+        const args: string[] = Util.argStrArrTrans(arg, otherArgs);
         const insertFields: string[] = Util.safeToArr(this.insertFields);
-        const result = [].concat(insertFields, fields);
+        const result = [].concat(insertFields, args);
         this.insertFields = Array.from(new Set(result));
         return this;
     }

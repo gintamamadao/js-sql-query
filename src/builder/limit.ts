@@ -19,7 +19,7 @@ class Limit {
             return `${query} LIMIT ${step}`;
         }
         if (step === -1) {
-            return `${query} OFFSET ${step}`;
+            return `${query} OFFSET ${offset}`;
         }
         return `${query} LIMIT ${step} OFFSET ${offset}`;
     }

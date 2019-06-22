@@ -68,7 +68,7 @@ class Update extends Where {
         return result;
     }
 
-    protected update(data: FieldData, type: UpdateTypes) {
+    protected updateCache(data: FieldData, type: UpdateTypes) {
         if (!Util.isNotEmptyObj(data)) {
             throw new Error("Illegal Update Data");
         }
@@ -89,15 +89,15 @@ class Update extends Where {
     }
 
     set(data: FieldData) {
-        return this.update(data, UpdateTypes.set);
+        return this.updateCache(data, UpdateTypes.set);
     }
 
     add(data: FieldData) {
-        return this.update(data, UpdateTypes.add);
+        return this.updateCache(data, UpdateTypes.add);
     }
 
     minus(data: FieldData) {
-        return this.update(data, UpdateTypes.minus);
+        return this.updateCache(data, UpdateTypes.minus);
     }
 
     protected checkQuery(): void {
