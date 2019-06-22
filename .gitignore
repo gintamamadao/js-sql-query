@@ -8,7 +8,6 @@ logs/
 .ftpignore
 *.sh
 npm-debug.log
-dist
 .vscode/
 log/
 access.log
