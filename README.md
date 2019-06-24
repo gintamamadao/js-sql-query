@@ -19,7 +19,10 @@ npm i js-sql-query --save
 
 -   [api](#api)
     -   [Builder](#Builder)
-        -   [Insert](#Insert)
+        -   [INSERT](#INSERT)
+        -   [UPDATE](#UPDATE)
+        -   [SELECT](#SELECT)
+        -   [DELETE](#DELETE)
 
 # api
 
@@ -36,7 +39,7 @@ var builder = new Builder();
 var builder = new Builder("mysql");
 ```
 
-### Insert
+### INSERT
 
 #### insert
 
@@ -134,4 +137,99 @@ builder
             .fields(["field1", "field2"])
     ).query;
 // INSERT INTO `table1` ( `field1`, `field2` )  VALUES SELECT `field1`, `field2` FROM `table1`
+```
+
+### UPDATE
+
+#### update
+
+-   指定 sql 语句为 UPDATE
+
+#### table
+
+-   设置 sql 语句的表名
+
+#### set
+
+-   设置 sql 语句的更新信息，更新方式为覆盖
+
+#### add
+
+-   设置 sql 语句的更新信息，更新方式为增加
+
+#### minus
+
+-   设置 sql 语句的更新信息，更新方式为减少
+
+#### build
+
+-   获取拼装后的 sql 语句
+
+#### query
+
+-   获取拼装后的 sql 语句
+
+#### update 例子：
+
+```js
+builder
+    .update()
+    .table("table1")
+    .set({
+        field1: "value1"
+    }).query;
+// UPDATE `table1` SET `field1` = 'value1'
+
+builder
+    .update()
+    .table("table1")
+    .set({
+        field1: "value1"
+    })
+    .step(100).query;
+// UPDATE `table1` SET `field1` = 'value1' LIMIT 100
+
+builder
+    .update()
+    .table("table1")
+    .set({
+        field1: "value1"
+    })
+    .step(100)
+    .descBy("field1").query;
+// UPDATE `table1` SET `field1` = 'value1' ORDER BY `field1` DESC LIMIT 100
+
+builder
+    .update()
+    .table("table1")
+    .set({
+        field1: "value1",
+        field2: "value2"
+    })
+    .where$Equal({
+        field3: "value3"
+    }).query;
+// UPDATE `table1` SET `field1` = 'value1', `field2` = 'value2' WHERE `field3` = 'value3'
+
+builder
+    .update()
+    .table("table1")
+    .add({
+        field1: 1
+    })
+    .where$Equal({
+        field2: "value2"
+    }).query;
+// UPDATE `table1` SET `field1` = `field1` + '1' WHERE `field2` = 'value2'
+
+builder
+    .update()
+    .table("table1")
+    .minus({
+        field1: 1
+    })
+    .where$Equal({
+        field2: "value2"
+    }).query;
+// UPDATE `table1` SET `field1` = `field1` - '1' WHERE `field2` = 'value2'
 ```
