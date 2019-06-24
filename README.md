@@ -39,6 +39,12 @@ var builder = new Builder();
 var builder = new Builder("mysql");
 ```
 
+设置要操作的表名
+
+```js
+builder.table("table1");
+```
+
 ### INSERT
 
 #### insert
@@ -177,7 +183,8 @@ builder
     .table("table1")
     .set({
         field1: "value1"
-    }).query;
+    })
+    .build();
 // UPDATE `table1` SET `field1` = 'value1'
 
 builder
@@ -232,4 +239,180 @@ builder
         field2: "value2"
     }).query;
 // UPDATE `table1` SET `field1` = `field1` - '1' WHERE `field2` = 'value2'
+```
+
+### SELECT
+
+#### select
+
+-   指定 sql 语句为 SELECT
+
+#### table
+
+-   设置 sql 语句的表名
+
+#### fields
+
+-   设置 sql 语句的要获取的字段
+
+#### count 等函数
+
+-   设置 sql 语句的函数，有 count,sum,max,min,avg,abs,ceil,floor,round,log,log2,exp,power,acos,asin,atan,cos,sin,tan,conv,random,rand,radians,degrees,distinct
+
+#### funcFeilds
+
+-   设置 sql 语句的函数
+
+#### groupBy
+
+-   设置 sql 语句根据某个字段聚合
+
+#### build
+
+-   获取拼装后的 sql 语句
+
+#### query
+
+-   获取拼装后的 sql 语句
+
+#### select 例子：
+
+```js
+builder
+    .select()
+    .table("table1")
+    .fields("*")
+    .build();
+// SELECT * FROM `table1`
+
+builder
+    .select()
+    .table("table1")
+    .fields("field1", "field2").query;
+// SELECT `field1`, `field2` FROM `table1`
+
+builder
+    .select()
+    .table("table1")
+    .fields(["field1", "field2"]).query;
+// SELECT `field1`, `field2` FROM `table1`
+
+builder
+    .select()
+    .table("table1")
+    .fields("field1")
+    .count("field2").query;
+// SELECT `field1`, COUNT(`field2`) FROM `table1`
+
+builder
+    .select()
+    .table("table1")
+    .fields("field1")
+    .fields(builder.func.count("field2")).query;
+// SELECT `field1`, COUNT(`field2`) FROM `table1`
+
+builder
+    .select()
+    .table("table1")
+    .fields("field1")
+    .fields({ func: "count", field: "field2" }).query;
+// SELECT `field1`, COUNT(`field2`) FROM `table1`
+
+builder
+    .select()
+    .table("table1")
+    .fields("field1")
+    .funcFeilds({ func: "count", field: "field2" }).query;
+// SELECT `field1`, COUNT(`field2`) FROM `table1`
+
+builder
+    .select()
+    .table("table1")
+    .fields("field1")
+    .funcFeilds(builder.func.count("field2")).query;
+// SELECT `field1`, COUNT(`field2`) FROM `table1`
+
+builder
+    .select()
+    .table("table1")
+    .fields("field1")
+    .count("field2")
+    .sum("field3").query;
+// SELECT `field1`, COUNT(`field2`), SUM(`field3`) FROM `table1`
+
+builder
+    .select()
+    .table("table1")
+    .fields("field1")
+    .funcFeilds(
+        { func: "count", field: "field2" },
+        { func: "sum", field: "field3" }
+    ).query;
+// SELECT `field1`, COUNT(`field2`), SUM(`field3`) FROM `table1`
+
+builder
+    .select()
+    .table("table1")
+    .fields("field1")
+    .funcFeilds(builder.func.count("field2"), builder.func.sum("field3")).query;
+// SELECT `field1`, COUNT(`field2`), SUM(`field3`) FROM `table1`
+
+builder
+    .select()
+    .table("table1")
+    .fields("field1")
+    .count("field2")
+    .groupBy("field2").query;
+// SELECT `field1`, COUNT(`field2`) FROM `table1` GROUP BY `field2`
+
+builder
+    .select()
+    .table("table1")
+    .fields("field1")
+    .count("field2")
+    .groupBy("field2", "field3").query;
+// SELECT `field1`, COUNT(`field2`) FROM `table1` GROUP BY `field2`, `field3`
+```
+
+### DELETE
+
+#### delete
+
+-   指定 sql 语句为 DELETE
+
+#### table
+
+-   设置 sql 语句的表名
+
+#### build
+
+-   获取拼装后的 sql 语句
+
+#### query
+
+-   获取拼装后的 sql 语句
+
+#### delete 例子：
+
+```js
+builder
+    .delete()
+    .table("table1")
+    .step(100).query;
+// DELETE FROM `table1` LIMIT 100
+
+builder
+    .delete()
+    .table("table1")
+    .step(100)
+    .descBy("field1").query;
+// DELETE FROM `table1` ORDER BY `field1` DESC LIMIT 100
+
+builder
+    .delete()
+    .table("table1")
+    .where$Equal({
+        field1: "value1"
+    }).query;
+// DELETE FROM `table1` WHERE `field1` = 'value1'
 ```
