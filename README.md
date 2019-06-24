@@ -12,3 +12,126 @@ js sql query builder
 ```sh
 npm i js-sql-query --save
 ```
+
+## 目录
+
+<!-- TOC -->
+
+-   [api](#api)
+    -   [Builder](#Builder)
+        -   [Insert](#Insert)
+
+# api
+
+## Builder
+
+```js
+var { Builder } = require("js-sql-query");
+var builder = new Builder();
+```
+
+新建时指定数据库类型 mysql，mssql，postgresql，sqlite
+
+```js
+var builder = new Builder("mysql");
+```
+
+### Insert
+
+#### insert
+
+-   指定 sql 语句为 INSERT
+
+#### table
+
+-   设置 sql 语句的表名
+
+#### data
+
+-   设置 sql 语句的插入值信息
+
+#### multiData
+
+-   设置 sql 语句多行插入值信息，一次插入一行或多行数据
+
+#### values
+
+-   设置 sql 语句的插入值信息为子查询的结果
+
+#### fields
+
+-   设置 sql 语句的插入值的字段
+
+#### build
+
+-   获取拼装后的 sql 语句
+
+#### query
+
+-   获取拼装后的 sql 语句
+
+#### insert 例子：
+
+```js
+builder
+    .insert()
+    .table("table1")
+    .data({
+        field1: "value1",
+        field2: "value2"
+    })
+    .build();
+// INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
+
+builder
+    .insert()
+    .table("table1")
+    .fields("field1", "field2")
+    .data({
+        field1: "value1",
+        field2: "value2",
+        field3: "value3"
+    }).query;
+// INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
+
+builder
+    .insert()
+    .table("table1")
+    .fields(["field1", "field2"])
+    .data({
+        field1: "value1",
+        field2: "value2",
+        field3: "value3"
+    }).query;
+// INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
+
+builder
+    .insert()
+    .table("table1")
+    .fields(["field1", "field2"])
+    .multiData([
+        {
+            field1: "value1",
+            field2: "value2",
+            field3: "value3"
+        },
+        {
+            field1: "value4",
+            field2: "value5",
+            field3: "value6"
+        }
+    ]).query;
+// INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' ), ( 'value4', 'value5' )
+
+builder
+    .insert()
+    .table("table1")
+    .fields(["field1", "field2"])
+    .values(() =>
+        builder
+            .select()
+            .table("table1")
+            .fields(["field1", "field2"])
+    ).query;
+// INSERT INTO `table1` ( `field1`, `field2` )  VALUES SELECT `field1`, `field2` FROM `table1`
+```
