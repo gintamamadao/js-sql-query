@@ -1,6 +1,6 @@
 {
     "name": "js-sql-query",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "",
     "main": "./dist/js-sql-query.js",
     "scripts": {
@@ -13,6 +13,12 @@
     "repository": {
         "url": "https://github.com/gintamamadao/js-sql-query"
     },
+    "keywords": [
+        "node",
+        "orm",
+        "sql",
+        "query"
+    ],
     "dependencies": {},
     "devDependencies": {
         "babel-runtime": "^6.26.0",
