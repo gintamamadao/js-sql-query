@@ -46,19 +46,20 @@ class Safe {
     }
 
     protected formatManualSql(key: string): string {
-        let sql: string | Function = this[key];
+        let sql: any = this[key];
         if (Util.isNotEmptyStr(sql)) {
             return <string>sql;
         }
         if (Util.isFunction(sql)) {
-            const sqlRes: any = (<Function>sql)() || {};
-            const query: string | void = sqlRes.query;
-            if (Util.isNotEmptyStr(query)) {
-                return <string>query;
+            sql = (<Function>sql)();
+            if (Util.isNotEmptyStr(sql)) {
+                return <string>sql;
             }
-
-            if (Util.isNotEmptyStr(sqlRes)) {
-                return <string>sqlRes;
+        }
+        if (Util.isNotEmptyObj(sql) && sql instanceof Safe) {
+            sql = sql.query;
+            if (Util.isNotEmptyStr(sql)) {
+                return <string>sql;
             }
         }
         return "";

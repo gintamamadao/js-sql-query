@@ -582,15 +582,18 @@ var safe = createCommonjsModule(function (module, exports) {
       }
 
       if (util$1.isFunction(sql)) {
-        const sqlRes = sql() || {};
-        const query = sqlRes.query;
+        sql = sql();
 
-        if (util$1.isNotEmptyStr(query)) {
-          return query;
+        if (util$1.isNotEmptyStr(sql)) {
+          return sql;
         }
+      }
 
-        if (util$1.isNotEmptyStr(sqlRes)) {
-          return sqlRes;
+      if (util$1.isNotEmptyObj(sql) && sql instanceof Safe) {
+        sql = sql.query;
+
+        if (util$1.isNotEmptyStr(sql)) {
+          return sql;
         }
       }
 
@@ -994,15 +997,18 @@ var safe$1 = createCommonjsModule(function (module, exports) {
       }
 
       if (util$1.isFunction(sql)) {
-        const sqlRes = sql() || {};
-        const query = sqlRes.query;
+        sql = sql();
 
-        if (util$1.isNotEmptyStr(query)) {
-          return query;
+        if (util$1.isNotEmptyStr(sql)) {
+          return sql;
         }
+      }
 
-        if (util$1.isNotEmptyStr(sqlRes)) {
-          return sqlRes;
+      if (util$1.isNotEmptyObj(sql) && sql instanceof Safe) {
+        sql = sql.query;
+
+        if (util$1.isNotEmptyStr(sql)) {
+          return sql;
         }
       }
 
