@@ -19,7 +19,7 @@ npm i js-sql-query --save
 
 -   [api](#api)
     -   [Builder](#Builder)
-        -   [INSERT/REPLACE](#INSERT/REPLACE)
+        -   [INSERT(REPLACE)](#INSERT(REPLACE))
         -   [UPDATE](#UPDATE)
         -   [SELECT](#SELECT)
         -   [DELETE](#DELETE)
@@ -27,7 +27,7 @@ npm i js-sql-query --save
         -   [HAVING](#HAVING)
         -   [Term](#Term)
         -   [ORDER](#ORDER)
-        -   [LIMIT/OFFSET](#LIMIT/OFFSET)
+        -   [LIMIT(OFFSET)](#LIMIT(OFFSET))
 
 # api
 
