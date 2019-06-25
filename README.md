@@ -19,7 +19,7 @@ npm i js-sql-query --save
 
 -   [api](#api)
     -   [Builder](#Builder)
-        -   [INSERT(REPLACE)](#INSERT(REPLACE))
+        -   [INSERT/REPLACE](#INSERTREPLACE)
         -   [UPDATE](#UPDATE)
         -   [SELECT](#SELECT)
         -   [DELETE](#DELETE)
@@ -27,7 +27,7 @@ npm i js-sql-query --save
         -   [HAVING](#HAVING)
         -   [Term](#Term)
         -   [ORDER](#ORDER)
-        -   [LIMIT(OFFSET)](#LIMIT(OFFSET))
+        -   [LIMIT/OFFSET](#LIMITOFFSET)
 
 # api
 
@@ -55,7 +55,7 @@ builder.table("table1");
 语句的基本类型有 INSERT，REPLACE， UPDATE，SELECT，DELETE，其中 INSERT 和 REPLACE 的拼装逻辑是完全一样的，就合在一起讲
 不同的基本类型可以调用的 api 不完全一样，有些是公用的，有些是仅限某些基本类型才能调用。
 
-### INSERT(REPLACE)
+### INSERT/REPLACE
 
 #### insert/replace
 
@@ -1280,7 +1280,7 @@ builder
 // SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` ASC, FIELD(`field3`, 'value1', 'value2')
 ```
 
-### LIMIT(OFFSET)
+### LIMIT/OFFSET
 
 #### offset
 
