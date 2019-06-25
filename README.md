@@ -19,10 +19,15 @@ npm i js-sql-query --save
 
 -   [api](#api)
     -   [Builder](#Builder)
-        -   [INSERT](#INSERT)
+        -   [INSERT/REPLACE](#INSERT/REPLACE)
         -   [UPDATE](#UPDATE)
         -   [SELECT](#SELECT)
         -   [DELETE](#DELETE)
+        -   [WHERE](#WHERE)
+        -   [HAVING](#HAVING)
+        -   [Term](#Term)
+        -   [ORDER](#ORDER)
+        -   [LIMIT/OFFSET](#LIMIT/OFFSET)
 
 # api
 
@@ -33,23 +38,28 @@ var { Builder } = require("js-sql-query");
 var builder = new Builder();
 ```
 
-新建时指定数据库类型 mysql，mssql，postgresql，sqlite
+-   新建时指定数据库类型 mysql，mssql，postgresql，sqlite
 
 ```js
 var builder = new Builder("mysql");
 ```
 
-设置要操作的表名
+-   设置要操作的表名
 
 ```js
 builder.table("table1");
 ```
 
-### INSERT
+-   语句类型
 
-#### insert
+语句的基本类型有 INSERT，REPLACE， UPDATE，SELECT，DELETE，其中 INSERT 和 REPLACE 的拼装逻辑是完全一样的，就合在一起讲
+不同的基本类型可以调用的 api 不完全一样，有些是公用的，有些是仅限某些基本类型才能调用。
 
--   指定 sql 语句为 INSERT
+### INSERT/REPLACE
+
+#### insert/replace
+
+-   指定 sql 语句为 INSERT/REPLACE
 
 #### table
 
@@ -91,6 +101,15 @@ builder
     })
     .build();
 // INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
+
+builder
+    .replace()
+    .table("table1")
+    .data({
+        field1: "value1",
+        field2: "value2"
+    }).query;
+// REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
 
 builder
     .insert()
@@ -415,4 +434,910 @@ builder
         field1: "value1"
     }).query;
 // DELETE FROM `table1` WHERE `field1` = 'value1'
+```
+
+### WHERE
+
+-   UPDATE、SELECT、DELETE 的条件逻辑拼装 api 是一样的。
+-   条件之间的逻辑根据后面的 api 决定，api 名中有 Or 这个词就代表，该条件与前一个条件为或关系，否则为与
+-   where$Bracket 和 where$OrBracket 是特殊的 api，表示将 api 前后的条件分别用括号括起来，Or 代表括号之间的逻辑是或关系
+
+#### where
+
+-   添加手打的条件或者 Term 类型的 api
+
+#### where\$Equal
+
+-   条件 =
+
+#### where\$NoEqual
+
+-   条件 <>
+
+#### where\$In
+
+-   条件 IN
+
+#### where\$NotIn
+
+-   条件 NOT IN
+
+#### where\$More
+
+-   条件 >
+
+#### where\$Less
+
+-   条件 <
+
+#### where\$MoreEqual
+
+-   条件 >=
+
+#### where\$LessEqual
+
+-   条件 <=
+
+#### where\$Like
+
+-   条件 LIKE
+
+#### where\$NotLike
+
+-   条件 NOT LIKE
+
+#### where\$Between
+
+-   条件 BETWEEN
+
+#### where\$NotBetween
+
+-   条件 NOT BETWEEN
+
+#### where\$OrEqual
+
+-   条件 =，和前一条件逻辑为或
+
+#### where\$OrNoEqual
+
+-   条件 <>，和前一条件逻辑为或
+
+#### where\$OrIn
+
+-   条件 IN，和前一条件逻辑为或
+
+#### where\$OrNotIn
+
+-   条件 NOT IN，和前一条件逻辑为或
+
+#### where\$OrMore
+
+-   条件 >，和前一条件逻辑为或
+
+#### where\$OrLess
+
+-   条件 <，和前一条件逻辑为或
+
+#### where\$OrMoreEqual
+
+-   条件 >=，和前一条件逻辑为或
+
+#### where\$OrLessEqual
+
+-   条件 <=，和前一条件逻辑为或
+
+#### where\$OrLike
+
+-   条件 LIKE，和前一条件逻辑为或
+
+#### where\$OrNotLike
+
+-   条件 NOT LIKE，和前一条件逻辑为或
+
+#### where\$OrBetween
+
+-   条件 BETWEEN，和前一条件逻辑为或
+
+#### where\$OrNotBetween
+
+-   条件 NOT BETWEEN，和前一条件逻辑为或
+
+#### where\$Bracket
+
+-   前后的条件分别用括号括起来
+
+#### where\$OrBracket
+
+-   前后的条件分别用括号括起来，和前一括号逻辑为或
+
+#### where 例子：
+
+```js
+builder
+    .select()
+    .table("table1")
+    .where("`field1` = 'value1'").query;
+// SELECT * FROM `table1` WHERE `field1` = 'value1'
+
+builder
+    .select()
+    .table("table1")
+    .where$Equal({
+        field1: "value1"
+    }).query;
+// SELECT * FROM `table1` WHERE `field1` = 'value1'
+
+builder
+    .select()
+    .table("table1")
+    .where$NoEqual({
+        field1: "value1"
+    }).query;
+// SELECT * FROM `table1` WHERE `field1` <> 'value1'
+
+builder
+    .select()
+    .table("table1")
+    .where$In({
+        field1: ["value1", "value2"]
+    }).query;
+// SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' )
+
+builder
+    .select()
+    .table("table1")
+    .where$NotIn({
+        field1: ["value1", "value2"]
+    }).query;
+// SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' )
+
+builder
+    .select()
+    .table("table1")
+    .where$More({
+        field1: "value1"
+    }).query;
+// SELECT * FROM `table1` WHERE `field1` > 'value1'
+
+builder
+    .select()
+    .table("table1")
+    .where$Less({
+        field1: "value1"
+    }).query;
+// SELECT * FROM `table1` WHERE `field1` < 'value1'
+
+builder
+    .select()
+    .table("table1")
+    .where$MoreEqual({
+        field1: "value1"
+    }).query;
+// SELECT * FROM `table1` WHERE `field1` >= 'value1'
+
+builder
+    .select()
+    .table("table1")
+    .where$LessEqual({
+        field1: "value1"
+    }).query;
+// SELECT * FROM `table1` WHERE `field1` <= 'value1'
+
+builder
+    .select()
+    .table("table1")
+    .where$Like({
+        field1: "value1"
+    }).query;
+// SELECT * FROM `table1` WHERE `field1` LIKE '%value1%'
+
+builder
+    .select()
+    .table("table1")
+    .where$NotLike({
+        field1: "value1"
+    }).query;
+// SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%'
+
+builder
+    .select()
+    .table("table1")
+    .where$Between({
+        field1: ["value1", "value2"]
+    }).query;
+// SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2'
+
+builder
+    .select()
+    .table("table1")
+    .where$NotBetween({
+        field1: ["value1", "value2"]
+    }).query;
+// SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1' AND 'value2'
+
+builder
+    .select()
+    .table("table1")
+    .where$Equal({
+        field1: "value1",
+        field2: "value2"
+    }).query;
+// SELECT * FROM `table1` WHERE `field1` = 'value1' AND `field2` = 'value2'
+
+builder
+    .select()
+    .table("table1")
+    .where$Equal({
+        field1: "value1"
+    })
+    .where$NoEqual({
+        field2: "value2"
+    }).query;
+// SELECT * FROM `table1` WHERE `field1` = 'value1' AND `field2` <> 'value2'
+
+builder
+    .select()
+    .table("table1")
+    .where$NoEqual({
+        field1: "value1"
+    })
+    .where$NoEqual({
+        field1: "value2"
+    }).query;
+// SELECT * FROM `table1` WHERE `field1` <> 'value1' AND `field1` <> 'value2'
+
+builder
+    .select()
+    .table("table1")
+    .where$OrEqual({
+        field1: "value1",
+        field2: "value2"
+    }).query;
+// SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field2` = 'value2'
+
+builder
+    .select()
+    .table("table1")
+    .where$OrEqual({
+        field1: "value1"
+    })
+    .where$OrEqual({
+        field1: "value2"
+    }).query;
+// SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field1` = 'value2'
+
+builder
+    .select()
+    .table("table1")
+    .where$OrEqual({
+        field1: "value1"
+    })
+    .where$OrEqual({
+        field2: "value2"
+    })
+    .where$Bracket()
+    .where$OrEqual({
+        field3: "value3"
+    }).query;
+// SELECT * FROM `table1` WHERE ( `field1` = 'value1' OR `field2` = 'value2' ) AND ( `field3` = 'value3' )
+
+builder
+    .select()
+    .table("table1")
+    .where$Equal({
+        field1: "value1",
+        field2: "value2"
+    })
+    .where$OrBracket()
+    .where$Equal({
+        field3: "value3"
+    }).query;
+// SELECT * FROM `table1` WHERE ( `field1` = 'value1' AND `field2` = 'value2' ) OR ( `field3` = 'value3' )
+```
+
+### HAVING
+
+-   HAVING 的逻辑和 WHERE 是一样的，但仅限 SELECT 能调用
+-   为和 WHERE 做区分，HAVING 的 api 的前缀都是 HAVING
+
+#### having
+
+-   添加手打的条件或者 Term 类型的 api
+
+#### having\$Equal
+
+-   条件 =
+
+#### having\$NoEqual
+
+-   条件 <>
+
+#### having\$In
+
+-   条件 IN
+
+#### having\$NotIn
+
+-   条件 NOT IN
+
+#### having\$More
+
+-   条件 >
+
+#### having\$Less
+
+-   条件 <
+
+#### having\$MoreEqual
+
+-   条件 >=
+
+#### having\$LessEqual
+
+-   条件 <=
+
+#### having\$Like
+
+-   条件 LIKE
+
+#### having\$NotLike
+
+-   条件 NOT LIKE
+
+#### having\$Between
+
+-   条件 BETWEEN
+
+#### having\$NotBetween
+
+-   条件 NOT BETWEEN
+
+#### having\$OrEqual
+
+-   条件 =，和前一条件逻辑为或
+
+#### having\$OrNoEqual
+
+-   条件 <>，和前一条件逻辑为或
+
+#### having\$OrIn
+
+-   条件 IN，和前一条件逻辑为或
+
+#### having\$OrNotIn
+
+-   条件 NOT IN，和前一条件逻辑为或
+
+#### having\$OrMore
+
+-   条件 >，和前一条件逻辑为或
+
+#### having\$OrLess
+
+-   条件 <，和前一条件逻辑为或
+
+#### having\$OrMoreEqual
+
+-   条件 >=，和前一条件逻辑为或
+
+#### having\$OrLessEqual
+
+-   条件 <=，和前一条件逻辑为或
+
+#### having\$OrLike
+
+-   条件 LIKE，和前一条件逻辑为或
+
+#### having\$OrNotLike
+
+-   条件 NOT LIKE，和前一条件逻辑为或
+
+#### having\$OrBetween
+
+-   条件 BETWEEN，和前一条件逻辑为或
+
+#### having\$OrNotBetween
+
+-   条件 NOT BETWEEN，和前一条件逻辑为或
+
+#### having\$Bracket
+
+-   前后的条件分别用括号括起来
+
+#### having\$OrBracket
+
+-   前后的条件分别用括号括起来，和前一括号逻辑为或
+
+#### having 例子：
+
+-   基本和 where 一样，可以看项目中的 example 文件夹下的例子
+
+### Term
+
+-   Term 也是用于拼装语句的条件部分，拼装逻辑和 WHERE 和 HAVING 是一样的。
+-   Term 的 api 与 WHERE 和 HAVING 也是基本一样的，只是没有前缀。
+-   如果语句条件过于复杂，可以用 term 使代码更简洁。
+
+#### equal
+
+-   条件 =
+
+#### noEqual
+
+-   条件 <>
+
+#### in
+
+-   条件 IN
+
+#### notIn
+
+-   条件 NOT IN
+
+#### more
+
+-   条件 >
+
+#### less
+
+-   条件 <
+
+#### moreEqual
+
+-   条件 >=
+
+#### lessEqual
+
+-   条件 <=
+
+#### like
+
+-   条件 LIKE
+
+#### notLike
+
+-   条件 NOT LIKE
+
+#### between
+
+-   条件 BETWEEN
+
+#### notBetween
+
+-   条件 NOT BETWEEN
+
+#### orEqual
+
+-   条件 =，和前一条件逻辑为或
+
+#### orNoEqual
+
+-   条件 <>，和前一条件逻辑为或
+
+#### orIn
+
+-   条件 IN，和前一条件逻辑为或
+
+#### orNotIn
+
+-   条件 NOT IN，和前一条件逻辑为或
+
+#### orMore
+
+-   条件 >，和前一条件逻辑为或
+
+#### orLess
+
+-   条件 <，和前一条件逻辑为或
+
+#### orMoreEqual
+
+-   条件 >=，和前一条件逻辑为或
+
+#### orLessEqual
+
+-   条件 <=，和前一条件逻辑为或
+
+#### orLike
+
+-   条件 LIKE，和前一条件逻辑为或
+
+#### orNotLike
+
+-   条件 NOT LIKE，和前一条件逻辑为或
+
+#### orBetween
+
+-   条件 BETWEEN，和前一条件逻辑为或
+
+#### orNotBetween
+
+-   条件 NOT BETWEEN，和前一条件逻辑为或
+
+#### bracket
+
+-   前后的条件分别用括号括起来
+
+#### orBracket
+
+-   前后的条件分别用括号括起来，和前一括号逻辑为或
+
+#### Term 例子：
+
+```js
+builder
+    .select()
+    .table("table1")
+    .where(() =>
+        builder.term.equal({
+            field1: "value1"
+        })
+    ).query;
+// SELECT * FROM `table1` WHERE `field1` = 'value1'
+
+builder
+    .select()
+    .table("table1")
+    .having(() =>
+        builder.term.equal({
+            field1: "value1"
+        })
+    ).query;
+// SELECT * FROM `table1` HAVING `field1` = 'value1'
+
+builder
+    .select()
+    .table("table1")
+    .where(() =>
+        builder.term.noEqual({
+            field1: "value1"
+        })
+    ).query;
+// SELECT * FROM `table1` WHERE `field1` <> 'value1'
+
+builder
+    .select()
+    .table("table1")
+    .where(() =>
+        builder.term.in({
+            field1: ["value1", "value2"]
+        })
+    ).query;
+// SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' )
+
+builder
+    .select()
+    .table("table1")
+    .where(() =>
+        builder.term.notIn({
+            field1: ["value1", "value2"]
+        })
+    ).query;
+// SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' )
+
+builder
+    .select()
+    .table("table1")
+    .where(() =>
+        builder.term.more({
+            field1: "value1"
+        })
+    ).query;
+// SELECT * FROM `table1` WHERE `field1` > 'value1'
+
+builder
+    .select()
+    .table("table1")
+    .where(() =>
+        builder.term.less({
+            field1: "value1"
+        })
+    ).query;
+// SELECT * FROM `table1` WHERE `field1` < 'value1'
+
+builder
+    .select()
+    .table("table1")
+    .where(() =>
+        builder.term.moreEqual({
+            field1: "value1"
+        })
+    ).query;
+// SELECT * FROM `table1` WHERE `field1` >= 'value1'
+
+builder
+    .select()
+    .table("table1")
+    .where(() =>
+        builder.term.lessEqual({
+            field1: "value1"
+        })
+    ).query;
+// SELECT * FROM `table1` WHERE `field1` <= 'value1'
+
+builder
+    .select()
+    .table("table1")
+    .where(() =>
+        builder.term.like({
+            field1: "value1"
+        })
+    ).query;
+// SELECT * FROM `table1` WHERE `field1` LIKE '%value1%'
+
+builder
+    .select()
+    .table("table1")
+    .where(() =>
+        builder.term.notLike({
+            field1: "value1"
+        })
+    ).query;
+// SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%'
+
+builder
+    .select()
+    .table("table1")
+    .where(() =>
+        builder.term.between({
+            field1: ["value1", "value2"]
+        })
+    ).query;
+// SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2'
+
+builder
+    .select()
+    .table("table1")
+    .where(() =>
+        builder.term.notBetween({
+            field1: ["value1", "value2"]
+        })
+    ).query;
+// SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1' AND 'value2'
+
+builder
+    .select()
+    .table("table1")
+    .where(() =>
+        builder.term.equal({
+            field1: "value1",
+            field2: "value2"
+        })
+    ).query;
+// SELECT * FROM `table1` WHERE `field1` = 'value1' AND `field2` <> 'value2'
+
+builder
+    .select()
+    .table("table1")
+    .where(() =>
+        builder.term
+            .equal({
+                field1: "value1"
+            })
+            .noEqual({
+                field2: "value2"
+            })
+    ).query;
+// SELECT * FROM `table1` WHERE `field1` = 'value1' AND `field2` <> 'value2'
+
+builder
+    .select()
+    .table("table1")
+    .where(() =>
+        builder.term
+            .noEqual({
+                field1: "value1"
+            })
+            .noEqual({
+                field1: "value2"
+            })
+    ).query;
+// SELECT * FROM `table1` WHERE `field1` <> 'value1' AND `field1` <> 'value2'
+
+builder
+    .select()
+    .table("table1")
+    .where(() =>
+        builder.term.orEqual({
+            field1: "value1",
+            field2: "value2"
+        })
+    ).query;
+// SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field2` = 'value2'
+
+builder
+    .select()
+    .table("table1")
+    .where(() =>
+        builder.term
+            .orEqual({
+                field1: "value1"
+            })
+            .orEqual({
+                field1: "value2"
+            })
+    ).query;
+// SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field1` = 'value2'
+
+builder
+    .select()
+    .table("table1")
+    .where(() =>
+        builder.term
+            .orEqual({
+                field1: "value1"
+            })
+            .orEqual({
+                field2: "value2"
+            })
+            .bracket()
+            .orEqual({
+                field3: "value3"
+            })
+    ).query;
+// SELECT * FROM `table1` WHERE ( `field1` = 'value1' OR `field2` = 'value2' ) AND ( `field3` = 'value3' )
+
+builder
+    .select()
+    .table("table1")
+    .where(() =>
+        builder.term
+            .equal({
+                field1: "value1",
+                field2: "value2"
+            })
+            .orBracket()
+            .equal({
+                field3: "value3"
+            })
+    ).query;
+// SELECT * FROM `table1` WHERE ( `field1` = 'value1' AND `field2` = 'value2' ) OR ( `field3` = 'value3' )
+```
+
+### ORDER
+
+#### descBy
+
+-   根据某个字段降序排序
+
+#### ascBy
+
+-   根据某个字段升序排序
+
+#### orderField
+
+-   根据某个字段自定义序列排序
+
+#### order
+
+-   输入手打的排序方式或者 order api
+
+#### ORDER 例子：
+
+```js
+builder
+    .select()
+    .table("table1")
+    .descBy("field1").query;
+// SELECT * FROM `table1` ORDER BY `field1` DESC
+
+builder
+    .select()
+    .table("table1")
+    .ascBy("field1").query;
+// SELECT * FROM `table1` ORDER BY `field1` ASC
+
+builder
+    .select()
+    .table("table1")
+    .descBy("field1", "field2").query;
+// SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` DESC
+
+builder
+    .select()
+    .table("table1")
+    .descBy(["field1", "field2"]).query;
+// SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` DESC
+
+builder
+    .select()
+    .table("table1")
+    .ascBy("field1", "field2").query;
+// SELECT * FROM `table1` ORDER BY `field1` ASC, `field2` ASC
+
+builder
+    .select()
+    .table("table1")
+    .ascBy(["field1", "field2"]).query;
+// SELECT * FROM `table1` ORDER BY `field1` ASC, `field2` ASC
+
+builder
+    .select()
+    .table("table1")
+    .descBy("field1")
+    .ascBy("field2").query;
+// SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` ASC
+
+builder
+    .select()
+    .table("table1")
+    .orderField({
+        field1: ["value1", "value2"]
+    }).query;
+// SELECT * FROM `table1` ORDER BY FIELD(`field1`, 'value1', 'value2')
+
+builder
+    .select()
+    .table("table1")
+    .order(() =>
+        builder.order
+            .descBy("field1")
+            .ascBy("field2")
+            .orderField({
+                field3: ["value1", "value2"]
+            })
+    ).query;
+// SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` ASC, FIELD(`field3`, 'value1', 'value2')
+```
+
+### LIMIT/OFFSET
+
+#### offset
+
+-   设置 sql 语句的 offset
+
+#### step
+
+-   设置 sql 语句的 limit
+
+#### limit
+
+-   设置 sql 语句的 limit，仅限 SELECT 类型使用
+
+#### paging
+
+-   设置 sql 语句的 limit，仅限 SELECT 类型使用
+
+#### findOne
+
+-   限制只返回一个，仅限 SELECT 类型使用
+
+#### LIMIT/OFFSET 例子：
+
+```js
+builder
+    .select()
+    .table("table1")
+    .offset(1).query;
+// SELECT * FROM `table1` OFFSET 1
+
+builder
+    .select()
+    .table("table1")
+    .step(10).query;
+// SELECT * FROM `table1` LIMIT 10
+
+builder
+    .select()
+    .table("table1")
+    .limit(1, 10).query;
+// SELECT * FROM `table1` LIMIT 10 OFFSET 1
+
+builder
+    .select()
+    .table("table1")
+    .paging(1, 10).query;
+// SELECT * FROM `table1` LIMIT 10
+
+builder
+    .select()
+    .table("table1")
+    .paging(2, 10).query;
+// SELECT * FROM `table1` LIMIT 10 OFFSET 10
+
+builder
+    .select()
+    .table("table1")
+    .findOne().query;
+// SELECT * FROM `table1` LIMIT 1
 ```
