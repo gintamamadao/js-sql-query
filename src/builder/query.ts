@@ -1,6 +1,6 @@
-import * as Util from "../util/util";
 import { QueryTypes, DialectTypes } from "../constant/enum";
 import { FieldOrder } from "../constant/interface";
+import { Type } from "schema-verify";
 import Safe from "./safe";
 import Limit from "./limit";
 import Order from "./order";
@@ -75,16 +75,16 @@ class Query extends Safe {
     protected _checkQuery(): void {
         const type = this.queryType;
         const table = this.queryTable;
-        if (!Util.isNotEmptyStr(type)) {
+        if (!Type.string.isNotEmpty(type)) {
             throw new Error("Illegal Query Type");
         }
-        if (!Util.isNotEmptyStr(table)) {
+        if (!Type.string.isNotEmpty(table)) {
             throw new Error("Illegal Table Name");
         }
     }
 
     table(tableName: string) {
-        if (!Util.isNotEmptyStr(tableName)) {
+        if (!Type.string.isNotEmpty(tableName)) {
             throw new Error("Illegal Table Name");
         }
         this.queryTable = tableName;

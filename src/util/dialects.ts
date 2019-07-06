@@ -1,5 +1,5 @@
 import { Dialects } from "../constant/interface";
-import * as Util from "./util";
+import { Type } from "schema-verify";
 
 const DialectsObj: Dialects = {
     mysql: {
@@ -11,7 +11,7 @@ const DialectsObj: Dialects = {
                     .replace(/\\/g, () => "\\\\");
                 result = `'${value}'`;
             }
-            if (Util.isLegalNum(value)) {
+            if (Type.number.is(value)) {
                 result = `'${value}'`;
             }
             if (!result) {
@@ -21,7 +21,7 @@ const DialectsObj: Dialects = {
         },
         safeKey(key: string): string {
             let result: string;
-            if (!Util.isNotEmptyStr(key)) {
+            if (!Type.string.isNotEmpty(key)) {
                 throw new Error("Illegal Key");
             }
             result = key.replace(/`/g, "``");
@@ -35,7 +35,7 @@ const DialectsObj: Dialects = {
                 value = value.replace(/\'/g, () => "''");
                 result = `'${value}'`;
             }
-            if (Util.isLegalNum(value)) {
+            if (Type.number.is(value)) {
                 result = `'${value}'`;
             }
             if (!result) {
@@ -44,7 +44,7 @@ const DialectsObj: Dialects = {
             return result;
         },
         safeKey(key: string): string {
-            if (!Util.isNotEmptyStr(key)) {
+            if (!Type.string.isNotEmpty(key)) {
                 throw new Error("Illegal Key");
             }
             return `[${key}]`;
@@ -57,7 +57,7 @@ const DialectsObj: Dialects = {
                 value = value.replace(/\'/g, () => "''");
                 result = `'${value}'`;
             }
-            if (Util.isLegalNum(value)) {
+            if (Type.number.is(value)) {
                 result = `'${value}'`;
             }
             if (!result) {
@@ -67,7 +67,7 @@ const DialectsObj: Dialects = {
         },
         safeKey(key: string): string {
             let result: string;
-            if (!Util.isNotEmptyStr(key)) {
+            if (!Type.string.isNotEmpty(key)) {
                 throw new Error("Illegal Key");
             }
             result = key.replace(/\"/g, '""');
@@ -81,7 +81,7 @@ const DialectsObj: Dialects = {
                 value = value.replace(/\'/g, () => "''");
                 result = `'${value}'`;
             }
-            if (Util.isLegalNum(value)) {
+            if (Type.number.is(value)) {
                 result = `'${value}'`;
             }
             if (!result) {
@@ -91,7 +91,7 @@ const DialectsObj: Dialects = {
         },
         safeKey(key: string): string {
             let result: string;
-            if (!Util.isNotEmptyStr(key)) {
+            if (!Type.string.isNotEmpty(key)) {
                 throw new Error("Illegal Key");
             }
             result = key.replace(/`/g, "``");

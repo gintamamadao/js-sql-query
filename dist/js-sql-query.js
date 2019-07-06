@@ -1,5 +1,9 @@
 'use strict';
 
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var schemaVerify = _interopDefault(require('schema-verify'));
+
 function unwrapExports (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
 }
@@ -14,73 +18,13 @@ var util = createCommonjsModule(function (module, exports) {
     value: true
   });
 
-  function isNotEmptyStr(s) {
-    return typeof s === "string" && s.length > 0;
-  }
-
-  exports.isNotEmptyStr = isNotEmptyStr;
-
-  function isNotEmptyObj(o) {
-    return o && Object.prototype.toString.apply(o) === "[object Object]" && Object.keys(o).length > 0;
-  }
-
-  exports.isNotEmptyObj = isNotEmptyObj;
-
-  function isNotEmptyArr(a) {
-    return Array.isArray(a) && a.length > 0;
-  }
-
-  exports.isNotEmptyArr = isNotEmptyArr;
-
-  function isString(s) {
-    return typeof s === "string";
-  }
-
-  exports.isString = isString;
-
-  function isArray(a) {
-    return Array.isArray(a);
-  }
-
-  exports.isArray = isArray;
-
-  function isFunction(f) {
-    return typeof f === "function";
-  }
-
-  exports.isFunction = isFunction;
-
-  function isLegalNum(n) {
-    return typeof n === "number" && !isNaN(n);
-  }
-
-  exports.isLegalNum = isLegalNum;
-
-  function isUndefinedNull(n) {
-    return n === undefined || n === null;
-  }
-
-  exports.isUndefinedNull = isUndefinedNull;
-
-  function safeToArr(arr) {
-    return Array.isArray(arr) ? arr : [];
-  }
-
-  exports.safeToArr = safeToArr;
-
-  function safeToObj(o) {
-    return Object.prototype.toString.apply(o) === "[object Object]" ? o : {};
-  }
-
-  exports.safeToObj = safeToObj;
-
   function argStrArrTrans(arg, otherArgs) {
     let args = [];
 
-    if (isArray(arg)) {
+    if (schemaVerify.Type.array.is(arg)) {
       args = arg;
     } else {
-      otherArgs = safeToArr(otherArgs);
+      otherArgs = schemaVerify.Type.array.safe(otherArgs);
       otherArgs.unshift(arg);
       args = otherArgs;
     }
@@ -89,170 +33,9 @@ var util = createCommonjsModule(function (module, exports) {
   }
 
   exports.argStrArrTrans = argStrArrTrans;
-
-  function replaceTemplate(str, opt) {
-    if (!isNotEmptyStr(str)) {
-      return "";
-    }
-
-    return str.replace(/{{([a-zA-Z_0-9]+)}}/g, (match, key) => {
-      if (opt[key] || isNotEmptyStr(opt[key])) {
-        return opt[key];
-      } else {
-        return match;
-      }
-    });
-  }
-
-  exports.replaceTemplate = replaceTemplate;
-
-  function applyMixins(derivedCtor, baseCtors) {
-    baseCtors.forEach(baseCtor => {
-      Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
-        derivedCtor.prototype[name] = baseCtor.prototype[name];
-      });
-    });
-  }
-
-  exports.applyMixins = applyMixins;
 });
 unwrapExports(util);
-var util_1 = util.isNotEmptyStr;
-var util_2 = util.isNotEmptyObj;
-var util_3 = util.isNotEmptyArr;
-var util_4 = util.isString;
-var util_5 = util.isArray;
-var util_6 = util.isFunction;
-var util_7 = util.isLegalNum;
-var util_8 = util.isUndefinedNull;
-var util_9 = util.safeToArr;
-var util_10 = util.safeToObj;
-var util_11 = util.argStrArrTrans;
-var util_12 = util.replaceTemplate;
-var util_13 = util.applyMixins;
-
-var util$1 = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-
-  function isNotEmptyStr(s) {
-    return typeof s === "string" && s.length > 0;
-  }
-
-  exports.isNotEmptyStr = isNotEmptyStr;
-
-  function isNotEmptyObj(o) {
-    return o && Object.prototype.toString.apply(o) === "[object Object]" && Object.keys(o).length > 0;
-  }
-
-  exports.isNotEmptyObj = isNotEmptyObj;
-
-  function isNotEmptyArr(a) {
-    return Array.isArray(a) && a.length > 0;
-  }
-
-  exports.isNotEmptyArr = isNotEmptyArr;
-
-  function isString(s) {
-    return typeof s === "string";
-  }
-
-  exports.isString = isString;
-
-  function isArray(a) {
-    return Array.isArray(a);
-  }
-
-  exports.isArray = isArray;
-
-  function isFunction(f) {
-    return typeof f === "function";
-  }
-
-  exports.isFunction = isFunction;
-
-  function isLegalNum(n) {
-    return typeof n === "number" && !isNaN(n);
-  }
-
-  exports.isLegalNum = isLegalNum;
-
-  function isUndefinedNull(n) {
-    return n === undefined || n === null;
-  }
-
-  exports.isUndefinedNull = isUndefinedNull;
-
-  function safeToArr(arr) {
-    return Array.isArray(arr) ? arr : [];
-  }
-
-  exports.safeToArr = safeToArr;
-
-  function safeToObj(o) {
-    return Object.prototype.toString.apply(o) === "[object Object]" ? o : {};
-  }
-
-  exports.safeToObj = safeToObj;
-
-  function argStrArrTrans(arg, otherArgs) {
-    let args = [];
-
-    if (isArray(arg)) {
-      args = arg;
-    } else {
-      otherArgs = safeToArr(otherArgs);
-      otherArgs.unshift(arg);
-      args = otherArgs;
-    }
-
-    return args;
-  }
-
-  exports.argStrArrTrans = argStrArrTrans;
-
-  function replaceTemplate(str, opt) {
-    if (!isNotEmptyStr(str)) {
-      return "";
-    }
-
-    return str.replace(/{{([a-zA-Z_0-9]+)}}/g, (match, key) => {
-      if (opt[key] || isNotEmptyStr(opt[key])) {
-        return opt[key];
-      } else {
-        return match;
-      }
-    });
-  }
-
-  exports.replaceTemplate = replaceTemplate;
-
-  function applyMixins(derivedCtor, baseCtors) {
-    baseCtors.forEach(baseCtor => {
-      Object.getOwnPropertyNames(baseCtor.prototype).forEach(name => {
-        derivedCtor.prototype[name] = baseCtor.prototype[name];
-      });
-    });
-  }
-
-  exports.applyMixins = applyMixins;
-});
-unwrapExports(util$1);
-var util_1$1 = util$1.isNotEmptyStr;
-var util_2$1 = util$1.isNotEmptyObj;
-var util_3$1 = util$1.isNotEmptyArr;
-var util_4$1 = util$1.isString;
-var util_5$1 = util$1.isArray;
-var util_6$1 = util$1.isFunction;
-var util_7$1 = util$1.isLegalNum;
-var util_8$1 = util$1.isUndefinedNull;
-var util_9$1 = util$1.safeToArr;
-var util_10$1 = util$1.safeToObj;
-var util_11$1 = util$1.argStrArrTrans;
-var util_12$1 = util$1.replaceTemplate;
-var util_13$1 = util$1.applyMixins;
+var util_1 = util.argStrArrTrans;
 
 var dialects = createCommonjsModule(function (module, exports) {
 
@@ -269,7 +52,7 @@ var dialects = createCommonjsModule(function (module, exports) {
           result = `'${value}'`;
         }
 
-        if (util$1.isLegalNum(value)) {
+        if (schemaVerify.Type.number.is(value)) {
           result = `'${value}'`;
         }
 
@@ -283,7 +66,7 @@ var dialects = createCommonjsModule(function (module, exports) {
       safeKey(key) {
         let result;
 
-        if (!util$1.isNotEmptyStr(key)) {
+        if (!schemaVerify.Type.string.isNotEmpty(key)) {
           throw new Error("Illegal Key");
         }
 
@@ -301,7 +84,7 @@ var dialects = createCommonjsModule(function (module, exports) {
           result = `'${value}'`;
         }
 
-        if (util$1.isLegalNum(value)) {
+        if (schemaVerify.Type.number.is(value)) {
           result = `'${value}'`;
         }
 
@@ -313,7 +96,7 @@ var dialects = createCommonjsModule(function (module, exports) {
       },
 
       safeKey(key) {
-        if (!util$1.isNotEmptyStr(key)) {
+        if (!schemaVerify.Type.string.isNotEmpty(key)) {
           throw new Error("Illegal Key");
         }
 
@@ -330,7 +113,7 @@ var dialects = createCommonjsModule(function (module, exports) {
           result = `'${value}'`;
         }
 
-        if (util$1.isLegalNum(value)) {
+        if (schemaVerify.Type.number.is(value)) {
           result = `'${value}'`;
         }
 
@@ -344,7 +127,7 @@ var dialects = createCommonjsModule(function (module, exports) {
       safeKey(key) {
         let result;
 
-        if (!util$1.isNotEmptyStr(key)) {
+        if (!schemaVerify.Type.string.isNotEmpty(key)) {
           throw new Error("Illegal Key");
         }
 
@@ -362,7 +145,7 @@ var dialects = createCommonjsModule(function (module, exports) {
           result = `'${value}'`;
         }
 
-        if (util$1.isLegalNum(value)) {
+        if (schemaVerify.Type.number.is(value)) {
           result = `'${value}'`;
         }
 
@@ -376,7 +159,7 @@ var dialects = createCommonjsModule(function (module, exports) {
       safeKey(key) {
         let result;
 
-        if (!util$1.isNotEmptyStr(key)) {
+        if (!schemaVerify.Type.string.isNotEmpty(key)) {
           throw new Error("Illegal Key");
         }
 
@@ -405,7 +188,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
           result = `'${value}'`;
         }
 
-        if (util$1.isLegalNum(value)) {
+        if (schemaVerify.Type.number.is(value)) {
           result = `'${value}'`;
         }
 
@@ -419,7 +202,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
       safeKey(key) {
         let result;
 
-        if (!util$1.isNotEmptyStr(key)) {
+        if (!schemaVerify.Type.string.isNotEmpty(key)) {
           throw new Error("Illegal Key");
         }
 
@@ -437,7 +220,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
           result = `'${value}'`;
         }
 
-        if (util$1.isLegalNum(value)) {
+        if (schemaVerify.Type.number.is(value)) {
           result = `'${value}'`;
         }
 
@@ -449,7 +232,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
       },
 
       safeKey(key) {
-        if (!util$1.isNotEmptyStr(key)) {
+        if (!schemaVerify.Type.string.isNotEmpty(key)) {
           throw new Error("Illegal Key");
         }
 
@@ -466,7 +249,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
           result = `'${value}'`;
         }
 
-        if (util$1.isLegalNum(value)) {
+        if (schemaVerify.Type.number.is(value)) {
           result = `'${value}'`;
         }
 
@@ -480,7 +263,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
       safeKey(key) {
         let result;
 
-        if (!util$1.isNotEmptyStr(key)) {
+        if (!schemaVerify.Type.string.isNotEmpty(key)) {
           throw new Error("Illegal Key");
         }
 
@@ -498,7 +281,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
           result = `'${value}'`;
         }
 
-        if (util$1.isLegalNum(value)) {
+        if (schemaVerify.Type.number.is(value)) {
           result = `'${value}'`;
         }
 
@@ -512,7 +295,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
       safeKey(key) {
         let result;
 
-        if (!util$1.isNotEmptyStr(key)) {
+        if (!schemaVerify.Type.string.isNotEmpty(key)) {
           throw new Error("Illegal Key");
         }
 
@@ -567,7 +350,7 @@ var safe = createCommonjsModule(function (module, exports) {
     }
 
     manualSql(sql, key) {
-      if (!util$1.isNotEmptyStr(sql) && !util$1.isFunction(sql) && !(sql instanceof Safe)) {
+      if (!schemaVerify.Type.string.isNotEmpty(sql) && !schemaVerify.Type.function.is(sql) && !(sql instanceof Safe)) {
         throw new Error("Illegal Sql Type, Need String or Function");
       }
 
@@ -577,22 +360,22 @@ var safe = createCommonjsModule(function (module, exports) {
     formatManualSql(key) {
       let sql = this[key];
 
-      if (util$1.isNotEmptyStr(sql)) {
+      if (schemaVerify.Type.string.isNotEmpty(sql)) {
         return sql;
       }
 
-      if (util$1.isFunction(sql)) {
+      if (schemaVerify.Type.function.is(sql)) {
         sql = sql();
 
-        if (util$1.isNotEmptyStr(sql)) {
+        if (schemaVerify.Type.string.isNotEmpty(sql)) {
           return sql;
         }
       }
 
-      if (util$1.isNotEmptyObj(sql) && sql instanceof Safe) {
+      if (schemaVerify.Type.object.isNotEmpty(sql) && sql instanceof Safe) {
         sql = sql.query;
 
-        if (util$1.isNotEmptyStr(sql)) {
+        if (schemaVerify.Type.string.isNotEmpty(sql)) {
           return sql;
         }
       }
@@ -622,11 +405,11 @@ var limit = createCommonjsModule(function (module, exports) {
 
   class Limit {
     limitBuild(query) {
-      const limitInfo = util$1.safeToObj(this.limitInfo);
+      const limitInfo = schemaVerify.Type.object.safe(this.limitInfo);
       const offset = limitInfo.offset;
       const step = limitInfo.step;
 
-      if (!util$1.isLegalNum(offset) || !util$1.isLegalNum(step)) {
+      if (!schemaVerify.Type.number.is(offset) || !schemaVerify.Type.number.is(step)) {
         return query;
       }
 
@@ -642,24 +425,24 @@ var limit = createCommonjsModule(function (module, exports) {
     }
 
     limit(offset, step) {
-      if (!util$1.isLegalNum(offset) || offset < 0) {
+      if (!schemaVerify.Type.number.is(offset) || offset < 0) {
         throw new Error("Illegal Param Offset");
       }
 
-      if (!util$1.isUndefinedNull(step) && (!util$1.isLegalNum(step) || step < 0)) {
+      if (!schemaVerify.Type.undefinedNull.is(step) && (!schemaVerify.Type.number.is(step) || step < 0)) {
         throw new Error("Illegal Param Step");
       }
 
       let limitInfo;
 
-      if (util$1.isLegalNum(offset) && util$1.isLegalNum(step)) {
+      if (schemaVerify.Type.number.is(offset) && schemaVerify.Type.number.is(step)) {
         limitInfo = {
           offset,
           step
         };
       }
 
-      if (util$1.isLegalNum(offset) && !util$1.isLegalNum(step)) {
+      if (schemaVerify.Type.number.is(offset) && !schemaVerify.Type.number.is(step)) {
         limitInfo = {
           offset: 0,
           step: offset
@@ -670,7 +453,7 @@ var limit = createCommonjsModule(function (module, exports) {
     }
 
     offset(offset) {
-      if (!util$1.isLegalNum(offset) || offset < 0) {
+      if (!schemaVerify.Type.number.is(offset) || offset < 0) {
         throw new Error("Illegal Param Offset");
       }
 
@@ -681,7 +464,7 @@ var limit = createCommonjsModule(function (module, exports) {
     }
 
     step(step) {
-      if (!util$1.isLegalNum(step) || step < 0) {
+      if (!schemaVerify.Type.number.is(step) || step < 0) {
         throw new Error("Illegal Param Step");
       }
 
@@ -692,11 +475,11 @@ var limit = createCommonjsModule(function (module, exports) {
     }
 
     paging(page, size) {
-      if (!util$1.isLegalNum(page) || page < 1) {
+      if (!schemaVerify.Type.number.is(page) || page < 1) {
         throw new Error("Illegal Param Page");
       }
 
-      if (!util$1.isLegalNum(size) || size < 0) {
+      if (!schemaVerify.Type.number.is(size) || size < 0) {
         throw new Error("Illegal Param Size");
       }
 
@@ -840,6 +623,31 @@ var _enum_6 = _enum.OrderTypes;
 var _enum_7 = _enum.UpdateTypes;
 var _enum_8 = _enum.WidgetTypes;
 var _enum_9 = _enum.DataTypes;
+
+var util$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  function argStrArrTrans(arg, otherArgs) {
+    let args = [];
+
+    if (schemaVerify.Type.array.is(arg)) {
+      args = arg;
+    } else {
+      otherArgs = schemaVerify.Type.array.safe(otherArgs);
+      otherArgs.unshift(arg);
+      args = otherArgs;
+    }
+
+    return args;
+  }
+
+  exports.argStrArrTrans = argStrArrTrans;
+});
+unwrapExports(util$1);
+var util_1$1 = util$1.argStrArrTrans;
 
 var _enum$1 = createCommonjsModule(function (module, exports) {
 
@@ -1010,7 +818,7 @@ var safe$1 = createCommonjsModule(function (module, exports) {
     }
 
     manualSql(sql, key) {
-      if (!util$1.isNotEmptyStr(sql) && !util$1.isFunction(sql) && !(sql instanceof Safe)) {
+      if (!schemaVerify.Type.string.isNotEmpty(sql) && !schemaVerify.Type.function.is(sql) && !(sql instanceof Safe)) {
         throw new Error("Illegal Sql Type, Need String or Function");
       }
 
@@ -1020,22 +828,22 @@ var safe$1 = createCommonjsModule(function (module, exports) {
     formatManualSql(key) {
       let sql = this[key];
 
-      if (util$1.isNotEmptyStr(sql)) {
+      if (schemaVerify.Type.string.isNotEmpty(sql)) {
         return sql;
       }
 
-      if (util$1.isFunction(sql)) {
+      if (schemaVerify.Type.function.is(sql)) {
         sql = sql();
 
-        if (util$1.isNotEmptyStr(sql)) {
+        if (schemaVerify.Type.string.isNotEmpty(sql)) {
           return sql;
         }
       }
 
-      if (util$1.isNotEmptyObj(sql) && sql instanceof Safe) {
+      if (schemaVerify.Type.object.isNotEmpty(sql) && sql instanceof Safe) {
         sql = sql.query;
 
-        if (util$1.isNotEmptyStr(sql)) {
+        if (schemaVerify.Type.string.isNotEmpty(sql)) {
           return sql;
         }
       }
@@ -1074,13 +882,13 @@ var order = createCommonjsModule(function (module, exports) {
     build() {
       const orderSql = this.formatOrderSql();
 
-      if (util$1.isNotEmptyStr(orderSql)) {
+      if (schemaVerify.Type.string.isNotEmpty(orderSql)) {
         return orderSql;
       }
 
-      const orderInfos = util$1.safeToArr(this.orderInfos);
+      const orderInfos = schemaVerify.Type.array.safe(this.orderInfos);
 
-      if (!util$1.isNotEmptyArr(orderInfos)) {
+      if (!schemaVerify.Type.array.isNotEmpty(orderInfos)) {
         return "";
       }
 
@@ -1093,7 +901,7 @@ var order = createCommonjsModule(function (module, exports) {
         const safeField = this.safeKey(field);
 
         if (type === _enum$1.OrderTypes.field) {
-          if (!util$1.isNotEmptyArr(list)) {
+          if (!schemaVerify.Type.array.isNotEmpty(list)) {
             throw new Error("Illegal Value List");
           }
 
@@ -1105,7 +913,7 @@ var order = createCommonjsModule(function (module, exports) {
         ordersArr.push(`${safeField} ${type}`);
       }
 
-      if (!util$1.isNotEmptyArr(ordersArr)) {
+      if (!schemaVerify.Type.array.isNotEmpty(ordersArr)) {
         return "";
       }
 
@@ -1117,7 +925,7 @@ var order = createCommonjsModule(function (module, exports) {
     orderBuild(query) {
       const ordersStr = this.build();
 
-      if (util$1.isNotEmptyStr(ordersStr)) {
+      if (schemaVerify.Type.string.isNotEmpty(ordersStr)) {
         query = `${query} ORDER BY ${ordersStr}`;
       }
 
@@ -1135,7 +943,7 @@ var order = createCommonjsModule(function (module, exports) {
     }
 
     orderField(data) {
-      data = util$1.safeToObj(data);
+      data = schemaVerify.Type.object.safe(data);
       const fields = Object.keys(data);
       return this.orderCache(fields, _enum$1.OrderTypes.field, data);
     }
@@ -1149,9 +957,9 @@ var order = createCommonjsModule(function (module, exports) {
     }
 
     orderCache(fields, type, fieldOrder) {
-      fields = util$1.safeToArr(fields);
-      fieldOrder = util$1.safeToObj(fieldOrder);
-      const orderInfos = util$1.safeToArr(this.orderInfos);
+      fields = schemaVerify.Type.array.safe(fields);
+      fieldOrder = schemaVerify.Type.object.safe(fieldOrder);
+      const orderInfos = schemaVerify.Type.array.safe(this.orderInfos);
 
       for (const field of fields) {
         const info = {
@@ -1162,7 +970,7 @@ var order = createCommonjsModule(function (module, exports) {
         if (type === _enum$1.OrderTypes.field) {
           const list = fieldOrder[field];
 
-          if (!util$1.isNotEmptyArr(list)) {
+          if (!schemaVerify.Type.array.isNotEmpty(list)) {
             throw new Error("Illegal Value List");
           }
 
@@ -1190,11 +998,11 @@ var limit$1 = createCommonjsModule(function (module, exports) {
 
   class Limit {
     limitBuild(query) {
-      const limitInfo = util$1.safeToObj(this.limitInfo);
+      const limitInfo = schemaVerify.Type.object.safe(this.limitInfo);
       const offset = limitInfo.offset;
       const step = limitInfo.step;
 
-      if (!util$1.isLegalNum(offset) || !util$1.isLegalNum(step)) {
+      if (!schemaVerify.Type.number.is(offset) || !schemaVerify.Type.number.is(step)) {
         return query;
       }
 
@@ -1210,24 +1018,24 @@ var limit$1 = createCommonjsModule(function (module, exports) {
     }
 
     limit(offset, step) {
-      if (!util$1.isLegalNum(offset) || offset < 0) {
+      if (!schemaVerify.Type.number.is(offset) || offset < 0) {
         throw new Error("Illegal Param Offset");
       }
 
-      if (!util$1.isUndefinedNull(step) && (!util$1.isLegalNum(step) || step < 0)) {
+      if (!schemaVerify.Type.undefinedNull.is(step) && (!schemaVerify.Type.number.is(step) || step < 0)) {
         throw new Error("Illegal Param Step");
       }
 
       let limitInfo;
 
-      if (util$1.isLegalNum(offset) && util$1.isLegalNum(step)) {
+      if (schemaVerify.Type.number.is(offset) && schemaVerify.Type.number.is(step)) {
         limitInfo = {
           offset,
           step
         };
       }
 
-      if (util$1.isLegalNum(offset) && !util$1.isLegalNum(step)) {
+      if (schemaVerify.Type.number.is(offset) && !schemaVerify.Type.number.is(step)) {
         limitInfo = {
           offset: 0,
           step: offset
@@ -1238,7 +1046,7 @@ var limit$1 = createCommonjsModule(function (module, exports) {
     }
 
     offset(offset) {
-      if (!util$1.isLegalNum(offset) || offset < 0) {
+      if (!schemaVerify.Type.number.is(offset) || offset < 0) {
         throw new Error("Illegal Param Offset");
       }
 
@@ -1249,7 +1057,7 @@ var limit$1 = createCommonjsModule(function (module, exports) {
     }
 
     step(step) {
-      if (!util$1.isLegalNum(step) || step < 0) {
+      if (!schemaVerify.Type.number.is(step) || step < 0) {
         throw new Error("Illegal Param Step");
       }
 
@@ -1260,11 +1068,11 @@ var limit$1 = createCommonjsModule(function (module, exports) {
     }
 
     paging(page, size) {
-      if (!util$1.isLegalNum(page) || page < 1) {
+      if (!schemaVerify.Type.number.is(page) || page < 1) {
         throw new Error("Illegal Param Page");
       }
 
-      if (!util$1.isLegalNum(size) || size < 0) {
+      if (!schemaVerify.Type.number.is(size) || size < 0) {
         throw new Error("Illegal Param Size");
       }
 
@@ -1298,13 +1106,13 @@ var order$1 = createCommonjsModule(function (module, exports) {
     build() {
       const orderSql = this.formatOrderSql();
 
-      if (util$1.isNotEmptyStr(orderSql)) {
+      if (schemaVerify.Type.string.isNotEmpty(orderSql)) {
         return orderSql;
       }
 
-      const orderInfos = util$1.safeToArr(this.orderInfos);
+      const orderInfos = schemaVerify.Type.array.safe(this.orderInfos);
 
-      if (!util$1.isNotEmptyArr(orderInfos)) {
+      if (!schemaVerify.Type.array.isNotEmpty(orderInfos)) {
         return "";
       }
 
@@ -1317,7 +1125,7 @@ var order$1 = createCommonjsModule(function (module, exports) {
         const safeField = this.safeKey(field);
 
         if (type === _enum$1.OrderTypes.field) {
-          if (!util$1.isNotEmptyArr(list)) {
+          if (!schemaVerify.Type.array.isNotEmpty(list)) {
             throw new Error("Illegal Value List");
           }
 
@@ -1329,7 +1137,7 @@ var order$1 = createCommonjsModule(function (module, exports) {
         ordersArr.push(`${safeField} ${type}`);
       }
 
-      if (!util$1.isNotEmptyArr(ordersArr)) {
+      if (!schemaVerify.Type.array.isNotEmpty(ordersArr)) {
         return "";
       }
 
@@ -1341,7 +1149,7 @@ var order$1 = createCommonjsModule(function (module, exports) {
     orderBuild(query) {
       const ordersStr = this.build();
 
-      if (util$1.isNotEmptyStr(ordersStr)) {
+      if (schemaVerify.Type.string.isNotEmpty(ordersStr)) {
         query = `${query} ORDER BY ${ordersStr}`;
       }
 
@@ -1359,7 +1167,7 @@ var order$1 = createCommonjsModule(function (module, exports) {
     }
 
     orderField(data) {
-      data = util$1.safeToObj(data);
+      data = schemaVerify.Type.object.safe(data);
       const fields = Object.keys(data);
       return this.orderCache(fields, _enum$1.OrderTypes.field, data);
     }
@@ -1373,9 +1181,9 @@ var order$1 = createCommonjsModule(function (module, exports) {
     }
 
     orderCache(fields, type, fieldOrder) {
-      fields = util$1.safeToArr(fields);
-      fieldOrder = util$1.safeToObj(fieldOrder);
-      const orderInfos = util$1.safeToArr(this.orderInfos);
+      fields = schemaVerify.Type.array.safe(fields);
+      fieldOrder = schemaVerify.Type.object.safe(fieldOrder);
+      const orderInfos = schemaVerify.Type.array.safe(this.orderInfos);
 
       for (const field of fields) {
         const info = {
@@ -1386,7 +1194,7 @@ var order$1 = createCommonjsModule(function (module, exports) {
         if (type === _enum$1.OrderTypes.field) {
           const list = fieldOrder[field];
 
-          if (!util$1.isNotEmptyArr(list)) {
+          if (!schemaVerify.Type.array.isNotEmpty(list)) {
             throw new Error("Illegal Value List");
           }
 
@@ -1483,17 +1291,17 @@ var query = createCommonjsModule(function (module, exports) {
       const type = this.queryType;
       const table = this.queryTable;
 
-      if (!util$1.isNotEmptyStr(type)) {
+      if (!schemaVerify.Type.string.isNotEmpty(type)) {
         throw new Error("Illegal Query Type");
       }
 
-      if (!util$1.isNotEmptyStr(table)) {
+      if (!schemaVerify.Type.string.isNotEmpty(table)) {
         throw new Error("Illegal Table Name");
       }
     }
 
     table(tableName) {
-      if (!util$1.isNotEmptyStr(tableName)) {
+      if (!schemaVerify.Type.string.isNotEmpty(tableName)) {
         throw new Error("Illegal Table Name");
       }
 
@@ -1588,17 +1396,17 @@ var query$1 = createCommonjsModule(function (module, exports) {
       const type = this.queryType;
       const table = this.queryTable;
 
-      if (!util$1.isNotEmptyStr(type)) {
+      if (!schemaVerify.Type.string.isNotEmpty(type)) {
         throw new Error("Illegal Query Type");
       }
 
-      if (!util$1.isNotEmptyStr(table)) {
+      if (!schemaVerify.Type.string.isNotEmpty(table)) {
         throw new Error("Illegal Table Name");
       }
     }
 
     table(tableName) {
-      if (!util$1.isNotEmptyStr(tableName)) {
+      if (!schemaVerify.Type.string.isNotEmpty(tableName)) {
         throw new Error("Illegal Table Name");
       }
 
@@ -1634,29 +1442,29 @@ var insert = createCommonjsModule(function (module, exports) {
     }
 
     data(data) {
-      if (!util$1.isNotEmptyObj(data)) {
+      if (!schemaVerify.Type.object.isNotEmpty(data)) {
         throw new Error("Illegal Field Data");
       }
 
-      const insertData = util$1.safeToObj(this.insertData);
+      const insertData = schemaVerify.Type.object.safe(this.insertData);
       this.insertData = Object.assign({}, insertData, data);
       return this;
     }
 
     fields(arg, ...otherArgs) {
       const args = util$1.argStrArrTrans(arg, otherArgs);
-      const insertFields = util$1.safeToArr(this.insertFields);
+      const insertFields = schemaVerify.Type.array.safe(this.insertFields);
       const result = [].concat(insertFields, args);
       this.insertFields = Array.from(new Set(result));
       return this;
     }
 
     multiData(dataArr) {
-      if (!util$1.isNotEmptyArr(dataArr)) {
+      if (!schemaVerify.Type.array.isNotEmpty(dataArr)) {
         throw new Error("Illegal Field Data Array");
       }
 
-      const insertDataArr = util$1.safeToArr(this.insertDataArr);
+      const insertDataArr = schemaVerify.Type.array.safe(this.insertDataArr);
       this.insertDataArr = [].concat(insertDataArr, dataArr);
       return this;
     }
@@ -1676,15 +1484,15 @@ var insert = createCommonjsModule(function (module, exports) {
       const insertDataArr = this.insertDataArr;
       let fields;
 
-      if (util$1.isNotEmptyArr(insertFields)) {
+      if (schemaVerify.Type.array.isNotEmpty(insertFields)) {
         fields = insertFields;
-      } else if (util$1.isNotEmptyObj(insertData)) {
+      } else if (schemaVerify.Type.object.isNotEmpty(insertData)) {
         fields = Object.keys(insertData);
-      } else if (util$1.isNotEmptyArr(insertDataArr)) {
+      } else if (schemaVerify.Type.array.isNotEmpty(insertDataArr)) {
         fields = Object.keys(insertDataArr[0]);
       }
 
-      if (!util$1.isNotEmptyArr(fields)) {
+      if (!schemaVerify.Type.array.isNotEmpty(fields)) {
         throw new Error("Illegal Insert Fields");
       }
 
@@ -1692,28 +1500,37 @@ var insert = createCommonjsModule(function (module, exports) {
     }
 
     formatValues(fields) {
-      fields = util$1.safeToArr(fields);
+      fields = schemaVerify.Type.array.safe(fields);
       let result = "";
       const valuesSql = this.formatValuesSql();
       const insertData = this.insertData;
       const insertDataArr = this.insertDataArr;
       const valuesArr = [];
 
-      if (util$1.isNotEmptyStr(valuesSql)) {
-        result = valuesSql;
-      } else if (util$1.isNotEmptyObj(insertData)) {
-        const valuesStr = fields.map(field => this.safeValue(insertData[field])).join(", ");
-        result = `( ${valuesStr} )`;
-      } else if (util$1.isNotEmptyArr(insertDataArr)) {
-        for (const data of insertDataArr) {
-          const valuesStr = fields.map(field => this.safeValue(data[field])).join(", ");
-          valuesArr.push(`( ${valuesStr} )`);
+      const valuesStrFormat = data => {
+        const valuesStr = fields.map(field => this.safeValue(data[field])).join(", ");
+        return `( ${valuesStr} )`;
+      };
+
+      const valuesArrStrFormat = arr => {
+        for (const data of arr) {
+          if (schemaVerify.Type.object.isNotEmpty(data)) {
+            valuesArr.push(valuesStrFormat(data));
+          }
         }
 
-        result = valuesArr.join(", ");
+        return valuesArr.join(", ");
+      };
+
+      if (schemaVerify.Type.string.isNotEmpty(valuesSql)) {
+        result = valuesSql;
+      } else if (schemaVerify.Type.object.isNotEmpty(insertData)) {
+        result = valuesStrFormat(insertData);
+      } else if (schemaVerify.Type.array.isNotEmpty(insertDataArr)) {
+        result = valuesArrStrFormat(insertDataArr);
       }
 
-      if (!util$1.isNotEmptyStr(result)) {
+      if (!schemaVerify.Type.string.isNotEmpty(result)) {
         throw new Error("Illegal Insert Values");
       }
 
@@ -1739,39 +1556,37 @@ var insert = createCommonjsModule(function (module, exports) {
       const insertFields = this.insertFields;
       const insertDataArr = this.insertDataArr;
 
-      if (util$1.isNotEmptyStr(valuesSql) || util$1.isFunction(valuesSql)) {
-        if (!util$1.isNotEmptyArr(insertFields)) {
+      if (schemaVerify.Type.string.isNotEmpty(valuesSql) || schemaVerify.Type.function.is(valuesSql) || schemaVerify.Type.object.is(valuesSql)) {
+        if (!schemaVerify.Type.array.isNotEmpty(insertFields)) {
           throw new Error("Illegal Insert Fields");
         }
 
         return;
       }
 
-      if (!util$1.isNotEmptyObj(insertData) && !util$1.isNotEmptyArr(insertDataArr)) {
+      if (!schemaVerify.Type.object.isNotEmpty(insertData) && !schemaVerify.Type.array.isNotEmpty(insertDataArr)) {
         throw new Error("Illegal Insert Data");
       }
 
-      if (!util$1.isNotEmptyArr(insertFields)) {
+      if (!schemaVerify.Type.array.isNotEmpty(insertFields)) {
         return;
       }
 
-      if (util$1.isNotEmptyObj(insertData)) {
+      const checkInsertData = data => {
         for (const field of insertFields) {
-          if (util$1.isUndefinedNull(insertData[field])) {
+          if (schemaVerify.Type.undefinedNull.is(data[field])) {
             throw new Error("Illegal Insert Data");
           }
         }
+      };
 
-        return;
+      if (schemaVerify.Type.object.isNotEmpty(insertData)) {
+        return checkInsertData(insertData);
       }
 
-      if (util$1.isNotEmptyArr(insertDataArr)) {
+      if (schemaVerify.Type.array.isNotEmpty(insertDataArr)) {
         for (const data of insertDataArr) {
-          for (const field of insertFields) {
-            if (util$1.isUndefinedNull(data[field])) {
-              throw new Error("Illegal Insert Data");
-            }
-          }
+          checkInsertData(data);
         }
       }
     }
@@ -1804,18 +1619,18 @@ var term = createCommonjsModule(function (module, exports) {
     termsBuild() {
       const termSql = this.formatTermSql();
 
-      if (util$1.isNotEmptyStr(termSql)) {
+      if (schemaVerify.Type.string.isNotEmpty(termSql)) {
         return termSql;
       }
 
       const termInfos = this.termInfos;
       const termBrackets = this.termBrackets;
 
-      if (!util$1.isNotEmptyArr(termInfos)) {
+      if (!schemaVerify.Type.array.isNotEmpty(termInfos)) {
         return "";
       }
 
-      const allTermStr = !util$1.isNotEmptyArr(termBrackets) ? this.formatTerms(termInfos) : this.formatTermBrackets(termBrackets, termInfos);
+      const allTermStr = !schemaVerify.Type.array.isNotEmpty(termBrackets) ? this.formatTerms(termInfos) : this.formatTermBrackets(termBrackets, termInfos);
       return allTermStr;
     }
 
@@ -1825,8 +1640,8 @@ var term = createCommonjsModule(function (module, exports) {
 
     formatTermBrackets(brackets, terms) {
       let allTermStr = "";
-      brackets = util$1.safeToArr(brackets);
-      terms = util$1.safeToArr(terms);
+      brackets = schemaVerify.Type.array.safe(brackets);
+      terms = schemaVerify.Type.array.safe(terms);
       const bracketsLen = brackets.length;
       const termsLen = terms.length;
 
@@ -1839,11 +1654,11 @@ var term = createCommonjsModule(function (module, exports) {
         let prePos = 0;
         let nextPos = termsLen;
 
-        if (util$1.isNotEmptyObj(perBracket)) {
+        if (schemaVerify.Type.object.isNotEmpty(perBracket)) {
           prePos = perBracket.position;
         }
 
-        if (util$1.isNotEmptyObj(nextBracket)) {
+        if (schemaVerify.Type.object.isNotEmpty(nextBracket)) {
           nextPos = nextBracket.position;
         }
 
@@ -1852,19 +1667,19 @@ var term = createCommonjsModule(function (module, exports) {
         const needFullBracket = bracketsLen === 1 || i + 1 === bracketsLen || nextPos === termsLen;
         const termStr = this.formatBracketTerm(needFullBracket, curLogic, preTerms, nextTerms);
 
-        if (!util$1.isNotEmptyStr(termStr)) {
+        if (!schemaVerify.Type.string.isNotEmpty(termStr)) {
           continue;
         }
 
-        allTermStr = util$1.isNotEmptyStr(allTermStr) ? `${allTermStr} ${termStr}` : termStr;
+        allTermStr = schemaVerify.Type.string.isNotEmpty(allTermStr) ? `${allTermStr} ${termStr}` : termStr;
       }
 
       return allTermStr;
     }
 
     formatBracketTerm(needFullBracket, logic, preTerms, nextTerms) {
-      preTerms = util$1.safeToArr(preTerms);
-      nextTerms = util$1.safeToArr(nextTerms);
+      preTerms = schemaVerify.Type.array.safe(preTerms);
+      nextTerms = schemaVerify.Type.array.safe(nextTerms);
       const preTermsStr = this.formatTerms(preTerms);
 
       if (preTerms.length <= 0 || nextTerms.length <= 0) {
@@ -1880,11 +1695,11 @@ var term = createCommonjsModule(function (module, exports) {
     }
 
     formatTerms(terms) {
-      terms = util$1.safeToArr(terms);
+      terms = schemaVerify.Type.array.safe(terms);
       let allTermStr = "";
 
       for (const term of terms) {
-        if (!util$1.isNotEmptyObj(term)) {
+        if (!schemaVerify.Type.object.isNotEmpty(term)) {
           continue;
         }
 
@@ -1895,7 +1710,7 @@ var term = createCommonjsModule(function (module, exports) {
         const termValue = this.formatTermValue(value, sign);
         const termStr = `${field} ${sign} ${termValue}`;
 
-        if (!util$1.isNotEmptyStr(allTermStr)) {
+        if (!schemaVerify.Type.string.isNotEmpty(allTermStr)) {
           allTermStr = termStr;
           continue;
         }
@@ -1910,7 +1725,7 @@ var term = createCommonjsModule(function (module, exports) {
       let termValue;
 
       if (sign === _enum$1.TermSign.in || sign === _enum$1.TermSign.notIn) {
-        if (!util$1.isNotEmptyArr(value)) {
+        if (!schemaVerify.Type.array.isNotEmpty(value)) {
           throw new Error("Illegal Term Value (need Array)");
         }
 
@@ -1919,7 +1734,7 @@ var term = createCommonjsModule(function (module, exports) {
       }
 
       if (sign === _enum$1.TermSign.between || sign === _enum$1.TermSign.notBetween) {
-        if (!util$1.isNotEmptyArr(value) || value.length !== 2) {
+        if (!schemaVerify.Type.array.isNotEmpty(value) || value.length !== 2) {
           throw new Error("Illegal Term Value (need Array[2])");
         }
 
@@ -1928,7 +1743,7 @@ var term = createCommonjsModule(function (module, exports) {
         return `${lower} AND ${upper}`;
       }
 
-      if (!util$1.isString(value) && !util$1.isLegalNum(value)) {
+      if (!schemaVerify.Type.string.isNotEmpty(value) && !schemaVerify.Type.number.is(value)) {
         throw new Error("Illegal Term Value");
       }
 
@@ -1941,39 +1756,43 @@ var term = createCommonjsModule(function (module, exports) {
     }
 
     termCache(data, sign, logic) {
-      if (!util$1.isNotEmptyObj(data)) {
+      if (!schemaVerify.Type.object.isNotEmpty(data)) {
         throw new Error("Illegal Term data");
       }
 
-      if (!util$1.isNotEmptyStr(sign) || !util$1.isNotEmptyStr(logic)) {
+      if (!schemaVerify.Type.string.isNotEmpty(sign) || !schemaVerify.Type.string.isNotEmpty(logic)) {
         throw new Error("Illegal Param");
       }
 
-      const termInfos = util$1.safeToArr(this.termInfos);
+      const termInfos = schemaVerify.Type.array.safe(this.termInfos);
       const termsArr = [];
 
       for (const field in data) {
         const value = data[field];
-        let isCheck = false;
 
-        if (sign === _enum$1.TermSign.in || sign === _enum$1.TermSign.notIn) {
-          if (!util$1.isNotEmptyArr(value)) {
-            throw new Error("Illegal Func Value");
-          }
+        switch (sign) {
+          case _enum$1.TermSign.in:
+          case _enum$1.TermSign.notIn:
+            if (!schemaVerify.Type.array.isNotEmpty(value)) {
+              throw new Error("Illegal Func Value");
+            }
 
-          isCheck = true;
-        }
+            break;
 
-        if (sign === _enum$1.TermSign.between || sign === _enum$1.TermSign.notBetween) {
-          if (!util$1.isNotEmptyArr(value) || value.length !== 2) {
-            throw new Error("Illegal Func Value");
-          }
+          case _enum$1.TermSign.between:
+          case _enum$1.TermSign.notBetween:
+            if (!schemaVerify.Type.array.isNotEmpty(value) || value.length !== 2) {
+              throw new Error("Illegal Func Value");
+            }
 
-          isCheck = true;
-        }
+            break;
 
-        if (!util$1.isString(value) && !util$1.isLegalNum(value) && !isCheck) {
-          throw new Error("Illegal Func Value");
+          default:
+            if (!schemaVerify.Type.string.isNotEmpty(value) && !schemaVerify.Type.number.is(value)) {
+              throw new Error("Illegal Func Value");
+            }
+
+            break;
         }
 
         const term = {
@@ -1990,8 +1809,8 @@ var term = createCommonjsModule(function (module, exports) {
     }
 
     bracketTerm(logic) {
-      const termInfos = util$1.safeToArr(this.termInfos);
-      const termBrackets = util$1.safeToArr(this.termBrackets);
+      const termInfos = schemaVerify.Type.array.safe(this.termInfos);
+      const termBrackets = schemaVerify.Type.array.safe(this.termBrackets);
       const termsLen = termInfos.length;
 
       if (termsLen <= 0) {
@@ -2159,18 +1978,18 @@ var term$1 = createCommonjsModule(function (module, exports) {
     termsBuild() {
       const termSql = this.formatTermSql();
 
-      if (util$1.isNotEmptyStr(termSql)) {
+      if (schemaVerify.Type.string.isNotEmpty(termSql)) {
         return termSql;
       }
 
       const termInfos = this.termInfos;
       const termBrackets = this.termBrackets;
 
-      if (!util$1.isNotEmptyArr(termInfos)) {
+      if (!schemaVerify.Type.array.isNotEmpty(termInfos)) {
         return "";
       }
 
-      const allTermStr = !util$1.isNotEmptyArr(termBrackets) ? this.formatTerms(termInfos) : this.formatTermBrackets(termBrackets, termInfos);
+      const allTermStr = !schemaVerify.Type.array.isNotEmpty(termBrackets) ? this.formatTerms(termInfos) : this.formatTermBrackets(termBrackets, termInfos);
       return allTermStr;
     }
 
@@ -2180,8 +1999,8 @@ var term$1 = createCommonjsModule(function (module, exports) {
 
     formatTermBrackets(brackets, terms) {
       let allTermStr = "";
-      brackets = util$1.safeToArr(brackets);
-      terms = util$1.safeToArr(terms);
+      brackets = schemaVerify.Type.array.safe(brackets);
+      terms = schemaVerify.Type.array.safe(terms);
       const bracketsLen = brackets.length;
       const termsLen = terms.length;
 
@@ -2194,11 +2013,11 @@ var term$1 = createCommonjsModule(function (module, exports) {
         let prePos = 0;
         let nextPos = termsLen;
 
-        if (util$1.isNotEmptyObj(perBracket)) {
+        if (schemaVerify.Type.object.isNotEmpty(perBracket)) {
           prePos = perBracket.position;
         }
 
-        if (util$1.isNotEmptyObj(nextBracket)) {
+        if (schemaVerify.Type.object.isNotEmpty(nextBracket)) {
           nextPos = nextBracket.position;
         }
 
@@ -2207,19 +2026,19 @@ var term$1 = createCommonjsModule(function (module, exports) {
         const needFullBracket = bracketsLen === 1 || i + 1 === bracketsLen || nextPos === termsLen;
         const termStr = this.formatBracketTerm(needFullBracket, curLogic, preTerms, nextTerms);
 
-        if (!util$1.isNotEmptyStr(termStr)) {
+        if (!schemaVerify.Type.string.isNotEmpty(termStr)) {
           continue;
         }
 
-        allTermStr = util$1.isNotEmptyStr(allTermStr) ? `${allTermStr} ${termStr}` : termStr;
+        allTermStr = schemaVerify.Type.string.isNotEmpty(allTermStr) ? `${allTermStr} ${termStr}` : termStr;
       }
 
       return allTermStr;
     }
 
     formatBracketTerm(needFullBracket, logic, preTerms, nextTerms) {
-      preTerms = util$1.safeToArr(preTerms);
-      nextTerms = util$1.safeToArr(nextTerms);
+      preTerms = schemaVerify.Type.array.safe(preTerms);
+      nextTerms = schemaVerify.Type.array.safe(nextTerms);
       const preTermsStr = this.formatTerms(preTerms);
 
       if (preTerms.length <= 0 || nextTerms.length <= 0) {
@@ -2235,11 +2054,11 @@ var term$1 = createCommonjsModule(function (module, exports) {
     }
 
     formatTerms(terms) {
-      terms = util$1.safeToArr(terms);
+      terms = schemaVerify.Type.array.safe(terms);
       let allTermStr = "";
 
       for (const term of terms) {
-        if (!util$1.isNotEmptyObj(term)) {
+        if (!schemaVerify.Type.object.isNotEmpty(term)) {
           continue;
         }
 
@@ -2250,7 +2069,7 @@ var term$1 = createCommonjsModule(function (module, exports) {
         const termValue = this.formatTermValue(value, sign);
         const termStr = `${field} ${sign} ${termValue}`;
 
-        if (!util$1.isNotEmptyStr(allTermStr)) {
+        if (!schemaVerify.Type.string.isNotEmpty(allTermStr)) {
           allTermStr = termStr;
           continue;
         }
@@ -2265,7 +2084,7 @@ var term$1 = createCommonjsModule(function (module, exports) {
       let termValue;
 
       if (sign === _enum$1.TermSign.in || sign === _enum$1.TermSign.notIn) {
-        if (!util$1.isNotEmptyArr(value)) {
+        if (!schemaVerify.Type.array.isNotEmpty(value)) {
           throw new Error("Illegal Term Value (need Array)");
         }
 
@@ -2274,7 +2093,7 @@ var term$1 = createCommonjsModule(function (module, exports) {
       }
 
       if (sign === _enum$1.TermSign.between || sign === _enum$1.TermSign.notBetween) {
-        if (!util$1.isNotEmptyArr(value) || value.length !== 2) {
+        if (!schemaVerify.Type.array.isNotEmpty(value) || value.length !== 2) {
           throw new Error("Illegal Term Value (need Array[2])");
         }
 
@@ -2283,7 +2102,7 @@ var term$1 = createCommonjsModule(function (module, exports) {
         return `${lower} AND ${upper}`;
       }
 
-      if (!util$1.isString(value) && !util$1.isLegalNum(value)) {
+      if (!schemaVerify.Type.string.isNotEmpty(value) && !schemaVerify.Type.number.is(value)) {
         throw new Error("Illegal Term Value");
       }
 
@@ -2296,39 +2115,43 @@ var term$1 = createCommonjsModule(function (module, exports) {
     }
 
     termCache(data, sign, logic) {
-      if (!util$1.isNotEmptyObj(data)) {
+      if (!schemaVerify.Type.object.isNotEmpty(data)) {
         throw new Error("Illegal Term data");
       }
 
-      if (!util$1.isNotEmptyStr(sign) || !util$1.isNotEmptyStr(logic)) {
+      if (!schemaVerify.Type.string.isNotEmpty(sign) || !schemaVerify.Type.string.isNotEmpty(logic)) {
         throw new Error("Illegal Param");
       }
 
-      const termInfos = util$1.safeToArr(this.termInfos);
+      const termInfos = schemaVerify.Type.array.safe(this.termInfos);
       const termsArr = [];
 
       for (const field in data) {
         const value = data[field];
-        let isCheck = false;
 
-        if (sign === _enum$1.TermSign.in || sign === _enum$1.TermSign.notIn) {
-          if (!util$1.isNotEmptyArr(value)) {
-            throw new Error("Illegal Func Value");
-          }
+        switch (sign) {
+          case _enum$1.TermSign.in:
+          case _enum$1.TermSign.notIn:
+            if (!schemaVerify.Type.array.isNotEmpty(value)) {
+              throw new Error("Illegal Func Value");
+            }
 
-          isCheck = true;
-        }
+            break;
 
-        if (sign === _enum$1.TermSign.between || sign === _enum$1.TermSign.notBetween) {
-          if (!util$1.isNotEmptyArr(value) || value.length !== 2) {
-            throw new Error("Illegal Func Value");
-          }
+          case _enum$1.TermSign.between:
+          case _enum$1.TermSign.notBetween:
+            if (!schemaVerify.Type.array.isNotEmpty(value) || value.length !== 2) {
+              throw new Error("Illegal Func Value");
+            }
 
-          isCheck = true;
-        }
+            break;
 
-        if (!util$1.isString(value) && !util$1.isLegalNum(value) && !isCheck) {
-          throw new Error("Illegal Func Value");
+          default:
+            if (!schemaVerify.Type.string.isNotEmpty(value) && !schemaVerify.Type.number.is(value)) {
+              throw new Error("Illegal Func Value");
+            }
+
+            break;
         }
 
         const term = {
@@ -2345,8 +2168,8 @@ var term$1 = createCommonjsModule(function (module, exports) {
     }
 
     bracketTerm(logic) {
-      const termInfos = util$1.safeToArr(this.termInfos);
-      const termBrackets = util$1.safeToArr(this.termBrackets);
+      const termInfos = schemaVerify.Type.array.safe(this.termInfos);
+      const termBrackets = schemaVerify.Type.array.safe(this.termBrackets);
       const termsLen = termInfos.length;
 
       if (termsLen <= 0) {
@@ -2655,7 +2478,7 @@ var where = createCommonjsModule(function (module, exports) {
       const whereTerm = this.getTermCase(TERM_NAME);
       const whereSql = whereTerm.termsBuild();
 
-      if (util$1.isNotEmptyStr(whereSql)) {
+      if (schemaVerify.Type.string.isNotEmpty(whereSql)) {
         query = `${query} WHERE ${whereSql}`;
       }
 
@@ -2831,7 +2654,7 @@ var where$1 = createCommonjsModule(function (module, exports) {
       const whereTerm = this.getTermCase(TERM_NAME);
       const whereSql = whereTerm.termsBuild();
 
-      if (util$1.isNotEmptyStr(whereSql)) {
+      if (schemaVerify.Type.string.isNotEmpty(whereSql)) {
         query = `${query} WHERE ${whereSql}`;
       }
 
@@ -2995,7 +2818,7 @@ var having = createCommonjsModule(function (module, exports) {
       const termInstance = this.getTermCase(TERM_NAME);
       const havingSql = termInstance.termsBuild();
 
-      if (util$1.isNotEmptyStr(havingSql)) {
+      if (schemaVerify.Type.string.isNotEmpty(havingSql)) {
         query = `${query} HAVING ${havingSql}`;
       }
 
@@ -3021,8 +2844,8 @@ var func = createCommonjsModule(function (module, exports) {
     }
 
     funcField(func, field) {
-      const needSafeTrans = util$1.isNotEmptyStr(field) && field !== "*";
-      const fieldStr = needSafeTrans ? field : util$1.isLegalNum(field) ? field + "" : "*";
+      const needSafeTrans = schemaVerify.Type.string.isNotEmpty(field) && field !== "*";
+      const fieldStr = needSafeTrans ? field : schemaVerify.Type.number.is(field) ? field + "" : "*";
       const safeField = needSafeTrans ? this.safeKey(fieldStr) : fieldStr;
       const funcInfo = {
         funcFeild: `${func}(${safeField})`
@@ -3287,7 +3110,7 @@ var having$1 = createCommonjsModule(function (module, exports) {
       const termInstance = this.getTermCase(TERM_NAME);
       const havingSql = termInstance.termsBuild();
 
-      if (util$1.isNotEmptyStr(havingSql)) {
+      if (schemaVerify.Type.string.isNotEmpty(havingSql)) {
         query = `${query} HAVING ${havingSql}`;
       }
 
@@ -3313,8 +3136,8 @@ var func$1 = createCommonjsModule(function (module, exports) {
     }
 
     funcField(func, field) {
-      const needSafeTrans = util$1.isNotEmptyStr(field) && field !== "*";
-      const fieldStr = needSafeTrans ? field : util$1.isLegalNum(field) ? field + "" : "*";
+      const needSafeTrans = schemaVerify.Type.string.isNotEmpty(field) && field !== "*";
+      const fieldStr = needSafeTrans ? field : schemaVerify.Type.number.is(field) ? field + "" : "*";
       const safeField = needSafeTrans ? this.safeKey(fieldStr) : fieldStr;
       const funcInfo = {
         funcFeild: `${func}(${safeField})`
@@ -3443,7 +3266,7 @@ var combine = createCommonjsModule(function (module, exports) {
     groupBuild(query) {
       const fields = this.groupByFields;
 
-      if (!util$1.isNotEmptyArr(fields)) {
+      if (!schemaVerify.Type.array.isNotEmpty(fields)) {
         return query;
       }
 
@@ -3453,9 +3276,9 @@ var combine = createCommonjsModule(function (module, exports) {
     }
 
     groupBy(...fields) {
-      let groupByFields = util$1.safeToArr(this.groupByFields);
+      let groupByFields = schemaVerify.Type.array.safe(this.groupByFields);
 
-      if (!util$1.isNotEmptyArr(fields)) {
+      if (!schemaVerify.Type.array.isNotEmpty(fields)) {
         throw new Error("Illegal Field");
       }
 
@@ -3477,11 +3300,11 @@ var combine = createCommonjsModule(function (module, exports) {
     }
 
     formatFuncs() {
-      const combineFuncs = util$1.safeToArr(this.combineFuncs);
+      const combineFuncs = schemaVerify.Type.array.safe(this.combineFuncs);
       let funcs = [];
 
       for (const info of combineFuncs) {
-        if (!util$1.isNotEmptyObj(info) || !util$1.isNotEmptyStr(info.funcFeild)) {
+        if (!schemaVerify.Type.object.isNotEmpty(info) || !schemaVerify.Type.string.isNotEmpty(info.funcFeild)) {
           throw new Error("Illegal Func Feild");
         }
 
@@ -3494,9 +3317,9 @@ var combine = createCommonjsModule(function (module, exports) {
     }
 
     funcsCache(funcInfo) {
-      const combineFuncs = util$1.safeToArr(this.combineFuncs);
+      const combineFuncs = schemaVerify.Type.array.safe(this.combineFuncs);
 
-      if (util$1.isNotEmptyObj(funcInfo) && util$1.isNotEmptyStr(funcInfo.funcFeild)) {
+      if (schemaVerify.Type.object.isNotEmpty(funcInfo) && schemaVerify.Type.string.isNotEmpty(funcInfo.funcFeild)) {
         combineFuncs.push(funcInfo);
       }
 
@@ -3506,13 +3329,13 @@ var combine = createCommonjsModule(function (module, exports) {
 
     funcFeilds(...funcInfos) {
       for (let info of funcInfos) {
-        info = util$1.safeToObj(info);
+        info = schemaVerify.Type.object.safe(info);
         let saveInfo = info;
         const func = info.func;
         const field = info.field;
         const funcCase = this.getFuncCase();
 
-        if (util$1.isNotEmptyStr(func) && util$1.isFunction(funcCase[func]) && !util$1.isUndefinedNull(field)) {
+        if (schemaVerify.Type.string.isNotEmpty(func) && schemaVerify.Type.function.is(funcCase[func]) && schemaVerify.Type.undefinedNull.isNot(field)) {
           saveInfo = funcCase[func].call(funcCase, field);
         }
 
@@ -3668,7 +3491,7 @@ var combine$1 = createCommonjsModule(function (module, exports) {
     groupBuild(query) {
       const fields = this.groupByFields;
 
-      if (!util$1.isNotEmptyArr(fields)) {
+      if (!schemaVerify.Type.array.isNotEmpty(fields)) {
         return query;
       }
 
@@ -3678,9 +3501,9 @@ var combine$1 = createCommonjsModule(function (module, exports) {
     }
 
     groupBy(...fields) {
-      let groupByFields = util$1.safeToArr(this.groupByFields);
+      let groupByFields = schemaVerify.Type.array.safe(this.groupByFields);
 
-      if (!util$1.isNotEmptyArr(fields)) {
+      if (!schemaVerify.Type.array.isNotEmpty(fields)) {
         throw new Error("Illegal Field");
       }
 
@@ -3702,11 +3525,11 @@ var combine$1 = createCommonjsModule(function (module, exports) {
     }
 
     formatFuncs() {
-      const combineFuncs = util$1.safeToArr(this.combineFuncs);
+      const combineFuncs = schemaVerify.Type.array.safe(this.combineFuncs);
       let funcs = [];
 
       for (const info of combineFuncs) {
-        if (!util$1.isNotEmptyObj(info) || !util$1.isNotEmptyStr(info.funcFeild)) {
+        if (!schemaVerify.Type.object.isNotEmpty(info) || !schemaVerify.Type.string.isNotEmpty(info.funcFeild)) {
           throw new Error("Illegal Func Feild");
         }
 
@@ -3719,9 +3542,9 @@ var combine$1 = createCommonjsModule(function (module, exports) {
     }
 
     funcsCache(funcInfo) {
-      const combineFuncs = util$1.safeToArr(this.combineFuncs);
+      const combineFuncs = schemaVerify.Type.array.safe(this.combineFuncs);
 
-      if (util$1.isNotEmptyObj(funcInfo) && util$1.isNotEmptyStr(funcInfo.funcFeild)) {
+      if (schemaVerify.Type.object.isNotEmpty(funcInfo) && schemaVerify.Type.string.isNotEmpty(funcInfo.funcFeild)) {
         combineFuncs.push(funcInfo);
       }
 
@@ -3731,13 +3554,13 @@ var combine$1 = createCommonjsModule(function (module, exports) {
 
     funcFeilds(...funcInfos) {
       for (let info of funcInfos) {
-        info = util$1.safeToObj(info);
+        info = schemaVerify.Type.object.safe(info);
         let saveInfo = info;
         const func = info.func;
         const field = info.field;
         const funcCase = this.getFuncCase();
 
-        if (util$1.isNotEmptyStr(func) && util$1.isFunction(funcCase[func]) && !util$1.isUndefinedNull(field)) {
+        if (schemaVerify.Type.string.isNotEmpty(func) && schemaVerify.Type.function.is(funcCase[func]) && schemaVerify.Type.undefinedNull.isNot(field)) {
           saveInfo = funcCase[func].call(funcCase, field);
         }
 
@@ -3894,14 +3717,14 @@ var select = createCommonjsModule(function (module, exports) {
     }
 
     formatFields() {
-      const fields = util$1.safeToArr(this.selectFields);
-      const asMap = util$1.safeToObj(this.fieldsAsMap);
+      const fields = schemaVerify.Type.array.safe(this.selectFields);
+      const asMap = schemaVerify.Type.object.safe(this.fieldsAsMap);
       const result = [];
 
       for (const field of fields) {
         const safeField = field !== "*" ? this.safeKey(field) : "*";
 
-        if (util$1.isNotEmptyStr(asMap[field])) {
+        if (schemaVerify.Type.string.isNotEmpty(asMap[field])) {
           const safeAsField = this.safeKey(asMap[field]);
           result.push(`${safeField} AS ${safeAsField}`);
         } else {
@@ -3941,12 +3764,12 @@ var select = createCommonjsModule(function (module, exports) {
     }
 
     fields(arg, ...otherArgs) {
-      const selectFields = util$1.safeToArr(this.selectFields);
+      const selectFields = schemaVerify.Type.array.safe(this.selectFields);
       const args = util$1.argStrArrTrans(arg, otherArgs);
       const fields = [];
 
       for (const item of args) {
-        if (util$1.isNotEmptyObj(item)) {
+        if (schemaVerify.Type.object.isNotEmpty(item)) {
           this.funcFeilds(item);
           continue;
         }
@@ -3964,9 +3787,9 @@ var select = createCommonjsModule(function (module, exports) {
     }
 
     asFieldMap(map) {
-      let asMap = this.fieldsAsMap;
+      let asMap = schemaVerify.Type.object.safe(this.fieldsAsMap);
 
-      if (util$1.isNotEmptyObj(map)) {
+      if (schemaVerify.Type.object.isNotEmpty(map)) {
         asMap = Object.assign({}, asMap, map);
       }
 
@@ -4029,7 +3852,7 @@ var update = createCommonjsModule(function (module, exports) {
     formatData() {
       const updateInfos = this.updateInfos;
 
-      if (!util$1.isNotEmptyObj(updateInfos)) {
+      if (!schemaVerify.Type.object.isNotEmpty(updateInfos)) {
         throw new Error("Illegal Update Infos");
       }
 
@@ -4038,7 +3861,7 @@ var update = createCommonjsModule(function (module, exports) {
       for (const field in updateInfos) {
         const info = updateInfos[field];
 
-        if (!util$1.isNotEmptyObj(info)) {
+        if (!schemaVerify.Type.object.isNotEmpty(info)) {
           throw new Error("Illegal Update Info");
         }
 
@@ -4062,7 +3885,7 @@ var update = createCommonjsModule(function (module, exports) {
             break;
         }
 
-        if (!util$1.isNotEmptyStr(infoStr)) {
+        if (!schemaVerify.Type.string.isNotEmpty(infoStr)) {
           throw new Error("Illegal Update Type");
         }
 
@@ -4073,16 +3896,16 @@ var update = createCommonjsModule(function (module, exports) {
     }
 
     updateCache(data, type) {
-      if (!util$1.isNotEmptyObj(data)) {
+      if (!schemaVerify.Type.object.isNotEmpty(data)) {
         throw new Error("Illegal Update Data");
       }
 
-      const updateInfos = util$1.safeToObj(this.updateInfos);
+      const updateInfos = schemaVerify.Type.object.safe(this.updateInfos);
 
       for (const field in data) {
         const value = data[field];
 
-        if (!util$1.isNotEmptyStr(value) && !util$1.isLegalNum(value)) {
+        if (!schemaVerify.Type.string.isNotEmpty(value) && !schemaVerify.Type.number.is(value)) {
           throw new Error("Illegal Value Type");
         }
 
@@ -4114,7 +3937,7 @@ var update = createCommonjsModule(function (module, exports) {
 
       const updateInfos = this.updateInfos;
 
-      if (!util$1.isNotEmptyObj(updateInfos)) {
+      if (!schemaVerify.Type.object.isNotEmpty(updateInfos)) {
         throw "Illegal Update Infos";
       }
     }
@@ -4178,29 +4001,29 @@ var insert$1 = createCommonjsModule(function (module, exports) {
     }
 
     data(data) {
-      if (!util$1.isNotEmptyObj(data)) {
+      if (!schemaVerify.Type.object.isNotEmpty(data)) {
         throw new Error("Illegal Field Data");
       }
 
-      const insertData = util$1.safeToObj(this.insertData);
+      const insertData = schemaVerify.Type.object.safe(this.insertData);
       this.insertData = Object.assign({}, insertData, data);
       return this;
     }
 
     fields(arg, ...otherArgs) {
       const args = util$1.argStrArrTrans(arg, otherArgs);
-      const insertFields = util$1.safeToArr(this.insertFields);
+      const insertFields = schemaVerify.Type.array.safe(this.insertFields);
       const result = [].concat(insertFields, args);
       this.insertFields = Array.from(new Set(result));
       return this;
     }
 
     multiData(dataArr) {
-      if (!util$1.isNotEmptyArr(dataArr)) {
+      if (!schemaVerify.Type.array.isNotEmpty(dataArr)) {
         throw new Error("Illegal Field Data Array");
       }
 
-      const insertDataArr = util$1.safeToArr(this.insertDataArr);
+      const insertDataArr = schemaVerify.Type.array.safe(this.insertDataArr);
       this.insertDataArr = [].concat(insertDataArr, dataArr);
       return this;
     }
@@ -4220,15 +4043,15 @@ var insert$1 = createCommonjsModule(function (module, exports) {
       const insertDataArr = this.insertDataArr;
       let fields;
 
-      if (util$1.isNotEmptyArr(insertFields)) {
+      if (schemaVerify.Type.array.isNotEmpty(insertFields)) {
         fields = insertFields;
-      } else if (util$1.isNotEmptyObj(insertData)) {
+      } else if (schemaVerify.Type.object.isNotEmpty(insertData)) {
         fields = Object.keys(insertData);
-      } else if (util$1.isNotEmptyArr(insertDataArr)) {
+      } else if (schemaVerify.Type.array.isNotEmpty(insertDataArr)) {
         fields = Object.keys(insertDataArr[0]);
       }
 
-      if (!util$1.isNotEmptyArr(fields)) {
+      if (!schemaVerify.Type.array.isNotEmpty(fields)) {
         throw new Error("Illegal Insert Fields");
       }
 
@@ -4236,28 +4059,37 @@ var insert$1 = createCommonjsModule(function (module, exports) {
     }
 
     formatValues(fields) {
-      fields = util$1.safeToArr(fields);
+      fields = schemaVerify.Type.array.safe(fields);
       let result = "";
       const valuesSql = this.formatValuesSql();
       const insertData = this.insertData;
       const insertDataArr = this.insertDataArr;
       const valuesArr = [];
 
-      if (util$1.isNotEmptyStr(valuesSql)) {
-        result = valuesSql;
-      } else if (util$1.isNotEmptyObj(insertData)) {
-        const valuesStr = fields.map(field => this.safeValue(insertData[field])).join(", ");
-        result = `( ${valuesStr} )`;
-      } else if (util$1.isNotEmptyArr(insertDataArr)) {
-        for (const data of insertDataArr) {
-          const valuesStr = fields.map(field => this.safeValue(data[field])).join(", ");
-          valuesArr.push(`( ${valuesStr} )`);
+      const valuesStrFormat = data => {
+        const valuesStr = fields.map(field => this.safeValue(data[field])).join(", ");
+        return `( ${valuesStr} )`;
+      };
+
+      const valuesArrStrFormat = arr => {
+        for (const data of arr) {
+          if (schemaVerify.Type.object.isNotEmpty(data)) {
+            valuesArr.push(valuesStrFormat(data));
+          }
         }
 
-        result = valuesArr.join(", ");
+        return valuesArr.join(", ");
+      };
+
+      if (schemaVerify.Type.string.isNotEmpty(valuesSql)) {
+        result = valuesSql;
+      } else if (schemaVerify.Type.object.isNotEmpty(insertData)) {
+        result = valuesStrFormat(insertData);
+      } else if (schemaVerify.Type.array.isNotEmpty(insertDataArr)) {
+        result = valuesArrStrFormat(insertDataArr);
       }
 
-      if (!util$1.isNotEmptyStr(result)) {
+      if (!schemaVerify.Type.string.isNotEmpty(result)) {
         throw new Error("Illegal Insert Values");
       }
 
@@ -4283,39 +4115,37 @@ var insert$1 = createCommonjsModule(function (module, exports) {
       const insertFields = this.insertFields;
       const insertDataArr = this.insertDataArr;
 
-      if (util$1.isNotEmptyStr(valuesSql) || util$1.isFunction(valuesSql)) {
-        if (!util$1.isNotEmptyArr(insertFields)) {
+      if (schemaVerify.Type.string.isNotEmpty(valuesSql) || schemaVerify.Type.function.is(valuesSql) || schemaVerify.Type.object.is(valuesSql)) {
+        if (!schemaVerify.Type.array.isNotEmpty(insertFields)) {
           throw new Error("Illegal Insert Fields");
         }
 
         return;
       }
 
-      if (!util$1.isNotEmptyObj(insertData) && !util$1.isNotEmptyArr(insertDataArr)) {
+      if (!schemaVerify.Type.object.isNotEmpty(insertData) && !schemaVerify.Type.array.isNotEmpty(insertDataArr)) {
         throw new Error("Illegal Insert Data");
       }
 
-      if (!util$1.isNotEmptyArr(insertFields)) {
+      if (!schemaVerify.Type.array.isNotEmpty(insertFields)) {
         return;
       }
 
-      if (util$1.isNotEmptyObj(insertData)) {
+      const checkInsertData = data => {
         for (const field of insertFields) {
-          if (util$1.isUndefinedNull(insertData[field])) {
+          if (schemaVerify.Type.undefinedNull.is(data[field])) {
             throw new Error("Illegal Insert Data");
           }
         }
+      };
 
-        return;
+      if (schemaVerify.Type.object.isNotEmpty(insertData)) {
+        return checkInsertData(insertData);
       }
 
-      if (util$1.isNotEmptyArr(insertDataArr)) {
+      if (schemaVerify.Type.array.isNotEmpty(insertDataArr)) {
         for (const data of insertDataArr) {
-          for (const field of insertFields) {
-            if (util$1.isUndefinedNull(data[field])) {
-              throw new Error("Illegal Insert Data");
-            }
-          }
+          checkInsertData(data);
         }
       }
     }
@@ -4360,14 +4190,14 @@ var select$1 = createCommonjsModule(function (module, exports) {
     }
 
     formatFields() {
-      const fields = util$1.safeToArr(this.selectFields);
-      const asMap = util$1.safeToObj(this.fieldsAsMap);
+      const fields = schemaVerify.Type.array.safe(this.selectFields);
+      const asMap = schemaVerify.Type.object.safe(this.fieldsAsMap);
       const result = [];
 
       for (const field of fields) {
         const safeField = field !== "*" ? this.safeKey(field) : "*";
 
-        if (util$1.isNotEmptyStr(asMap[field])) {
+        if (schemaVerify.Type.string.isNotEmpty(asMap[field])) {
           const safeAsField = this.safeKey(asMap[field]);
           result.push(`${safeField} AS ${safeAsField}`);
         } else {
@@ -4407,12 +4237,12 @@ var select$1 = createCommonjsModule(function (module, exports) {
     }
 
     fields(arg, ...otherArgs) {
-      const selectFields = util$1.safeToArr(this.selectFields);
+      const selectFields = schemaVerify.Type.array.safe(this.selectFields);
       const args = util$1.argStrArrTrans(arg, otherArgs);
       const fields = [];
 
       for (const item of args) {
-        if (util$1.isNotEmptyObj(item)) {
+        if (schemaVerify.Type.object.isNotEmpty(item)) {
           this.funcFeilds(item);
           continue;
         }
@@ -4430,9 +4260,9 @@ var select$1 = createCommonjsModule(function (module, exports) {
     }
 
     asFieldMap(map) {
-      let asMap = this.fieldsAsMap;
+      let asMap = schemaVerify.Type.object.safe(this.fieldsAsMap);
 
-      if (util$1.isNotEmptyObj(map)) {
+      if (schemaVerify.Type.object.isNotEmpty(map)) {
         asMap = Object.assign({}, asMap, map);
       }
 
@@ -4495,7 +4325,7 @@ var update$1 = createCommonjsModule(function (module, exports) {
     formatData() {
       const updateInfos = this.updateInfos;
 
-      if (!util$1.isNotEmptyObj(updateInfos)) {
+      if (!schemaVerify.Type.object.isNotEmpty(updateInfos)) {
         throw new Error("Illegal Update Infos");
       }
 
@@ -4504,7 +4334,7 @@ var update$1 = createCommonjsModule(function (module, exports) {
       for (const field in updateInfos) {
         const info = updateInfos[field];
 
-        if (!util$1.isNotEmptyObj(info)) {
+        if (!schemaVerify.Type.object.isNotEmpty(info)) {
           throw new Error("Illegal Update Info");
         }
 
@@ -4528,7 +4358,7 @@ var update$1 = createCommonjsModule(function (module, exports) {
             break;
         }
 
-        if (!util$1.isNotEmptyStr(infoStr)) {
+        if (!schemaVerify.Type.string.isNotEmpty(infoStr)) {
           throw new Error("Illegal Update Type");
         }
 
@@ -4539,16 +4369,16 @@ var update$1 = createCommonjsModule(function (module, exports) {
     }
 
     updateCache(data, type) {
-      if (!util$1.isNotEmptyObj(data)) {
+      if (!schemaVerify.Type.object.isNotEmpty(data)) {
         throw new Error("Illegal Update Data");
       }
 
-      const updateInfos = util$1.safeToObj(this.updateInfos);
+      const updateInfos = schemaVerify.Type.object.safe(this.updateInfos);
 
       for (const field in data) {
         const value = data[field];
 
-        if (!util$1.isNotEmptyStr(value) && !util$1.isLegalNum(value)) {
+        if (!schemaVerify.Type.string.isNotEmpty(value) && !schemaVerify.Type.number.is(value)) {
           throw new Error("Illegal Value Type");
         }
 
@@ -4580,7 +4410,7 @@ var update$1 = createCommonjsModule(function (module, exports) {
 
       const updateInfos = this.updateInfos;
 
-      if (!util$1.isNotEmptyObj(updateInfos)) {
+      if (!schemaVerify.Type.object.isNotEmpty(updateInfos)) {
         throw "Illegal Update Infos";
       }
     }
@@ -4715,7 +4545,7 @@ var builder = createCommonjsModule(function (module, exports) {
           break;
       }
 
-      if (util$1.isNotEmptyStr(queryTable)) {
+      if (schemaVerify.Type.string.isNotEmpty(queryTable)) {
         typeof instance.table === "function" && instance.table(queryTable);
       }
 
@@ -4744,7 +4574,7 @@ var builder = createCommonjsModule(function (module, exports) {
     }
 
     table(tableName) {
-      if (!util$1.isNotEmptyStr(tableName)) {
+      if (!schemaVerify.Type.string.isNotEmpty(tableName)) {
         throw new Error("Illegal Table Name");
       }
 
@@ -4829,7 +4659,7 @@ var builder$1 = createCommonjsModule(function (module, exports) {
           break;
       }
 
-      if (util$1.isNotEmptyStr(queryTable)) {
+      if (schemaVerify.Type.string.isNotEmpty(queryTable)) {
         typeof instance.table === "function" && instance.table(queryTable);
       }
 
@@ -4858,7 +4688,7 @@ var builder$1 = createCommonjsModule(function (module, exports) {
     }
 
     table(tableName) {
-      if (!util$1.isNotEmptyStr(tableName)) {
+      if (!schemaVerify.Type.string.isNotEmpty(tableName)) {
         throw new Error("Illegal Table Name");
       }
 

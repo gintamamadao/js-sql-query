@@ -1,6 +1,6 @@
 import Having from "./having";
 import Func from "./func";
-import * as Util from "../util/util";
+import { Type } from "schema-verify";
 import { FuncInfo } from "../constant/interface";
 import { DialectTypes } from "../constant/enum";
 
@@ -20,7 +20,7 @@ class Combine extends Having {
 
     protected groupBuild(query: string): string {
         const fields: string[] = this.groupByFields;
-        if (!Util.isNotEmptyArr(fields)) {
+        if (!Type.array.isNotEmpty(fields)) {
             return query;
         }
         const fieldsStr: string = fields
@@ -31,8 +31,8 @@ class Combine extends Having {
     }
 
     groupBy(...fields: string[]) {
-        let groupByFields: string[] = Util.safeToArr(this.groupByFields);
-        if (!Util.isNotEmptyArr(fields)) {
+        let groupByFields: string[] = Type.array.safe(this.groupByFields);
+        if (!Type.array.isNotEmpty(fields)) {
             throw new Error("Illegal Field");
         }
         groupByFields = groupByFields.concat(fields);
@@ -51,12 +51,12 @@ class Combine extends Having {
     }
 
     protected formatFuncs(): string[] {
-        const combineFuncs: FuncInfo[] = Util.safeToArr(this.combineFuncs);
+        const combineFuncs: FuncInfo[] = Type.array.safe(this.combineFuncs);
         let funcs: string[] = [];
         for (const info of combineFuncs) {
             if (
-                !Util.isNotEmptyObj(info) ||
-                !Util.isNotEmptyStr(info.funcFeild)
+                !Type.object.isNotEmpty(info) ||
+                !Type.string.isNotEmpty(info.funcFeild)
             ) {
                 throw new Error("Illegal Func Feild");
             }
@@ -68,10 +68,10 @@ class Combine extends Having {
     }
 
     protected funcsCache(funcInfo: FuncInfo) {
-        const combineFuncs: FuncInfo[] = Util.safeToArr(this.combineFuncs);
+        const combineFuncs: FuncInfo[] = Type.array.safe(this.combineFuncs);
         if (
-            Util.isNotEmptyObj(funcInfo) &&
-            Util.isNotEmptyStr(funcInfo.funcFeild)
+            Type.object.isNotEmpty(funcInfo) &&
+            Type.string.isNotEmpty(funcInfo.funcFeild)
         ) {
             combineFuncs.push(funcInfo);
         }
@@ -81,15 +81,15 @@ class Combine extends Having {
 
     funcFeilds(...funcInfos: FuncInfo[] | FuncInput[]) {
         for (let info of funcInfos) {
-            info = Util.safeToObj(info);
+            info = Type.object.safe(info);
             let saveInfo: FuncInfo = <FuncInfo>info;
             const func: string = (<FuncInput>info).func;
             const field: string | number = (<FuncInput>info).field;
             const funcCase = this.getFuncCase();
             if (
-                Util.isNotEmptyStr(func) &&
-                Util.isFunction(funcCase[func]) &&
-                !Util.isUndefinedNull(field)
+                Type.string.isNotEmpty(func) &&
+                Type.function.is(funcCase[func]) &&
+                Type.undefinedNull.isNot(field)
             ) {
                 saveInfo = funcCase[func].call(funcCase, field);
             }

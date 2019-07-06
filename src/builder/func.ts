@@ -1,6 +1,6 @@
-import * as Util from "../util/util";
 import { FuncTypes, DialectTypes } from "../constant/enum";
 import { FuncInfo } from "../constant/interface";
+import { Type } from "schema-verify";
 import Safe from "./safe";
 
 class Func extends Safe {
@@ -11,10 +11,10 @@ class Func extends Safe {
 
     protected funcField(func: FuncTypes, field: number | string): FuncInfo {
         const needSafeTrans: boolean =
-            Util.isNotEmptyStr(field) && field !== "*";
+            Type.string.isNotEmpty(field) && field !== "*";
         const fieldStr: string = needSafeTrans
             ? <string>field
-            : Util.isLegalNum(field)
+            : Type.number.is(field)
             ? field + ""
             : "*";
         const safeField: string = needSafeTrans

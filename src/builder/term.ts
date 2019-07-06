@@ -1,7 +1,7 @@
-import * as Util from "../util/util";
 import { TermSign, TermLogic, DialectTypes } from "../constant/enum";
 import { TermData, TermInfo, TermBracket } from "../constant/interface";
 import Safe from "./safe";
+import { Type } from "schema-verify";
 
 const SQL_NAME = "termSql";
 class Term extends Safe {
@@ -21,15 +21,15 @@ class Term extends Safe {
 
     termsBuild(): string {
         const termSql: string = this.formatTermSql();
-        if (Util.isNotEmptyStr(termSql)) {
+        if (Type.string.isNotEmpty(termSql)) {
             return termSql;
         }
         const termInfos: TermInfo[] = this.termInfos;
         const termBrackets: TermBracket[] = this.termBrackets;
-        if (!Util.isNotEmptyArr(termInfos)) {
+        if (!Type.array.isNotEmpty(termInfos)) {
             return "";
         }
-        const allTermStr = !Util.isNotEmptyArr(termBrackets)
+        const allTermStr = !Type.array.isNotEmpty(termBrackets)
             ? this.formatTerms(termInfos)
             : this.formatTermBrackets(termBrackets, termInfos);
         return allTermStr;
@@ -44,8 +44,8 @@ class Term extends Safe {
         terms: TermInfo[]
     ): string {
         let allTermStr: string = "";
-        brackets = Util.safeToArr(brackets);
-        terms = Util.safeToArr(terms);
+        brackets = Type.array.safe(brackets);
+        terms = Type.array.safe(terms);
         const bracketsLen = brackets.length;
         const termsLen = terms.length;
         for (let i = 0; i < bracketsLen; i++) {
@@ -56,10 +56,10 @@ class Term extends Safe {
             const curLogic: TermLogic = curBracket.logic;
             let prePos: number = 0;
             let nextPos: number = termsLen;
-            if (Util.isNotEmptyObj(perBracket)) {
+            if (Type.object.isNotEmpty(perBracket)) {
                 prePos = perBracket.position;
             }
-            if (Util.isNotEmptyObj(nextBracket)) {
+            if (Type.object.isNotEmpty(nextBracket)) {
                 nextPos = nextBracket.position;
             }
             const preTerms: TermInfo[] = terms.slice(prePos, curPos);
@@ -77,11 +77,11 @@ class Term extends Safe {
                 nextTerms
             );
 
-            if (!Util.isNotEmptyStr(termStr)) {
+            if (!Type.string.isNotEmpty(termStr)) {
                 continue;
             }
 
-            allTermStr = Util.isNotEmptyStr(allTermStr)
+            allTermStr = Type.string.isNotEmpty(allTermStr)
                 ? `${allTermStr} ${termStr}`
                 : termStr;
         }
@@ -95,8 +95,8 @@ class Term extends Safe {
         preTerms: TermInfo[],
         nextTerms: TermInfo[]
     ): string {
-        preTerms = Util.safeToArr(preTerms);
-        nextTerms = Util.safeToArr(nextTerms);
+        preTerms = Type.array.safe(preTerms);
+        nextTerms = Type.array.safe(nextTerms);
         const preTermsStr: string = this.formatTerms(preTerms);
 
         if (preTerms.length <= 0 || nextTerms.length <= 0) {
@@ -112,10 +112,10 @@ class Term extends Safe {
     }
 
     protected formatTerms(terms: TermInfo[]): string {
-        terms = Util.safeToArr(terms);
+        terms = Type.array.safe(terms);
         let allTermStr: string = "";
         for (const term of terms) {
-            if (!Util.isNotEmptyObj(term)) {
+            if (!Type.object.isNotEmpty(term)) {
                 continue;
             }
             const field: string = this.safeKey(term.field);
@@ -125,7 +125,7 @@ class Term extends Safe {
             const termValue: string = this.formatTermValue(value, sign);
             const termStr: string = `${field} ${sign} ${termValue}`;
 
-            if (!Util.isNotEmptyStr(allTermStr)) {
+            if (!Type.string.isNotEmpty(allTermStr)) {
                 allTermStr = termStr;
                 continue;
             }
@@ -142,7 +142,7 @@ class Term extends Safe {
     ): string {
         let termValue: string;
         if (sign === TermSign.in || sign === TermSign.notIn) {
-            if (!Util.isNotEmptyArr(value)) {
+            if (!Type.array.isNotEmpty(value)) {
                 throw new Error("Illegal Term Value (need Array)");
             }
             termValue = (<string[]>value)
@@ -152,7 +152,10 @@ class Term extends Safe {
         }
 
         if (sign === TermSign.between || sign === TermSign.notBetween) {
-            if (!Util.isNotEmptyArr(value) || (<string[]>value).length !== 2) {
+            if (
+                !Type.array.isNotEmpty(value) ||
+                (<string[]>value).length !== 2
+            ) {
                 throw new Error("Illegal Term Value (need Array[2])");
             }
             const lower = this.safeValue(value[0]);
@@ -160,7 +163,7 @@ class Term extends Safe {
             return `${lower} AND ${upper}`;
         }
 
-        if (!Util.isString(value) && !Util.isLegalNum(value)) {
+        if (!Type.string.isNotEmpty(value) && !Type.number.is(value)) {
             throw new Error("Illegal Term Value");
         }
 
@@ -174,35 +177,42 @@ class Term extends Safe {
     }
 
     termCache(data: TermData, sign: TermSign, logic: TermLogic) {
-        if (!Util.isNotEmptyObj(data)) {
+        if (!Type.object.isNotEmpty(data)) {
             throw new Error("Illegal Term data");
         }
-        if (!Util.isNotEmptyStr(sign) || !Util.isNotEmptyStr(logic)) {
+        if (!Type.string.isNotEmpty(sign) || !Type.string.isNotEmpty(logic)) {
             throw new Error("Illegal Param");
         }
-        const termInfos: TermInfo[] = Util.safeToArr(this.termInfos);
+        const termInfos: TermInfo[] = Type.array.safe(this.termInfos);
         const termsArr: TermInfo[] = [];
         for (const field in data) {
             const value: string | number | string[] = data[field];
-            let isCheck = false;
-            if (sign === TermSign.in || sign === TermSign.notIn) {
-                if (!Util.isNotEmptyArr(value)) {
-                    throw new Error("Illegal Func Value");
-                }
-                isCheck = true;
+            switch (sign) {
+                case TermSign.in:
+                case TermSign.notIn:
+                    if (!Type.array.isNotEmpty(value)) {
+                        throw new Error("Illegal Func Value");
+                    }
+                    break;
+                case TermSign.between:
+                case TermSign.notBetween:
+                    if (
+                        !Type.array.isNotEmpty(value) ||
+                        (<string[]>value).length !== 2
+                    ) {
+                        throw new Error("Illegal Func Value");
+                    }
+                    break;
+                default:
+                    if (
+                        !Type.string.isNotEmpty(value) &&
+                        !Type.number.is(value)
+                    ) {
+                        throw new Error("Illegal Func Value");
+                    }
+                    break;
             }
-            if (sign === TermSign.between || sign === TermSign.notBetween) {
-                if (
-                    !Util.isNotEmptyArr(value) ||
-                    (<string[]>value).length !== 2
-                ) {
-                    throw new Error("Illegal Func Value");
-                }
-                isCheck = true;
-            }
-            if (!Util.isString(value) && !Util.isLegalNum(value) && !isCheck) {
-                throw new Error("Illegal Func Value");
-            }
+
             const term: TermInfo = {
                 field,
                 value,
@@ -216,8 +226,8 @@ class Term extends Safe {
     }
 
     bracketTerm(logic: TermLogic) {
-        const termInfos: TermInfo[] = Util.safeToArr(this.termInfos);
-        const termBrackets: TermBracket[] = Util.safeToArr(this.termBrackets);
+        const termInfos: TermInfo[] = Type.array.safe(this.termInfos);
+        const termBrackets: TermBracket[] = Type.array.safe(this.termBrackets);
         const termsLen: number = termInfos.length;
         if (termsLen <= 0) {
             return;

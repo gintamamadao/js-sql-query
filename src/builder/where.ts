@@ -1,8 +1,8 @@
-import * as Util from "../util/util";
 import { TermData } from "../constant/interface";
 import { DialectTypes } from "../constant/enum";
 import Query from "./query";
 import Term from "./term";
+import { Type } from "schema-verify";
 
 const TERM_NAME = "whereTerm";
 class Where extends Query {
@@ -159,7 +159,7 @@ class Where extends Query {
     protected whereBuild(query: string) {
         const whereTerm: Term = this.getTermCase(TERM_NAME);
         const whereSql: string = whereTerm.termsBuild();
-        if (Util.isNotEmptyStr(whereSql)) {
+        if (Type.string.isNotEmpty(whereSql)) {
             query = `${query} WHERE ${whereSql}`;
         }
         return query;

@@ -1,7 +1,7 @@
-import * as Util from "../util/util";
 import { QueryTypes, DialectTypes, UpdateTypes } from "../constant/enum";
 import { FieldData } from "../constant/interface";
 import Where from "./where";
+import { Type } from "schema-verify";
 
 interface UpdateInfo {
     value: string | number;
@@ -35,13 +35,13 @@ class Update extends Where {
 
     protected formatData(): string[] {
         const updateInfos: UpdateInfos = this.updateInfos;
-        if (!Util.isNotEmptyObj(updateInfos)) {
+        if (!Type.object.isNotEmpty(updateInfos)) {
             throw new Error("Illegal Update Infos");
         }
         const result: string[] = [];
         for (const field in updateInfos) {
             const info: UpdateInfo = updateInfos[field];
-            if (!Util.isNotEmptyObj(info)) {
+            if (!Type.object.isNotEmpty(info)) {
                 throw new Error("Illegal Update Info");
             }
             const type: string = info.type;
@@ -60,7 +60,7 @@ class Update extends Where {
                     infoStr = `${safeField} = ${safeField} - ${safeValue}`;
                     break;
             }
-            if (!Util.isNotEmptyStr(infoStr)) {
+            if (!Type.string.isNotEmpty(infoStr)) {
                 throw new Error("Illegal Update Type");
             }
             result.push(infoStr);
@@ -69,13 +69,13 @@ class Update extends Where {
     }
 
     protected updateCache(data: FieldData, type: UpdateTypes) {
-        if (!Util.isNotEmptyObj(data)) {
+        if (!Type.object.isNotEmpty(data)) {
             throw new Error("Illegal Update Data");
         }
-        const updateInfos: UpdateInfos = Util.safeToObj(this.updateInfos);
+        const updateInfos: UpdateInfos = Type.object.safe(this.updateInfos);
         for (const field in data) {
             const value: string | number = data[field];
-            if (!Util.isNotEmptyStr(value) && !Util.isLegalNum(value)) {
+            if (!Type.string.isNotEmpty(value) && !Type.number.is(value)) {
                 throw new Error("Illegal Value Type");
             }
             const updateInfo = {
@@ -103,7 +103,7 @@ class Update extends Where {
     protected checkQuery(): void {
         this._checkQuery();
         const updateInfos: UpdateInfos = this.updateInfos;
-        if (!Util.isNotEmptyObj(updateInfos)) {
+        if (!Type.object.isNotEmpty(updateInfos)) {
             throw "Illegal Update Infos";
         }
     }

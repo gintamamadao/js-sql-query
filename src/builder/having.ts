@@ -1,7 +1,7 @@
-import * as Util from "../util/util";
 import { TermData } from "../constant/interface";
 import Where from "./where";
 import Term from "./term";
+import { Type } from "schema-verify";
 
 const TERM_NAME = "havingTerm";
 class Having extends Where {
@@ -148,7 +148,7 @@ class Having extends Where {
     protected havingBuild(query: string) {
         const termInstance: Term = this.getTermCase(TERM_NAME);
         const havingSql: string = termInstance.termsBuild();
-        if (Util.isNotEmptyStr(havingSql)) {
+        if (Type.string.isNotEmpty(havingSql)) {
             query = `${query} HAVING ${havingSql}`;
         }
         return query;

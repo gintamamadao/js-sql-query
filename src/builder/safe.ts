@@ -1,7 +1,7 @@
-import * as Util from "../util/util";
 import Dialects from "../util/dialects";
 import { DialectTypes } from "../constant/enum";
 import { SafeValue, SafeKey, Dialect } from "../constant/interface";
+import { Type } from "schema-verify";
 
 class Safe {
     protected _dialect: Dialect;
@@ -39,7 +39,11 @@ class Safe {
     };
 
     protected manualSql(sql: string | Function, key: string) {
-        if (!Util.isNotEmptyStr(sql) && !Util.isFunction(sql) && !(sql instanceof Safe)) {
+        if (
+            !Type.string.isNotEmpty(sql) &&
+            !Type.function.is(sql) &&
+            !(sql instanceof Safe)
+        ) {
             throw new Error("Illegal Sql Type, Need String or Function");
         }
         this[key] = sql;
@@ -47,18 +51,18 @@ class Safe {
 
     protected formatManualSql(key: string): string {
         let sql: any = this[key];
-        if (Util.isNotEmptyStr(sql)) {
+        if (Type.string.isNotEmpty(sql)) {
             return <string>sql;
         }
-        if (Util.isFunction(sql)) {
+        if (Type.function.is(sql)) {
             sql = (<Function>sql)();
-            if (Util.isNotEmptyStr(sql)) {
+            if (Type.string.isNotEmpty(sql)) {
                 return <string>sql;
             }
         }
-        if (Util.isNotEmptyObj(sql) && sql instanceof Safe) {
+        if (Type.object.isNotEmpty(sql) && sql instanceof Safe) {
             sql = sql.query;
-            if (Util.isNotEmptyStr(sql)) {
+            if (Type.string.isNotEmpty(sql)) {
                 return <string>sql;
             }
         }

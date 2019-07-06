@@ -6,7 +6,7 @@ import Replace from "./replace";
 import Term from "./term";
 import Func from "./func";
 import Order from "./order";
-import * as Util from "../util/util";
+import { Type } from "schema-verify";
 import { QueryTypes, DialectTypes, WidgetTypes } from "../constant/enum";
 
 class Builder {
@@ -71,7 +71,7 @@ class Builder {
                 instance = new Delete(dialectType);
                 break;
         }
-        if (Util.isNotEmptyStr(queryTable)) {
+        if (Type.string.isNotEmpty(queryTable)) {
             typeof instance.table === "function" && instance.table(queryTable);
         }
         return instance;
@@ -95,7 +95,7 @@ class Builder {
     }
 
     table(tableName: string) {
-        if (!Util.isNotEmptyStr(tableName)) {
+        if (!Type.string.isNotEmpty(tableName)) {
             throw new Error("Illegal Table Name");
         }
         this.queryTable = tableName;

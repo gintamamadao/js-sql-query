@@ -36,5 +36,6 @@ module.exports = {
         nodeResolve({ extensions }),
         commonjs({ extensions }),
         babel(babelOptions)
-    ]
+    ],
+    external: ["schema-verify"]
 };

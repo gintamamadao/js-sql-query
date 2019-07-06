@@ -1,6 +1,6 @@
 {
     "name": "js-sql-query",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "",
     "main": "./dist/js-sql-query.js",
     "scripts": {
@@ -20,7 +20,9 @@
         "sql",
         "query"
     ],
-    "dependencies": {},
+    "dependencies": {
+        "schema-verify": "^1.0.8"
+    },
     "devDependencies": {
         "babel-runtime": "^6.26.0",
         "@babel/core": "^7.4.5",
