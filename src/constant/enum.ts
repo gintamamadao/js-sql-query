@@ -79,3 +79,14 @@ export enum WidgetTypes {
     term = "TERM",
     order = "ORDER"
 }
+
+export enum DataTypes {
+    tinyint = "TINYINT",
+    smallint = "SMALLINT",
+    mediumint = "MEDIUMINT",
+    int = "INT",
+    bigint = "BIGINT",
+    float = "FLOAT",
+    double = "DOUBLE",
+    decimal = "DECIMAL"
+}

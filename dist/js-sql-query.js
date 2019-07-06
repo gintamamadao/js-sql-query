@@ -567,7 +567,7 @@ var safe = createCommonjsModule(function (module, exports) {
     }
 
     manualSql(sql, key) {
-      if (!util$1.isNotEmptyStr(sql) && !util$1.isFunction(sql)) {
+      if (!util$1.isNotEmptyStr(sql) && !util$1.isFunction(sql) && !(sql instanceof Safe)) {
         throw new Error("Illegal Sql Type, Need String or Function");
       }
 
@@ -815,6 +815,19 @@ var _enum = createCommonjsModule(function (module, exports) {
     WidgetTypes["term"] = "TERM";
     WidgetTypes["order"] = "ORDER";
   })(WidgetTypes = exports.WidgetTypes || (exports.WidgetTypes = {}));
+
+  var DataTypes;
+
+  (function (DataTypes) {
+    DataTypes["tinyint"] = "TINYINT";
+    DataTypes["smallint"] = "SMALLINT";
+    DataTypes["mediumint"] = "MEDIUMINT";
+    DataTypes["int"] = "INT";
+    DataTypes["bigint"] = "BIGINT";
+    DataTypes["float"] = "FLOAT";
+    DataTypes["double"] = "DOUBLE";
+    DataTypes["decimal"] = "DECIMAL";
+  })(DataTypes = exports.DataTypes || (exports.DataTypes = {}));
 });
 
 unwrapExports(_enum);
@@ -826,6 +839,7 @@ var _enum_5 = _enum.TermSign;
 var _enum_6 = _enum.OrderTypes;
 var _enum_7 = _enum.UpdateTypes;
 var _enum_8 = _enum.WidgetTypes;
+var _enum_9 = _enum.DataTypes;
 
 var _enum$1 = createCommonjsModule(function (module, exports) {
 
@@ -929,6 +943,19 @@ var _enum$1 = createCommonjsModule(function (module, exports) {
     WidgetTypes["term"] = "TERM";
     WidgetTypes["order"] = "ORDER";
   })(WidgetTypes = exports.WidgetTypes || (exports.WidgetTypes = {}));
+
+  var DataTypes;
+
+  (function (DataTypes) {
+    DataTypes["tinyint"] = "TINYINT";
+    DataTypes["smallint"] = "SMALLINT";
+    DataTypes["mediumint"] = "MEDIUMINT";
+    DataTypes["int"] = "INT";
+    DataTypes["bigint"] = "BIGINT";
+    DataTypes["float"] = "FLOAT";
+    DataTypes["double"] = "DOUBLE";
+    DataTypes["decimal"] = "DECIMAL";
+  })(DataTypes = exports.DataTypes || (exports.DataTypes = {}));
 });
 
 unwrapExports(_enum$1);
@@ -940,6 +967,7 @@ var _enum_5$1 = _enum$1.TermSign;
 var _enum_6$1 = _enum$1.OrderTypes;
 var _enum_7$1 = _enum$1.UpdateTypes;
 var _enum_8$1 = _enum$1.WidgetTypes;
+var _enum_9$1 = _enum$1.DataTypes;
 
 var safe$1 = createCommonjsModule(function (module, exports) {
 
@@ -982,7 +1010,7 @@ var safe$1 = createCommonjsModule(function (module, exports) {
     }
 
     manualSql(sql, key) {
-      if (!util$1.isNotEmptyStr(sql) && !util$1.isFunction(sql)) {
+      if (!util$1.isNotEmptyStr(sql) && !util$1.isFunction(sql) && !(sql instanceof Safe)) {
         throw new Error("Illegal Sql Type, Need String or Function");
       }
 
