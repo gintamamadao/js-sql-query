@@ -2,6 +2,8 @@ import Dialects from "../util/dialects";
 import { DialectTypes } from "../constant/enum";
 import { SafeValue, SafeKey, Dialect } from "../constant/interface";
 import { Type } from "schema-verify";
+import { dialectVerify } from "../verify/safe.verify";
+import ErrMsg from "../error/safe.error";
 
 class Safe {
     protected _dialect: Dialect;
@@ -9,21 +11,17 @@ class Safe {
 
     get dialectType(): DialectTypes {
         const dialectType: DialectTypes = this._dialectType;
-        if (!Dialects[dialectType]) {
-            throw new Error("Illegal Dialect Type");
+        if (!dialectVerify(Dialects[dialectType])) {
+            throw new Error(ErrMsg.errorDialect);
         }
         return dialectType;
     }
 
     set dialectType(dialectType: DialectTypes) {
-        const dialect = Dialects[dialectType];
-        if (
-            !dialect ||
-            !(typeof dialect.safeKey === "function") ||
-            !(typeof dialect.safeValue === "function")
-        ) {
-            throw new Error("Illegal Dialect Type");
+        if (!dialectVerify(Dialects[dialectType])) {
+            throw new Error(ErrMsg.errorDialect);
         }
+        const dialect = Dialects[dialectType];
         this._dialect = dialect;
         this._dialectType = dialectType;
         this.safeValue = dialect.safeValue;
@@ -44,7 +42,7 @@ class Safe {
             !Type.function.is(sql) &&
             !(sql instanceof Safe)
         ) {
-            throw new Error("Illegal Sql Type, Need String or Function");
+            throw new Error(ErrMsg.errorManualSql);
         }
         this[key] = sql;
     }

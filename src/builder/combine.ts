@@ -3,6 +3,12 @@ import Func from "./func";
 import { Type } from "schema-verify";
 import { FuncInfo } from "../constant/interface";
 import { DialectTypes } from "../constant/enum";
+import ErrMsg from "../error/builder.error";
+import {
+    groupByVerify,
+    funcInfoVerify,
+    funcInputVerify
+} from "../verify/combine.verify";
 
 interface FuncInput {
     func: string;
@@ -32,8 +38,8 @@ class Combine extends Having {
 
     groupBy(...fields: string[]) {
         let groupByFields: string[] = Type.array.safe(this.groupByFields);
-        if (!Type.array.isNotEmpty(fields)) {
-            throw new Error("Illegal Field");
+        if (!groupByVerify(fields)) {
+            throw new Error(ErrMsg.errorFieldName);
         }
         groupByFields = groupByFields.concat(fields);
         this.groupByFields = Array.from(new Set(groupByFields));
@@ -54,11 +60,8 @@ class Combine extends Having {
         const combineFuncs: FuncInfo[] = Type.array.safe(this.combineFuncs);
         let funcs: string[] = [];
         for (const info of combineFuncs) {
-            if (
-                !Type.object.isNotEmpty(info) ||
-                !Type.string.isNotEmpty(info.funcFeild)
-            ) {
-                throw new Error("Illegal Func Feild");
+            if (!funcInfoVerify(info)) {
+                throw new Error(ErrMsg.errorFuncInfo);
             }
             const funcFeild: string = info.funcFeild;
             funcs.push(funcFeild);
@@ -69,10 +72,7 @@ class Combine extends Having {
 
     protected funcsCache(funcInfo: FuncInfo) {
         const combineFuncs: FuncInfo[] = Type.array.safe(this.combineFuncs);
-        if (
-            Type.object.isNotEmpty(funcInfo) &&
-            Type.string.isNotEmpty(funcInfo.funcFeild)
-        ) {
+        if (funcInfoVerify(funcInfo)) {
             combineFuncs.push(funcInfo);
         }
         this.combineFuncs = combineFuncs;
@@ -82,18 +82,26 @@ class Combine extends Having {
     funcFeilds(...funcInfos: FuncInfo[] | FuncInput[]) {
         for (let info of funcInfos) {
             info = Type.object.safe(info);
-            let saveInfo: FuncInfo = <FuncInfo>info;
-            const func: string = (<FuncInput>info).func;
-            const field: string | number = (<FuncInput>info).field;
-            const funcCase = this.getFuncCase();
-            if (
-                Type.string.isNotEmpty(func) &&
-                Type.function.is(funcCase[func]) &&
-                Type.undefinedNull.isNot(field)
-            ) {
-                saveInfo = funcCase[func].call(funcCase, field);
+            if (funcInfoVerify(info)) {
+                this.funcsCache(<FuncInfo>info);
+                continue;
             }
-            this.funcsCache(saveInfo);
+            const funcCase = this.getFuncCase();
+            if (funcInputVerify(info, true)) {
+                const func: string = (<FuncInput>info).func;
+                const field: string | number = (<FuncInput>info).field;
+                if (
+                    Type.object.is(funcCase) &&
+                    Type.function.is(funcCase[func])
+                ) {
+                    const funcInfo: FuncInfo = funcCase[func].call(
+                        funcCase,
+                        field
+                    );
+                    this.funcsCache(funcInfo);
+                }
+                continue;
+            }
         }
         return this;
     }

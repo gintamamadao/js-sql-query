@@ -57,7 +57,7 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$NoEqual({
+                    .having$NotEqual({
                         field1: "value1"
                     }).query)()
         ).toBe(QUERY);
@@ -224,7 +224,7 @@ describe("SELECT:HAVING", () => {
                     .having$Equal({
                         field1: "value1"
                     })
-                    .having$NoEqual({
+                    .having$NotEqual({
                         field2: "value2"
                     }).query)()
         ).toBe(QUERY);
@@ -237,10 +237,10 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$NoEqual({
+                    .having$NotEqual({
                         field1: "value1"
                     })
-                    .having$NoEqual({
+                    .having$NotEqual({
                         field1: "value2"
                     }).query)()
         ).toBe(QUERY);

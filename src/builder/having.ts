@@ -15,8 +15,8 @@ class Having extends Where {
         return this;
     }
 
-    having$NoEqual(data: TermData) {
-        this.getTermCase(TERM_NAME).noEqual(data);
+    having$NotEqual(data: TermData) {
+        this.getTermCase(TERM_NAME).notEqual(data);
         return this;
     }
 

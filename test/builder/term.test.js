@@ -24,7 +24,7 @@ describe("SELECT:TERM", () => {
                     .select()
                     .table("table1")
                     .where(() =>
-                        builder.term.noEqual({
+                        builder.term.notEqual({
                             field1: "value1"
                         })
                     ).query)()
@@ -219,7 +219,7 @@ describe("SELECT:TERM", () => {
                             .equal({
                                 field1: "value1"
                             })
-                            .noEqual({
+                            .notEqual({
                                 field2: "value2"
                             })
                     ).query)()
@@ -235,10 +235,10 @@ describe("SELECT:TERM", () => {
                     .table("table1")
                     .where(() =>
                         builder.term
-                            .noEqual({
+                            .notEqual({
                                 field1: "value1"
                             })
-                            .noEqual({
+                            .notEqual({
                                 field1: "value2"
                             })
                     ).query)()

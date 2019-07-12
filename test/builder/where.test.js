@@ -57,7 +57,7 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$NoEqual({
+                    .where$NotEqual({
                         field1: "value1"
                     }).query)()
         ).toBe(QUERY);
@@ -224,7 +224,7 @@ describe("SELECT:WHERE", () => {
                     .where$Equal({
                         field1: "value1"
                     })
-                    .where$NoEqual({
+                    .where$NotEqual({
                         field2: "value2"
                     }).query)()
         ).toBe(QUERY);
@@ -237,10 +237,10 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$NoEqual({
+                    .where$NotEqual({
                         field1: "value1"
                     })
-                    .where$NoEqual({
+                    .where$NotEqual({
                         field1: "value2"
                     }).query)()
         ).toBe(QUERY);

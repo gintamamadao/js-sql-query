@@ -16,8 +16,8 @@ class Where extends Query {
         return this;
     }
 
-    where$NoEqual(data: TermData) {
-        this.getTermCase(TERM_NAME).noEqual(data);
+    where$NotEqual(data: TermData) {
+        this.getTermCase(TERM_NAME).notEqual(data);
         return this;
     }
 

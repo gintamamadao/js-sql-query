@@ -8,6 +8,7 @@ import Func from "./func";
 import Order from "./order";
 import { Type } from "schema-verify";
 import { QueryTypes, DialectTypes, WidgetTypes } from "../constant/enum";
+import ErrMsg from "../error/builder.error";
 
 class Builder {
     protected dialectType: DialectTypes;
@@ -72,7 +73,7 @@ class Builder {
                 break;
         }
         if (Type.string.isNotEmpty(queryTable)) {
-            typeof instance.table === "function" && instance.table(queryTable);
+            Type.function.is(instance.table) && instance.table(queryTable);
         }
         return instance;
     }
@@ -96,7 +97,7 @@ class Builder {
 
     table(tableName: string) {
         if (!Type.string.isNotEmpty(tableName)) {
-            throw new Error("Illegal Table Name");
+            throw new Error(ErrMsg.errorTableName);
         }
         this.queryTable = tableName;
         return this;

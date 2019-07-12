@@ -13,7 +13,7 @@ console.log(query); // SELECT * FROM `table1` WHERE `field1` = 'value1'
 var query = builder
     .select()
     .table("table1")
-    .where$NoEqual({
+    .where$NotEqual({
         field1: "value1"
     }).query;
 console.log(query); // SELECT * FROM `table1` WHERE `field1` <> 'value1'
@@ -113,7 +113,7 @@ var query = builder
     .where$Equal({
         field1: "value1"
     })
-    .where$NoEqual({
+    .where$NotEqual({
         field2: "value2"
     }).query;
 console.log(query); // SELECT * FROM `table1` WHERE `field1` = 'value1' AND `field2` <> 'value2'
@@ -121,10 +121,10 @@ console.log(query); // SELECT * FROM `table1` WHERE `field1` = 'value1' AND `fie
 var query = builder
     .select()
     .table("table1")
-    .where$NoEqual({
+    .where$NotEqual({
         field1: "value1"
     })
-    .where$NoEqual({
+    .where$NotEqual({
         field1: "value2"
     }).query;
 console.log(query); // SELECT * FROM `table1` WHERE `field1` <> 'value1' AND `field1` <> 'value2'

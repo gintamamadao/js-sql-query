@@ -173,6 +173,41 @@ var dialects = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(dialects);
 
+var safe_verify = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.dialectVerify = new schemaVerify.Schema({
+    type: Object,
+    restrict: true,
+    props: [{
+      index: "safeKey",
+      required: true,
+      type: Function
+    }, {
+      index: "safeValue",
+      required: true,
+      type: Function
+    }]
+  }).verify;
+});
+unwrapExports(safe_verify);
+var safe_verify_1 = safe_verify.dialectVerify;
+
+var safe_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorDialect: "错误的数据库类型",
+    errorManualSql: "错误的自定义sql"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(safe_error);
+
 var dialects$1 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -309,6 +344,41 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(dialects$1);
 
+var safe_verify$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.dialectVerify = new schemaVerify.Schema({
+    type: Object,
+    restrict: true,
+    props: [{
+      index: "safeKey",
+      required: true,
+      type: Function
+    }, {
+      index: "safeValue",
+      required: true,
+      type: Function
+    }]
+  }).verify;
+});
+unwrapExports(safe_verify$1);
+var safe_verify_1$1 = safe_verify$1.dialectVerify;
+
+var safe_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorDialect: "错误的数据库类型",
+    errorManualSql: "错误的自定义sql"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(safe_error$1);
+
 var safe = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -329,20 +399,19 @@ var safe = createCommonjsModule(function (module, exports) {
     get dialectType() {
       const dialectType = this._dialectType;
 
-      if (!dialects$1.default[dialectType]) {
-        throw new Error("Illegal Dialect Type");
+      if (!safe_verify$1.dialectVerify(dialects$1.default[dialectType])) {
+        throw new Error(safe_error$1.default.errorDialect);
       }
 
       return dialectType;
     }
 
     set dialectType(dialectType) {
-      const dialect = dialects$1.default[dialectType];
-
-      if (!dialect || !(typeof dialect.safeKey === "function") || !(typeof dialect.safeValue === "function")) {
-        throw new Error("Illegal Dialect Type");
+      if (!safe_verify$1.dialectVerify(dialects$1.default[dialectType])) {
+        throw new Error(safe_error$1.default.errorDialect);
       }
 
+      const dialect = dialects$1.default[dialectType];
       this._dialect = dialect;
       this._dialectType = dialectType;
       this.safeValue = dialect.safeValue;
@@ -351,7 +420,7 @@ var safe = createCommonjsModule(function (module, exports) {
 
     manualSql(sql, key) {
       if (!schemaVerify.Type.string.isNotEmpty(sql) && !schemaVerify.Type.function.is(sql) && !(sql instanceof Safe)) {
-        throw new Error("Illegal Sql Type, Need String or Function");
+        throw new Error(safe_error$1.default.errorManualSql);
       }
 
       this[key] = sql;
@@ -561,7 +630,7 @@ var _enum = createCommonjsModule(function (module, exports) {
 
   (function (TermSign) {
     TermSign["equal"] = "=";
-    TermSign["noEqual"] = "<>";
+    TermSign["notEqual"] = "<>";
     TermSign["more"] = ">";
     TermSign["less"] = "<";
     TermSign["moreEqual"] = ">=";
@@ -714,7 +783,7 @@ var _enum$1 = createCommonjsModule(function (module, exports) {
 
   (function (TermSign) {
     TermSign["equal"] = "=";
-    TermSign["noEqual"] = "<>";
+    TermSign["notEqual"] = "<>";
     TermSign["more"] = ">";
     TermSign["less"] = "<";
     TermSign["moreEqual"] = ">=";
@@ -797,20 +866,19 @@ var safe$1 = createCommonjsModule(function (module, exports) {
     get dialectType() {
       const dialectType = this._dialectType;
 
-      if (!dialects$1.default[dialectType]) {
-        throw new Error("Illegal Dialect Type");
+      if (!safe_verify$1.dialectVerify(dialects$1.default[dialectType])) {
+        throw new Error(safe_error$1.default.errorDialect);
       }
 
       return dialectType;
     }
 
     set dialectType(dialectType) {
-      const dialect = dialects$1.default[dialectType];
-
-      if (!dialect || !(typeof dialect.safeKey === "function") || !(typeof dialect.safeValue === "function")) {
-        throw new Error("Illegal Dialect Type");
+      if (!safe_verify$1.dialectVerify(dialects$1.default[dialectType])) {
+        throw new Error(safe_error$1.default.errorDialect);
       }
 
+      const dialect = dialects$1.default[dialectType];
       this._dialect = dialect;
       this._dialectType = dialectType;
       this.safeValue = dialect.safeValue;
@@ -819,7 +887,7 @@ var safe$1 = createCommonjsModule(function (module, exports) {
 
     manualSql(sql, key) {
       if (!schemaVerify.Type.string.isNotEmpty(sql) && !schemaVerify.Type.function.is(sql) && !(sql instanceof Safe)) {
-        throw new Error("Illegal Sql Type, Need String or Function");
+        throw new Error(safe_error$1.default.errorManualSql);
       }
 
       this[key] = sql;
@@ -1842,8 +1910,8 @@ var term = createCommonjsModule(function (module, exports) {
       return this.and(data, _enum$1.TermSign.equal);
     }
 
-    noEqual(data) {
-      return this.and(data, _enum$1.TermSign.noEqual);
+    notEqual(data) {
+      return this.and(data, _enum$1.TermSign.notEqual);
     }
 
     in(data) {
@@ -1891,7 +1959,7 @@ var term = createCommonjsModule(function (module, exports) {
     }
 
     orNoEqual(data) {
-      return this.or(data, _enum$1.TermSign.noEqual);
+      return this.or(data, _enum$1.TermSign.notEqual);
     }
 
     orIn(data) {
@@ -2201,8 +2269,8 @@ var term$1 = createCommonjsModule(function (module, exports) {
       return this.and(data, _enum$1.TermSign.equal);
     }
 
-    noEqual(data) {
-      return this.and(data, _enum$1.TermSign.noEqual);
+    notEqual(data) {
+      return this.and(data, _enum$1.TermSign.notEqual);
     }
 
     in(data) {
@@ -2250,7 +2318,7 @@ var term$1 = createCommonjsModule(function (module, exports) {
     }
 
     orNoEqual(data) {
-      return this.or(data, _enum$1.TermSign.noEqual);
+      return this.or(data, _enum$1.TermSign.notEqual);
     }
 
     orIn(data) {
@@ -2332,8 +2400,8 @@ var where = createCommonjsModule(function (module, exports) {
       return this;
     }
 
-    where$NoEqual(data) {
-      this.getTermCase(TERM_NAME).noEqual(data);
+    where$NotEqual(data) {
+      this.getTermCase(TERM_NAME).notEqual(data);
       return this;
     }
 
@@ -2508,8 +2576,8 @@ var where$1 = createCommonjsModule(function (module, exports) {
       return this;
     }
 
-    where$NoEqual(data) {
-      this.getTermCase(TERM_NAME).noEqual(data);
+    where$NotEqual(data) {
+      this.getTermCase(TERM_NAME).notEqual(data);
       return this;
     }
 
@@ -2684,8 +2752,8 @@ var having = createCommonjsModule(function (module, exports) {
       return this;
     }
 
-    having$NoEqual(data) {
-      this.getTermCase(TERM_NAME).noEqual(data);
+    having$NotEqual(data) {
+      this.getTermCase(TERM_NAME).notEqual(data);
       return this;
     }
 
@@ -2959,6 +3027,62 @@ var func = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(func);
 
+var builder_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorTableName: "错误的表名",
+    errorFieldName: "错误的字段名",
+    errorFuncInfo: "错误的组合函数信息"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(builder_error);
+
+var combine_verify = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.groupByVerify = new schemaVerify.Schema({
+    type: Array,
+    elements: {
+      type: String,
+      required: true
+    }
+  }).verify;
+  exports.funcInfoVerify = new schemaVerify.Schema({
+    type: Object,
+    restrict: true,
+    props: [{
+      index: "funcFeild",
+      required: true,
+      type: String
+    }]
+  }).verify;
+  exports.funcInputVerify = new schemaVerify.Schema({
+    type: Object,
+    restrict: true,
+    props: [{
+      type: String,
+      index: "func",
+      required: true
+    }, [{
+      index: "field",
+      required: true,
+      type: String
+    }, {
+      type: Number
+    }]]
+  }).verify;
+});
+unwrapExports(combine_verify);
+var combine_verify_1 = combine_verify.groupByVerify;
+var combine_verify_2 = combine_verify.funcInfoVerify;
+var combine_verify_3 = combine_verify.funcInputVerify;
+
 var having$1 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -2976,8 +3100,8 @@ var having$1 = createCommonjsModule(function (module, exports) {
       return this;
     }
 
-    having$NoEqual(data) {
-      this.getTermCase(TERM_NAME).noEqual(data);
+    having$NotEqual(data) {
+      this.getTermCase(TERM_NAME).notEqual(data);
       return this;
     }
 
@@ -3251,6 +3375,62 @@ var func$1 = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(func$1);
 
+var builder_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorTableName: "错误的表名",
+    errorFieldName: "错误的字段名",
+    errorFuncInfo: "错误的组合函数信息"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(builder_error$1);
+
+var combine_verify$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.groupByVerify = new schemaVerify.Schema({
+    type: Array,
+    elements: {
+      type: String,
+      required: true
+    }
+  }).verify;
+  exports.funcInfoVerify = new schemaVerify.Schema({
+    type: Object,
+    restrict: true,
+    props: [{
+      index: "funcFeild",
+      required: true,
+      type: String
+    }]
+  }).verify;
+  exports.funcInputVerify = new schemaVerify.Schema({
+    type: Object,
+    restrict: true,
+    props: [{
+      type: String,
+      index: "func",
+      required: true
+    }, [{
+      index: "field",
+      required: true,
+      type: String
+    }, {
+      type: Number
+    }]]
+  }).verify;
+});
+unwrapExports(combine_verify$1);
+var combine_verify_1$1 = combine_verify$1.groupByVerify;
+var combine_verify_2$1 = combine_verify$1.funcInfoVerify;
+var combine_verify_3$1 = combine_verify$1.funcInputVerify;
+
 var combine = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -3278,8 +3458,8 @@ var combine = createCommonjsModule(function (module, exports) {
     groupBy(...fields) {
       let groupByFields = schemaVerify.Type.array.safe(this.groupByFields);
 
-      if (!schemaVerify.Type.array.isNotEmpty(fields)) {
-        throw new Error("Illegal Field");
+      if (!combine_verify$1.groupByVerify(fields)) {
+        throw new Error(builder_error$1.default.errorFieldName);
       }
 
       groupByFields = groupByFields.concat(fields);
@@ -3304,8 +3484,8 @@ var combine = createCommonjsModule(function (module, exports) {
       let funcs = [];
 
       for (const info of combineFuncs) {
-        if (!schemaVerify.Type.object.isNotEmpty(info) || !schemaVerify.Type.string.isNotEmpty(info.funcFeild)) {
-          throw new Error("Illegal Func Feild");
+        if (!combine_verify$1.funcInfoVerify(info)) {
+          throw new Error(builder_error$1.default.errorFuncInfo);
         }
 
         const funcFeild = info.funcFeild;
@@ -3319,7 +3499,7 @@ var combine = createCommonjsModule(function (module, exports) {
     funcsCache(funcInfo) {
       const combineFuncs = schemaVerify.Type.array.safe(this.combineFuncs);
 
-      if (schemaVerify.Type.object.isNotEmpty(funcInfo) && schemaVerify.Type.string.isNotEmpty(funcInfo.funcFeild)) {
+      if (combine_verify$1.funcInfoVerify(funcInfo)) {
         combineFuncs.push(funcInfo);
       }
 
@@ -3330,16 +3510,25 @@ var combine = createCommonjsModule(function (module, exports) {
     funcFeilds(...funcInfos) {
       for (let info of funcInfos) {
         info = schemaVerify.Type.object.safe(info);
-        let saveInfo = info;
-        const func = info.func;
-        const field = info.field;
-        const funcCase = this.getFuncCase();
 
-        if (schemaVerify.Type.string.isNotEmpty(func) && schemaVerify.Type.function.is(funcCase[func]) && schemaVerify.Type.undefinedNull.isNot(field)) {
-          saveInfo = funcCase[func].call(funcCase, field);
+        if (combine_verify$1.funcInfoVerify(info)) {
+          this.funcsCache(info);
+          continue;
         }
 
-        this.funcsCache(saveInfo);
+        const funcCase = this.getFuncCase();
+
+        if (combine_verify$1.funcInputVerify(info, true)) {
+          const func = info.func;
+          const field = info.field;
+
+          if (schemaVerify.Type.object.is(funcCase) && schemaVerify.Type.function.is(funcCase[func])) {
+            const funcInfo = funcCase[func].call(funcCase, field);
+            this.funcsCache(funcInfo);
+          }
+
+          continue;
+        }
       }
 
       return this;
@@ -3503,8 +3692,8 @@ var combine$1 = createCommonjsModule(function (module, exports) {
     groupBy(...fields) {
       let groupByFields = schemaVerify.Type.array.safe(this.groupByFields);
 
-      if (!schemaVerify.Type.array.isNotEmpty(fields)) {
-        throw new Error("Illegal Field");
+      if (!combine_verify$1.groupByVerify(fields)) {
+        throw new Error(builder_error$1.default.errorFieldName);
       }
 
       groupByFields = groupByFields.concat(fields);
@@ -3529,8 +3718,8 @@ var combine$1 = createCommonjsModule(function (module, exports) {
       let funcs = [];
 
       for (const info of combineFuncs) {
-        if (!schemaVerify.Type.object.isNotEmpty(info) || !schemaVerify.Type.string.isNotEmpty(info.funcFeild)) {
-          throw new Error("Illegal Func Feild");
+        if (!combine_verify$1.funcInfoVerify(info)) {
+          throw new Error(builder_error$1.default.errorFuncInfo);
         }
 
         const funcFeild = info.funcFeild;
@@ -3544,7 +3733,7 @@ var combine$1 = createCommonjsModule(function (module, exports) {
     funcsCache(funcInfo) {
       const combineFuncs = schemaVerify.Type.array.safe(this.combineFuncs);
 
-      if (schemaVerify.Type.object.isNotEmpty(funcInfo) && schemaVerify.Type.string.isNotEmpty(funcInfo.funcFeild)) {
+      if (combine_verify$1.funcInfoVerify(funcInfo)) {
         combineFuncs.push(funcInfo);
       }
 
@@ -3555,16 +3744,25 @@ var combine$1 = createCommonjsModule(function (module, exports) {
     funcFeilds(...funcInfos) {
       for (let info of funcInfos) {
         info = schemaVerify.Type.object.safe(info);
-        let saveInfo = info;
-        const func = info.func;
-        const field = info.field;
-        const funcCase = this.getFuncCase();
 
-        if (schemaVerify.Type.string.isNotEmpty(func) && schemaVerify.Type.function.is(funcCase[func]) && schemaVerify.Type.undefinedNull.isNot(field)) {
-          saveInfo = funcCase[func].call(funcCase, field);
+        if (combine_verify$1.funcInfoVerify(info)) {
+          this.funcsCache(info);
+          continue;
         }
 
-        this.funcsCache(saveInfo);
+        const funcCase = this.getFuncCase();
+
+        if (combine_verify$1.funcInputVerify(info, true)) {
+          const func = info.func;
+          const field = info.field;
+
+          if (schemaVerify.Type.object.is(funcCase) && schemaVerify.Type.function.is(funcCase[func])) {
+            const funcInfo = funcCase[func].call(funcCase, field);
+            this.funcsCache(funcInfo);
+          }
+
+          continue;
+        }
       }
 
       return this;
@@ -4546,7 +4744,7 @@ var builder = createCommonjsModule(function (module, exports) {
       }
 
       if (schemaVerify.Type.string.isNotEmpty(queryTable)) {
-        typeof instance.table === "function" && instance.table(queryTable);
+        schemaVerify.Type.function.is(instance.table) && instance.table(queryTable);
       }
 
       return instance;
@@ -4575,7 +4773,7 @@ var builder = createCommonjsModule(function (module, exports) {
 
     table(tableName) {
       if (!schemaVerify.Type.string.isNotEmpty(tableName)) {
-        throw new Error("Illegal Table Name");
+        throw new Error(builder_error$1.default.errorTableName);
       }
 
       this.queryTable = tableName;
@@ -4660,7 +4858,7 @@ var builder$1 = createCommonjsModule(function (module, exports) {
       }
 
       if (schemaVerify.Type.string.isNotEmpty(queryTable)) {
-        typeof instance.table === "function" && instance.table(queryTable);
+        schemaVerify.Type.function.is(instance.table) && instance.table(queryTable);
       }
 
       return instance;
@@ -4689,7 +4887,7 @@ var builder$1 = createCommonjsModule(function (module, exports) {
 
     table(tableName) {
       if (!schemaVerify.Type.string.isNotEmpty(tableName)) {
-        throw new Error("Illegal Table Name");
+        throw new Error(builder_error$1.default.errorTableName);
       }
 
       this.queryTable = tableName;

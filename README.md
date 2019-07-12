@@ -450,7 +450,7 @@ builder
 
 -   条件 =
 
-#### where\$NoEqual
+#### where\$NotEqual
 
 -   条件 <>
 
@@ -570,7 +570,7 @@ builder
 builder
     .select()
     .table("table1")
-    .where$NoEqual({
+    .where$NotEqual({
         field1: "value1"
     }).query;
 // SELECT * FROM `table1` WHERE `field1` <> 'value1'
@@ -670,7 +670,7 @@ builder
     .where$Equal({
         field1: "value1"
     })
-    .where$NoEqual({
+    .where$NotEqual({
         field2: "value2"
     }).query;
 // SELECT * FROM `table1` WHERE `field1` = 'value1' AND `field2` <> 'value2'
@@ -678,10 +678,10 @@ builder
 builder
     .select()
     .table("table1")
-    .where$NoEqual({
+    .where$NotEqual({
         field1: "value1"
     })
-    .where$NoEqual({
+    .where$NotEqual({
         field1: "value2"
     }).query;
 // SELECT * FROM `table1` WHERE `field1` <> 'value1' AND `field1` <> 'value2'
@@ -748,7 +748,7 @@ builder
 
 -   条件 =
 
-#### having\$NoEqual
+#### having\$NotEqual
 
 -   条件 <>
 
@@ -862,7 +862,7 @@ builder
 
 -   条件 =
 
-#### noEqual
+#### notEqual
 
 -   条件 <>
 
@@ -989,7 +989,7 @@ builder
     .select()
     .table("table1")
     .where(() =>
-        builder.term.noEqual({
+        builder.term.notEqual({
             field1: "value1"
         })
     ).query;
@@ -1114,7 +1114,7 @@ builder
             .equal({
                 field1: "value1"
             })
-            .noEqual({
+            .notEqual({
                 field2: "value2"
             })
     ).query;
@@ -1125,10 +1125,10 @@ builder
     .table("table1")
     .where(() =>
         builder.term
-            .noEqual({
+            .notEqual({
                 field1: "value1"
             })
-            .noEqual({
+            .notEqual({
                 field1: "value2"
             })
     ).query;

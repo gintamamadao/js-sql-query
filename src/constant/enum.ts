@@ -48,7 +48,7 @@ export enum TermLogic {
 
 export enum TermSign {
     equal = "=",
-    noEqual = "<>",
+    notEqual = "<>",
     more = ">",
     less = "<",
     moreEqual = ">=",

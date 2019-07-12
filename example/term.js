@@ -16,7 +16,7 @@ var query = builder
     .select()
     .table("table1")
     .where(() =>
-        builder.term.noEqual({
+        builder.term.notEqual({
             field1: "value1"
         })
     ).query;
@@ -141,7 +141,7 @@ var query = builder
             .equal({
                 field1: "value1"
             })
-            .noEqual({
+            .notEqual({
                 field2: "value2"
             })
     ).query;
@@ -152,10 +152,10 @@ var query = builder
     .table("table1")
     .where(() =>
         builder.term
-            .noEqual({
+            .notEqual({
                 field1: "value1"
             })
-            .noEqual({
+            .notEqual({
                 field1: "value2"
             })
     ).query;

@@ -13,7 +13,7 @@ console.log(query); // SELECT * FROM `table1` HAVING `field1` = 'value1'
 var query = builder
     .select()
     .table("table1")
-    .having$NoEqual({
+    .having$NotEqual({
         field1: "value1"
     }).query;
 console.log(query); // SELECT * FROM `table1` HAVING `field1` <> 'value1'
@@ -113,7 +113,7 @@ var query = builder
     .having$Equal({
         field1: "value1"
     })
-    .having$NoEqual({
+    .having$NotEqual({
         field2: "value2"
     }).query;
 console.log(query); // SELECT * FROM `table1` HAVING `field1` = 'value1' AND `field2` <> 'value2'
@@ -121,10 +121,10 @@ console.log(query); // SELECT * FROM `table1` HAVING `field1` = 'value1' AND `fi
 var query = builder
     .select()
     .table("table1")
-    .having$NoEqual({
+    .having$NotEqual({
         field1: "value1"
     })
-    .having$NoEqual({
+    .having$NotEqual({
         field1: "value2"
     }).query;
 console.log(query); // SELECT * FROM `table1` HAVING `field1` <> 'value1' AND `field1` <> 'value2'

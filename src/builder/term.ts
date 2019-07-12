@@ -255,8 +255,8 @@ class Term extends Safe {
         return this.and(data, TermSign.equal);
     }
 
-    noEqual(data: TermData) {
-        return this.and(data, TermSign.noEqual);
+    notEqual(data: TermData) {
+        return this.and(data, TermSign.notEqual);
     }
 
     in(data: TermData) {
@@ -304,7 +304,7 @@ class Term extends Safe {
     }
 
     orNoEqual(data: TermData) {
-        return this.or(data, TermSign.noEqual);
+        return this.or(data, TermSign.notEqual);
     }
 
     orIn(data: TermData) {

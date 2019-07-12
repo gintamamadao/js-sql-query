@@ -53,6 +53,46 @@ describe("SELECT", () => {
                     .fields(["field1", "field2"]).query)()
         ).toBe(QUERY);
     });
+    test("GROUP BY", () => {
+        const QUERY =
+            "SELECT `field1`, COUNT(`field2`) FROM `table1` GROUP BY `field2`";
+        expect(
+            (() =>
+                builder
+                    .select()
+                    .table("table1")
+                    .fields("field1")
+                    .count("field2")
+                    .groupBy("field2").query)()
+        ).toBe(QUERY);
+    });
+    test("GROUP BY", () => {
+        const QUERY =
+            "SELECT `field1`, COUNT(`field2`) FROM `table1` GROUP BY `field2`, `field3`";
+        expect(
+            (() =>
+                builder
+                    .select()
+                    .table("table1")
+                    .fields("field1")
+                    .count("field2")
+                    .groupBy("field2", "field3").query)()
+        ).toBe(QUERY);
+        expect(
+            (() =>
+                builder
+                    .select()
+                    .table("table1")
+                    .fields("field1")
+                    .count("field2")
+                    .groupBy("field2")
+                    .groupBy("field3").query)()
+        ).toBe(QUERY);
+    });
+});
+
+describe("SELECT:COMBINE FUNC", () => {
+    const builder = new Builder();
     test("COUNT", () => {
         const QUERY = "SELECT `field1`, COUNT(`field2`) FROM `table1`";
         expect(
@@ -177,40 +217,29 @@ describe("SELECT", () => {
                     }).query)()
         ).toBe(QUERY);
     });
-    test("GROUP BY", () => {
-        const QUERY =
-            "SELECT `field1`, COUNT(`field2`) FROM `table1` GROUP BY `field2`";
-        expect(
-            (() =>
-                builder
-                    .select()
-                    .table("table1")
-                    .fields("field1")
-                    .count("field2")
-                    .groupBy("field2").query)()
-        ).toBe(QUERY);
+});
+
+describe("SELECT:ERROR", () => {
+    const builder = new Builder();
+    test("table", () => {
+        expect(() => builder.table().select()).toThrowError("错误的表名");
     });
-    test("GROUP BY", () => {
-        const QUERY =
-            "SELECT `field1`, COUNT(`field2`) FROM `table1` GROUP BY `field2`, `field3`";
+    test("groupBy", () => {
         expect(
-            (() =>
+            () =>
                 builder
                     .select()
                     .table("table1")
-                    .fields("field1")
-                    .count("field2")
-                    .groupBy("field2", "field3").query)()
-        ).toBe(QUERY);
+                    .groupBy().query
+        ).toThrowError("错误的字段名");
+    });
+    test("groupBy", () => {
         expect(
-            (() =>
+            () =>
                 builder
                     .select()
                     .table("table1")
-                    .fields("field1")
-                    .count("field2")
-                    .groupBy("field2")
-                    .groupBy("field3").query)()
-        ).toBe(QUERY);
+                    .groupBy({}).query
+        ).toThrowError("错误的字段名");
     });
 });
