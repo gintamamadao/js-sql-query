@@ -37,6 +37,264 @@ var util = createCommonjsModule(function (module, exports) {
 unwrapExports(util);
 var util_1 = util.argStrArrTrans;
 
+var combine_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorFuncInfo: "错误的组合函数信息"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(combine_error);
+
+var insert_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorFieldDataArr: "错误的字段数据组",
+    errorInsertValues: "错误的插入值"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(insert_error);
+
+var safe_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorDialect: "错误的数据库类型",
+    errorManualSql: "错误的自定义sql"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(safe_error);
+
+var limit_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorPage: "错误的页码",
+    errorSize: "错误的页码",
+    errorStep: "错误的步长",
+    errorOffset: "错误的偏移"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(limit_error);
+
+var order_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorOrderInfo: "错误的排序信息",
+    errorValueList: "需要非空数组"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(order_error);
+
+var select_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorFieldMap: "错误的字段映射"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(select_error);
+
+var term_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorTermdata: "错误的条件数据",
+    errorTermSign: "错误的条件类型",
+    errorTermValue: "错误的条件值",
+    errorTermLogic: "错误的条件逻辑"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(term_error);
+
+var update_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    emptyUpdateInfo: "缺少更新信息",
+    errorUpdateInfo: "错误的更新信息"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(update_error);
+
+var combine_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorFuncInfo: "错误的组合函数信息"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(combine_error$1);
+
+var insert_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorFieldDataArr: "错误的字段数据组",
+    errorInsertValues: "错误的插入值"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(insert_error$1);
+
+var safe_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorDialect: "错误的数据库类型",
+    errorManualSql: "错误的自定义sql"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(safe_error$1);
+
+var limit_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorPage: "错误的页码",
+    errorSize: "错误的页码",
+    errorStep: "错误的步长",
+    errorOffset: "错误的偏移"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(limit_error$1);
+
+var order_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorOrderInfo: "错误的排序信息",
+    errorValueList: "需要非空数组"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(order_error$1);
+
+var select_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorFieldMap: "错误的字段映射"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(select_error$1);
+
+var term_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorTermdata: "错误的条件数据",
+    errorTermSign: "错误的条件类型",
+    errorTermValue: "错误的条件值",
+    errorTermLogic: "错误的条件逻辑"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(term_error$1);
+
+var update_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    emptyUpdateInfo: "缺少更新信息",
+    errorUpdateInfo: "错误的更新信息"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(update_error$1);
+
+var D__project_jsSqlQuery_src_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = { ...combine_error$1.default,
+    ...insert_error$1.default,
+    ...safe_error$1.default,
+    ...limit_error$1.default,
+    ...order_error$1.default,
+    ...select_error$1.default,
+    ...term_error$1.default,
+    ...update_error$1.default,
+    errorTableName: "错误的表名，需要非空字符串",
+    errorFields: "错误的字段，需要非空字符串或非空字符串数组",
+    errorFieldData: "错误的字段数据",
+    needStr: "需要字符串",
+    needNumStr: "需要数字或者字符串"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(D__project_jsSqlQuery_src_error);
+
+var error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = { ...combine_error$1.default,
+    ...insert_error$1.default,
+    ...safe_error$1.default,
+    ...limit_error$1.default,
+    ...order_error$1.default,
+    ...select_error$1.default,
+    ...term_error$1.default,
+    ...update_error$1.default,
+    errorTableName: "错误的表名，需要非空字符串",
+    errorFields: "错误的字段，需要非空字符串或非空字符串数组",
+    errorFieldData: "错误的字段数据",
+    needStr: "需要字符串",
+    needNumStr: "需要数字或者字符串"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(error);
+
 var dialects = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -57,7 +315,7 @@ var dialects = createCommonjsModule(function (module, exports) {
         }
 
         if (!result) {
-          throw new Error("Illegal Value");
+          throw new Error(error.default.needNumStr);
         }
 
         return result;
@@ -67,7 +325,7 @@ var dialects = createCommonjsModule(function (module, exports) {
         let result;
 
         if (!schemaVerify.Type.string.isNotEmpty(key)) {
-          throw new Error("Illegal Key");
+          throw new Error(error.default.needStr);
         }
 
         result = key.replace(/`/g, "``");
@@ -89,7 +347,7 @@ var dialects = createCommonjsModule(function (module, exports) {
         }
 
         if (!result) {
-          throw new Error("Illegal Value");
+          throw new Error(error.default.needNumStr);
         }
 
         return result;
@@ -97,7 +355,7 @@ var dialects = createCommonjsModule(function (module, exports) {
 
       safeKey(key) {
         if (!schemaVerify.Type.string.isNotEmpty(key)) {
-          throw new Error("Illegal Key");
+          throw new Error(error.default.needStr);
         }
 
         return `[${key}]`;
@@ -118,7 +376,7 @@ var dialects = createCommonjsModule(function (module, exports) {
         }
 
         if (!result) {
-          throw new Error("Illegal Value");
+          throw new Error(error.default.needNumStr);
         }
 
         return result;
@@ -128,7 +386,7 @@ var dialects = createCommonjsModule(function (module, exports) {
         let result;
 
         if (!schemaVerify.Type.string.isNotEmpty(key)) {
-          throw new Error("Illegal Key");
+          throw new Error(error.default.needStr);
         }
 
         result = key.replace(/\"/g, '""');
@@ -150,7 +408,7 @@ var dialects = createCommonjsModule(function (module, exports) {
         }
 
         if (!result) {
-          throw new Error("Illegal Value");
+          throw new Error(error.default.needNumStr);
         }
 
         return result;
@@ -160,7 +418,7 @@ var dialects = createCommonjsModule(function (module, exports) {
         let result;
 
         if (!schemaVerify.Type.string.isNotEmpty(key)) {
-          throw new Error("Illegal Key");
+          throw new Error(error.default.needStr);
         }
 
         result = key.replace(/`/g, "``");
@@ -1075,7 +1333,7 @@ var update_verify$1 = createCommonjsModule(function (module, exports) {
 unwrapExports(update_verify$1);
 var update_verify_1$1 = update_verify$1.updateInfoVerify;
 
-var D__vmproject_sql_query_src_verify = createCommonjsModule(function (module, exports) {
+var D__project_jsSqlQuery_src_verify = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
@@ -1141,263 +1399,30 @@ var D__vmproject_sql_query_src_verify = createCommonjsModule(function (module, e
   }).verify;
   exports.fieldDataVerify = fieldDataVerify;
 });
-unwrapExports(D__vmproject_sql_query_src_verify);
-var D__vmproject_sql_query_src_verify_1 = D__vmproject_sql_query_src_verify.fieldDataArrVerify;
-var D__vmproject_sql_query_src_verify_2 = D__vmproject_sql_query_src_verify.funcInfoVerify;
-var D__vmproject_sql_query_src_verify_3 = D__vmproject_sql_query_src_verify.funcInputVerify;
-var D__vmproject_sql_query_src_verify_4 = D__vmproject_sql_query_src_verify.dialectVerify;
-var D__vmproject_sql_query_src_verify_5 = D__vmproject_sql_query_src_verify.manualSqlVerify;
-var D__vmproject_sql_query_src_verify_6 = D__vmproject_sql_query_src_verify.pageVerify;
-var D__vmproject_sql_query_src_verify_7 = D__vmproject_sql_query_src_verify.limitInfoVerify;
-var D__vmproject_sql_query_src_verify_8 = D__vmproject_sql_query_src_verify.orderInfoVerify;
-var D__vmproject_sql_query_src_verify_9 = D__vmproject_sql_query_src_verify.valueListVerify;
-var D__vmproject_sql_query_src_verify_10 = D__vmproject_sql_query_src_verify.termDataVerify;
-var D__vmproject_sql_query_src_verify_11 = D__vmproject_sql_query_src_verify.termBracketVerify;
-var D__vmproject_sql_query_src_verify_12 = D__vmproject_sql_query_src_verify.termSignVerify;
-var D__vmproject_sql_query_src_verify_13 = D__vmproject_sql_query_src_verify.termLogicVerify;
-var D__vmproject_sql_query_src_verify_14 = D__vmproject_sql_query_src_verify.termValueVerify;
-var D__vmproject_sql_query_src_verify_15 = D__vmproject_sql_query_src_verify.termInVerify;
-var D__vmproject_sql_query_src_verify_16 = D__vmproject_sql_query_src_verify.termBetweenVerify;
-var D__vmproject_sql_query_src_verify_17 = D__vmproject_sql_query_src_verify.termInfoVerify;
-var D__vmproject_sql_query_src_verify_18 = D__vmproject_sql_query_src_verify.updateInfoVerify;
-var D__vmproject_sql_query_src_verify_19 = D__vmproject_sql_query_src_verify.strArrVerify;
-var D__vmproject_sql_query_src_verify_20 = D__vmproject_sql_query_src_verify.strObjVerify;
-var D__vmproject_sql_query_src_verify_21 = D__vmproject_sql_query_src_verify.naturalVerify;
-var D__vmproject_sql_query_src_verify_22 = D__vmproject_sql_query_src_verify.integerVerify;
-var D__vmproject_sql_query_src_verify_23 = D__vmproject_sql_query_src_verify.fieldDataVerify;
-
-var combine_error = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = {
-    errorFuncInfo: "错误的组合函数信息"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(combine_error);
-
-var insert_error = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = {
-    errorFieldDataArr: "错误的字段数据组",
-    errorInsertValues: "错误的插入值"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(insert_error);
-
-var safe_error = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = {
-    errorDialect: "错误的数据库类型",
-    errorManualSql: "错误的自定义sql"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(safe_error);
-
-var limit_error = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = {
-    errorPage: "错误的页码",
-    errorSize: "错误的页码",
-    errorStep: "错误的步长",
-    errorOffset: "错误的偏移"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(limit_error);
-
-var order_error = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = {
-    errorOrderInfo: "错误的排序信息",
-    errorValueList: "需要非空数组"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(order_error);
-
-var select_error = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = {
-    errorFieldMap: "错误的字段映射"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(select_error);
-
-var term_error = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = {
-    errorTermdata: "错误的条件数据",
-    errorTermSign: "错误的条件类型",
-    errorTermValue: "错误的条件值",
-    errorTermLogic: "错误的条件逻辑"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(term_error);
-
-var update_error = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = {
-    emptyUpdateInfo: "缺少更新信息",
-    errorUpdateInfo: "错误的更新信息"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(update_error);
-
-var combine_error$1 = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = {
-    errorFuncInfo: "错误的组合函数信息"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(combine_error$1);
-
-var insert_error$1 = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = {
-    errorFieldDataArr: "错误的字段数据组",
-    errorInsertValues: "错误的插入值"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(insert_error$1);
-
-var safe_error$1 = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = {
-    errorDialect: "错误的数据库类型",
-    errorManualSql: "错误的自定义sql"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(safe_error$1);
-
-var limit_error$1 = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = {
-    errorPage: "错误的页码",
-    errorSize: "错误的页码",
-    errorStep: "错误的步长",
-    errorOffset: "错误的偏移"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(limit_error$1);
-
-var order_error$1 = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = {
-    errorOrderInfo: "错误的排序信息",
-    errorValueList: "需要非空数组"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(order_error$1);
-
-var select_error$1 = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = {
-    errorFieldMap: "错误的字段映射"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(select_error$1);
-
-var term_error$1 = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = {
-    errorTermdata: "错误的条件数据",
-    errorTermSign: "错误的条件类型",
-    errorTermValue: "错误的条件值",
-    errorTermLogic: "错误的条件逻辑"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(term_error$1);
-
-var update_error$1 = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = {
-    emptyUpdateInfo: "缺少更新信息",
-    errorUpdateInfo: "错误的更新信息"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(update_error$1);
-
-var D__vmproject_sql_query_src_error = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = { ...combine_error$1.default,
-    ...insert_error$1.default,
-    ...safe_error$1.default,
-    ...limit_error$1.default,
-    ...order_error$1.default,
-    ...select_error$1.default,
-    ...term_error$1.default,
-    ...update_error$1.default,
-    errorTableName: "错误的表名，需要非空字符串",
-    errorFields: "错误的字段，需要非空字符串或非空字符串数组",
-    errorFieldData: "错误的字段数据"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(D__vmproject_sql_query_src_error);
+unwrapExports(D__project_jsSqlQuery_src_verify);
+var D__project_jsSqlQuery_src_verify_1 = D__project_jsSqlQuery_src_verify.fieldDataArrVerify;
+var D__project_jsSqlQuery_src_verify_2 = D__project_jsSqlQuery_src_verify.funcInfoVerify;
+var D__project_jsSqlQuery_src_verify_3 = D__project_jsSqlQuery_src_verify.funcInputVerify;
+var D__project_jsSqlQuery_src_verify_4 = D__project_jsSqlQuery_src_verify.dialectVerify;
+var D__project_jsSqlQuery_src_verify_5 = D__project_jsSqlQuery_src_verify.manualSqlVerify;
+var D__project_jsSqlQuery_src_verify_6 = D__project_jsSqlQuery_src_verify.pageVerify;
+var D__project_jsSqlQuery_src_verify_7 = D__project_jsSqlQuery_src_verify.limitInfoVerify;
+var D__project_jsSqlQuery_src_verify_8 = D__project_jsSqlQuery_src_verify.orderInfoVerify;
+var D__project_jsSqlQuery_src_verify_9 = D__project_jsSqlQuery_src_verify.valueListVerify;
+var D__project_jsSqlQuery_src_verify_10 = D__project_jsSqlQuery_src_verify.termDataVerify;
+var D__project_jsSqlQuery_src_verify_11 = D__project_jsSqlQuery_src_verify.termBracketVerify;
+var D__project_jsSqlQuery_src_verify_12 = D__project_jsSqlQuery_src_verify.termSignVerify;
+var D__project_jsSqlQuery_src_verify_13 = D__project_jsSqlQuery_src_verify.termLogicVerify;
+var D__project_jsSqlQuery_src_verify_14 = D__project_jsSqlQuery_src_verify.termValueVerify;
+var D__project_jsSqlQuery_src_verify_15 = D__project_jsSqlQuery_src_verify.termInVerify;
+var D__project_jsSqlQuery_src_verify_16 = D__project_jsSqlQuery_src_verify.termBetweenVerify;
+var D__project_jsSqlQuery_src_verify_17 = D__project_jsSqlQuery_src_verify.termInfoVerify;
+var D__project_jsSqlQuery_src_verify_18 = D__project_jsSqlQuery_src_verify.updateInfoVerify;
+var D__project_jsSqlQuery_src_verify_19 = D__project_jsSqlQuery_src_verify.strArrVerify;
+var D__project_jsSqlQuery_src_verify_20 = D__project_jsSqlQuery_src_verify.strObjVerify;
+var D__project_jsSqlQuery_src_verify_21 = D__project_jsSqlQuery_src_verify.naturalVerify;
+var D__project_jsSqlQuery_src_verify_22 = D__project_jsSqlQuery_src_verify.integerVerify;
+var D__project_jsSqlQuery_src_verify_23 = D__project_jsSqlQuery_src_verify.fieldDataVerify;
 
 var dialects$1 = createCommonjsModule(function (module, exports) {
 
@@ -1419,7 +1444,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
         }
 
         if (!result) {
-          throw new Error("Illegal Value");
+          throw new Error(error.default.needNumStr);
         }
 
         return result;
@@ -1429,7 +1454,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
         let result;
 
         if (!schemaVerify.Type.string.isNotEmpty(key)) {
-          throw new Error("Illegal Key");
+          throw new Error(error.default.needStr);
         }
 
         result = key.replace(/`/g, "``");
@@ -1451,7 +1476,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
         }
 
         if (!result) {
-          throw new Error("Illegal Value");
+          throw new Error(error.default.needNumStr);
         }
 
         return result;
@@ -1459,7 +1484,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
 
       safeKey(key) {
         if (!schemaVerify.Type.string.isNotEmpty(key)) {
-          throw new Error("Illegal Key");
+          throw new Error(error.default.needStr);
         }
 
         return `[${key}]`;
@@ -1480,7 +1505,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
         }
 
         if (!result) {
-          throw new Error("Illegal Value");
+          throw new Error(error.default.needNumStr);
         }
 
         return result;
@@ -1490,7 +1515,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
         let result;
 
         if (!schemaVerify.Type.string.isNotEmpty(key)) {
-          throw new Error("Illegal Key");
+          throw new Error(error.default.needStr);
         }
 
         result = key.replace(/\"/g, '""');
@@ -1512,7 +1537,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
         }
 
         if (!result) {
-          throw new Error("Illegal Value");
+          throw new Error(error.default.needNumStr);
         }
 
         return result;
@@ -1522,7 +1547,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
         let result;
 
         if (!schemaVerify.Type.string.isNotEmpty(key)) {
-          throw new Error("Illegal Key");
+          throw new Error(error.default.needStr);
         }
 
         result = key.replace(/`/g, "``");
@@ -1625,27 +1650,6 @@ var verify_20 = verify.strObjVerify;
 var verify_21 = verify.naturalVerify;
 var verify_22 = verify.integerVerify;
 var verify_23 = verify.fieldDataVerify;
-
-var error = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = { ...combine_error$1.default,
-    ...insert_error$1.default,
-    ...safe_error$1.default,
-    ...limit_error$1.default,
-    ...order_error$1.default,
-    ...select_error$1.default,
-    ...term_error$1.default,
-    ...update_error$1.default,
-    errorTableName: "错误的表名，需要非空字符串",
-    errorFields: "错误的字段，需要非空字符串或非空字符串数组",
-    errorFieldData: "错误的字段数据"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(error);
 
 var safe = createCommonjsModule(function (module, exports) {
 

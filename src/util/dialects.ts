@@ -1,5 +1,6 @@
 import { Dialects } from "../constant/interface";
 import { Type } from "schema-verify";
+import ErrMsg from "../error/index";
 
 const DialectsObj: Dialects = {
     mysql: {
@@ -15,14 +16,14 @@ const DialectsObj: Dialects = {
                 result = `'${value}'`;
             }
             if (!result) {
-                throw new Error("Illegal Value");
+                throw new Error(ErrMsg.needNumStr);
             }
             return result;
         },
         safeKey(key: string): string {
             let result: string;
             if (!Type.string.isNotEmpty(key)) {
-                throw new Error("Illegal Key");
+                throw new Error(ErrMsg.needStr);
             }
             result = key.replace(/`/g, "``");
             return "`" + result + "`";
@@ -39,13 +40,13 @@ const DialectsObj: Dialects = {
                 result = `'${value}'`;
             }
             if (!result) {
-                throw new Error("Illegal Value");
+                throw new Error(ErrMsg.needNumStr);
             }
             return result;
         },
         safeKey(key: string): string {
             if (!Type.string.isNotEmpty(key)) {
-                throw new Error("Illegal Key");
+                throw new Error(ErrMsg.needStr);
             }
             return `[${key}]`;
         }
@@ -61,14 +62,14 @@ const DialectsObj: Dialects = {
                 result = `'${value}'`;
             }
             if (!result) {
-                throw new Error("Illegal Value");
+                throw new Error(ErrMsg.needNumStr);
             }
             return result;
         },
         safeKey(key: string): string {
             let result: string;
             if (!Type.string.isNotEmpty(key)) {
-                throw new Error("Illegal Key");
+                throw new Error(ErrMsg.needStr);
             }
             result = key.replace(/\"/g, '""');
             return `"${result}"`;
@@ -85,14 +86,14 @@ const DialectsObj: Dialects = {
                 result = `'${value}'`;
             }
             if (!result) {
-                throw new Error("Illegal Value");
+                throw new Error(ErrMsg.needNumStr);
             }
             return result;
         },
         safeKey(key: string): string {
             let result: string;
             if (!Type.string.isNotEmpty(key)) {
-                throw new Error("Illegal Key");
+                throw new Error(ErrMsg.needStr);
             }
             result = key.replace(/`/g, "``");
             return "`" + result + "`";

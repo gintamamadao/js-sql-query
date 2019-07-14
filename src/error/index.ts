@@ -18,7 +18,9 @@ const ErrMsg = {
     ...UpdateError,
     errorTableName: "错误的表名，需要非空字符串",
     errorFields: "错误的字段，需要非空字符串或非空字符串数组",
-    errorFieldData: "错误的字段数据"
+    errorFieldData: "错误的字段数据",
+    needStr: "需要字符串",
+    needNumStr: "需要数字或者字符串"
 };
 
 export default ErrMsg;
