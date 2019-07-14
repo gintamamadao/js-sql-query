@@ -9,7 +9,6 @@ class Delete extends Where {
     }
 
     build(): string {
-        this.checkQuery();
         const type: string = this.queryType;
         const table: string = this.getQueryTable();
         let query: string = `${type} FROM ${table}`;
@@ -17,10 +16,6 @@ class Delete extends Where {
         query = this.orderBuild(query);
         query = this.limitBuild(query);
         return query;
-    }
-
-    checkQuery(): void {
-        this._checkQuery();
     }
 }
 

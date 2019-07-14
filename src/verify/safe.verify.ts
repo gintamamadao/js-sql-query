@@ -16,3 +16,16 @@ export const dialectVerify = new Schema({
         }
     ]
 }).verify;
+
+export const manualSqlVerify = new Schema([
+    {
+        type: String,
+        length: { min: 1 }
+    },
+    {
+        type: Function
+    },
+    {
+        type: Object
+    }
+]).verify;

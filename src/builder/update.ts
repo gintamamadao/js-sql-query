@@ -2,6 +2,12 @@ import { QueryTypes, DialectTypes, UpdateTypes } from "../constant/enum";
 import { FieldData } from "../constant/interface";
 import Where from "./where";
 import { Type } from "schema-verify";
+import {
+    strArrVerify,
+    fieldDataVerify,
+    updateInfoVerify
+} from "../verify/index";
+import ErrMsg from "../error/index";
 
 interface UpdateInfo {
     value: string | number;
@@ -21,7 +27,6 @@ class Update extends Where {
     }
 
     build(): string {
-        this.checkQuery();
         const type: string = this.queryType;
         const table: string = this.getQueryTable();
         const data: string[] = this.formatData();
@@ -36,13 +41,13 @@ class Update extends Where {
     protected formatData(): string[] {
         const updateInfos: UpdateInfos = this.updateInfos;
         if (!Type.object.isNotEmpty(updateInfos)) {
-            throw new Error("Illegal Update Infos");
+            throw new Error(ErrMsg.emptyUpdateInfo);
         }
         const result: string[] = [];
         for (const field in updateInfos) {
             const info: UpdateInfo = updateInfos[field];
-            if (!Type.object.isNotEmpty(info)) {
-                throw new Error("Illegal Update Info");
+            if (!updateInfoVerify(info)) {
+                continue;
             }
             const type: string = info.type;
             const value: string | number = info.value;
@@ -60,28 +65,30 @@ class Update extends Where {
                     infoStr = `${safeField} = ${safeField} - ${safeValue}`;
                     break;
             }
-            if (!Type.string.isNotEmpty(infoStr)) {
-                throw new Error("Illegal Update Type");
+            if (Type.string.isNotEmpty(infoStr)) {
+                result.push(infoStr);
             }
-            result.push(infoStr);
+        }
+        if (!strArrVerify(result)) {
+            throw new Error(ErrMsg.emptyUpdateInfo);
         }
         return result;
     }
 
     protected updateCache(data: FieldData, type: UpdateTypes) {
-        if (!Type.object.isNotEmpty(data)) {
-            throw new Error("Illegal Update Data");
+        if (!fieldDataVerify(data)) {
+            throw new Error(ErrMsg.errorFieldData);
         }
         const updateInfos: UpdateInfos = Type.object.safe(this.updateInfos);
         for (const field in data) {
-            const value: string | number = data[field];
-            if (!Type.string.isNotEmpty(value) && !Type.number.is(value)) {
-                throw new Error("Illegal Value Type");
-            }
+            const value = data[field];
             const updateInfo = {
                 value,
                 type
             };
+            if (!updateInfoVerify(updateInfo)) {
+                throw new Error(ErrMsg.errorUpdateInfo);
+            }
             updateInfos[field] = updateInfo;
         }
         this.updateInfos = updateInfos;
@@ -98,14 +105,6 @@ class Update extends Where {
 
     minus(data: FieldData) {
         return this.updateCache(data, UpdateTypes.minus);
-    }
-
-    protected checkQuery(): void {
-        this._checkQuery();
-        const updateInfos: UpdateInfos = this.updateInfos;
-        if (!Type.object.isNotEmpty(updateInfos)) {
-            throw "Illegal Update Infos";
-        }
     }
 }
 

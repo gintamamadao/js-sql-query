@@ -2,6 +2,17 @@ import { TermSign, TermLogic, DialectTypes } from "../constant/enum";
 import { TermData, TermInfo, TermBracket } from "../constant/interface";
 import Safe from "./safe";
 import { Type } from "schema-verify";
+import {
+    termDataVerify,
+    termSignVerify,
+    termLogicVerify,
+    termBracketVerify,
+    termValueVerify,
+    termInVerify,
+    termBetweenVerify,
+    termInfoVerify
+} from "../verify/index";
+import ErrMsg from "../error/index";
 
 const SQL_NAME = "termSql";
 class Term extends Safe {
@@ -52,14 +63,17 @@ class Term extends Safe {
             const curBracket: TermBracket = brackets[i];
             const perBracket: TermBracket = brackets[i - 1];
             const nextBracket: TermBracket = brackets[i + 1];
+            if (!termBracketVerify(curBracket)) {
+                continue;
+            }
             const curPos: number = curBracket.position;
             const curLogic: TermLogic = curBracket.logic;
             let prePos: number = 0;
             let nextPos: number = termsLen;
-            if (Type.object.isNotEmpty(perBracket)) {
+            if (termBracketVerify(perBracket)) {
                 prePos = perBracket.position;
             }
-            if (Type.object.isNotEmpty(nextBracket)) {
+            if (termBracketVerify(nextBracket)) {
                 nextPos = nextBracket.position;
             }
             const preTerms: TermInfo[] = terms.slice(prePos, curPos);
@@ -115,11 +129,11 @@ class Term extends Safe {
         terms = Type.array.safe(terms);
         let allTermStr: string = "";
         for (const term of terms) {
-            if (!Type.object.isNotEmpty(term)) {
+            if (!termInfoVerify(term)) {
                 continue;
             }
             const field: string = this.safeKey(term.field);
-            const value: string | number | string[] = term.value;
+            const value = term.value;
             const sign: TermSign = term.sign;
             const logic: TermLogic = term.logic;
             const termValue: string = this.formatTermValue(value, sign);
@@ -136,79 +150,68 @@ class Term extends Safe {
         return allTermStr;
     }
 
-    protected formatTermValue(
-        value: string | number | string[],
-        sign: TermSign
-    ): string {
+    protected formatTermValue(value, sign: TermSign): string {
         let termValue: string;
         if (sign === TermSign.in || sign === TermSign.notIn) {
-            if (!Type.array.isNotEmpty(value)) {
-                throw new Error("Illegal Term Value (need Array)");
+            if (!termInVerify(value)) {
+                throw new Error(ErrMsg.errorTermValue);
             }
-            termValue = (<string[]>value)
-                .map(item => this.safeValue(item))
-                .join(", ");
+            termValue = value.map(item => this.safeValue(item)).join(", ");
             return `( ${termValue} )`;
         }
 
         if (sign === TermSign.between || sign === TermSign.notBetween) {
-            if (
-                !Type.array.isNotEmpty(value) ||
-                (<string[]>value).length !== 2
-            ) {
-                throw new Error("Illegal Term Value (need Array[2])");
+            if (!termBetweenVerify(value)) {
+                throw new Error(ErrMsg.errorTermValue);
             }
             const lower = this.safeValue(value[0]);
             const upper = this.safeValue(value[1]);
             return `${lower} AND ${upper}`;
         }
 
-        if (!Type.string.isNotEmpty(value) && !Type.number.is(value)) {
-            throw new Error("Illegal Term Value");
+        if (!termValueVerify(value)) {
+            throw new Error(ErrMsg.errorTermValue);
         }
 
         if (sign === TermSign.like || sign === TermSign.notlike) {
             value = `%${value}%`;
         }
 
-        termValue = this.safeValue(<string | number>value);
+        termValue = this.safeValue(value);
 
         return termValue;
     }
 
     termCache(data: TermData, sign: TermSign, logic: TermLogic) {
-        if (!Type.object.isNotEmpty(data)) {
-            throw new Error("Illegal Term data");
+        if (!termDataVerify(data)) {
+            throw new Error(ErrMsg.errorTermdata);
         }
-        if (!Type.string.isNotEmpty(sign) || !Type.string.isNotEmpty(logic)) {
-            throw new Error("Illegal Param");
+        if (!termSignVerify(sign)) {
+            throw new Error(ErrMsg.errorTermSign);
+        }
+        if (!termLogicVerify(logic)) {
+            throw new Error(ErrMsg.errorTermLogic);
         }
         const termInfos: TermInfo[] = Type.array.safe(this.termInfos);
         const termsArr: TermInfo[] = [];
         for (const field in data) {
-            const value: string | number | string[] = data[field];
+            const value = data[field];
             switch (sign) {
                 case TermSign.in:
                 case TermSign.notIn:
-                    if (!Type.array.isNotEmpty(value)) {
-                        throw new Error("Illegal Func Value");
+                    if (!termInVerify(value)) {
+                        throw new Error(ErrMsg.errorTermValue);
                     }
                     break;
                 case TermSign.between:
                 case TermSign.notBetween:
-                    if (
-                        !Type.array.isNotEmpty(value) ||
-                        (<string[]>value).length !== 2
-                    ) {
-                        throw new Error("Illegal Func Value");
+                    if (!termBetweenVerify(value)) {
+                        throw new Error(ErrMsg.errorTermValue);
                     }
                     break;
                 default:
-                    if (
-                        !Type.string.isNotEmpty(value) &&
-                        !Type.number.is(value)
-                    ) {
-                        throw new Error("Illegal Func Value");
+                    if (!termValueVerify(value)) {
+                        throw new Error(ErrMsg.errorTermValue);
                     }
                     break;
             }
@@ -233,6 +236,9 @@ class Term extends Safe {
             return;
         }
         for (const bracket of termBrackets) {
+            if (!termBracketVerify(bracket)) {
+                continue;
+            }
             const position: number = bracket.position;
             if (position === termsLen) {
                 return;
@@ -242,7 +248,9 @@ class Term extends Safe {
             position: termsLen,
             logic
         };
-        termBrackets.push(bracket);
+        if (termBracketVerify(bracket)) {
+            termBrackets.push(bracket);
+        }
         this.termBrackets = termBrackets;
         return this;
     }

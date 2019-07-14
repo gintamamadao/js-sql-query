@@ -3,6 +3,12 @@ import Query from "./query";
 import { QueryTypes, DialectTypes } from "../constant/enum";
 import { FieldData } from "../constant/interface";
 import { Type } from "schema-verify";
+import {
+    fieldDataVerify,
+    fieldDataArrVerify,
+    strArrVerify
+} from "../verify/index";
+import ErrMsg from "../error/index";
 
 const SQL_NAME = "valuesSql";
 class Insert extends Query {
@@ -21,8 +27,8 @@ class Insert extends Query {
     }
 
     data(data: FieldData) {
-        if (!Type.object.isNotEmpty(data)) {
-            throw new Error("Illegal Field Data");
+        if (!fieldDataVerify(data)) {
+            throw new Error(ErrMsg.errorFieldData);
         }
         const insertData: FieldData = Type.object.safe(this.insertData);
         this.insertData = Object.assign({}, insertData, data);
@@ -38,8 +44,8 @@ class Insert extends Query {
     }
 
     multiData(dataArr: FieldData[]) {
-        if (!Type.array.isNotEmpty(dataArr)) {
-            throw new Error("Illegal Field Data Array");
+        if (!fieldDataArrVerify(dataArr)) {
+            throw new Error(ErrMsg.errorFieldDataArr);
         }
         const insertDataArr: FieldData[] = Type.array.safe(this.insertDataArr);
         this.insertDataArr = [].concat(insertDataArr, dataArr);
@@ -61,16 +67,16 @@ class Insert extends Query {
         const insertDataArr: FieldData[] = this.insertDataArr;
         let fields: string[];
 
-        if (Type.array.isNotEmpty(insertFields)) {
+        if (strArrVerify(insertFields)) {
             fields = insertFields;
-        } else if (Type.object.isNotEmpty(insertData)) {
+        } else if (fieldDataVerify(insertData)) {
             fields = Object.keys(insertData);
-        } else if (Type.array.isNotEmpty(insertDataArr)) {
+        } else if (fieldDataArrVerify(insertDataArr)) {
             fields = Object.keys(insertDataArr[0]);
         }
 
-        if (!Type.array.isNotEmpty(fields)) {
-            throw new Error("Illegal Insert Fields");
+        if (!strArrVerify(fields)) {
+            throw new Error(ErrMsg.errorFields);
         }
 
         return fields;
@@ -101,20 +107,19 @@ class Insert extends Query {
 
         if (Type.string.isNotEmpty(valuesSql)) {
             result = valuesSql;
-        } else if (Type.object.isNotEmpty(insertData)) {
+        } else if (fieldDataVerify(insertData)) {
             result = valuesStrFormat(insertData);
-        } else if (Type.array.isNotEmpty(insertDataArr)) {
+        } else if (fieldDataArrVerify(insertDataArr)) {
             result = valuesArrStrFormat(insertDataArr);
         }
 
         if (!Type.string.isNotEmpty(result)) {
-            throw new Error("Illegal Insert Values");
+            throw new Error(ErrMsg.errorInsertValues);
         }
         return `VALUES ${result}`;
     }
 
     build(): string {
-        this.checkQuery();
         const type: string = this.queryType;
         const table: string = this.getQueryTable();
 
@@ -123,54 +128,6 @@ class Insert extends Query {
         const fieldsStr = fields.map(field => this.safeKey(field)).join(", ");
         let query: string = `${type} INTO ${table} ( ${fieldsStr} )  ${valuesStr}`;
         return query;
-    }
-
-    protected checkQuery(): void {
-        this._checkQuery();
-        const valuesSql: string | Function = this.valuesSql;
-        const insertData: FieldData = this.insertData;
-        const insertFields: string[] = this.insertFields;
-        const insertDataArr: FieldData[] = this.insertDataArr;
-
-        if (
-            Type.string.isNotEmpty(valuesSql) ||
-            Type.function.is(valuesSql) ||
-            Type.object.is(valuesSql)
-        ) {
-            if (!Type.array.isNotEmpty(insertFields)) {
-                throw new Error("Illegal Insert Fields");
-            }
-            return;
-        }
-
-        if (
-            !Type.object.isNotEmpty(insertData) &&
-            !Type.array.isNotEmpty(insertDataArr)
-        ) {
-            throw new Error("Illegal Insert Data");
-        }
-
-        if (!Type.array.isNotEmpty(insertFields)) {
-            return;
-        }
-
-        const checkInsertData = data => {
-            for (const field of insertFields) {
-                if (Type.undefinedNull.is(data[field])) {
-                    throw new Error("Illegal Insert Data");
-                }
-            }
-        };
-
-        if (Type.object.isNotEmpty(insertData)) {
-            return checkInsertData(insertData);
-        }
-
-        if (Type.array.isNotEmpty(insertDataArr)) {
-            for (const data of insertDataArr) {
-                checkInsertData(data);
-            }
-        }
     }
 }
 

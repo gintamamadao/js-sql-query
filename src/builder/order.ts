@@ -3,6 +3,12 @@ import { OrderTypes, DialectTypes } from "../constant/enum";
 import { OrderInfo, FieldOrder } from "../constant/interface";
 import { Type } from "schema-verify";
 import Safe from "./safe";
+import {
+    orderInfoVerify,
+    valueListVerify,
+    strArrVerify
+} from "../verify/index";
+import ErrMsg from "../error/index";
 
 const SQL_NAME = "orderSql";
 
@@ -26,14 +32,14 @@ class Order extends Safe {
         }
         let ordersArr: string[] = [];
         for (const info of orderInfos) {
+            if (!orderInfoVerify(info)) {
+                continue;
+            }
             const field: string = info.field;
             const type: OrderTypes = info.type;
             const list: string[] = info.list;
             const safeField = this.safeKey(field);
             if (type === OrderTypes.field) {
-                if (!Type.array.isNotEmpty(list)) {
-                    throw new Error("Illegal Value List");
-                }
                 const listStr: string = list
                     .map(value => this.safeValue(value))
                     .join(", ");
@@ -87,7 +93,9 @@ class Order extends Safe {
         type: OrderTypes,
         fieldOrder?: FieldOrder
     ) {
-        fields = Type.array.safe(fields);
+        if (!strArrVerify(fields)) {
+            throw new Error(ErrMsg.errorFields);
+        }
         fieldOrder = Type.object.safe(fieldOrder);
         const orderInfos: OrderInfo[] = Type.array.safe(this.orderInfos);
         for (const field of fields) {
@@ -97,10 +105,13 @@ class Order extends Safe {
             };
             if (type === OrderTypes.field) {
                 const list: string[] = fieldOrder[field];
-                if (!Type.array.isNotEmpty(list)) {
-                    throw new Error("Illegal Value List");
+                if (!valueListVerify(list)) {
+                    throw new Error(ErrMsg.errorValueList);
                 }
                 info["list"] = list;
+            }
+            if (!orderInfoVerify(info)) {
+                throw new Error(ErrMsg.errorOrderInfo);
             }
             orderInfos.push(info);
         }

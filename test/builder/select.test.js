@@ -222,7 +222,9 @@ describe("SELECT:COMBINE FUNC", () => {
 describe("SELECT:ERROR", () => {
     const builder = new Builder();
     test("table", () => {
-        expect(() => builder.table().select()).toThrowError("错误的表名");
+        expect(() => builder.table().select()).toThrowError(
+            "错误的表名，需要非空字符串"
+        );
     });
     test("groupBy", () => {
         expect(
@@ -231,7 +233,7 @@ describe("SELECT:ERROR", () => {
                     .select()
                     .table("table1")
                     .groupBy().query
-        ).toThrowError("错误的字段名");
+        ).toThrowError("错误的字段，需要非空字符串或非空字符串数组");
     });
     test("groupBy", () => {
         expect(
@@ -240,6 +242,6 @@ describe("SELECT:ERROR", () => {
                     .select()
                     .table("table1")
                     .groupBy({}).query
-        ).toThrowError("错误的字段名");
+        ).toThrowError("错误的字段，需要非空字符串或非空字符串数组");
     });
 });

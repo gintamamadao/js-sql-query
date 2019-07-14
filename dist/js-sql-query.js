@@ -173,6 +173,320 @@ var dialects = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(dialects);
 
+var insert_verify = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.fieldDataArrVerify = new schemaVerify.Schema({
+    type: Array,
+    elements: {
+      type: Object,
+      required: true,
+      props: [[{
+        type: String
+      }, {
+        type: Number
+      }]]
+    }
+  }).verify;
+});
+unwrapExports(insert_verify);
+var insert_verify_1 = insert_verify.fieldDataArrVerify;
+
+var _enum = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  var DialectTypes;
+
+  (function (DialectTypes) {
+    DialectTypes["mysql"] = "mysql";
+    DialectTypes["mssql"] = "mssql";
+    DialectTypes["postgresql"] = "postgresql";
+    DialectTypes["sqlite"] = "sqlite";
+  })(DialectTypes = exports.DialectTypes || (exports.DialectTypes = {}));
+
+  var QueryTypes;
+
+  (function (QueryTypes) {
+    QueryTypes["insert"] = "INSERT";
+    QueryTypes["replace"] = "REPLACE";
+    QueryTypes["select"] = "SELECT";
+    QueryTypes["update"] = "UPDATE";
+    QueryTypes["delete"] = "DELETE";
+  })(QueryTypes = exports.QueryTypes || (exports.QueryTypes = {}));
+
+  var FuncTypes;
+
+  (function (FuncTypes) {
+    FuncTypes["count"] = "COUNT";
+    FuncTypes["sum"] = "SUM";
+    FuncTypes["max"] = "MAX";
+    FuncTypes["min"] = "MIN";
+    FuncTypes["avg"] = "AVG";
+    FuncTypes["abs"] = "ABS";
+    FuncTypes["ceil"] = "CEIL";
+    FuncTypes["floor"] = "FLOOR";
+    FuncTypes["round"] = "ROUND";
+    FuncTypes["log"] = "LOG";
+    FuncTypes["log2"] = "LOG2";
+    FuncTypes["exp"] = "EXP";
+    FuncTypes["power"] = "POWER";
+    FuncTypes["acos"] = "ACOS";
+    FuncTypes["asin"] = "ASIN";
+    FuncTypes["atan"] = "ATAN";
+    FuncTypes["cos"] = "COS";
+    FuncTypes["sin"] = "SIN";
+    FuncTypes["tan"] = "TAN";
+    FuncTypes["conv"] = "CONV";
+    FuncTypes["random"] = "RANDOM";
+    FuncTypes["rand"] = "RAND";
+    FuncTypes["radians"] = "RADIANS";
+    FuncTypes["degrees"] = "DEGREES";
+    FuncTypes["distinct"] = "DISTINCT";
+  })(FuncTypes = exports.FuncTypes || (exports.FuncTypes = {}));
+
+  var TermLogic;
+
+  (function (TermLogic) {
+    TermLogic["and"] = "AND";
+    TermLogic["or"] = "OR";
+  })(TermLogic = exports.TermLogic || (exports.TermLogic = {}));
+
+  var TermSign;
+
+  (function (TermSign) {
+    TermSign["equal"] = "=";
+    TermSign["notEqual"] = "<>";
+    TermSign["more"] = ">";
+    TermSign["less"] = "<";
+    TermSign["moreEqual"] = ">=";
+    TermSign["lessEqual"] = "<=";
+    TermSign["like"] = "LIKE";
+    TermSign["notlike"] = "NOT LIKE";
+    TermSign["isNot"] = "IS NOT";
+    TermSign["in"] = "IN";
+    TermSign["notIn"] = "NOT IN";
+    TermSign["between"] = "BETWEEN";
+    TermSign["notBetween"] = "NOT BETWEEN";
+  })(TermSign = exports.TermSign || (exports.TermSign = {}));
+
+  var OrderTypes;
+
+  (function (OrderTypes) {
+    OrderTypes["desc"] = "DESC";
+    OrderTypes["asc"] = "ASC";
+    OrderTypes["field"] = "FIELD";
+  })(OrderTypes = exports.OrderTypes || (exports.OrderTypes = {}));
+
+  var UpdateTypes;
+
+  (function (UpdateTypes) {
+    UpdateTypes["set"] = "SET";
+    UpdateTypes["add"] = "ADD";
+    UpdateTypes["minus"] = "MINUS";
+  })(UpdateTypes = exports.UpdateTypes || (exports.UpdateTypes = {}));
+
+  var WidgetTypes;
+
+  (function (WidgetTypes) {
+    WidgetTypes["func"] = "FUNC";
+    WidgetTypes["term"] = "TERM";
+    WidgetTypes["order"] = "ORDER";
+  })(WidgetTypes = exports.WidgetTypes || (exports.WidgetTypes = {}));
+
+  var DataTypes;
+
+  (function (DataTypes) {
+    DataTypes["tinyint"] = "TINYINT";
+    DataTypes["smallint"] = "SMALLINT";
+    DataTypes["mediumint"] = "MEDIUMINT";
+    DataTypes["int"] = "INT";
+    DataTypes["bigint"] = "BIGINT";
+    DataTypes["float"] = "FLOAT";
+    DataTypes["double"] = "DOUBLE";
+    DataTypes["decimal"] = "DECIMAL";
+  })(DataTypes = exports.DataTypes || (exports.DataTypes = {}));
+});
+
+unwrapExports(_enum);
+var _enum_1 = _enum.DialectTypes;
+var _enum_2 = _enum.QueryTypes;
+var _enum_3 = _enum.FuncTypes;
+var _enum_4 = _enum.TermLogic;
+var _enum_5 = _enum.TermSign;
+var _enum_6 = _enum.OrderTypes;
+var _enum_7 = _enum.UpdateTypes;
+var _enum_8 = _enum.WidgetTypes;
+var _enum_9 = _enum.DataTypes;
+
+var _enum$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  var DialectTypes;
+
+  (function (DialectTypes) {
+    DialectTypes["mysql"] = "mysql";
+    DialectTypes["mssql"] = "mssql";
+    DialectTypes["postgresql"] = "postgresql";
+    DialectTypes["sqlite"] = "sqlite";
+  })(DialectTypes = exports.DialectTypes || (exports.DialectTypes = {}));
+
+  var QueryTypes;
+
+  (function (QueryTypes) {
+    QueryTypes["insert"] = "INSERT";
+    QueryTypes["replace"] = "REPLACE";
+    QueryTypes["select"] = "SELECT";
+    QueryTypes["update"] = "UPDATE";
+    QueryTypes["delete"] = "DELETE";
+  })(QueryTypes = exports.QueryTypes || (exports.QueryTypes = {}));
+
+  var FuncTypes;
+
+  (function (FuncTypes) {
+    FuncTypes["count"] = "COUNT";
+    FuncTypes["sum"] = "SUM";
+    FuncTypes["max"] = "MAX";
+    FuncTypes["min"] = "MIN";
+    FuncTypes["avg"] = "AVG";
+    FuncTypes["abs"] = "ABS";
+    FuncTypes["ceil"] = "CEIL";
+    FuncTypes["floor"] = "FLOOR";
+    FuncTypes["round"] = "ROUND";
+    FuncTypes["log"] = "LOG";
+    FuncTypes["log2"] = "LOG2";
+    FuncTypes["exp"] = "EXP";
+    FuncTypes["power"] = "POWER";
+    FuncTypes["acos"] = "ACOS";
+    FuncTypes["asin"] = "ASIN";
+    FuncTypes["atan"] = "ATAN";
+    FuncTypes["cos"] = "COS";
+    FuncTypes["sin"] = "SIN";
+    FuncTypes["tan"] = "TAN";
+    FuncTypes["conv"] = "CONV";
+    FuncTypes["random"] = "RANDOM";
+    FuncTypes["rand"] = "RAND";
+    FuncTypes["radians"] = "RADIANS";
+    FuncTypes["degrees"] = "DEGREES";
+    FuncTypes["distinct"] = "DISTINCT";
+  })(FuncTypes = exports.FuncTypes || (exports.FuncTypes = {}));
+
+  var TermLogic;
+
+  (function (TermLogic) {
+    TermLogic["and"] = "AND";
+    TermLogic["or"] = "OR";
+  })(TermLogic = exports.TermLogic || (exports.TermLogic = {}));
+
+  var TermSign;
+
+  (function (TermSign) {
+    TermSign["equal"] = "=";
+    TermSign["notEqual"] = "<>";
+    TermSign["more"] = ">";
+    TermSign["less"] = "<";
+    TermSign["moreEqual"] = ">=";
+    TermSign["lessEqual"] = "<=";
+    TermSign["like"] = "LIKE";
+    TermSign["notlike"] = "NOT LIKE";
+    TermSign["isNot"] = "IS NOT";
+    TermSign["in"] = "IN";
+    TermSign["notIn"] = "NOT IN";
+    TermSign["between"] = "BETWEEN";
+    TermSign["notBetween"] = "NOT BETWEEN";
+  })(TermSign = exports.TermSign || (exports.TermSign = {}));
+
+  var OrderTypes;
+
+  (function (OrderTypes) {
+    OrderTypes["desc"] = "DESC";
+    OrderTypes["asc"] = "ASC";
+    OrderTypes["field"] = "FIELD";
+  })(OrderTypes = exports.OrderTypes || (exports.OrderTypes = {}));
+
+  var UpdateTypes;
+
+  (function (UpdateTypes) {
+    UpdateTypes["set"] = "SET";
+    UpdateTypes["add"] = "ADD";
+    UpdateTypes["minus"] = "MINUS";
+  })(UpdateTypes = exports.UpdateTypes || (exports.UpdateTypes = {}));
+
+  var WidgetTypes;
+
+  (function (WidgetTypes) {
+    WidgetTypes["func"] = "FUNC";
+    WidgetTypes["term"] = "TERM";
+    WidgetTypes["order"] = "ORDER";
+  })(WidgetTypes = exports.WidgetTypes || (exports.WidgetTypes = {}));
+
+  var DataTypes;
+
+  (function (DataTypes) {
+    DataTypes["tinyint"] = "TINYINT";
+    DataTypes["smallint"] = "SMALLINT";
+    DataTypes["mediumint"] = "MEDIUMINT";
+    DataTypes["int"] = "INT";
+    DataTypes["bigint"] = "BIGINT";
+    DataTypes["float"] = "FLOAT";
+    DataTypes["double"] = "DOUBLE";
+    DataTypes["decimal"] = "DECIMAL";
+  })(DataTypes = exports.DataTypes || (exports.DataTypes = {}));
+});
+
+unwrapExports(_enum$1);
+var _enum_1$1 = _enum$1.DialectTypes;
+var _enum_2$1 = _enum$1.QueryTypes;
+var _enum_3$1 = _enum$1.FuncTypes;
+var _enum_4$1 = _enum$1.TermLogic;
+var _enum_5$1 = _enum$1.TermSign;
+var _enum_6$1 = _enum$1.OrderTypes;
+var _enum_7$1 = _enum$1.UpdateTypes;
+var _enum_8$1 = _enum$1.WidgetTypes;
+var _enum_9$1 = _enum$1.DataTypes;
+
+var combine_verify = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.funcInfoVerify = new schemaVerify.Schema({
+    type: Object,
+    restrict: true,
+    props: [{
+      index: "funcFeild",
+      required: true,
+      type: String
+    }]
+  }).verify;
+  exports.funcInputVerify = new schemaVerify.Schema({
+    type: Object,
+    restrict: true,
+    props: [{
+      type: String,
+      index: "func",
+      required: true,
+      custom: value => {
+        return !!_enum$1.FuncTypes[value];
+      }
+    }, [{
+      index: "field",
+      required: true,
+      type: String
+    }, {
+      type: Number
+    }]]
+  }).verify;
+});
+unwrapExports(combine_verify);
+var combine_verify_1 = combine_verify.funcInfoVerify;
+var combine_verify_2 = combine_verify.funcInputVerify;
+
 var safe_verify = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -191,9 +505,691 @@ var safe_verify = createCommonjsModule(function (module, exports) {
       type: Function
     }]
   }).verify;
+  exports.manualSqlVerify = new schemaVerify.Schema([{
+    type: String,
+    length: {
+      min: 1
+    }
+  }, {
+    type: Function
+  }, {
+    type: Object
+  }]).verify;
 });
 unwrapExports(safe_verify);
 var safe_verify_1 = safe_verify.dialectVerify;
+var safe_verify_2 = safe_verify.manualSqlVerify;
+
+var limit_verify = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.pageVerify = new schemaVerify.Schema({
+    type: Number,
+    integer: true,
+    range: {
+      min: 1
+    }
+  }).verify;
+  exports.limitInfoVerify = new schemaVerify.Schema({
+    type: Object,
+    restrict: true,
+    props: [{
+      type: Number,
+      index: "offset",
+      integer: true,
+      required: true
+    }, {
+      type: Number,
+      index: "step",
+      integer: true,
+      required: true
+    }]
+  }).verify;
+});
+unwrapExports(limit_verify);
+var limit_verify_1 = limit_verify.pageVerify;
+var limit_verify_2 = limit_verify.limitInfoVerify;
+
+var order_verify = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.orderInfoVerify = new schemaVerify.Schema({
+    type: Object,
+    restrict: true,
+    props: [{
+      index: "field",
+      required: true,
+      type: String
+    }, {
+      index: "type",
+      required: true,
+      type: String,
+      enum: _enum$1.OrderTypes
+    }, {
+      index: "list",
+      type: Array,
+      elements: [[{
+        type: String,
+        required: true,
+        length: {
+          min: 1
+        }
+      }, {
+        type: Number
+      }]]
+    }]
+  }).verify;
+  exports.valueListVerify = new schemaVerify.Schema({
+    type: Array,
+    elements: [[{
+      type: String,
+      required: true,
+      length: {
+        min: 1
+      }
+    }, {
+      type: Number
+    }]]
+  }).verify;
+});
+unwrapExports(order_verify);
+var order_verify_1 = order_verify.orderInfoVerify;
+var order_verify_2 = order_verify.valueListVerify;
+
+var term_verify = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.termDataVerify = new schemaVerify.Schema({
+    type: Object,
+    props: [[{
+      required: true,
+      type: String
+    }, {
+      type: Number
+    }, {
+      type: Array,
+      length: {
+        min: 1
+      },
+      elements: [[{
+        type: String,
+        required: true
+      }, {
+        type: Number
+      }]]
+    }]]
+  }).verify;
+  exports.termSignVerify = new schemaVerify.Schema({
+    type: String,
+    enum: _enum$1.TermSign
+  }).verify;
+  exports.termLogicVerify = new schemaVerify.Schema({
+    type: String,
+    enum: _enum$1.TermLogic
+  }).verify;
+  exports.termValueVerify = new schemaVerify.Schema([{
+    required: true,
+    type: String
+  }, {
+    type: Number
+  }]).verify;
+  exports.termInVerify = new schemaVerify.Schema({
+    type: Array,
+    length: {
+      min: 1
+    },
+    elements: [[{
+      type: String,
+      required: true
+    }, {
+      type: Number
+    }]]
+  }).verify;
+  exports.termBetweenVerify = new schemaVerify.Schema({
+    type: Array,
+    length: 2,
+    elements: [[{
+      type: String,
+      required: true
+    }, {
+      type: Number
+    }]]
+  }).verify;
+  exports.termBracketVerify = new schemaVerify.Schema({
+    type: Object,
+    restrict: true,
+    props: [{
+      index: "position",
+      required: true,
+      type: Number,
+      range: {
+        min: 1
+      }
+    }, {
+      index: "logic",
+      required: true,
+      type: String,
+      enum: _enum$1.TermLogic
+    }]
+  }).verify;
+  exports.termInfoVerify = new schemaVerify.Schema({
+    type: Object,
+    restrict: true,
+    props: [{
+      index: "field",
+      required: true,
+      type: String,
+      length: {
+        min: 1
+      }
+    }, [{
+      index: "value",
+      required: true,
+      type: String
+    }, {
+      type: Number
+    }, {
+      type: Array,
+      length: {
+        min: 1
+      },
+      elements: [[{
+        type: String,
+        required: true
+      }, {
+        type: Number
+      }]]
+    }], {
+      index: "sign",
+      required: true,
+      type: String,
+      enum: _enum$1.TermSign
+    }, {
+      index: "logic",
+      required: true,
+      type: String,
+      enum: _enum$1.TermLogic
+    }]
+  }).verify;
+});
+unwrapExports(term_verify);
+var term_verify_1 = term_verify.termDataVerify;
+var term_verify_2 = term_verify.termSignVerify;
+var term_verify_3 = term_verify.termLogicVerify;
+var term_verify_4 = term_verify.termValueVerify;
+var term_verify_5 = term_verify.termInVerify;
+var term_verify_6 = term_verify.termBetweenVerify;
+var term_verify_7 = term_verify.termBracketVerify;
+var term_verify_8 = term_verify.termInfoVerify;
+
+var update_verify = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.updateInfoVerify = new schemaVerify.Schema({
+    type: Object,
+    props: [[{
+      index: "value",
+      required: true,
+      type: String
+    }, {
+      type: Number
+    }], {
+      index: "type",
+      required: true,
+      type: String,
+      enum: _enum$1.UpdateTypes
+    }]
+  }).verify;
+});
+unwrapExports(update_verify);
+var update_verify_1 = update_verify.updateInfoVerify;
+
+var insert_verify$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.fieldDataArrVerify = new schemaVerify.Schema({
+    type: Array,
+    elements: {
+      type: Object,
+      required: true,
+      props: [[{
+        type: String
+      }, {
+        type: Number
+      }]]
+    }
+  }).verify;
+});
+unwrapExports(insert_verify$1);
+var insert_verify_1$1 = insert_verify$1.fieldDataArrVerify;
+
+var combine_verify$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.funcInfoVerify = new schemaVerify.Schema({
+    type: Object,
+    restrict: true,
+    props: [{
+      index: "funcFeild",
+      required: true,
+      type: String
+    }]
+  }).verify;
+  exports.funcInputVerify = new schemaVerify.Schema({
+    type: Object,
+    restrict: true,
+    props: [{
+      type: String,
+      index: "func",
+      required: true,
+      custom: value => {
+        return !!_enum$1.FuncTypes[value];
+      }
+    }, [{
+      index: "field",
+      required: true,
+      type: String
+    }, {
+      type: Number
+    }]]
+  }).verify;
+});
+unwrapExports(combine_verify$1);
+var combine_verify_1$1 = combine_verify$1.funcInfoVerify;
+var combine_verify_2$1 = combine_verify$1.funcInputVerify;
+
+var safe_verify$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.dialectVerify = new schemaVerify.Schema({
+    type: Object,
+    restrict: true,
+    props: [{
+      index: "safeKey",
+      required: true,
+      type: Function
+    }, {
+      index: "safeValue",
+      required: true,
+      type: Function
+    }]
+  }).verify;
+  exports.manualSqlVerify = new schemaVerify.Schema([{
+    type: String,
+    length: {
+      min: 1
+    }
+  }, {
+    type: Function
+  }, {
+    type: Object
+  }]).verify;
+});
+unwrapExports(safe_verify$1);
+var safe_verify_1$1 = safe_verify$1.dialectVerify;
+var safe_verify_2$1 = safe_verify$1.manualSqlVerify;
+
+var limit_verify$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.pageVerify = new schemaVerify.Schema({
+    type: Number,
+    integer: true,
+    range: {
+      min: 1
+    }
+  }).verify;
+  exports.limitInfoVerify = new schemaVerify.Schema({
+    type: Object,
+    restrict: true,
+    props: [{
+      type: Number,
+      index: "offset",
+      integer: true,
+      required: true
+    }, {
+      type: Number,
+      index: "step",
+      integer: true,
+      required: true
+    }]
+  }).verify;
+});
+unwrapExports(limit_verify$1);
+var limit_verify_1$1 = limit_verify$1.pageVerify;
+var limit_verify_2$1 = limit_verify$1.limitInfoVerify;
+
+var order_verify$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.orderInfoVerify = new schemaVerify.Schema({
+    type: Object,
+    restrict: true,
+    props: [{
+      index: "field",
+      required: true,
+      type: String
+    }, {
+      index: "type",
+      required: true,
+      type: String,
+      enum: _enum$1.OrderTypes
+    }, {
+      index: "list",
+      type: Array,
+      elements: [[{
+        type: String,
+        required: true,
+        length: {
+          min: 1
+        }
+      }, {
+        type: Number
+      }]]
+    }]
+  }).verify;
+  exports.valueListVerify = new schemaVerify.Schema({
+    type: Array,
+    elements: [[{
+      type: String,
+      required: true,
+      length: {
+        min: 1
+      }
+    }, {
+      type: Number
+    }]]
+  }).verify;
+});
+unwrapExports(order_verify$1);
+var order_verify_1$1 = order_verify$1.orderInfoVerify;
+var order_verify_2$1 = order_verify$1.valueListVerify;
+
+var term_verify$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.termDataVerify = new schemaVerify.Schema({
+    type: Object,
+    props: [[{
+      required: true,
+      type: String
+    }, {
+      type: Number
+    }, {
+      type: Array,
+      length: {
+        min: 1
+      },
+      elements: [[{
+        type: String,
+        required: true
+      }, {
+        type: Number
+      }]]
+    }]]
+  }).verify;
+  exports.termSignVerify = new schemaVerify.Schema({
+    type: String,
+    enum: _enum$1.TermSign
+  }).verify;
+  exports.termLogicVerify = new schemaVerify.Schema({
+    type: String,
+    enum: _enum$1.TermLogic
+  }).verify;
+  exports.termValueVerify = new schemaVerify.Schema([{
+    required: true,
+    type: String
+  }, {
+    type: Number
+  }]).verify;
+  exports.termInVerify = new schemaVerify.Schema({
+    type: Array,
+    length: {
+      min: 1
+    },
+    elements: [[{
+      type: String,
+      required: true
+    }, {
+      type: Number
+    }]]
+  }).verify;
+  exports.termBetweenVerify = new schemaVerify.Schema({
+    type: Array,
+    length: 2,
+    elements: [[{
+      type: String,
+      required: true
+    }, {
+      type: Number
+    }]]
+  }).verify;
+  exports.termBracketVerify = new schemaVerify.Schema({
+    type: Object,
+    restrict: true,
+    props: [{
+      index: "position",
+      required: true,
+      type: Number,
+      range: {
+        min: 1
+      }
+    }, {
+      index: "logic",
+      required: true,
+      type: String,
+      enum: _enum$1.TermLogic
+    }]
+  }).verify;
+  exports.termInfoVerify = new schemaVerify.Schema({
+    type: Object,
+    restrict: true,
+    props: [{
+      index: "field",
+      required: true,
+      type: String,
+      length: {
+        min: 1
+      }
+    }, [{
+      index: "value",
+      required: true,
+      type: String
+    }, {
+      type: Number
+    }, {
+      type: Array,
+      length: {
+        min: 1
+      },
+      elements: [[{
+        type: String,
+        required: true
+      }, {
+        type: Number
+      }]]
+    }], {
+      index: "sign",
+      required: true,
+      type: String,
+      enum: _enum$1.TermSign
+    }, {
+      index: "logic",
+      required: true,
+      type: String,
+      enum: _enum$1.TermLogic
+    }]
+  }).verify;
+});
+unwrapExports(term_verify$1);
+var term_verify_1$1 = term_verify$1.termDataVerify;
+var term_verify_2$1 = term_verify$1.termSignVerify;
+var term_verify_3$1 = term_verify$1.termLogicVerify;
+var term_verify_4$1 = term_verify$1.termValueVerify;
+var term_verify_5$1 = term_verify$1.termInVerify;
+var term_verify_6$1 = term_verify$1.termBetweenVerify;
+var term_verify_7$1 = term_verify$1.termBracketVerify;
+var term_verify_8$1 = term_verify$1.termInfoVerify;
+
+var update_verify$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.updateInfoVerify = new schemaVerify.Schema({
+    type: Object,
+    props: [[{
+      index: "value",
+      required: true,
+      type: String
+    }, {
+      type: Number
+    }], {
+      index: "type",
+      required: true,
+      type: String,
+      enum: _enum$1.UpdateTypes
+    }]
+  }).verify;
+});
+unwrapExports(update_verify$1);
+var update_verify_1$1 = update_verify$1.updateInfoVerify;
+
+var D__vmproject_sql_query_src_verify = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.fieldDataArrVerify = insert_verify$1.fieldDataArrVerify;
+  exports.funcInfoVerify = combine_verify$1.funcInfoVerify;
+  exports.funcInputVerify = combine_verify$1.funcInputVerify;
+  exports.dialectVerify = safe_verify$1.dialectVerify;
+  exports.manualSqlVerify = safe_verify$1.manualSqlVerify;
+  exports.pageVerify = limit_verify$1.pageVerify;
+  exports.limitInfoVerify = limit_verify$1.limitInfoVerify;
+  exports.orderInfoVerify = order_verify$1.orderInfoVerify;
+  exports.valueListVerify = order_verify$1.valueListVerify;
+  exports.termDataVerify = term_verify$1.termDataVerify;
+  exports.termBracketVerify = term_verify$1.termBracketVerify;
+  exports.termSignVerify = term_verify$1.termSignVerify;
+  exports.termLogicVerify = term_verify$1.termLogicVerify;
+  exports.termValueVerify = term_verify$1.termValueVerify;
+  exports.termInVerify = term_verify$1.termInVerify;
+  exports.termBetweenVerify = term_verify$1.termBetweenVerify;
+  exports.termInfoVerify = term_verify$1.termInfoVerify;
+  exports.updateInfoVerify = update_verify$1.updateInfoVerify;
+  const strArrVerify = new schemaVerify.Schema({
+    type: Array,
+    elements: {
+      type: String,
+      required: true,
+      length: {
+        min: 1
+      }
+    }
+  }).verify;
+  exports.strArrVerify = strArrVerify;
+  const strObjVerify = new schemaVerify.Schema({
+    type: Object,
+    props: {
+      type: String,
+      required: true,
+      length: {
+        min: 1
+      }
+    }
+  }).verify;
+  exports.strObjVerify = strObjVerify;
+  const naturalVerify = new schemaVerify.Schema({
+    type: Number,
+    natural: true
+  }).verify;
+  exports.naturalVerify = naturalVerify;
+  const integerVerify = new schemaVerify.Schema({
+    type: Number,
+    integer: true
+  }).verify;
+  exports.integerVerify = integerVerify;
+  const fieldDataVerify = new schemaVerify.Schema({
+    type: Object,
+    props: [[{
+      required: true,
+      type: String
+    }, {
+      type: Number
+    }]]
+  }).verify;
+  exports.fieldDataVerify = fieldDataVerify;
+});
+unwrapExports(D__vmproject_sql_query_src_verify);
+var D__vmproject_sql_query_src_verify_1 = D__vmproject_sql_query_src_verify.fieldDataArrVerify;
+var D__vmproject_sql_query_src_verify_2 = D__vmproject_sql_query_src_verify.funcInfoVerify;
+var D__vmproject_sql_query_src_verify_3 = D__vmproject_sql_query_src_verify.funcInputVerify;
+var D__vmproject_sql_query_src_verify_4 = D__vmproject_sql_query_src_verify.dialectVerify;
+var D__vmproject_sql_query_src_verify_5 = D__vmproject_sql_query_src_verify.manualSqlVerify;
+var D__vmproject_sql_query_src_verify_6 = D__vmproject_sql_query_src_verify.pageVerify;
+var D__vmproject_sql_query_src_verify_7 = D__vmproject_sql_query_src_verify.limitInfoVerify;
+var D__vmproject_sql_query_src_verify_8 = D__vmproject_sql_query_src_verify.orderInfoVerify;
+var D__vmproject_sql_query_src_verify_9 = D__vmproject_sql_query_src_verify.valueListVerify;
+var D__vmproject_sql_query_src_verify_10 = D__vmproject_sql_query_src_verify.termDataVerify;
+var D__vmproject_sql_query_src_verify_11 = D__vmproject_sql_query_src_verify.termBracketVerify;
+var D__vmproject_sql_query_src_verify_12 = D__vmproject_sql_query_src_verify.termSignVerify;
+var D__vmproject_sql_query_src_verify_13 = D__vmproject_sql_query_src_verify.termLogicVerify;
+var D__vmproject_sql_query_src_verify_14 = D__vmproject_sql_query_src_verify.termValueVerify;
+var D__vmproject_sql_query_src_verify_15 = D__vmproject_sql_query_src_verify.termInVerify;
+var D__vmproject_sql_query_src_verify_16 = D__vmproject_sql_query_src_verify.termBetweenVerify;
+var D__vmproject_sql_query_src_verify_17 = D__vmproject_sql_query_src_verify.termInfoVerify;
+var D__vmproject_sql_query_src_verify_18 = D__vmproject_sql_query_src_verify.updateInfoVerify;
+var D__vmproject_sql_query_src_verify_19 = D__vmproject_sql_query_src_verify.strArrVerify;
+var D__vmproject_sql_query_src_verify_20 = D__vmproject_sql_query_src_verify.strObjVerify;
+var D__vmproject_sql_query_src_verify_21 = D__vmproject_sql_query_src_verify.naturalVerify;
+var D__vmproject_sql_query_src_verify_22 = D__vmproject_sql_query_src_verify.integerVerify;
+var D__vmproject_sql_query_src_verify_23 = D__vmproject_sql_query_src_verify.fieldDataVerify;
+
+var combine_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorFuncInfo: "错误的组合函数信息"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(combine_error);
+
+var insert_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorFieldDataArr: "错误的字段数据组",
+    errorInsertValues: "错误的插入值"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(insert_error);
 
 var safe_error = createCommonjsModule(function (module, exports) {
 
@@ -207,6 +1203,201 @@ var safe_error = createCommonjsModule(function (module, exports) {
   exports.default = ErrMsg;
 });
 unwrapExports(safe_error);
+
+var limit_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorPage: "错误的页码",
+    errorSize: "错误的页码",
+    errorStep: "错误的步长",
+    errorOffset: "错误的偏移"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(limit_error);
+
+var order_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorOrderInfo: "错误的排序信息",
+    errorValueList: "需要非空数组"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(order_error);
+
+var select_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorFieldMap: "错误的字段映射"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(select_error);
+
+var term_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorTermdata: "错误的条件数据",
+    errorTermSign: "错误的条件类型",
+    errorTermValue: "错误的条件值",
+    errorTermLogic: "错误的条件逻辑"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(term_error);
+
+var update_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    emptyUpdateInfo: "缺少更新信息",
+    errorUpdateInfo: "错误的更新信息"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(update_error);
+
+var combine_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorFuncInfo: "错误的组合函数信息"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(combine_error$1);
+
+var insert_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorFieldDataArr: "错误的字段数据组",
+    errorInsertValues: "错误的插入值"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(insert_error$1);
+
+var safe_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorDialect: "错误的数据库类型",
+    errorManualSql: "错误的自定义sql"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(safe_error$1);
+
+var limit_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorPage: "错误的页码",
+    errorSize: "错误的页码",
+    errorStep: "错误的步长",
+    errorOffset: "错误的偏移"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(limit_error$1);
+
+var order_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorOrderInfo: "错误的排序信息",
+    errorValueList: "需要非空数组"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(order_error$1);
+
+var select_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorFieldMap: "错误的字段映射"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(select_error$1);
+
+var term_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorTermdata: "错误的条件数据",
+    errorTermSign: "错误的条件类型",
+    errorTermValue: "错误的条件值",
+    errorTermLogic: "错误的条件逻辑"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(term_error$1);
+
+var update_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    emptyUpdateInfo: "缺少更新信息",
+    errorUpdateInfo: "错误的更新信息"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(update_error$1);
+
+var D__vmproject_sql_query_src_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = { ...combine_error$1.default,
+    ...insert_error$1.default,
+    ...safe_error$1.default,
+    ...limit_error$1.default,
+    ...order_error$1.default,
+    ...select_error$1.default,
+    ...term_error$1.default,
+    ...update_error$1.default,
+    errorTableName: "错误的表名，需要非空字符串",
+    errorFields: "错误的字段，需要非空字符串或非空字符串数组",
+    errorFieldData: "错误的字段数据"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(D__vmproject_sql_query_src_error);
 
 var dialects$1 = createCommonjsModule(function (module, exports) {
 
@@ -344,40 +1535,117 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(dialects$1);
 
-var safe_verify$1 = createCommonjsModule(function (module, exports) {
+var verify = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.dialectVerify = new schemaVerify.Schema({
-    type: Object,
-    restrict: true,
-    props: [{
-      index: "safeKey",
+  exports.fieldDataArrVerify = insert_verify$1.fieldDataArrVerify;
+  exports.funcInfoVerify = combine_verify$1.funcInfoVerify;
+  exports.funcInputVerify = combine_verify$1.funcInputVerify;
+  exports.dialectVerify = safe_verify$1.dialectVerify;
+  exports.manualSqlVerify = safe_verify$1.manualSqlVerify;
+  exports.pageVerify = limit_verify$1.pageVerify;
+  exports.limitInfoVerify = limit_verify$1.limitInfoVerify;
+  exports.orderInfoVerify = order_verify$1.orderInfoVerify;
+  exports.valueListVerify = order_verify$1.valueListVerify;
+  exports.termDataVerify = term_verify$1.termDataVerify;
+  exports.termBracketVerify = term_verify$1.termBracketVerify;
+  exports.termSignVerify = term_verify$1.termSignVerify;
+  exports.termLogicVerify = term_verify$1.termLogicVerify;
+  exports.termValueVerify = term_verify$1.termValueVerify;
+  exports.termInVerify = term_verify$1.termInVerify;
+  exports.termBetweenVerify = term_verify$1.termBetweenVerify;
+  exports.termInfoVerify = term_verify$1.termInfoVerify;
+  exports.updateInfoVerify = update_verify$1.updateInfoVerify;
+  const strArrVerify = new schemaVerify.Schema({
+    type: Array,
+    elements: {
+      type: String,
       required: true,
-      type: Function
-    }, {
-      index: "safeValue",
-      required: true,
-      type: Function
-    }]
+      length: {
+        min: 1
+      }
+    }
   }).verify;
+  exports.strArrVerify = strArrVerify;
+  const strObjVerify = new schemaVerify.Schema({
+    type: Object,
+    props: {
+      type: String,
+      required: true,
+      length: {
+        min: 1
+      }
+    }
+  }).verify;
+  exports.strObjVerify = strObjVerify;
+  const naturalVerify = new schemaVerify.Schema({
+    type: Number,
+    natural: true
+  }).verify;
+  exports.naturalVerify = naturalVerify;
+  const integerVerify = new schemaVerify.Schema({
+    type: Number,
+    integer: true
+  }).verify;
+  exports.integerVerify = integerVerify;
+  const fieldDataVerify = new schemaVerify.Schema({
+    type: Object,
+    props: [[{
+      required: true,
+      type: String
+    }, {
+      type: Number
+    }]]
+  }).verify;
+  exports.fieldDataVerify = fieldDataVerify;
 });
-unwrapExports(safe_verify$1);
-var safe_verify_1$1 = safe_verify$1.dialectVerify;
+unwrapExports(verify);
+var verify_1 = verify.fieldDataArrVerify;
+var verify_2 = verify.funcInfoVerify;
+var verify_3 = verify.funcInputVerify;
+var verify_4 = verify.dialectVerify;
+var verify_5 = verify.manualSqlVerify;
+var verify_6 = verify.pageVerify;
+var verify_7 = verify.limitInfoVerify;
+var verify_8 = verify.orderInfoVerify;
+var verify_9 = verify.valueListVerify;
+var verify_10 = verify.termDataVerify;
+var verify_11 = verify.termBracketVerify;
+var verify_12 = verify.termSignVerify;
+var verify_13 = verify.termLogicVerify;
+var verify_14 = verify.termValueVerify;
+var verify_15 = verify.termInVerify;
+var verify_16 = verify.termBetweenVerify;
+var verify_17 = verify.termInfoVerify;
+var verify_18 = verify.updateInfoVerify;
+var verify_19 = verify.strArrVerify;
+var verify_20 = verify.strObjVerify;
+var verify_21 = verify.naturalVerify;
+var verify_22 = verify.integerVerify;
+var verify_23 = verify.fieldDataVerify;
 
-var safe_error$1 = createCommonjsModule(function (module, exports) {
+var error = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  const ErrMsg = {
-    errorDialect: "错误的数据库类型",
-    errorManualSql: "错误的自定义sql"
+  const ErrMsg = { ...combine_error$1.default,
+    ...insert_error$1.default,
+    ...safe_error$1.default,
+    ...limit_error$1.default,
+    ...order_error$1.default,
+    ...select_error$1.default,
+    ...term_error$1.default,
+    ...update_error$1.default,
+    errorTableName: "错误的表名，需要非空字符串",
+    errorFields: "错误的字段，需要非空字符串或非空字符串数组",
+    errorFieldData: "错误的字段数据"
   };
   exports.default = ErrMsg;
 });
-unwrapExports(safe_error$1);
+unwrapExports(error);
 
 var safe = createCommonjsModule(function (module, exports) {
 
@@ -399,16 +1667,16 @@ var safe = createCommonjsModule(function (module, exports) {
     get dialectType() {
       const dialectType = this._dialectType;
 
-      if (!safe_verify$1.dialectVerify(dialects$1.default[dialectType])) {
-        throw new Error(safe_error$1.default.errorDialect);
+      if (!verify.dialectVerify(dialects$1.default[dialectType])) {
+        throw new Error(error.default.errorDialect);
       }
 
       return dialectType;
     }
 
     set dialectType(dialectType) {
-      if (!safe_verify$1.dialectVerify(dialects$1.default[dialectType])) {
-        throw new Error(safe_error$1.default.errorDialect);
+      if (!verify.dialectVerify(dialects$1.default[dialectType])) {
+        throw new Error(error.default.errorDialect);
       }
 
       const dialect = dialects$1.default[dialectType];
@@ -419,8 +1687,8 @@ var safe = createCommonjsModule(function (module, exports) {
     }
 
     manualSql(sql, key) {
-      if (!schemaVerify.Type.string.isNotEmpty(sql) && !schemaVerify.Type.function.is(sql) && !(sql instanceof Safe)) {
-        throw new Error(safe_error$1.default.errorManualSql);
+      if (!verify.manualSqlVerify(sql) && !(sql instanceof Safe)) {
+        throw new Error(error.default.errorManualSql);
       }
 
       this[key] = sql;
@@ -474,13 +1742,14 @@ var limit = createCommonjsModule(function (module, exports) {
 
   class Limit {
     limitBuild(query) {
-      const limitInfo = schemaVerify.Type.object.safe(this.limitInfo);
-      const offset = limitInfo.offset;
-      const step = limitInfo.step;
+      const limitInfo = this.limitInfo;
 
-      if (!schemaVerify.Type.number.is(offset) || !schemaVerify.Type.number.is(step)) {
+      if (!verify.limitInfoVerify(limitInfo)) {
         return query;
       }
+
+      const offset = limitInfo.offset;
+      const step = limitInfo.step;
 
       if (offset === 0) {
         return `${query} LIMIT ${step}`;
@@ -494,12 +1763,12 @@ var limit = createCommonjsModule(function (module, exports) {
     }
 
     limit(offset, step) {
-      if (!schemaVerify.Type.number.is(offset) || offset < 0) {
-        throw new Error("Illegal Param Offset");
+      if (!verify.integerVerify(offset)) {
+        throw new Error(error.default.errorOffset);
       }
 
-      if (!schemaVerify.Type.undefinedNull.is(step) && (!schemaVerify.Type.number.is(step) || step < 0)) {
-        throw new Error("Illegal Param Step");
+      if (schemaVerify.Type.undefined.isNot(step) && !verify.integerVerify(step)) {
+        throw new Error(error.default.errorStep);
       }
 
       let limitInfo;
@@ -522,8 +1791,8 @@ var limit = createCommonjsModule(function (module, exports) {
     }
 
     offset(offset) {
-      if (!schemaVerify.Type.number.is(offset) || offset < 0) {
-        throw new Error("Illegal Param Offset");
+      if (!verify.integerVerify(offset)) {
+        throw new Error(error.default.errorOffset);
       }
 
       this.limitInfo = {
@@ -533,8 +1802,8 @@ var limit = createCommonjsModule(function (module, exports) {
     }
 
     step(step) {
-      if (!schemaVerify.Type.number.is(step) || step < 0) {
-        throw new Error("Illegal Param Step");
+      if (!verify.integerVerify(step)) {
+        throw new Error(error.default.errorStep);
       }
 
       this.limitInfo = {
@@ -544,12 +1813,12 @@ var limit = createCommonjsModule(function (module, exports) {
     }
 
     paging(page, size) {
-      if (!schemaVerify.Type.number.is(page) || page < 1) {
-        throw new Error("Illegal Param Page");
+      if (!verify.pageVerify(page)) {
+        throw new Error(error.default.errorPage);
       }
 
-      if (!schemaVerify.Type.number.is(size) || size < 0) {
-        throw new Error("Illegal Param Size");
+      if (!verify.naturalVerify(size)) {
+        throw new Error(error.default.errorSize);
       }
 
       const offset = (page - 1) * size;
@@ -564,134 +1833,6 @@ var limit = createCommonjsModule(function (module, exports) {
   exports.default = Limit;
 });
 unwrapExports(limit);
-
-var _enum = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  var DialectTypes;
-
-  (function (DialectTypes) {
-    DialectTypes["mysql"] = "mysql";
-    DialectTypes["mssql"] = "mssql";
-    DialectTypes["postgresql"] = "postgresql";
-    DialectTypes["sqlite"] = "sqlite";
-  })(DialectTypes = exports.DialectTypes || (exports.DialectTypes = {}));
-
-  var QueryTypes;
-
-  (function (QueryTypes) {
-    QueryTypes["insert"] = "INSERT";
-    QueryTypes["replace"] = "REPLACE";
-    QueryTypes["select"] = "SELECT";
-    QueryTypes["update"] = "UPDATE";
-    QueryTypes["delete"] = "DELETE";
-  })(QueryTypes = exports.QueryTypes || (exports.QueryTypes = {}));
-
-  var FuncTypes;
-
-  (function (FuncTypes) {
-    FuncTypes["count"] = "COUNT";
-    FuncTypes["sum"] = "SUM";
-    FuncTypes["max"] = "MAX";
-    FuncTypes["min"] = "MIN";
-    FuncTypes["avg"] = "AVG";
-    FuncTypes["abs"] = "ABS";
-    FuncTypes["ceil"] = "CEIL";
-    FuncTypes["floor"] = "FLOOR";
-    FuncTypes["round"] = "ROUND";
-    FuncTypes["log"] = "LOG";
-    FuncTypes["log2"] = "LOG2";
-    FuncTypes["exp"] = "EXP";
-    FuncTypes["power"] = "POWER";
-    FuncTypes["acos"] = "ACOS";
-    FuncTypes["asin"] = "ASIN";
-    FuncTypes["atan"] = "ATAN";
-    FuncTypes["cos"] = "COS";
-    FuncTypes["sin"] = "SIN";
-    FuncTypes["tan"] = "TAN";
-    FuncTypes["conv"] = "CONV";
-    FuncTypes["random"] = "RANDOM";
-    FuncTypes["rand"] = "RAND";
-    FuncTypes["radians"] = "RADIANS";
-    FuncTypes["degrees"] = "DEGREES";
-    FuncTypes["distinct"] = "DISTINCT";
-  })(FuncTypes = exports.FuncTypes || (exports.FuncTypes = {}));
-
-  var TermLogic;
-
-  (function (TermLogic) {
-    TermLogic["and"] = "AND";
-    TermLogic["or"] = "OR";
-  })(TermLogic = exports.TermLogic || (exports.TermLogic = {}));
-
-  var TermSign;
-
-  (function (TermSign) {
-    TermSign["equal"] = "=";
-    TermSign["notEqual"] = "<>";
-    TermSign["more"] = ">";
-    TermSign["less"] = "<";
-    TermSign["moreEqual"] = ">=";
-    TermSign["lessEqual"] = "<=";
-    TermSign["like"] = "LIKE";
-    TermSign["notlike"] = "NOT LIKE";
-    TermSign["isNot"] = "IS NOT";
-    TermSign["in"] = "IN";
-    TermSign["notIn"] = "NOT IN";
-    TermSign["between"] = "BETWEEN";
-    TermSign["notBetween"] = "NOT BETWEEN";
-  })(TermSign = exports.TermSign || (exports.TermSign = {}));
-
-  var OrderTypes;
-
-  (function (OrderTypes) {
-    OrderTypes["desc"] = "DESC";
-    OrderTypes["asc"] = "ASC";
-    OrderTypes["field"] = "FIELD";
-  })(OrderTypes = exports.OrderTypes || (exports.OrderTypes = {}));
-
-  var UpdateTypes;
-
-  (function (UpdateTypes) {
-    UpdateTypes["set"] = "SET";
-    UpdateTypes["add"] = "ADD";
-    UpdateTypes["minus"] = "MINUS";
-  })(UpdateTypes = exports.UpdateTypes || (exports.UpdateTypes = {}));
-
-  var WidgetTypes;
-
-  (function (WidgetTypes) {
-    WidgetTypes["func"] = "FUNC";
-    WidgetTypes["term"] = "TERM";
-    WidgetTypes["order"] = "ORDER";
-  })(WidgetTypes = exports.WidgetTypes || (exports.WidgetTypes = {}));
-
-  var DataTypes;
-
-  (function (DataTypes) {
-    DataTypes["tinyint"] = "TINYINT";
-    DataTypes["smallint"] = "SMALLINT";
-    DataTypes["mediumint"] = "MEDIUMINT";
-    DataTypes["int"] = "INT";
-    DataTypes["bigint"] = "BIGINT";
-    DataTypes["float"] = "FLOAT";
-    DataTypes["double"] = "DOUBLE";
-    DataTypes["decimal"] = "DECIMAL";
-  })(DataTypes = exports.DataTypes || (exports.DataTypes = {}));
-});
-
-unwrapExports(_enum);
-var _enum_1 = _enum.DialectTypes;
-var _enum_2 = _enum.QueryTypes;
-var _enum_3 = _enum.FuncTypes;
-var _enum_4 = _enum.TermLogic;
-var _enum_5 = _enum.TermSign;
-var _enum_6 = _enum.OrderTypes;
-var _enum_7 = _enum.UpdateTypes;
-var _enum_8 = _enum.WidgetTypes;
-var _enum_9 = _enum.DataTypes;
 
 var util$1 = createCommonjsModule(function (module, exports) {
 
@@ -718,134 +1859,6 @@ var util$1 = createCommonjsModule(function (module, exports) {
 unwrapExports(util$1);
 var util_1$1 = util$1.argStrArrTrans;
 
-var _enum$1 = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  var DialectTypes;
-
-  (function (DialectTypes) {
-    DialectTypes["mysql"] = "mysql";
-    DialectTypes["mssql"] = "mssql";
-    DialectTypes["postgresql"] = "postgresql";
-    DialectTypes["sqlite"] = "sqlite";
-  })(DialectTypes = exports.DialectTypes || (exports.DialectTypes = {}));
-
-  var QueryTypes;
-
-  (function (QueryTypes) {
-    QueryTypes["insert"] = "INSERT";
-    QueryTypes["replace"] = "REPLACE";
-    QueryTypes["select"] = "SELECT";
-    QueryTypes["update"] = "UPDATE";
-    QueryTypes["delete"] = "DELETE";
-  })(QueryTypes = exports.QueryTypes || (exports.QueryTypes = {}));
-
-  var FuncTypes;
-
-  (function (FuncTypes) {
-    FuncTypes["count"] = "COUNT";
-    FuncTypes["sum"] = "SUM";
-    FuncTypes["max"] = "MAX";
-    FuncTypes["min"] = "MIN";
-    FuncTypes["avg"] = "AVG";
-    FuncTypes["abs"] = "ABS";
-    FuncTypes["ceil"] = "CEIL";
-    FuncTypes["floor"] = "FLOOR";
-    FuncTypes["round"] = "ROUND";
-    FuncTypes["log"] = "LOG";
-    FuncTypes["log2"] = "LOG2";
-    FuncTypes["exp"] = "EXP";
-    FuncTypes["power"] = "POWER";
-    FuncTypes["acos"] = "ACOS";
-    FuncTypes["asin"] = "ASIN";
-    FuncTypes["atan"] = "ATAN";
-    FuncTypes["cos"] = "COS";
-    FuncTypes["sin"] = "SIN";
-    FuncTypes["tan"] = "TAN";
-    FuncTypes["conv"] = "CONV";
-    FuncTypes["random"] = "RANDOM";
-    FuncTypes["rand"] = "RAND";
-    FuncTypes["radians"] = "RADIANS";
-    FuncTypes["degrees"] = "DEGREES";
-    FuncTypes["distinct"] = "DISTINCT";
-  })(FuncTypes = exports.FuncTypes || (exports.FuncTypes = {}));
-
-  var TermLogic;
-
-  (function (TermLogic) {
-    TermLogic["and"] = "AND";
-    TermLogic["or"] = "OR";
-  })(TermLogic = exports.TermLogic || (exports.TermLogic = {}));
-
-  var TermSign;
-
-  (function (TermSign) {
-    TermSign["equal"] = "=";
-    TermSign["notEqual"] = "<>";
-    TermSign["more"] = ">";
-    TermSign["less"] = "<";
-    TermSign["moreEqual"] = ">=";
-    TermSign["lessEqual"] = "<=";
-    TermSign["like"] = "LIKE";
-    TermSign["notlike"] = "NOT LIKE";
-    TermSign["isNot"] = "IS NOT";
-    TermSign["in"] = "IN";
-    TermSign["notIn"] = "NOT IN";
-    TermSign["between"] = "BETWEEN";
-    TermSign["notBetween"] = "NOT BETWEEN";
-  })(TermSign = exports.TermSign || (exports.TermSign = {}));
-
-  var OrderTypes;
-
-  (function (OrderTypes) {
-    OrderTypes["desc"] = "DESC";
-    OrderTypes["asc"] = "ASC";
-    OrderTypes["field"] = "FIELD";
-  })(OrderTypes = exports.OrderTypes || (exports.OrderTypes = {}));
-
-  var UpdateTypes;
-
-  (function (UpdateTypes) {
-    UpdateTypes["set"] = "SET";
-    UpdateTypes["add"] = "ADD";
-    UpdateTypes["minus"] = "MINUS";
-  })(UpdateTypes = exports.UpdateTypes || (exports.UpdateTypes = {}));
-
-  var WidgetTypes;
-
-  (function (WidgetTypes) {
-    WidgetTypes["func"] = "FUNC";
-    WidgetTypes["term"] = "TERM";
-    WidgetTypes["order"] = "ORDER";
-  })(WidgetTypes = exports.WidgetTypes || (exports.WidgetTypes = {}));
-
-  var DataTypes;
-
-  (function (DataTypes) {
-    DataTypes["tinyint"] = "TINYINT";
-    DataTypes["smallint"] = "SMALLINT";
-    DataTypes["mediumint"] = "MEDIUMINT";
-    DataTypes["int"] = "INT";
-    DataTypes["bigint"] = "BIGINT";
-    DataTypes["float"] = "FLOAT";
-    DataTypes["double"] = "DOUBLE";
-    DataTypes["decimal"] = "DECIMAL";
-  })(DataTypes = exports.DataTypes || (exports.DataTypes = {}));
-});
-
-unwrapExports(_enum$1);
-var _enum_1$1 = _enum$1.DialectTypes;
-var _enum_2$1 = _enum$1.QueryTypes;
-var _enum_3$1 = _enum$1.FuncTypes;
-var _enum_4$1 = _enum$1.TermLogic;
-var _enum_5$1 = _enum$1.TermSign;
-var _enum_6$1 = _enum$1.OrderTypes;
-var _enum_7$1 = _enum$1.UpdateTypes;
-var _enum_8$1 = _enum$1.WidgetTypes;
-var _enum_9$1 = _enum$1.DataTypes;
-
 var safe$1 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -866,16 +1879,16 @@ var safe$1 = createCommonjsModule(function (module, exports) {
     get dialectType() {
       const dialectType = this._dialectType;
 
-      if (!safe_verify$1.dialectVerify(dialects$1.default[dialectType])) {
-        throw new Error(safe_error$1.default.errorDialect);
+      if (!verify.dialectVerify(dialects$1.default[dialectType])) {
+        throw new Error(error.default.errorDialect);
       }
 
       return dialectType;
     }
 
     set dialectType(dialectType) {
-      if (!safe_verify$1.dialectVerify(dialects$1.default[dialectType])) {
-        throw new Error(safe_error$1.default.errorDialect);
+      if (!verify.dialectVerify(dialects$1.default[dialectType])) {
+        throw new Error(error.default.errorDialect);
       }
 
       const dialect = dialects$1.default[dialectType];
@@ -886,8 +1899,8 @@ var safe$1 = createCommonjsModule(function (module, exports) {
     }
 
     manualSql(sql, key) {
-      if (!schemaVerify.Type.string.isNotEmpty(sql) && !schemaVerify.Type.function.is(sql) && !(sql instanceof Safe)) {
-        throw new Error(safe_error$1.default.errorManualSql);
+      if (!verify.manualSqlVerify(sql) && !(sql instanceof Safe)) {
+        throw new Error(error.default.errorManualSql);
       }
 
       this[key] = sql;
@@ -963,16 +1976,16 @@ var order = createCommonjsModule(function (module, exports) {
       let ordersArr = [];
 
       for (const info of orderInfos) {
+        if (!verify.orderInfoVerify(info)) {
+          continue;
+        }
+
         const field = info.field;
         const type = info.type;
         const list = info.list;
         const safeField = this.safeKey(field);
 
         if (type === _enum$1.OrderTypes.field) {
-          if (!schemaVerify.Type.array.isNotEmpty(list)) {
-            throw new Error("Illegal Value List");
-          }
-
           const listStr = list.map(value => this.safeValue(value)).join(", ");
           ordersArr.push(`${type}(${safeField}, ${listStr})`);
           continue;
@@ -1025,7 +2038,10 @@ var order = createCommonjsModule(function (module, exports) {
     }
 
     orderCache(fields, type, fieldOrder) {
-      fields = schemaVerify.Type.array.safe(fields);
+      if (!verify.strArrVerify(fields)) {
+        throw new Error(error.default.errorFields);
+      }
+
       fieldOrder = schemaVerify.Type.object.safe(fieldOrder);
       const orderInfos = schemaVerify.Type.array.safe(this.orderInfos);
 
@@ -1038,11 +2054,15 @@ var order = createCommonjsModule(function (module, exports) {
         if (type === _enum$1.OrderTypes.field) {
           const list = fieldOrder[field];
 
-          if (!schemaVerify.Type.array.isNotEmpty(list)) {
-            throw new Error("Illegal Value List");
+          if (!verify.valueListVerify(list)) {
+            throw new Error(error.default.errorValueList);
           }
 
           info["list"] = list;
+        }
+
+        if (!verify.orderInfoVerify(info)) {
+          throw new Error(error.default.errorOrderInfo);
         }
 
         orderInfos.push(info);
@@ -1066,13 +2086,14 @@ var limit$1 = createCommonjsModule(function (module, exports) {
 
   class Limit {
     limitBuild(query) {
-      const limitInfo = schemaVerify.Type.object.safe(this.limitInfo);
-      const offset = limitInfo.offset;
-      const step = limitInfo.step;
+      const limitInfo = this.limitInfo;
 
-      if (!schemaVerify.Type.number.is(offset) || !schemaVerify.Type.number.is(step)) {
+      if (!verify.limitInfoVerify(limitInfo)) {
         return query;
       }
+
+      const offset = limitInfo.offset;
+      const step = limitInfo.step;
 
       if (offset === 0) {
         return `${query} LIMIT ${step}`;
@@ -1086,12 +2107,12 @@ var limit$1 = createCommonjsModule(function (module, exports) {
     }
 
     limit(offset, step) {
-      if (!schemaVerify.Type.number.is(offset) || offset < 0) {
-        throw new Error("Illegal Param Offset");
+      if (!verify.integerVerify(offset)) {
+        throw new Error(error.default.errorOffset);
       }
 
-      if (!schemaVerify.Type.undefinedNull.is(step) && (!schemaVerify.Type.number.is(step) || step < 0)) {
-        throw new Error("Illegal Param Step");
+      if (schemaVerify.Type.undefined.isNot(step) && !verify.integerVerify(step)) {
+        throw new Error(error.default.errorStep);
       }
 
       let limitInfo;
@@ -1114,8 +2135,8 @@ var limit$1 = createCommonjsModule(function (module, exports) {
     }
 
     offset(offset) {
-      if (!schemaVerify.Type.number.is(offset) || offset < 0) {
-        throw new Error("Illegal Param Offset");
+      if (!verify.integerVerify(offset)) {
+        throw new Error(error.default.errorOffset);
       }
 
       this.limitInfo = {
@@ -1125,8 +2146,8 @@ var limit$1 = createCommonjsModule(function (module, exports) {
     }
 
     step(step) {
-      if (!schemaVerify.Type.number.is(step) || step < 0) {
-        throw new Error("Illegal Param Step");
+      if (!verify.integerVerify(step)) {
+        throw new Error(error.default.errorStep);
       }
 
       this.limitInfo = {
@@ -1136,12 +2157,12 @@ var limit$1 = createCommonjsModule(function (module, exports) {
     }
 
     paging(page, size) {
-      if (!schemaVerify.Type.number.is(page) || page < 1) {
-        throw new Error("Illegal Param Page");
+      if (!verify.pageVerify(page)) {
+        throw new Error(error.default.errorPage);
       }
 
-      if (!schemaVerify.Type.number.is(size) || size < 0) {
-        throw new Error("Illegal Param Size");
+      if (!verify.naturalVerify(size)) {
+        throw new Error(error.default.errorSize);
       }
 
       const offset = (page - 1) * size;
@@ -1187,16 +2208,16 @@ var order$1 = createCommonjsModule(function (module, exports) {
       let ordersArr = [];
 
       for (const info of orderInfos) {
+        if (!verify.orderInfoVerify(info)) {
+          continue;
+        }
+
         const field = info.field;
         const type = info.type;
         const list = info.list;
         const safeField = this.safeKey(field);
 
         if (type === _enum$1.OrderTypes.field) {
-          if (!schemaVerify.Type.array.isNotEmpty(list)) {
-            throw new Error("Illegal Value List");
-          }
-
           const listStr = list.map(value => this.safeValue(value)).join(", ");
           ordersArr.push(`${type}(${safeField}, ${listStr})`);
           continue;
@@ -1249,7 +2270,10 @@ var order$1 = createCommonjsModule(function (module, exports) {
     }
 
     orderCache(fields, type, fieldOrder) {
-      fields = schemaVerify.Type.array.safe(fields);
+      if (!verify.strArrVerify(fields)) {
+        throw new Error(error.default.errorFields);
+      }
+
       fieldOrder = schemaVerify.Type.object.safe(fieldOrder);
       const orderInfos = schemaVerify.Type.array.safe(this.orderInfos);
 
@@ -1262,11 +2286,15 @@ var order$1 = createCommonjsModule(function (module, exports) {
         if (type === _enum$1.OrderTypes.field) {
           const list = fieldOrder[field];
 
-          if (!schemaVerify.Type.array.isNotEmpty(list)) {
-            throw new Error("Illegal Value List");
+          if (!verify.valueListVerify(list)) {
+            throw new Error(error.default.errorValueList);
           }
 
           info["list"] = list;
+        }
+
+        if (!verify.orderInfoVerify(info)) {
+          throw new Error(error.default.errorOrderInfo);
         }
 
         orderInfos.push(info);
@@ -1355,22 +2383,9 @@ var query = createCommonjsModule(function (module, exports) {
       return this;
     }
 
-    _checkQuery() {
-      const type = this.queryType;
-      const table = this.queryTable;
-
-      if (!schemaVerify.Type.string.isNotEmpty(type)) {
-        throw new Error("Illegal Query Type");
-      }
-
-      if (!schemaVerify.Type.string.isNotEmpty(table)) {
-        throw new Error("Illegal Table Name");
-      }
-    }
-
     table(tableName) {
       if (!schemaVerify.Type.string.isNotEmpty(tableName)) {
-        throw new Error("Illegal Table Name");
+        throw new Error(error.default.errorTableName);
       }
 
       this.queryTable = tableName;
@@ -1460,22 +2475,9 @@ var query$1 = createCommonjsModule(function (module, exports) {
       return this;
     }
 
-    _checkQuery() {
-      const type = this.queryType;
-      const table = this.queryTable;
-
-      if (!schemaVerify.Type.string.isNotEmpty(type)) {
-        throw new Error("Illegal Query Type");
-      }
-
-      if (!schemaVerify.Type.string.isNotEmpty(table)) {
-        throw new Error("Illegal Table Name");
-      }
-    }
-
     table(tableName) {
       if (!schemaVerify.Type.string.isNotEmpty(tableName)) {
-        throw new Error("Illegal Table Name");
+        throw new Error(error.default.errorTableName);
       }
 
       this.queryTable = tableName;
@@ -1510,8 +2512,8 @@ var insert = createCommonjsModule(function (module, exports) {
     }
 
     data(data) {
-      if (!schemaVerify.Type.object.isNotEmpty(data)) {
-        throw new Error("Illegal Field Data");
+      if (!verify.fieldDataVerify(data)) {
+        throw new Error(error.default.errorFieldData);
       }
 
       const insertData = schemaVerify.Type.object.safe(this.insertData);
@@ -1528,8 +2530,8 @@ var insert = createCommonjsModule(function (module, exports) {
     }
 
     multiData(dataArr) {
-      if (!schemaVerify.Type.array.isNotEmpty(dataArr)) {
-        throw new Error("Illegal Field Data Array");
+      if (!verify.fieldDataArrVerify(dataArr)) {
+        throw new Error(error.default.errorFieldDataArr);
       }
 
       const insertDataArr = schemaVerify.Type.array.safe(this.insertDataArr);
@@ -1552,16 +2554,16 @@ var insert = createCommonjsModule(function (module, exports) {
       const insertDataArr = this.insertDataArr;
       let fields;
 
-      if (schemaVerify.Type.array.isNotEmpty(insertFields)) {
+      if (verify.strArrVerify(insertFields)) {
         fields = insertFields;
-      } else if (schemaVerify.Type.object.isNotEmpty(insertData)) {
+      } else if (verify.fieldDataVerify(insertData)) {
         fields = Object.keys(insertData);
-      } else if (schemaVerify.Type.array.isNotEmpty(insertDataArr)) {
+      } else if (verify.fieldDataArrVerify(insertDataArr)) {
         fields = Object.keys(insertDataArr[0]);
       }
 
-      if (!schemaVerify.Type.array.isNotEmpty(fields)) {
-        throw new Error("Illegal Insert Fields");
+      if (!verify.strArrVerify(fields)) {
+        throw new Error(error.default.errorFields);
       }
 
       return fields;
@@ -1592,21 +2594,20 @@ var insert = createCommonjsModule(function (module, exports) {
 
       if (schemaVerify.Type.string.isNotEmpty(valuesSql)) {
         result = valuesSql;
-      } else if (schemaVerify.Type.object.isNotEmpty(insertData)) {
+      } else if (verify.fieldDataVerify(insertData)) {
         result = valuesStrFormat(insertData);
-      } else if (schemaVerify.Type.array.isNotEmpty(insertDataArr)) {
+      } else if (verify.fieldDataArrVerify(insertDataArr)) {
         result = valuesArrStrFormat(insertDataArr);
       }
 
       if (!schemaVerify.Type.string.isNotEmpty(result)) {
-        throw new Error("Illegal Insert Values");
+        throw new Error(error.default.errorInsertValues);
       }
 
       return `VALUES ${result}`;
     }
 
     build() {
-      this.checkQuery();
       const type = this.queryType;
       const table = this.getQueryTable();
       const fields = this.formatFields();
@@ -1614,49 +2615,6 @@ var insert = createCommonjsModule(function (module, exports) {
       const fieldsStr = fields.map(field => this.safeKey(field)).join(", ");
       let query = `${type} INTO ${table} ( ${fieldsStr} )  ${valuesStr}`;
       return query;
-    }
-
-    checkQuery() {
-      this._checkQuery();
-
-      const valuesSql = this.valuesSql;
-      const insertData = this.insertData;
-      const insertFields = this.insertFields;
-      const insertDataArr = this.insertDataArr;
-
-      if (schemaVerify.Type.string.isNotEmpty(valuesSql) || schemaVerify.Type.function.is(valuesSql) || schemaVerify.Type.object.is(valuesSql)) {
-        if (!schemaVerify.Type.array.isNotEmpty(insertFields)) {
-          throw new Error("Illegal Insert Fields");
-        }
-
-        return;
-      }
-
-      if (!schemaVerify.Type.object.isNotEmpty(insertData) && !schemaVerify.Type.array.isNotEmpty(insertDataArr)) {
-        throw new Error("Illegal Insert Data");
-      }
-
-      if (!schemaVerify.Type.array.isNotEmpty(insertFields)) {
-        return;
-      }
-
-      const checkInsertData = data => {
-        for (const field of insertFields) {
-          if (schemaVerify.Type.undefinedNull.is(data[field])) {
-            throw new Error("Illegal Insert Data");
-          }
-        }
-      };
-
-      if (schemaVerify.Type.object.isNotEmpty(insertData)) {
-        return checkInsertData(insertData);
-      }
-
-      if (schemaVerify.Type.array.isNotEmpty(insertDataArr)) {
-        for (const data of insertDataArr) {
-          checkInsertData(data);
-        }
-      }
     }
 
   }
@@ -1717,16 +2675,21 @@ var term = createCommonjsModule(function (module, exports) {
         const curBracket = brackets[i];
         const perBracket = brackets[i - 1];
         const nextBracket = brackets[i + 1];
+
+        if (!verify.termBracketVerify(curBracket)) {
+          continue;
+        }
+
         const curPos = curBracket.position;
         const curLogic = curBracket.logic;
         let prePos = 0;
         let nextPos = termsLen;
 
-        if (schemaVerify.Type.object.isNotEmpty(perBracket)) {
+        if (verify.termBracketVerify(perBracket)) {
           prePos = perBracket.position;
         }
 
-        if (schemaVerify.Type.object.isNotEmpty(nextBracket)) {
+        if (verify.termBracketVerify(nextBracket)) {
           nextPos = nextBracket.position;
         }
 
@@ -1767,7 +2730,7 @@ var term = createCommonjsModule(function (module, exports) {
       let allTermStr = "";
 
       for (const term of terms) {
-        if (!schemaVerify.Type.object.isNotEmpty(term)) {
+        if (!verify.termInfoVerify(term)) {
           continue;
         }
 
@@ -1793,8 +2756,8 @@ var term = createCommonjsModule(function (module, exports) {
       let termValue;
 
       if (sign === _enum$1.TermSign.in || sign === _enum$1.TermSign.notIn) {
-        if (!schemaVerify.Type.array.isNotEmpty(value)) {
-          throw new Error("Illegal Term Value (need Array)");
+        if (!verify.termInVerify(value)) {
+          throw new Error(error.default.errorTermValue);
         }
 
         termValue = value.map(item => this.safeValue(item)).join(", ");
@@ -1802,8 +2765,8 @@ var term = createCommonjsModule(function (module, exports) {
       }
 
       if (sign === _enum$1.TermSign.between || sign === _enum$1.TermSign.notBetween) {
-        if (!schemaVerify.Type.array.isNotEmpty(value) || value.length !== 2) {
-          throw new Error("Illegal Term Value (need Array[2])");
+        if (!verify.termBetweenVerify(value)) {
+          throw new Error(error.default.errorTermValue);
         }
 
         const lower = this.safeValue(value[0]);
@@ -1811,8 +2774,8 @@ var term = createCommonjsModule(function (module, exports) {
         return `${lower} AND ${upper}`;
       }
 
-      if (!schemaVerify.Type.string.isNotEmpty(value) && !schemaVerify.Type.number.is(value)) {
-        throw new Error("Illegal Term Value");
+      if (!verify.termValueVerify(value)) {
+        throw new Error(error.default.errorTermValue);
       }
 
       if (sign === _enum$1.TermSign.like || sign === _enum$1.TermSign.notlike) {
@@ -1824,12 +2787,16 @@ var term = createCommonjsModule(function (module, exports) {
     }
 
     termCache(data, sign, logic) {
-      if (!schemaVerify.Type.object.isNotEmpty(data)) {
-        throw new Error("Illegal Term data");
+      if (!verify.termDataVerify(data)) {
+        throw new Error(error.default.errorTermdata);
       }
 
-      if (!schemaVerify.Type.string.isNotEmpty(sign) || !schemaVerify.Type.string.isNotEmpty(logic)) {
-        throw new Error("Illegal Param");
+      if (!verify.termSignVerify(sign)) {
+        throw new Error(error.default.errorTermSign);
+      }
+
+      if (!verify.termLogicVerify(logic)) {
+        throw new Error(error.default.errorTermLogic);
       }
 
       const termInfos = schemaVerify.Type.array.safe(this.termInfos);
@@ -1841,23 +2808,23 @@ var term = createCommonjsModule(function (module, exports) {
         switch (sign) {
           case _enum$1.TermSign.in:
           case _enum$1.TermSign.notIn:
-            if (!schemaVerify.Type.array.isNotEmpty(value)) {
-              throw new Error("Illegal Func Value");
+            if (!verify.termInVerify(value)) {
+              throw new Error(error.default.errorTermValue);
             }
 
             break;
 
           case _enum$1.TermSign.between:
           case _enum$1.TermSign.notBetween:
-            if (!schemaVerify.Type.array.isNotEmpty(value) || value.length !== 2) {
-              throw new Error("Illegal Func Value");
+            if (!verify.termBetweenVerify(value)) {
+              throw new Error(error.default.errorTermValue);
             }
 
             break;
 
           default:
-            if (!schemaVerify.Type.string.isNotEmpty(value) && !schemaVerify.Type.number.is(value)) {
-              throw new Error("Illegal Func Value");
+            if (!verify.termValueVerify(value)) {
+              throw new Error(error.default.errorTermValue);
             }
 
             break;
@@ -1886,6 +2853,10 @@ var term = createCommonjsModule(function (module, exports) {
       }
 
       for (const bracket of termBrackets) {
+        if (!verify.termBracketVerify(bracket)) {
+          continue;
+        }
+
         const position = bracket.position;
 
         if (position === termsLen) {
@@ -1897,7 +2868,11 @@ var term = createCommonjsModule(function (module, exports) {
         position: termsLen,
         logic
       };
-      termBrackets.push(bracket);
+
+      if (verify.termBracketVerify(bracket)) {
+        termBrackets.push(bracket);
+      }
+
       this.termBrackets = termBrackets;
       return this;
     }
@@ -2076,16 +3051,21 @@ var term$1 = createCommonjsModule(function (module, exports) {
         const curBracket = brackets[i];
         const perBracket = brackets[i - 1];
         const nextBracket = brackets[i + 1];
+
+        if (!verify.termBracketVerify(curBracket)) {
+          continue;
+        }
+
         const curPos = curBracket.position;
         const curLogic = curBracket.logic;
         let prePos = 0;
         let nextPos = termsLen;
 
-        if (schemaVerify.Type.object.isNotEmpty(perBracket)) {
+        if (verify.termBracketVerify(perBracket)) {
           prePos = perBracket.position;
         }
 
-        if (schemaVerify.Type.object.isNotEmpty(nextBracket)) {
+        if (verify.termBracketVerify(nextBracket)) {
           nextPos = nextBracket.position;
         }
 
@@ -2126,7 +3106,7 @@ var term$1 = createCommonjsModule(function (module, exports) {
       let allTermStr = "";
 
       for (const term of terms) {
-        if (!schemaVerify.Type.object.isNotEmpty(term)) {
+        if (!verify.termInfoVerify(term)) {
           continue;
         }
 
@@ -2152,8 +3132,8 @@ var term$1 = createCommonjsModule(function (module, exports) {
       let termValue;
 
       if (sign === _enum$1.TermSign.in || sign === _enum$1.TermSign.notIn) {
-        if (!schemaVerify.Type.array.isNotEmpty(value)) {
-          throw new Error("Illegal Term Value (need Array)");
+        if (!verify.termInVerify(value)) {
+          throw new Error(error.default.errorTermValue);
         }
 
         termValue = value.map(item => this.safeValue(item)).join(", ");
@@ -2161,8 +3141,8 @@ var term$1 = createCommonjsModule(function (module, exports) {
       }
 
       if (sign === _enum$1.TermSign.between || sign === _enum$1.TermSign.notBetween) {
-        if (!schemaVerify.Type.array.isNotEmpty(value) || value.length !== 2) {
-          throw new Error("Illegal Term Value (need Array[2])");
+        if (!verify.termBetweenVerify(value)) {
+          throw new Error(error.default.errorTermValue);
         }
 
         const lower = this.safeValue(value[0]);
@@ -2170,8 +3150,8 @@ var term$1 = createCommonjsModule(function (module, exports) {
         return `${lower} AND ${upper}`;
       }
 
-      if (!schemaVerify.Type.string.isNotEmpty(value) && !schemaVerify.Type.number.is(value)) {
-        throw new Error("Illegal Term Value");
+      if (!verify.termValueVerify(value)) {
+        throw new Error(error.default.errorTermValue);
       }
 
       if (sign === _enum$1.TermSign.like || sign === _enum$1.TermSign.notlike) {
@@ -2183,12 +3163,16 @@ var term$1 = createCommonjsModule(function (module, exports) {
     }
 
     termCache(data, sign, logic) {
-      if (!schemaVerify.Type.object.isNotEmpty(data)) {
-        throw new Error("Illegal Term data");
+      if (!verify.termDataVerify(data)) {
+        throw new Error(error.default.errorTermdata);
       }
 
-      if (!schemaVerify.Type.string.isNotEmpty(sign) || !schemaVerify.Type.string.isNotEmpty(logic)) {
-        throw new Error("Illegal Param");
+      if (!verify.termSignVerify(sign)) {
+        throw new Error(error.default.errorTermSign);
+      }
+
+      if (!verify.termLogicVerify(logic)) {
+        throw new Error(error.default.errorTermLogic);
       }
 
       const termInfos = schemaVerify.Type.array.safe(this.termInfos);
@@ -2200,23 +3184,23 @@ var term$1 = createCommonjsModule(function (module, exports) {
         switch (sign) {
           case _enum$1.TermSign.in:
           case _enum$1.TermSign.notIn:
-            if (!schemaVerify.Type.array.isNotEmpty(value)) {
-              throw new Error("Illegal Func Value");
+            if (!verify.termInVerify(value)) {
+              throw new Error(error.default.errorTermValue);
             }
 
             break;
 
           case _enum$1.TermSign.between:
           case _enum$1.TermSign.notBetween:
-            if (!schemaVerify.Type.array.isNotEmpty(value) || value.length !== 2) {
-              throw new Error("Illegal Func Value");
+            if (!verify.termBetweenVerify(value)) {
+              throw new Error(error.default.errorTermValue);
             }
 
             break;
 
           default:
-            if (!schemaVerify.Type.string.isNotEmpty(value) && !schemaVerify.Type.number.is(value)) {
-              throw new Error("Illegal Func Value");
+            if (!verify.termValueVerify(value)) {
+              throw new Error(error.default.errorTermValue);
             }
 
             break;
@@ -2245,6 +3229,10 @@ var term$1 = createCommonjsModule(function (module, exports) {
       }
 
       for (const bracket of termBrackets) {
+        if (!verify.termBracketVerify(bracket)) {
+          continue;
+        }
+
         const position = bracket.position;
 
         if (position === termsLen) {
@@ -2256,7 +3244,11 @@ var term$1 = createCommonjsModule(function (module, exports) {
         position: termsLen,
         logic
       };
-      termBrackets.push(bracket);
+
+      if (verify.termBracketVerify(bracket)) {
+        termBrackets.push(bracket);
+      }
+
       this.termBrackets = termBrackets;
       return this;
     }
@@ -3027,62 +4019,6 @@ var func = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(func);
 
-var builder_error = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = {
-    errorTableName: "错误的表名",
-    errorFieldName: "错误的字段名",
-    errorFuncInfo: "错误的组合函数信息"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(builder_error);
-
-var combine_verify = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.groupByVerify = new schemaVerify.Schema({
-    type: Array,
-    elements: {
-      type: String,
-      required: true
-    }
-  }).verify;
-  exports.funcInfoVerify = new schemaVerify.Schema({
-    type: Object,
-    restrict: true,
-    props: [{
-      index: "funcFeild",
-      required: true,
-      type: String
-    }]
-  }).verify;
-  exports.funcInputVerify = new schemaVerify.Schema({
-    type: Object,
-    restrict: true,
-    props: [{
-      type: String,
-      index: "func",
-      required: true
-    }, [{
-      index: "field",
-      required: true,
-      type: String
-    }, {
-      type: Number
-    }]]
-  }).verify;
-});
-unwrapExports(combine_verify);
-var combine_verify_1 = combine_verify.groupByVerify;
-var combine_verify_2 = combine_verify.funcInfoVerify;
-var combine_verify_3 = combine_verify.funcInputVerify;
-
 var having$1 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -3375,62 +4311,6 @@ var func$1 = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(func$1);
 
-var builder_error$1 = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = {
-    errorTableName: "错误的表名",
-    errorFieldName: "错误的字段名",
-    errorFuncInfo: "错误的组合函数信息"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(builder_error$1);
-
-var combine_verify$1 = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.groupByVerify = new schemaVerify.Schema({
-    type: Array,
-    elements: {
-      type: String,
-      required: true
-    }
-  }).verify;
-  exports.funcInfoVerify = new schemaVerify.Schema({
-    type: Object,
-    restrict: true,
-    props: [{
-      index: "funcFeild",
-      required: true,
-      type: String
-    }]
-  }).verify;
-  exports.funcInputVerify = new schemaVerify.Schema({
-    type: Object,
-    restrict: true,
-    props: [{
-      type: String,
-      index: "func",
-      required: true
-    }, [{
-      index: "field",
-      required: true,
-      type: String
-    }, {
-      type: Number
-    }]]
-  }).verify;
-});
-unwrapExports(combine_verify$1);
-var combine_verify_1$1 = combine_verify$1.groupByVerify;
-var combine_verify_2$1 = combine_verify$1.funcInfoVerify;
-var combine_verify_3$1 = combine_verify$1.funcInputVerify;
-
 var combine = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -3458,8 +4338,8 @@ var combine = createCommonjsModule(function (module, exports) {
     groupBy(...fields) {
       let groupByFields = schemaVerify.Type.array.safe(this.groupByFields);
 
-      if (!combine_verify$1.groupByVerify(fields)) {
-        throw new Error(builder_error$1.default.errorFieldName);
+      if (!verify.strArrVerify(fields)) {
+        throw new Error(error.default.errorFields);
       }
 
       groupByFields = groupByFields.concat(fields);
@@ -3484,8 +4364,8 @@ var combine = createCommonjsModule(function (module, exports) {
       let funcs = [];
 
       for (const info of combineFuncs) {
-        if (!combine_verify$1.funcInfoVerify(info)) {
-          throw new Error(builder_error$1.default.errorFuncInfo);
+        if (!verify.funcInfoVerify(info)) {
+          throw new Error(error.default.errorFuncInfo);
         }
 
         const funcFeild = info.funcFeild;
@@ -3499,7 +4379,7 @@ var combine = createCommonjsModule(function (module, exports) {
     funcsCache(funcInfo) {
       const combineFuncs = schemaVerify.Type.array.safe(this.combineFuncs);
 
-      if (combine_verify$1.funcInfoVerify(funcInfo)) {
+      if (verify.funcInfoVerify(funcInfo)) {
         combineFuncs.push(funcInfo);
       }
 
@@ -3511,14 +4391,14 @@ var combine = createCommonjsModule(function (module, exports) {
       for (let info of funcInfos) {
         info = schemaVerify.Type.object.safe(info);
 
-        if (combine_verify$1.funcInfoVerify(info)) {
+        if (verify.funcInfoVerify(info)) {
           this.funcsCache(info);
           continue;
         }
 
         const funcCase = this.getFuncCase();
 
-        if (combine_verify$1.funcInputVerify(info, true)) {
+        if (verify.funcInputVerify(info)) {
           const func = info.func;
           const field = info.field;
 
@@ -3692,8 +4572,8 @@ var combine$1 = createCommonjsModule(function (module, exports) {
     groupBy(...fields) {
       let groupByFields = schemaVerify.Type.array.safe(this.groupByFields);
 
-      if (!combine_verify$1.groupByVerify(fields)) {
-        throw new Error(builder_error$1.default.errorFieldName);
+      if (!verify.strArrVerify(fields)) {
+        throw new Error(error.default.errorFields);
       }
 
       groupByFields = groupByFields.concat(fields);
@@ -3718,8 +4598,8 @@ var combine$1 = createCommonjsModule(function (module, exports) {
       let funcs = [];
 
       for (const info of combineFuncs) {
-        if (!combine_verify$1.funcInfoVerify(info)) {
-          throw new Error(builder_error$1.default.errorFuncInfo);
+        if (!verify.funcInfoVerify(info)) {
+          throw new Error(error.default.errorFuncInfo);
         }
 
         const funcFeild = info.funcFeild;
@@ -3733,7 +4613,7 @@ var combine$1 = createCommonjsModule(function (module, exports) {
     funcsCache(funcInfo) {
       const combineFuncs = schemaVerify.Type.array.safe(this.combineFuncs);
 
-      if (combine_verify$1.funcInfoVerify(funcInfo)) {
+      if (verify.funcInfoVerify(funcInfo)) {
         combineFuncs.push(funcInfo);
       }
 
@@ -3745,14 +4625,14 @@ var combine$1 = createCommonjsModule(function (module, exports) {
       for (let info of funcInfos) {
         info = schemaVerify.Type.object.safe(info);
 
-        if (combine_verify$1.funcInfoVerify(info)) {
+        if (verify.funcInfoVerify(info)) {
           this.funcsCache(info);
           continue;
         }
 
         const funcCase = this.getFuncCase();
 
-        if (combine_verify$1.funcInputVerify(info, true)) {
+        if (verify.funcInputVerify(info)) {
           const func = info.func;
           const field = info.field;
 
@@ -3920,6 +4800,10 @@ var select = createCommonjsModule(function (module, exports) {
       const result = [];
 
       for (const field of fields) {
+        if (!schemaVerify.Type.string.isNotEmpty(field)) {
+          continue;
+        }
+
         const safeField = field !== "*" ? this.safeKey(field) : "*";
 
         if (schemaVerify.Type.string.isNotEmpty(asMap[field])) {
@@ -3934,11 +4818,13 @@ var select = createCommonjsModule(function (module, exports) {
     }
 
     formatFieldStr() {
-      const fields = this.formatFields();
-      const funcs = this.formatFuncs();
+      let fields = this.formatFields();
+      let funcs = this.formatFuncs();
       let result;
 
-      if (fields.length > 0 || funcs.length > 0) {
+      if (verify.strArrVerify(fields) || verify.strArrVerify(funcs)) {
+        fields = schemaVerify.Type.array.safe(fields);
+        funcs = schemaVerify.Type.array.safe(funcs);
         result = [].concat(fields, funcs).join(", ");
       } else {
         result = "*";
@@ -3948,7 +4834,6 @@ var select = createCommonjsModule(function (module, exports) {
     }
 
     build() {
-      this.checkQuery();
       const type = this.queryType;
       const table = this.getQueryTable();
       const fieldsStr = this.formatFieldStr();
@@ -3972,7 +4857,9 @@ var select = createCommonjsModule(function (module, exports) {
           continue;
         }
 
-        fields.push(item);
+        if (schemaVerify.Type.string.isNotEmpty(item)) {
+          fields.push(item);
+        }
       }
 
       this.selectFields = Array.from(new Set(selectFields.concat(fields)));
@@ -3985,13 +4872,13 @@ var select = createCommonjsModule(function (module, exports) {
     }
 
     asFieldMap(map) {
-      let asMap = schemaVerify.Type.object.safe(this.fieldsAsMap);
+      const asMap = schemaVerify.Type.object.safe(this.fieldsAsMap);
 
-      if (schemaVerify.Type.object.isNotEmpty(map)) {
-        asMap = Object.assign({}, asMap, map);
+      if (!verify.strObjVerify(map)) {
+        throw new Error(error.default.errorFieldMap);
       }
 
-      this.fieldsAsMap = asMap;
+      this.fieldsAsMap = Object.assign({}, asMap, map);
       return this;
     }
 
@@ -4008,10 +4895,6 @@ var select = createCommonjsModule(function (module, exports) {
     findOne() {
       this.getLimitCase().step(1);
       return this;
-    }
-
-    checkQuery() {
-      this._checkQuery();
     }
 
   }
@@ -4035,7 +4918,6 @@ var update = createCommonjsModule(function (module, exports) {
     }
 
     build() {
-      this.checkQuery();
       const type = this.queryType;
       const table = this.getQueryTable();
       const data = this.formatData();
@@ -4051,7 +4933,7 @@ var update = createCommonjsModule(function (module, exports) {
       const updateInfos = this.updateInfos;
 
       if (!schemaVerify.Type.object.isNotEmpty(updateInfos)) {
-        throw new Error("Illegal Update Infos");
+        throw new Error(error.default.emptyUpdateInfo);
       }
 
       const result = [];
@@ -4059,8 +4941,8 @@ var update = createCommonjsModule(function (module, exports) {
       for (const field in updateInfos) {
         const info = updateInfos[field];
 
-        if (!schemaVerify.Type.object.isNotEmpty(info)) {
-          throw new Error("Illegal Update Info");
+        if (!verify.updateInfoVerify(info)) {
+          continue;
         }
 
         const type = info.type;
@@ -4083,34 +4965,36 @@ var update = createCommonjsModule(function (module, exports) {
             break;
         }
 
-        if (!schemaVerify.Type.string.isNotEmpty(infoStr)) {
-          throw new Error("Illegal Update Type");
+        if (schemaVerify.Type.string.isNotEmpty(infoStr)) {
+          result.push(infoStr);
         }
+      }
 
-        result.push(infoStr);
+      if (!verify.strArrVerify(result)) {
+        throw new Error(error.default.emptyUpdateInfo);
       }
 
       return result;
     }
 
     updateCache(data, type) {
-      if (!schemaVerify.Type.object.isNotEmpty(data)) {
-        throw new Error("Illegal Update Data");
+      if (!verify.fieldDataVerify(data)) {
+        throw new Error(error.default.errorFieldData);
       }
 
       const updateInfos = schemaVerify.Type.object.safe(this.updateInfos);
 
       for (const field in data) {
         const value = data[field];
-
-        if (!schemaVerify.Type.string.isNotEmpty(value) && !schemaVerify.Type.number.is(value)) {
-          throw new Error("Illegal Value Type");
-        }
-
         const updateInfo = {
           value,
           type
         };
+
+        if (!verify.updateInfoVerify(updateInfo)) {
+          throw new Error(error.default.errorUpdateInfo);
+        }
+
         updateInfos[field] = updateInfo;
       }
 
@@ -4128,16 +5012,6 @@ var update = createCommonjsModule(function (module, exports) {
 
     minus(data) {
       return this.updateCache(data, _enum$1.UpdateTypes.minus);
-    }
-
-    checkQuery() {
-      this._checkQuery();
-
-      const updateInfos = this.updateInfos;
-
-      if (!schemaVerify.Type.object.isNotEmpty(updateInfos)) {
-        throw "Illegal Update Infos";
-      }
     }
 
   }
@@ -4160,7 +5034,6 @@ var _delete = createCommonjsModule(function (module, exports) {
     }
 
     build() {
-      this.checkQuery();
       const type = this.queryType;
       const table = this.getQueryTable();
       let query = `${type} FROM ${table}`;
@@ -4168,10 +5041,6 @@ var _delete = createCommonjsModule(function (module, exports) {
       query = this.orderBuild(query);
       query = this.limitBuild(query);
       return query;
-    }
-
-    checkQuery() {
-      this._checkQuery();
     }
 
   }
@@ -4199,8 +5068,8 @@ var insert$1 = createCommonjsModule(function (module, exports) {
     }
 
     data(data) {
-      if (!schemaVerify.Type.object.isNotEmpty(data)) {
-        throw new Error("Illegal Field Data");
+      if (!verify.fieldDataVerify(data)) {
+        throw new Error(error.default.errorFieldData);
       }
 
       const insertData = schemaVerify.Type.object.safe(this.insertData);
@@ -4217,8 +5086,8 @@ var insert$1 = createCommonjsModule(function (module, exports) {
     }
 
     multiData(dataArr) {
-      if (!schemaVerify.Type.array.isNotEmpty(dataArr)) {
-        throw new Error("Illegal Field Data Array");
+      if (!verify.fieldDataArrVerify(dataArr)) {
+        throw new Error(error.default.errorFieldDataArr);
       }
 
       const insertDataArr = schemaVerify.Type.array.safe(this.insertDataArr);
@@ -4241,16 +5110,16 @@ var insert$1 = createCommonjsModule(function (module, exports) {
       const insertDataArr = this.insertDataArr;
       let fields;
 
-      if (schemaVerify.Type.array.isNotEmpty(insertFields)) {
+      if (verify.strArrVerify(insertFields)) {
         fields = insertFields;
-      } else if (schemaVerify.Type.object.isNotEmpty(insertData)) {
+      } else if (verify.fieldDataVerify(insertData)) {
         fields = Object.keys(insertData);
-      } else if (schemaVerify.Type.array.isNotEmpty(insertDataArr)) {
+      } else if (verify.fieldDataArrVerify(insertDataArr)) {
         fields = Object.keys(insertDataArr[0]);
       }
 
-      if (!schemaVerify.Type.array.isNotEmpty(fields)) {
-        throw new Error("Illegal Insert Fields");
+      if (!verify.strArrVerify(fields)) {
+        throw new Error(error.default.errorFields);
       }
 
       return fields;
@@ -4281,21 +5150,20 @@ var insert$1 = createCommonjsModule(function (module, exports) {
 
       if (schemaVerify.Type.string.isNotEmpty(valuesSql)) {
         result = valuesSql;
-      } else if (schemaVerify.Type.object.isNotEmpty(insertData)) {
+      } else if (verify.fieldDataVerify(insertData)) {
         result = valuesStrFormat(insertData);
-      } else if (schemaVerify.Type.array.isNotEmpty(insertDataArr)) {
+      } else if (verify.fieldDataArrVerify(insertDataArr)) {
         result = valuesArrStrFormat(insertDataArr);
       }
 
       if (!schemaVerify.Type.string.isNotEmpty(result)) {
-        throw new Error("Illegal Insert Values");
+        throw new Error(error.default.errorInsertValues);
       }
 
       return `VALUES ${result}`;
     }
 
     build() {
-      this.checkQuery();
       const type = this.queryType;
       const table = this.getQueryTable();
       const fields = this.formatFields();
@@ -4303,49 +5171,6 @@ var insert$1 = createCommonjsModule(function (module, exports) {
       const fieldsStr = fields.map(field => this.safeKey(field)).join(", ");
       let query = `${type} INTO ${table} ( ${fieldsStr} )  ${valuesStr}`;
       return query;
-    }
-
-    checkQuery() {
-      this._checkQuery();
-
-      const valuesSql = this.valuesSql;
-      const insertData = this.insertData;
-      const insertFields = this.insertFields;
-      const insertDataArr = this.insertDataArr;
-
-      if (schemaVerify.Type.string.isNotEmpty(valuesSql) || schemaVerify.Type.function.is(valuesSql) || schemaVerify.Type.object.is(valuesSql)) {
-        if (!schemaVerify.Type.array.isNotEmpty(insertFields)) {
-          throw new Error("Illegal Insert Fields");
-        }
-
-        return;
-      }
-
-      if (!schemaVerify.Type.object.isNotEmpty(insertData) && !schemaVerify.Type.array.isNotEmpty(insertDataArr)) {
-        throw new Error("Illegal Insert Data");
-      }
-
-      if (!schemaVerify.Type.array.isNotEmpty(insertFields)) {
-        return;
-      }
-
-      const checkInsertData = data => {
-        for (const field of insertFields) {
-          if (schemaVerify.Type.undefinedNull.is(data[field])) {
-            throw new Error("Illegal Insert Data");
-          }
-        }
-      };
-
-      if (schemaVerify.Type.object.isNotEmpty(insertData)) {
-        return checkInsertData(insertData);
-      }
-
-      if (schemaVerify.Type.array.isNotEmpty(insertDataArr)) {
-        for (const data of insertDataArr) {
-          checkInsertData(data);
-        }
-      }
     }
 
   }
@@ -4393,6 +5218,10 @@ var select$1 = createCommonjsModule(function (module, exports) {
       const result = [];
 
       for (const field of fields) {
+        if (!schemaVerify.Type.string.isNotEmpty(field)) {
+          continue;
+        }
+
         const safeField = field !== "*" ? this.safeKey(field) : "*";
 
         if (schemaVerify.Type.string.isNotEmpty(asMap[field])) {
@@ -4407,11 +5236,13 @@ var select$1 = createCommonjsModule(function (module, exports) {
     }
 
     formatFieldStr() {
-      const fields = this.formatFields();
-      const funcs = this.formatFuncs();
+      let fields = this.formatFields();
+      let funcs = this.formatFuncs();
       let result;
 
-      if (fields.length > 0 || funcs.length > 0) {
+      if (verify.strArrVerify(fields) || verify.strArrVerify(funcs)) {
+        fields = schemaVerify.Type.array.safe(fields);
+        funcs = schemaVerify.Type.array.safe(funcs);
         result = [].concat(fields, funcs).join(", ");
       } else {
         result = "*";
@@ -4421,7 +5252,6 @@ var select$1 = createCommonjsModule(function (module, exports) {
     }
 
     build() {
-      this.checkQuery();
       const type = this.queryType;
       const table = this.getQueryTable();
       const fieldsStr = this.formatFieldStr();
@@ -4445,7 +5275,9 @@ var select$1 = createCommonjsModule(function (module, exports) {
           continue;
         }
 
-        fields.push(item);
+        if (schemaVerify.Type.string.isNotEmpty(item)) {
+          fields.push(item);
+        }
       }
 
       this.selectFields = Array.from(new Set(selectFields.concat(fields)));
@@ -4458,13 +5290,13 @@ var select$1 = createCommonjsModule(function (module, exports) {
     }
 
     asFieldMap(map) {
-      let asMap = schemaVerify.Type.object.safe(this.fieldsAsMap);
+      const asMap = schemaVerify.Type.object.safe(this.fieldsAsMap);
 
-      if (schemaVerify.Type.object.isNotEmpty(map)) {
-        asMap = Object.assign({}, asMap, map);
+      if (!verify.strObjVerify(map)) {
+        throw new Error(error.default.errorFieldMap);
       }
 
-      this.fieldsAsMap = asMap;
+      this.fieldsAsMap = Object.assign({}, asMap, map);
       return this;
     }
 
@@ -4481,10 +5313,6 @@ var select$1 = createCommonjsModule(function (module, exports) {
     findOne() {
       this.getLimitCase().step(1);
       return this;
-    }
-
-    checkQuery() {
-      this._checkQuery();
     }
 
   }
@@ -4508,7 +5336,6 @@ var update$1 = createCommonjsModule(function (module, exports) {
     }
 
     build() {
-      this.checkQuery();
       const type = this.queryType;
       const table = this.getQueryTable();
       const data = this.formatData();
@@ -4524,7 +5351,7 @@ var update$1 = createCommonjsModule(function (module, exports) {
       const updateInfos = this.updateInfos;
 
       if (!schemaVerify.Type.object.isNotEmpty(updateInfos)) {
-        throw new Error("Illegal Update Infos");
+        throw new Error(error.default.emptyUpdateInfo);
       }
 
       const result = [];
@@ -4532,8 +5359,8 @@ var update$1 = createCommonjsModule(function (module, exports) {
       for (const field in updateInfos) {
         const info = updateInfos[field];
 
-        if (!schemaVerify.Type.object.isNotEmpty(info)) {
-          throw new Error("Illegal Update Info");
+        if (!verify.updateInfoVerify(info)) {
+          continue;
         }
 
         const type = info.type;
@@ -4556,34 +5383,36 @@ var update$1 = createCommonjsModule(function (module, exports) {
             break;
         }
 
-        if (!schemaVerify.Type.string.isNotEmpty(infoStr)) {
-          throw new Error("Illegal Update Type");
+        if (schemaVerify.Type.string.isNotEmpty(infoStr)) {
+          result.push(infoStr);
         }
+      }
 
-        result.push(infoStr);
+      if (!verify.strArrVerify(result)) {
+        throw new Error(error.default.emptyUpdateInfo);
       }
 
       return result;
     }
 
     updateCache(data, type) {
-      if (!schemaVerify.Type.object.isNotEmpty(data)) {
-        throw new Error("Illegal Update Data");
+      if (!verify.fieldDataVerify(data)) {
+        throw new Error(error.default.errorFieldData);
       }
 
       const updateInfos = schemaVerify.Type.object.safe(this.updateInfos);
 
       for (const field in data) {
         const value = data[field];
-
-        if (!schemaVerify.Type.string.isNotEmpty(value) && !schemaVerify.Type.number.is(value)) {
-          throw new Error("Illegal Value Type");
-        }
-
         const updateInfo = {
           value,
           type
         };
+
+        if (!verify.updateInfoVerify(updateInfo)) {
+          throw new Error(error.default.errorUpdateInfo);
+        }
+
         updateInfos[field] = updateInfo;
       }
 
@@ -4601,16 +5430,6 @@ var update$1 = createCommonjsModule(function (module, exports) {
 
     minus(data) {
       return this.updateCache(data, _enum$1.UpdateTypes.minus);
-    }
-
-    checkQuery() {
-      this._checkQuery();
-
-      const updateInfos = this.updateInfos;
-
-      if (!schemaVerify.Type.object.isNotEmpty(updateInfos)) {
-        throw "Illegal Update Infos";
-      }
     }
 
   }
@@ -4633,7 +5452,6 @@ var _delete$1 = createCommonjsModule(function (module, exports) {
     }
 
     build() {
-      this.checkQuery();
       const type = this.queryType;
       const table = this.getQueryTable();
       let query = `${type} FROM ${table}`;
@@ -4641,10 +5459,6 @@ var _delete$1 = createCommonjsModule(function (module, exports) {
       query = this.orderBuild(query);
       query = this.limitBuild(query);
       return query;
-    }
-
-    checkQuery() {
-      this._checkQuery();
     }
 
   }
@@ -4773,7 +5587,7 @@ var builder = createCommonjsModule(function (module, exports) {
 
     table(tableName) {
       if (!schemaVerify.Type.string.isNotEmpty(tableName)) {
-        throw new Error(builder_error$1.default.errorTableName);
+        throw new Error(error.default.errorTableName);
       }
 
       this.queryTable = tableName;
@@ -4887,7 +5701,7 @@ var builder$1 = createCommonjsModule(function (module, exports) {
 
     table(tableName) {
       if (!schemaVerify.Type.string.isNotEmpty(tableName)) {
-        throw new Error(builder_error$1.default.errorTableName);
+        throw new Error(error.default.errorTableName);
       }
 
       this.queryTable = tableName;

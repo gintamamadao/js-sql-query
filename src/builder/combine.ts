@@ -3,12 +3,12 @@ import Func from "./func";
 import { Type } from "schema-verify";
 import { FuncInfo } from "../constant/interface";
 import { DialectTypes } from "../constant/enum";
-import ErrMsg from "../error/builder.error";
+import ErrMsg from "../error/index";
 import {
-    groupByVerify,
+    strArrVerify,
     funcInfoVerify,
     funcInputVerify
-} from "../verify/combine.verify";
+} from "../verify/index";
 
 interface FuncInput {
     func: string;
@@ -38,8 +38,8 @@ class Combine extends Having {
 
     groupBy(...fields: string[]) {
         let groupByFields: string[] = Type.array.safe(this.groupByFields);
-        if (!groupByVerify(fields)) {
-            throw new Error(ErrMsg.errorFieldName);
+        if (!strArrVerify(fields)) {
+            throw new Error(ErrMsg.errorFields);
         }
         groupByFields = groupByFields.concat(fields);
         this.groupByFields = Array.from(new Set(groupByFields));
@@ -87,7 +87,7 @@ class Combine extends Having {
                 continue;
             }
             const funcCase = this.getFuncCase();
-            if (funcInputVerify(info, true)) {
+            if (funcInputVerify(info)) {
                 const func: string = (<FuncInput>info).func;
                 const field: string | number = (<FuncInput>info).field;
                 if (

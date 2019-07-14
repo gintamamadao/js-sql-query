@@ -1,12 +1,5 @@
 import { Schema } from "schema-verify";
-
-export const groupByVerify = new Schema({
-    type: Array,
-    elements: {
-        type: String,
-        required: true
-    }
-}).verify;
+import { FuncTypes } from "../constant/enum";
 
 export const funcInfoVerify = new Schema({
     type: Object,
@@ -27,7 +20,10 @@ export const funcInputVerify = new Schema({
         {
             type: String,
             index: "func",
-            required: true
+            required: true,
+            custom: value => {
+                return !!FuncTypes[value];
+            }
         },
         [
             {

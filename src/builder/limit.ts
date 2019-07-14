@@ -1,4 +1,11 @@
 import { Type } from "schema-verify";
+import {
+    integerVerify,
+    pageVerify,
+    naturalVerify,
+    limitInfoVerify
+} from "../verify/index";
+import ErrMsg from "../error/index";
 
 interface LimitInfo {
     offset: number;
@@ -9,12 +16,12 @@ class Limit {
     protected limitInfo: LimitInfo;
 
     limitBuild(query: string): string {
-        const limitInfo: LimitInfo = Type.object.safe(this.limitInfo);
-        const offset: number = limitInfo.offset;
-        const step: number = limitInfo.step;
-        if (!Type.number.is(offset) || !Type.number.is(step)) {
+        const limitInfo: LimitInfo = this.limitInfo;
+        if (!limitInfoVerify(limitInfo)) {
             return query;
         }
+        const offset: number = limitInfo.offset;
+        const step: number = limitInfo.step;
         if (offset === 0) {
             return `${query} LIMIT ${step}`;
         }
@@ -25,14 +32,11 @@ class Limit {
     }
 
     limit(offset: number, step?: number): void {
-        if (!Type.number.is(offset) || offset < 0) {
-            throw new Error("Illegal Param Offset");
+        if (!integerVerify(offset)) {
+            throw new Error(ErrMsg.errorOffset);
         }
-        if (
-            !Type.undefinedNull.is(step) &&
-            (!Type.number.is(step) || step < 0)
-        ) {
-            throw new Error("Illegal Param Step");
+        if (Type.undefined.isNot(step) && !integerVerify(step)) {
+            throw new Error(ErrMsg.errorStep);
         }
         let limitInfo: LimitInfo;
         if (Type.number.is(offset) && Type.number.is(step)) {
@@ -51,8 +55,8 @@ class Limit {
     }
 
     offset(offset: number) {
-        if (!Type.number.is(offset) || offset < 0) {
-            throw new Error("Illegal Param Offset");
+        if (!integerVerify(offset)) {
+            throw new Error(ErrMsg.errorOffset);
         }
         this.limitInfo = {
             offset: offset,
@@ -61,8 +65,8 @@ class Limit {
     }
 
     step(step: number): void {
-        if (!Type.number.is(step) || step < 0) {
-            throw new Error("Illegal Param Step");
+        if (!integerVerify(step)) {
+            throw new Error(ErrMsg.errorStep);
         }
         this.limitInfo = {
             offset: 0,
@@ -71,11 +75,11 @@ class Limit {
     }
 
     paging(page: number, size: number): void {
-        if (!Type.number.is(page) || page < 1) {
-            throw new Error("Illegal Param Page");
+        if (!pageVerify(page)) {
+            throw new Error(ErrMsg.errorPage);
         }
-        if (!Type.number.is(size) || size < 0) {
-            throw new Error("Illegal Param Size");
+        if (!naturalVerify(size)) {
+            throw new Error(ErrMsg.errorSize);
         }
         const offset = (page - 1) * size;
         this.limitInfo = {

@@ -3,6 +3,8 @@ import Combine from "./combine";
 import { KeyValueStr } from "../constant/interface";
 import { QueryTypes, DialectTypes } from "../constant/enum";
 import { Type } from "schema-verify";
+import { strArrVerify, strObjVerify } from "../verify/index";
+import ErrMsg from "../error/index";
 
 class Select extends Combine {
     protected selectFields: string[];
@@ -20,6 +22,9 @@ class Select extends Combine {
         const asMap: KeyValueStr = Type.object.safe(this.fieldsAsMap);
         const result: string[] = [];
         for (const field of fields) {
+            if (!Type.string.isNotEmpty(field)) {
+                continue;
+            }
             const safeField = field !== "*" ? this.safeKey(field) : "*";
             if (Type.string.isNotEmpty(asMap[field])) {
                 const safeAsField = this.safeKey(asMap[field]);
@@ -32,10 +37,12 @@ class Select extends Combine {
     }
 
     protected formatFieldStr(): string {
-        const fields: string[] = this.formatFields();
-        const funcs: string[] = this.formatFuncs();
+        let fields: string[] = this.formatFields();
+        let funcs: string[] = this.formatFuncs();
         let result: string;
-        if (fields.length > 0 || funcs.length > 0) {
+        if (strArrVerify(fields) || strArrVerify(funcs)) {
+            fields = Type.array.safe(fields);
+            funcs = Type.array.safe(funcs);
             result = [].concat(fields, funcs).join(", ");
         } else {
             result = "*";
@@ -44,7 +51,6 @@ class Select extends Combine {
     }
 
     build(): string {
-        this.checkQuery();
         const type: string = this.queryType;
         const table: string = this.getQueryTable();
         const fieldsStr: string = this.formatFieldStr();
@@ -66,7 +72,9 @@ class Select extends Combine {
                 this.funcFeilds(item);
                 continue;
             }
-            fields.push(item);
+            if (Type.string.isNotEmpty(item)) {
+                fields.push(item);
+            }
         }
         this.selectFields = Array.from(new Set(selectFields.concat(fields)));
         if (this.selectFields.includes("*")) {
@@ -76,11 +84,11 @@ class Select extends Combine {
     }
 
     asFieldMap(map: KeyValueStr) {
-        let asMap: KeyValueStr = Type.object.safe(this.fieldsAsMap);
-        if (Type.object.isNotEmpty(map)) {
-            asMap = Object.assign({}, asMap, map);
+        const asMap: KeyValueStr = Type.object.safe(this.fieldsAsMap);
+        if (!strObjVerify(map)) {
+            throw new Error(ErrMsg.errorFieldMap);
         }
-        this.fieldsAsMap = asMap;
+        this.fieldsAsMap = Object.assign({}, asMap, map);
         return this;
     }
 
@@ -97,10 +105,6 @@ class Select extends Combine {
     findOne() {
         this.getLimitCase().step(1);
         return this;
-    }
-
-    checkQuery(): void {
-        this._checkQuery();
     }
 }
 

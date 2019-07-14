@@ -4,6 +4,7 @@ import { Type } from "schema-verify";
 import Safe from "./safe";
 import Limit from "./limit";
 import Order from "./order";
+import ErrMsg from "../error/index";
 
 class Query extends Safe {
     protected queryTable: string;
@@ -72,20 +73,9 @@ class Query extends Safe {
         return this;
     }
 
-    protected _checkQuery(): void {
-        const type = this.queryType;
-        const table = this.queryTable;
-        if (!Type.string.isNotEmpty(type)) {
-            throw new Error("Illegal Query Type");
-        }
-        if (!Type.string.isNotEmpty(table)) {
-            throw new Error("Illegal Table Name");
-        }
-    }
-
     table(tableName: string) {
         if (!Type.string.isNotEmpty(tableName)) {
-            throw new Error("Illegal Table Name");
+            throw new Error(ErrMsg.errorTableName);
         }
         this.queryTable = tableName;
         return this;

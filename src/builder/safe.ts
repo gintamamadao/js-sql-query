@@ -2,8 +2,8 @@ import Dialects from "../util/dialects";
 import { DialectTypes } from "../constant/enum";
 import { SafeValue, SafeKey, Dialect } from "../constant/interface";
 import { Type } from "schema-verify";
-import { dialectVerify } from "../verify/safe.verify";
-import ErrMsg from "../error/safe.error";
+import { dialectVerify, manualSqlVerify } from "../verify/index";
+import ErrMsg from "../error/index";
 
 class Safe {
     protected _dialect: Dialect;
@@ -37,11 +37,7 @@ class Safe {
     };
 
     protected manualSql(sql: string | Function, key: string) {
-        if (
-            !Type.string.isNotEmpty(sql) &&
-            !Type.function.is(sql) &&
-            !(sql instanceof Safe)
-        ) {
+        if (!manualSqlVerify(sql) && !(sql instanceof Safe)) {
             throw new Error(ErrMsg.errorManualSql);
         }
         this[key] = sql;
