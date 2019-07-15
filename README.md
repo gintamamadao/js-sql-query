@@ -498,7 +498,7 @@ builder
 
 -   条件 =，和前一条件逻辑为或
 
-#### where\$OrNoEqual
+#### where\$OrNotEqual
 
 -   条件 <>，和前一条件逻辑为或
 
@@ -796,7 +796,7 @@ builder
 
 -   条件 =，和前一条件逻辑为或
 
-#### having\$OrNoEqual
+#### having\$OrNotEqual
 
 -   条件 <>，和前一条件逻辑为或
 
@@ -910,7 +910,7 @@ builder
 
 -   条件 =，和前一条件逻辑为或
 
-#### orNoEqual
+#### orNotEqual
 
 -   条件 <>，和前一条件逻辑为或
 

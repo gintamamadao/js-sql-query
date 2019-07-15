@@ -76,8 +76,8 @@ class Where extends Query {
         return this;
     }
 
-    where$OrNoEqual(data: TermData) {
-        this.getTermCase(TERM_NAME).orNoEqual(data);
+    where$OrNotEqual(data: TermData) {
+        this.getTermCase(TERM_NAME).orNotEqual(data);
         return this;
     }
 

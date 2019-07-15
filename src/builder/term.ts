@@ -311,7 +311,7 @@ class Term extends Safe {
         return this.or(data, TermSign.equal);
     }
 
-    orNoEqual(data: TermData) {
+    orNotEqual(data: TermData) {
         return this.or(data, TermSign.notEqual);
     }
 

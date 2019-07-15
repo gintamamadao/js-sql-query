@@ -75,8 +75,8 @@ class Having extends Where {
         return this;
     }
 
-    having$OrNoEqual(data: TermData) {
-        this.getTermCase(TERM_NAME).orNoEqual(data);
+    having$OrNotEqual(data: TermData) {
+        this.getTermCase(TERM_NAME).orNotEqual(data);
         return this;
     }
 

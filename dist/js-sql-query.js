@@ -2965,7 +2965,7 @@ var term = createCommonjsModule(function (module, exports) {
       return this.or(data, _enum$1.TermSign.equal);
     }
 
-    orNoEqual(data) {
+    orNotEqual(data) {
       return this.or(data, _enum$1.TermSign.notEqual);
     }
 
@@ -3341,7 +3341,7 @@ var term$1 = createCommonjsModule(function (module, exports) {
       return this.or(data, _enum$1.TermSign.equal);
     }
 
-    orNoEqual(data) {
+    orNotEqual(data) {
       return this.or(data, _enum$1.TermSign.notEqual);
     }
 
@@ -3484,8 +3484,8 @@ var where = createCommonjsModule(function (module, exports) {
       return this;
     }
 
-    where$OrNoEqual(data) {
-      this.getTermCase(TERM_NAME).orNoEqual(data);
+    where$OrNotEqual(data) {
+      this.getTermCase(TERM_NAME).orNotEqual(data);
       return this;
     }
 
@@ -3660,8 +3660,8 @@ var where$1 = createCommonjsModule(function (module, exports) {
       return this;
     }
 
-    where$OrNoEqual(data) {
-      this.getTermCase(TERM_NAME).orNoEqual(data);
+    where$OrNotEqual(data) {
+      this.getTermCase(TERM_NAME).orNotEqual(data);
       return this;
     }
 
@@ -3836,8 +3836,8 @@ var having = createCommonjsModule(function (module, exports) {
       return this;
     }
 
-    having$OrNoEqual(data) {
-      this.getTermCase(TERM_NAME).orNoEqual(data);
+    having$OrNotEqual(data) {
+      this.getTermCase(TERM_NAME).orNotEqual(data);
       return this;
     }
 
@@ -4128,8 +4128,8 @@ var having$1 = createCommonjsModule(function (module, exports) {
       return this;
     }
 
-    having$OrNoEqual(data) {
-      this.getTermCase(TERM_NAME).orNoEqual(data);
+    having$OrNotEqual(data) {
+      this.getTermCase(TERM_NAME).orNotEqual(data);
       return this;
     }
 
