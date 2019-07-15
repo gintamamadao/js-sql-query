@@ -218,30 +218,3 @@ describe("SELECT:COMBINE FUNC", () => {
         ).toBe(QUERY);
     });
 });
-
-describe("SELECT:ERROR", () => {
-    const builder = new Builder();
-    test("table", () => {
-        expect(() => builder.table().select()).toThrowError(
-            "错误的表名，需要非空字符串"
-        );
-    });
-    test("groupBy", () => {
-        expect(
-            () =>
-                builder
-                    .select()
-                    .table("table1")
-                    .groupBy().query
-        ).toThrowError("错误的字段，需要非空字符串或非空字符串数组");
-    });
-    test("groupBy", () => {
-        expect(
-            () =>
-                builder
-                    .select()
-                    .table("table1")
-                    .groupBy({}).query
-        ).toThrowError("错误的字段，需要非空字符串或非空字符串数组");
-    });
-});

@@ -143,6 +143,18 @@ var update_error = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(update_error);
 
+var builder_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    emptyQueryType: "未选择sql类型"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(builder_error);
+
 var combine_error$1 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -249,6 +261,18 @@ var update_error$1 = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(update_error$1);
 
+var builder_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    emptyQueryType: "未选择sql类型"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(builder_error$1);
+
 var D__project_jsSqlQuery_src_error = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -262,6 +286,7 @@ var D__project_jsSqlQuery_src_error = createCommonjsModule(function (module, exp
     ...select_error$1.default,
     ...term_error$1.default,
     ...update_error$1.default,
+    ...builder_error$1.default,
     errorTableName: "错误的表名，需要非空字符串",
     errorFields: "错误的字段，需要非空字符串或非空字符串数组",
     errorFieldData: "错误的字段数据",
@@ -285,6 +310,7 @@ var error = createCommonjsModule(function (module, exports) {
     ...select_error$1.default,
     ...term_error$1.default,
     ...update_error$1.default,
+    ...builder_error$1.default,
     errorTableName: "错误的表名，需要非空字符串",
     errorFields: "错误的字段，需要非空字符串或非空字符串数组",
     errorFieldData: "错误的字段数据",
@@ -1732,6 +1758,25 @@ var safe = createCommonjsModule(function (module, exports) {
       return this.build();
     }
 
+    table(queryTable) {
+      if (!schemaVerify.Type.string.isNotEmpty(queryTable)) {
+        throw new Error(error.default.errorTableName);
+      }
+
+      this._queryTable = queryTable;
+      return this;
+    }
+
+    getQueryTable() {
+      const queryTable = this._queryTable;
+
+      if (!schemaVerify.Type.string.isNotEmpty(queryTable)) {
+        throw new Error(error.default.errorTableName);
+      }
+
+      return this.safeKey(queryTable);
+    }
+
   }
 
   exports.default = Safe;
@@ -1942,6 +1987,25 @@ var safe$1 = createCommonjsModule(function (module, exports) {
 
     get query() {
       return this.build();
+    }
+
+    table(queryTable) {
+      if (!schemaVerify.Type.string.isNotEmpty(queryTable)) {
+        throw new Error(error.default.errorTableName);
+      }
+
+      this._queryTable = queryTable;
+      return this;
+    }
+
+    getQueryTable() {
+      const queryTable = this._queryTable;
+
+      if (!schemaVerify.Type.string.isNotEmpty(queryTable)) {
+        throw new Error(error.default.errorTableName);
+      }
+
+      return this.safeKey(queryTable);
     }
 
   }
@@ -2321,11 +2385,6 @@ var query = createCommonjsModule(function (module, exports) {
   });
 
   class Query extends safe$1.default {
-    constructor() {
-      super();
-      this.queryTable = "";
-    }
-
     getLimitCase() {
       let queryLimit = this.queryLimit;
 
@@ -2385,19 +2444,6 @@ var query = createCommonjsModule(function (module, exports) {
     order(sql) {
       this.getOrderCase().order(sql);
       return this;
-    }
-
-    table(tableName) {
-      if (!schemaVerify.Type.string.isNotEmpty(tableName)) {
-        throw new Error(error.default.errorTableName);
-      }
-
-      this.queryTable = tableName;
-      return this;
-    }
-
-    getQueryTable() {
-      return this.safeKey(this.queryTable);
     }
 
   }
@@ -2413,11 +2459,6 @@ var query$1 = createCommonjsModule(function (module, exports) {
   });
 
   class Query extends safe$1.default {
-    constructor() {
-      super();
-      this.queryTable = "";
-    }
-
     getLimitCase() {
       let queryLimit = this.queryLimit;
 
@@ -2477,19 +2518,6 @@ var query$1 = createCommonjsModule(function (module, exports) {
     order(sql) {
       this.getOrderCase().order(sql);
       return this;
-    }
-
-    table(tableName) {
-      if (!schemaVerify.Type.string.isNotEmpty(tableName)) {
-        throw new Error(error.default.errorTableName);
-      }
-
-      this.queryTable = tableName;
-      return this;
-    }
-
-    getQueryTable() {
-      return this.safeKey(this.queryTable);
     }
 
   }
@@ -5598,6 +5626,14 @@ var builder = createCommonjsModule(function (module, exports) {
       return this;
     }
 
+    build() {
+      throw new Error(error.default.emptyQueryType);
+    }
+
+    get query() {
+      return this.build();
+    }
+
   }
 
   exports.default = Builder;
@@ -5710,6 +5746,14 @@ var builder$1 = createCommonjsModule(function (module, exports) {
 
       this.queryTable = tableName;
       return this;
+    }
+
+    build() {
+      throw new Error(error.default.emptyQueryType);
+    }
+
+    get query() {
+      return this.build();
     }
 
   }

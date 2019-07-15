@@ -6,6 +6,7 @@ import { dialectVerify, manualSqlVerify } from "../verify/index";
 import ErrMsg from "../error/index";
 
 class Safe {
+    protected _queryTable: string;
     protected _dialect: Dialect;
     protected _dialectType: DialectTypes;
 
@@ -69,6 +70,22 @@ class Safe {
 
     get query(): string {
         return this.build();
+    }
+
+    table(queryTable: string) {
+        if (!Type.string.isNotEmpty(queryTable)) {
+            throw new Error(ErrMsg.errorTableName);
+        }
+        this._queryTable = queryTable;
+        return this;
+    }
+
+    protected getQueryTable() {
+        const queryTable = this._queryTable;
+        if (!Type.string.isNotEmpty(queryTable)) {
+            throw new Error(ErrMsg.errorTableName);
+        }
+        return this.safeKey(queryTable);
     }
 }
 

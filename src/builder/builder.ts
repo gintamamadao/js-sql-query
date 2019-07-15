@@ -102,6 +102,14 @@ class Builder {
         this.queryTable = tableName;
         return this;
     }
+
+    build(): string {
+        throw new Error(ErrMsg.emptyQueryType);
+    }
+
+    get query(): string {
+        return this.build();
+    }
 }
 
 export default Builder;

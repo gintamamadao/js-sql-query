@@ -1,20 +1,12 @@
-import { QueryTypes, DialectTypes } from "../constant/enum";
+import { DialectTypes } from "../constant/enum";
 import { FieldOrder } from "../constant/interface";
-import { Type } from "schema-verify";
 import Safe from "./safe";
 import Limit from "./limit";
 import Order from "./order";
-import ErrMsg from "../error/index";
 
 class Query extends Safe {
-    protected queryTable: string;
-    protected queryType: QueryTypes;
     protected queryLimit: Limit;
     protected queryOrder: Order;
-    constructor() {
-        super();
-        this.queryTable = "";
-    }
 
     protected getLimitCase() {
         let queryLimit: Limit = this.queryLimit;
@@ -71,18 +63,6 @@ class Query extends Safe {
     order(sql: string | Function) {
         this.getOrderCase().order(sql);
         return this;
-    }
-
-    table(tableName: string) {
-        if (!Type.string.isNotEmpty(tableName)) {
-            throw new Error(ErrMsg.errorTableName);
-        }
-        this.queryTable = tableName;
-        return this;
-    }
-
-    protected getQueryTable() {
-        return this.safeKey(this.queryTable);
     }
 }
 
