@@ -500,6 +500,7 @@ var _enum = createCommonjsModule(function (module, exports) {
     QueryTypes["select"] = "SELECT";
     QueryTypes["update"] = "UPDATE";
     QueryTypes["delete"] = "DELETE";
+    QueryTypes["create"] = "CREATE";
   })(QueryTypes = exports.QueryTypes || (exports.QueryTypes = {}));
 
   var FuncTypes;
@@ -581,18 +582,54 @@ var _enum = createCommonjsModule(function (module, exports) {
     WidgetTypes["order"] = "ORDER";
   })(WidgetTypes = exports.WidgetTypes || (exports.WidgetTypes = {}));
 
-  var DataTypes;
+  var SqlDataTypes;
 
-  (function (DataTypes) {
-    DataTypes["tinyint"] = "TINYINT";
-    DataTypes["smallint"] = "SMALLINT";
-    DataTypes["mediumint"] = "MEDIUMINT";
-    DataTypes["int"] = "INT";
-    DataTypes["bigint"] = "BIGINT";
-    DataTypes["float"] = "FLOAT";
-    DataTypes["double"] = "DOUBLE";
-    DataTypes["decimal"] = "DECIMAL";
-  })(DataTypes = exports.DataTypes || (exports.DataTypes = {}));
+  (function (SqlDataTypes) {
+    SqlDataTypes["tinyint"] = "TINYINT";
+    SqlDataTypes["smallint"] = "SMALLINT";
+    SqlDataTypes["mediumint"] = "MEDIUMINT";
+    SqlDataTypes["int"] = "INT";
+    SqlDataTypes["bigint"] = "BIGINT";
+    SqlDataTypes["float"] = "FLOAT";
+    SqlDataTypes["double"] = "DOUBLE";
+    SqlDataTypes["decimal"] = "DECIMAL";
+    SqlDataTypes["date"] = "DATE";
+    SqlDataTypes["time"] = "TIME";
+    SqlDataTypes["year"] = "YEAR";
+    SqlDataTypes["datetime"] = "DATETIME";
+    SqlDataTypes["timestamp"] = "TIMESTAMP";
+    SqlDataTypes["char"] = "CHAR";
+    SqlDataTypes["varchar"] = "VARCHAR";
+    SqlDataTypes["tinyblob"] = "TINYBLOB";
+    SqlDataTypes["tinytest"] = "TINYTEXT";
+    SqlDataTypes["blob"] = "BLOB";
+    SqlDataTypes["test"] = "TEXT";
+    SqlDataTypes["mediumblob"] = "MEDIUMBLOB";
+    SqlDataTypes["mediumtext"] = "MEDIUMTEXT";
+    SqlDataTypes["longblob"] = "LONGBLOB";
+    SqlDataTypes["longtext"] = "LONGTEXT";
+  })(SqlDataTypes = exports.SqlDataTypes || (exports.SqlDataTypes = {}));
+
+  var TableOptions;
+
+  (function (TableOptions) {
+    TableOptions["primaryKey"] = "PRIMARY KEY";
+    TableOptions["uniqueKey"] = "UNIQUE KEY";
+    TableOptions["engine"] = "ENGINE";
+    TableOptions["autoIncrement"] = "AUTO_INCREMENT";
+    TableOptions["defaultCharset"] = "DEFAULT CHARSET";
+    TableOptions["comment"] = "COMMENT";
+    TableOptions["unsigned"] = "UNSIGNED";
+    TableOptions["notNull"] = "NOT NULL";
+    TableOptions["default"] = "DEFAULT";
+    TableOptions["onUpdate"] = "ON UPDATE";
+  })(TableOptions = exports.TableOptions || (exports.TableOptions = {}));
+
+  var TableOptionValue;
+
+  (function (TableOptionValue) {
+    TableOptionValue["currentTimestamp"] = "CURRENT_TIMESTAMP";
+  })(TableOptionValue = exports.TableOptionValue || (exports.TableOptionValue = {}));
 });
 
 unwrapExports(_enum);
@@ -604,7 +641,9 @@ var _enum_5 = _enum.TermSign;
 var _enum_6 = _enum.OrderTypes;
 var _enum_7 = _enum.UpdateTypes;
 var _enum_8 = _enum.WidgetTypes;
-var _enum_9 = _enum.DataTypes;
+var _enum_9 = _enum.SqlDataTypes;
+var _enum_10 = _enum.TableOptions;
+var _enum_11 = _enum.TableOptionValue;
 
 var _enum$1 = createCommonjsModule(function (module, exports) {
 
@@ -628,6 +667,7 @@ var _enum$1 = createCommonjsModule(function (module, exports) {
     QueryTypes["select"] = "SELECT";
     QueryTypes["update"] = "UPDATE";
     QueryTypes["delete"] = "DELETE";
+    QueryTypes["create"] = "CREATE";
   })(QueryTypes = exports.QueryTypes || (exports.QueryTypes = {}));
 
   var FuncTypes;
@@ -709,18 +749,54 @@ var _enum$1 = createCommonjsModule(function (module, exports) {
     WidgetTypes["order"] = "ORDER";
   })(WidgetTypes = exports.WidgetTypes || (exports.WidgetTypes = {}));
 
-  var DataTypes;
+  var SqlDataTypes;
 
-  (function (DataTypes) {
-    DataTypes["tinyint"] = "TINYINT";
-    DataTypes["smallint"] = "SMALLINT";
-    DataTypes["mediumint"] = "MEDIUMINT";
-    DataTypes["int"] = "INT";
-    DataTypes["bigint"] = "BIGINT";
-    DataTypes["float"] = "FLOAT";
-    DataTypes["double"] = "DOUBLE";
-    DataTypes["decimal"] = "DECIMAL";
-  })(DataTypes = exports.DataTypes || (exports.DataTypes = {}));
+  (function (SqlDataTypes) {
+    SqlDataTypes["tinyint"] = "TINYINT";
+    SqlDataTypes["smallint"] = "SMALLINT";
+    SqlDataTypes["mediumint"] = "MEDIUMINT";
+    SqlDataTypes["int"] = "INT";
+    SqlDataTypes["bigint"] = "BIGINT";
+    SqlDataTypes["float"] = "FLOAT";
+    SqlDataTypes["double"] = "DOUBLE";
+    SqlDataTypes["decimal"] = "DECIMAL";
+    SqlDataTypes["date"] = "DATE";
+    SqlDataTypes["time"] = "TIME";
+    SqlDataTypes["year"] = "YEAR";
+    SqlDataTypes["datetime"] = "DATETIME";
+    SqlDataTypes["timestamp"] = "TIMESTAMP";
+    SqlDataTypes["char"] = "CHAR";
+    SqlDataTypes["varchar"] = "VARCHAR";
+    SqlDataTypes["tinyblob"] = "TINYBLOB";
+    SqlDataTypes["tinytest"] = "TINYTEXT";
+    SqlDataTypes["blob"] = "BLOB";
+    SqlDataTypes["test"] = "TEXT";
+    SqlDataTypes["mediumblob"] = "MEDIUMBLOB";
+    SqlDataTypes["mediumtext"] = "MEDIUMTEXT";
+    SqlDataTypes["longblob"] = "LONGBLOB";
+    SqlDataTypes["longtext"] = "LONGTEXT";
+  })(SqlDataTypes = exports.SqlDataTypes || (exports.SqlDataTypes = {}));
+
+  var TableOptions;
+
+  (function (TableOptions) {
+    TableOptions["primaryKey"] = "PRIMARY KEY";
+    TableOptions["uniqueKey"] = "UNIQUE KEY";
+    TableOptions["engine"] = "ENGINE";
+    TableOptions["autoIncrement"] = "AUTO_INCREMENT";
+    TableOptions["defaultCharset"] = "DEFAULT CHARSET";
+    TableOptions["comment"] = "COMMENT";
+    TableOptions["unsigned"] = "UNSIGNED";
+    TableOptions["notNull"] = "NOT NULL";
+    TableOptions["default"] = "DEFAULT";
+    TableOptions["onUpdate"] = "ON UPDATE";
+  })(TableOptions = exports.TableOptions || (exports.TableOptions = {}));
+
+  var TableOptionValue;
+
+  (function (TableOptionValue) {
+    TableOptionValue["currentTimestamp"] = "CURRENT_TIMESTAMP";
+  })(TableOptionValue = exports.TableOptionValue || (exports.TableOptionValue = {}));
 });
 
 unwrapExports(_enum$1);
@@ -732,7 +808,9 @@ var _enum_5$1 = _enum$1.TermSign;
 var _enum_6$1 = _enum$1.OrderTypes;
 var _enum_7$1 = _enum$1.UpdateTypes;
 var _enum_8$1 = _enum$1.WidgetTypes;
-var _enum_9$1 = _enum$1.DataTypes;
+var _enum_9$1 = _enum$1.SqlDataTypes;
+var _enum_10$1 = _enum$1.TableOptions;
+var _enum_11$1 = _enum$1.TableOptionValue;
 
 var combine_verify = createCommonjsModule(function (module, exports) {
 
@@ -791,9 +869,7 @@ var safe_verify = createCommonjsModule(function (module, exports) {
   }).verify;
   exports.manualSqlVerify = new schemaVerify.Schema([{
     type: String,
-    length: {
-      min: 1
-    }
+    minLength: 1
   }, {
     type: Function
   }, {
@@ -812,9 +888,7 @@ var limit_verify = createCommonjsModule(function (module, exports) {
   exports.pageVerify = new schemaVerify.Schema({
     type: Number,
     integer: true,
-    range: {
-      min: 1
-    }
+    min: 1
   }).verify;
   exports.limitInfoVerify = new schemaVerify.Schema({
     type: Object,
@@ -859,9 +933,7 @@ var order_verify = createCommonjsModule(function (module, exports) {
       elements: [[{
         type: String,
         required: true,
-        length: {
-          min: 1
-        }
+        minLength: 1
       }, {
         type: Number
       }]]
@@ -872,9 +944,7 @@ var order_verify = createCommonjsModule(function (module, exports) {
     elements: [[{
       type: String,
       required: true,
-      length: {
-        min: 1
-      }
+      minLength: 1
     }, {
       type: Number
     }]]
@@ -898,9 +968,7 @@ var term_verify = createCommonjsModule(function (module, exports) {
       type: Number
     }, {
       type: Array,
-      length: {
-        min: 1
-      },
+      minLength: 1,
       elements: [[{
         type: String,
         required: true
@@ -925,9 +993,7 @@ var term_verify = createCommonjsModule(function (module, exports) {
   }]).verify;
   exports.termInVerify = new schemaVerify.Schema({
     type: Array,
-    length: {
-      min: 1
-    },
+    minLength: 1,
     elements: [[{
       type: String,
       required: true
@@ -952,9 +1018,7 @@ var term_verify = createCommonjsModule(function (module, exports) {
       index: "position",
       required: true,
       type: Number,
-      range: {
-        min: 1
-      }
+      min: 1
     }, {
       index: "logic",
       required: true,
@@ -969,9 +1033,7 @@ var term_verify = createCommonjsModule(function (module, exports) {
       index: "field",
       required: true,
       type: String,
-      length: {
-        min: 1
-      }
+      minLength: 1
     }, [{
       index: "value",
       required: true,
@@ -980,9 +1042,7 @@ var term_verify = createCommonjsModule(function (module, exports) {
       type: Number
     }, {
       type: Array,
-      length: {
-        min: 1
-      },
+      minLength: 1,
       elements: [[{
         type: String,
         required: true
@@ -1114,9 +1174,7 @@ var safe_verify$1 = createCommonjsModule(function (module, exports) {
   }).verify;
   exports.manualSqlVerify = new schemaVerify.Schema([{
     type: String,
-    length: {
-      min: 1
-    }
+    minLength: 1
   }, {
     type: Function
   }, {
@@ -1135,9 +1193,7 @@ var limit_verify$1 = createCommonjsModule(function (module, exports) {
   exports.pageVerify = new schemaVerify.Schema({
     type: Number,
     integer: true,
-    range: {
-      min: 1
-    }
+    min: 1
   }).verify;
   exports.limitInfoVerify = new schemaVerify.Schema({
     type: Object,
@@ -1182,9 +1238,7 @@ var order_verify$1 = createCommonjsModule(function (module, exports) {
       elements: [[{
         type: String,
         required: true,
-        length: {
-          min: 1
-        }
+        minLength: 1
       }, {
         type: Number
       }]]
@@ -1195,9 +1249,7 @@ var order_verify$1 = createCommonjsModule(function (module, exports) {
     elements: [[{
       type: String,
       required: true,
-      length: {
-        min: 1
-      }
+      minLength: 1
     }, {
       type: Number
     }]]
@@ -1221,9 +1273,7 @@ var term_verify$1 = createCommonjsModule(function (module, exports) {
       type: Number
     }, {
       type: Array,
-      length: {
-        min: 1
-      },
+      minLength: 1,
       elements: [[{
         type: String,
         required: true
@@ -1248,9 +1298,7 @@ var term_verify$1 = createCommonjsModule(function (module, exports) {
   }]).verify;
   exports.termInVerify = new schemaVerify.Schema({
     type: Array,
-    length: {
-      min: 1
-    },
+    minLength: 1,
     elements: [[{
       type: String,
       required: true
@@ -1275,9 +1323,7 @@ var term_verify$1 = createCommonjsModule(function (module, exports) {
       index: "position",
       required: true,
       type: Number,
-      range: {
-        min: 1
-      }
+      min: 1
     }, {
       index: "logic",
       required: true,
@@ -1292,9 +1338,7 @@ var term_verify$1 = createCommonjsModule(function (module, exports) {
       index: "field",
       required: true,
       type: String,
-      length: {
-        min: 1
-      }
+      minLength: 1
     }, [{
       index: "value",
       required: true,
@@ -1303,9 +1347,7 @@ var term_verify$1 = createCommonjsModule(function (module, exports) {
       type: Number
     }, {
       type: Array,
-      length: {
-        min: 1
-      },
+      minLength: 1,
       elements: [[{
         type: String,
         required: true
@@ -1387,9 +1429,7 @@ var D__project_jsSqlQuery_src_verify = createCommonjsModule(function (module, ex
     elements: {
       type: String,
       required: true,
-      length: {
-        min: 1
-      }
+      minLength: 1
     }
   }).verify;
   exports.strArrVerify = strArrVerify;
@@ -1398,9 +1438,7 @@ var D__project_jsSqlQuery_src_verify = createCommonjsModule(function (module, ex
     props: {
       type: String,
       required: true,
-      length: {
-        min: 1
-      }
+      minLength: 1
     }
   }).verify;
   exports.strObjVerify = strObjVerify;
@@ -1614,9 +1652,7 @@ var verify = createCommonjsModule(function (module, exports) {
     elements: {
       type: String,
       required: true,
-      length: {
-        min: 1
-      }
+      minLength: 1
     }
   }).verify;
   exports.strArrVerify = strArrVerify;
@@ -1625,9 +1661,7 @@ var verify = createCommonjsModule(function (module, exports) {
     props: {
       type: String,
       required: true,
-      length: {
-        min: 1
-      }
+      minLength: 1
     }
   }).verify;
   exports.strObjVerify = strObjVerify;

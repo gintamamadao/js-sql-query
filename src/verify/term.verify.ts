@@ -14,7 +14,7 @@ export const termDataVerify = new Schema({
             },
             {
                 type: Array,
-                length: { min: 1 },
+                minLength: 1,
                 elements: [
                     [
                         {
@@ -53,7 +53,7 @@ export const termValueVerify = new Schema([
 
 export const termInVerify = new Schema({
     type: Array,
-    length: { min: 1 },
+    minLength: 1,
     elements: [
         [
             {
@@ -91,9 +91,7 @@ export const termBracketVerify = new Schema({
             index: "position",
             required: true,
             type: Number,
-            range: {
-                min: 1
-            }
+            min: 1
         },
         {
             index: "logic",
@@ -112,7 +110,7 @@ export const termInfoVerify = new Schema({
             index: "field",
             required: true,
             type: String,
-            length: { min: 1 }
+            minLength: 1
         },
         [
             {
@@ -125,7 +123,7 @@ export const termInfoVerify = new Schema({
             },
             {
                 type: Array,
-                length: { min: 1 },
+                minLength: 1,
                 elements: [
                     [
                         {

@@ -24,7 +24,7 @@ export const orderInfoVerify = new Schema({
                     {
                         type: String,
                         required: true,
-                        length: { min: 1 }
+                        minLength: 1
                     },
                     {
                         type: Number
@@ -42,7 +42,7 @@ export const valueListVerify = new Schema({
             {
                 type: String,
                 required: true,
-                length: { min: 1 }
+                minLength: 1
             },
             {
                 type: Number

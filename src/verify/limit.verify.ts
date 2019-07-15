@@ -3,9 +3,7 @@ import { Schema } from "schema-verify";
 export const pageVerify = new Schema({
     type: Number,
     integer: true,
-    range: {
-        min: 1
-    }
+    min: 1
 }).verify;
 
 export const limitInfoVerify = new Schema({

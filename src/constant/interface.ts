@@ -15,11 +15,9 @@ export interface Dialect {
 export interface Dialects {
     [propName: string]: Dialect;
 }
-
 export interface TermData {
     [propName: string]: string | number | string[];
 }
-
 export interface TermInfo {
     field: string;
     value: string | number | string[];
@@ -36,7 +34,6 @@ export interface FieldData {
 export interface FuncInfo {
     funcFeild: string;
 }
-
 export interface OrderInfo {
     field: string;
     type: OrderTypes;
@@ -44,4 +41,30 @@ export interface OrderInfo {
 }
 export interface FieldOrder {
     [propName: string]: string[];
+}
+export interface TableField {
+    field: string;
+    type: string;
+    length?: number;
+    unsigned?: boolean;
+    autoIncrement?: boolean;
+    notNull?: boolean;
+    default?: string | number;
+    onUpdate?: boolean;
+    comment?: string;
+    decimalParam?: number[];
+}
+export interface uniqueKey {
+    keyName: string;
+    combineFields: string[];
+}
+export interface TableInfo {
+    tableName: string;
+    primaryKey: string;
+    uniqueKey?: uniqueKey;
+    engine?: string;
+    autoIncrement?: number;
+    defaultCharset?: string;
+    comment?: string;
+    fields: TableField[];
 }

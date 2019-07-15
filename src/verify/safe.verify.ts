@@ -20,7 +20,7 @@ export const dialectVerify = new Schema({
 export const manualSqlVerify = new Schema([
     {
         type: String,
-        length: { min: 1 }
+        minLength: 1
     },
     {
         type: Function

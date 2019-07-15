@@ -10,7 +10,8 @@ export enum QueryTypes {
     replace = "REPLACE",
     select = "SELECT",
     update = "UPDATE",
-    delete = "DELETE"
+    delete = "DELETE",
+    create = "CREATE"
 }
 
 export enum FuncTypes {
@@ -80,7 +81,7 @@ export enum WidgetTypes {
     order = "ORDER"
 }
 
-export enum DataTypes {
+export enum SqlDataTypes {
     tinyint = "TINYINT",
     smallint = "SMALLINT",
     mediumint = "MEDIUMINT",
@@ -88,5 +89,37 @@ export enum DataTypes {
     bigint = "BIGINT",
     float = "FLOAT",
     double = "DOUBLE",
-    decimal = "DECIMAL"
+    decimal = "DECIMAL",
+    date = "DATE",
+    time = "TIME",
+    year = "YEAR",
+    datetime = "DATETIME",
+    timestamp = "TIMESTAMP",
+    char = "CHAR",
+    varchar = "VARCHAR",
+    tinyblob = "TINYBLOB",
+    tinytest = "TINYTEXT",
+    blob = "BLOB",
+    test = "TEXT",
+    mediumblob = "MEDIUMBLOB",
+    mediumtext = "MEDIUMTEXT",
+    longblob = "LONGBLOB",
+    longtext = "LONGTEXT"
+}
+
+export enum TableOptions {
+    primaryKey = "PRIMARY KEY",
+    uniqueKey = "UNIQUE KEY",
+    engine = "ENGINE",
+    autoIncrement = "AUTO_INCREMENT",
+    defaultCharset = "DEFAULT CHARSET",
+    comment = "COMMENT",
+    unsigned = "UNSIGNED",
+    notNull = "NOT NULL",
+    default = "DEFAULT",
+    onUpdate = "ON UPDATE"
+}
+
+export enum TableOptionValue {
+    currentTimestamp = "CURRENT_TIMESTAMP"
 }

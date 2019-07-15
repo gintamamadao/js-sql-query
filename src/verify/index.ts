@@ -21,7 +21,7 @@ const strArrVerify = new Schema({
     elements: {
         type: String,
         required: true,
-        length: { min: 1 }
+        minLength: 1
     }
 }).verify;
 
@@ -30,7 +30,7 @@ const strObjVerify = new Schema({
     props: {
         type: String,
         required: true,
-        length: { min: 1 }
+        minLength: 1
     }
 }).verify;
 
