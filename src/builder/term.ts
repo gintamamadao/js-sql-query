@@ -64,7 +64,7 @@ class Term extends Safe {
             const perBracket: TermBracket = brackets[i - 1];
             const nextBracket: TermBracket = brackets[i + 1];
             if (!termBracketVerify(curBracket)) {
-                continue;
+                throw new Error(ErrMsg.errorTermBracket);
             }
             const curPos: number = curBracket.position;
             const curLogic: TermLogic = curBracket.logic;
@@ -130,7 +130,7 @@ class Term extends Safe {
         let allTermStr: string = "";
         for (const term of terms) {
             if (!termInfoVerify(term)) {
-                continue;
+                throw new Error(ErrMsg.errorTermInfo);
             }
             const field: string = this.safeKey(term.field);
             const value = term.value;

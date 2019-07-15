@@ -1,7 +1,7 @@
 import { Schema } from "schema-verify";
 import { TermSign, TermLogic } from "../constant/enum";
 
-export const termDataVerify = new Schema({
+const termDataSchema = new Schema({
     type: Object,
     props: [
         [
@@ -29,19 +29,19 @@ export const termDataVerify = new Schema({
             }
         ]
     ]
-}).verify;
+});
 
-export const termSignVerify = new Schema({
+const termSignSchema = new Schema({
     type: String,
     enum: TermSign
-}).verify;
+});
 
-export const termLogicVerify = new Schema({
+const termLogicSchema = new Schema({
     type: String,
     enum: TermLogic
-}).verify;
+});
 
-export const termValueVerify = new Schema([
+const termValueSchema = new Schema([
     {
         required: true,
         type: String
@@ -49,9 +49,9 @@ export const termValueVerify = new Schema([
     {
         type: Number
     }
-]).verify;
+]);
 
-export const termInVerify = new Schema({
+const termInSchema = new Schema({
     type: Array,
     minLength: 1,
     elements: [
@@ -65,9 +65,9 @@ export const termInVerify = new Schema({
             }
         ]
     ]
-}).verify;
+});
 
-export const termBetweenVerify = new Schema({
+const termBetweenSchema = new Schema({
     type: Array,
     length: 2,
     elements: [
@@ -81,9 +81,9 @@ export const termBetweenVerify = new Schema({
             }
         ]
     ]
-}).verify;
+});
 
-export const termBracketVerify = new Schema({
+const termBracketSchema = new Schema({
     type: Object,
     restrict: true,
     props: [
@@ -100,9 +100,9 @@ export const termBracketVerify = new Schema({
             enum: TermLogic
         }
     ]
-}).verify;
+});
 
-export const termInfoVerify = new Schema({
+const termInfoSchema = new Schema({
     type: Object,
     restrict: true,
     props: [
@@ -150,4 +150,13 @@ export const termInfoVerify = new Schema({
             enum: TermLogic
         }
     ]
-}).verify;
+});
+
+export const termDataVerify = termDataSchema.verify;
+export const termSignVerify = termSignSchema.verify;
+export const termLogicVerify = termLogicSchema.verify;
+export const termValueVerify = termValueSchema.verify;
+export const termInVerify = termInSchema.verify;
+export const termBetweenVerify = termBetweenSchema.verify;
+export const termBracketVerify = termBracketSchema.verify;
+export const termInfoVerify = termInfoSchema.verify;

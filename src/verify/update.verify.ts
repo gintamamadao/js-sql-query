@@ -1,7 +1,7 @@
 import { Schema } from "schema-verify";
 import { UpdateTypes } from "../constant/enum";
 
-export const updateInfoVerify = new Schema({
+const updateInfoSchema = new Schema({
     type: Object,
     props: [
         [
@@ -21,4 +21,6 @@ export const updateInfoVerify = new Schema({
             enum: UpdateTypes
         }
     ]
-}).verify;
+});
+
+export const updateInfoVerify = updateInfoSchema.verify;

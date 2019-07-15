@@ -1,12 +1,12 @@
 import { Schema } from "schema-verify";
 
-export const pageVerify = new Schema({
+export const pageSchema = new Schema({
     type: Number,
     integer: true,
     min: 1
-}).verify;
+});
 
-export const limitInfoVerify = new Schema({
+export const limitInfoSchema = new Schema({
     type: Object,
     restrict: true,
     props: [
@@ -23,4 +23,7 @@ export const limitInfoVerify = new Schema({
             required: true
         }
     ]
-}).verify;
+});
+
+export const pageVerify = pageSchema.verify;
+export const limitInfoVerify = limitInfoSchema.verify;

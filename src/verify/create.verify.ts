@@ -126,7 +126,6 @@ const tableInfoSchema = new Schema({
         }
     ]
 });
-
 export const tableFieldVerify = tableFieldSchema.verify;
 export const uniqueKeyVerify = uniqueKeySchema.verify;
 export const tableInfoVerify = tableInfoSchema.verify;

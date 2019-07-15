@@ -1,7 +1,7 @@
 import { Schema } from "schema-verify";
 import { FuncTypes } from "../constant/enum";
 
-export const funcInfoVerify = new Schema({
+const funcInfoSchema = new Schema({
     type: Object,
     restrict: true,
     props: [
@@ -11,9 +11,9 @@ export const funcInfoVerify = new Schema({
             type: String
         }
     ]
-}).verify;
+});
 
-export const funcInputVerify = new Schema({
+const funcInputSchema = new Schema({
     type: Object,
     restrict: true,
     props: [
@@ -36,4 +36,7 @@ export const funcInputVerify = new Schema({
             }
         ]
     ]
-}).verify;
+});
+
+export const funcInfoVerify = funcInfoSchema.verify;
+export const funcInputVerify = funcInputSchema.verify;

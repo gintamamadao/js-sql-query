@@ -124,6 +124,8 @@ var term_error = createCommonjsModule(function (module, exports) {
     errorTermdata: "错误的条件数据",
     errorTermSign: "错误的条件类型",
     errorTermValue: "错误的条件值",
+    errorTermInfo: "错误的条件信息",
+    errorTermBracket: "错误的条件括号信息",
     errorTermLogic: "错误的条件逻辑"
   };
   exports.default = ErrMsg;
@@ -242,6 +244,8 @@ var term_error$1 = createCommonjsModule(function (module, exports) {
     errorTermdata: "错误的条件数据",
     errorTermSign: "错误的条件类型",
     errorTermValue: "错误的条件值",
+    errorTermInfo: "错误的条件信息",
+    errorTermBracket: "错误的条件括号信息",
     errorTermLogic: "错误的条件逻辑"
   };
   exports.default = ErrMsg;
@@ -462,7 +466,7 @@ var insert_verify = createCommonjsModule(function (module, exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.fieldDataArrVerify = new schemaVerify.Schema({
+  const fieldDataArrSchema = new schemaVerify.Schema({
     type: Array,
     elements: {
       type: Object,
@@ -473,7 +477,8 @@ var insert_verify = createCommonjsModule(function (module, exports) {
         type: Number
       }]]
     }
-  }).verify;
+  });
+  exports.fieldDataArrVerify = fieldDataArrSchema.verify;
 });
 unwrapExports(insert_verify);
 var insert_verify_1 = insert_verify.fieldDataArrVerify;
@@ -817,7 +822,7 @@ var combine_verify = createCommonjsModule(function (module, exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.funcInfoVerify = new schemaVerify.Schema({
+  const funcInfoSchema = new schemaVerify.Schema({
     type: Object,
     restrict: true,
     props: [{
@@ -825,8 +830,8 @@ var combine_verify = createCommonjsModule(function (module, exports) {
       required: true,
       type: String
     }]
-  }).verify;
-  exports.funcInputVerify = new schemaVerify.Schema({
+  });
+  const funcInputSchema = new schemaVerify.Schema({
     type: Object,
     restrict: true,
     props: [{
@@ -843,7 +848,9 @@ var combine_verify = createCommonjsModule(function (module, exports) {
     }, {
       type: Number
     }]]
-  }).verify;
+  });
+  exports.funcInfoVerify = funcInfoSchema.verify;
+  exports.funcInputVerify = funcInputSchema.verify;
 });
 unwrapExports(combine_verify);
 var combine_verify_1 = combine_verify.funcInfoVerify;
@@ -854,7 +861,7 @@ var safe_verify = createCommonjsModule(function (module, exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.dialectVerify = new schemaVerify.Schema({
+  exports.dialectSchema = new schemaVerify.Schema({
     type: Object,
     restrict: true,
     props: [{
@@ -866,31 +873,35 @@ var safe_verify = createCommonjsModule(function (module, exports) {
       required: true,
       type: Function
     }]
-  }).verify;
-  exports.manualSqlVerify = new schemaVerify.Schema([{
+  });
+  exports.manualSqlSchema = new schemaVerify.Schema([{
     type: String,
     minLength: 1
   }, {
     type: Function
   }, {
     type: Object
-  }]).verify;
+  }]);
+  exports.dialectVerify = exports.dialectSchema.verify;
+  exports.manualSqlVerify = exports.manualSqlSchema.verify;
 });
 unwrapExports(safe_verify);
-var safe_verify_1 = safe_verify.dialectVerify;
-var safe_verify_2 = safe_verify.manualSqlVerify;
+var safe_verify_1 = safe_verify.dialectSchema;
+var safe_verify_2 = safe_verify.manualSqlSchema;
+var safe_verify_3 = safe_verify.dialectVerify;
+var safe_verify_4 = safe_verify.manualSqlVerify;
 
 var limit_verify = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.pageVerify = new schemaVerify.Schema({
+  exports.pageSchema = new schemaVerify.Schema({
     type: Number,
     integer: true,
     min: 1
-  }).verify;
-  exports.limitInfoVerify = new schemaVerify.Schema({
+  });
+  exports.limitInfoSchema = new schemaVerify.Schema({
     type: Object,
     restrict: true,
     props: [{
@@ -904,18 +915,22 @@ var limit_verify = createCommonjsModule(function (module, exports) {
       integer: true,
       required: true
     }]
-  }).verify;
+  });
+  exports.pageVerify = exports.pageSchema.verify;
+  exports.limitInfoVerify = exports.limitInfoSchema.verify;
 });
 unwrapExports(limit_verify);
-var limit_verify_1 = limit_verify.pageVerify;
-var limit_verify_2 = limit_verify.limitInfoVerify;
+var limit_verify_1 = limit_verify.pageSchema;
+var limit_verify_2 = limit_verify.limitInfoSchema;
+var limit_verify_3 = limit_verify.pageVerify;
+var limit_verify_4 = limit_verify.limitInfoVerify;
 
 var order_verify = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.orderInfoVerify = new schemaVerify.Schema({
+  exports.orderInfoSchema = new schemaVerify.Schema({
     type: Object,
     restrict: true,
     props: [{
@@ -938,8 +953,8 @@ var order_verify = createCommonjsModule(function (module, exports) {
         type: Number
       }]]
     }]
-  }).verify;
-  exports.valueListVerify = new schemaVerify.Schema({
+  });
+  exports.valueListSchema = new schemaVerify.Schema({
     type: Array,
     elements: [[{
       type: String,
@@ -948,18 +963,22 @@ var order_verify = createCommonjsModule(function (module, exports) {
     }, {
       type: Number
     }]]
-  }).verify;
+  });
+  exports.orderInfoVerify = exports.orderInfoSchema.verify;
+  exports.valueListVerify = exports.valueListSchema.verify;
 });
 unwrapExports(order_verify);
-var order_verify_1 = order_verify.orderInfoVerify;
-var order_verify_2 = order_verify.valueListVerify;
+var order_verify_1 = order_verify.orderInfoSchema;
+var order_verify_2 = order_verify.valueListSchema;
+var order_verify_3 = order_verify.orderInfoVerify;
+var order_verify_4 = order_verify.valueListVerify;
 
 var term_verify = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.termDataVerify = new schemaVerify.Schema({
+  const termDataSchema = new schemaVerify.Schema({
     type: Object,
     props: [[{
       required: true,
@@ -976,22 +995,22 @@ var term_verify = createCommonjsModule(function (module, exports) {
         type: Number
       }]]
     }]]
-  }).verify;
-  exports.termSignVerify = new schemaVerify.Schema({
+  });
+  const termSignSchema = new schemaVerify.Schema({
     type: String,
     enum: _enum$1.TermSign
-  }).verify;
-  exports.termLogicVerify = new schemaVerify.Schema({
+  });
+  const termLogicSchema = new schemaVerify.Schema({
     type: String,
     enum: _enum$1.TermLogic
-  }).verify;
-  exports.termValueVerify = new schemaVerify.Schema([{
+  });
+  const termValueSchema = new schemaVerify.Schema([{
     required: true,
     type: String
   }, {
     type: Number
-  }]).verify;
-  exports.termInVerify = new schemaVerify.Schema({
+  }]);
+  const termInSchema = new schemaVerify.Schema({
     type: Array,
     minLength: 1,
     elements: [[{
@@ -1000,8 +1019,8 @@ var term_verify = createCommonjsModule(function (module, exports) {
     }, {
       type: Number
     }]]
-  }).verify;
-  exports.termBetweenVerify = new schemaVerify.Schema({
+  });
+  const termBetweenSchema = new schemaVerify.Schema({
     type: Array,
     length: 2,
     elements: [[{
@@ -1010,8 +1029,8 @@ var term_verify = createCommonjsModule(function (module, exports) {
     }, {
       type: Number
     }]]
-  }).verify;
-  exports.termBracketVerify = new schemaVerify.Schema({
+  });
+  const termBracketSchema = new schemaVerify.Schema({
     type: Object,
     restrict: true,
     props: [{
@@ -1025,8 +1044,8 @@ var term_verify = createCommonjsModule(function (module, exports) {
       type: String,
       enum: _enum$1.TermLogic
     }]
-  }).verify;
-  exports.termInfoVerify = new schemaVerify.Schema({
+  });
+  const termInfoSchema = new schemaVerify.Schema({
     type: Object,
     restrict: true,
     props: [{
@@ -1060,7 +1079,15 @@ var term_verify = createCommonjsModule(function (module, exports) {
       type: String,
       enum: _enum$1.TermLogic
     }]
-  }).verify;
+  });
+  exports.termDataVerify = termDataSchema.verify;
+  exports.termSignVerify = termSignSchema.verify;
+  exports.termLogicVerify = termLogicSchema.verify;
+  exports.termValueVerify = termValueSchema.verify;
+  exports.termInVerify = termInSchema.verify;
+  exports.termBetweenVerify = termBetweenSchema.verify;
+  exports.termBracketVerify = termBracketSchema.verify;
+  exports.termInfoVerify = termInfoSchema.verify;
 });
 unwrapExports(term_verify);
 var term_verify_1 = term_verify.termDataVerify;
@@ -1077,7 +1104,7 @@ var update_verify = createCommonjsModule(function (module, exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.updateInfoVerify = new schemaVerify.Schema({
+  const updateInfoSchema = new schemaVerify.Schema({
     type: Object,
     props: [[{
       index: "value",
@@ -1091,17 +1118,130 @@ var update_verify = createCommonjsModule(function (module, exports) {
       type: String,
       enum: _enum$1.UpdateTypes
     }]
-  }).verify;
+  });
+  exports.updateInfoVerify = updateInfoSchema.verify;
 });
 unwrapExports(update_verify);
 var update_verify_1 = update_verify.updateInfoVerify;
+
+var create_verify = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const tableFieldSchema = new schemaVerify.Schema({
+    type: Object,
+    props: [{
+      index: "field",
+      required: true,
+      type: String,
+      minLength: 1
+    }, {
+      index: "type",
+      required: true,
+      type: String,
+      minLength: 1
+    }, {
+      index: "length",
+      type: Number,
+      range: {
+        min: 1
+      }
+    }, {
+      index: "unsigned",
+      type: Boolean
+    }, {
+      index: "autoIncrement",
+      type: Boolean
+    }, {
+      index: "notNull",
+      type: Boolean
+    }, [{
+      index: "default",
+      type: String
+    }, {
+      type: Number
+    }], {
+      index: "onUpdate",
+      type: Boolean
+    }, {
+      index: "comment",
+      type: String
+    }, {
+      index: "decimalParam",
+      type: Array,
+      length: 2,
+      elements: {
+        type: Number
+      }
+    }]
+  });
+  const uniqueKeySchema = new schemaVerify.Schema({
+    type: Object,
+    props: [{
+      index: "keyName",
+      required: true,
+      type: String,
+      minLength: 1
+    }, {
+      index: "combineFields",
+      type: Array,
+      minLength: 1,
+      elements: {
+        type: String,
+        minLength: 1
+      }
+    }]
+  });
+  const tableInfoSchema = new schemaVerify.Schema({
+    type: Object,
+    props: [{
+      index: "tableName",
+      required: true,
+      type: String,
+      minLength: 1
+    }, {
+      index: "primaryKey",
+      required: true,
+      type: String,
+      minLength: 1
+    }, {
+      index: "uniqueKey",
+      schema: uniqueKeySchema
+    }, {
+      index: "engine",
+      type: String
+    }, {
+      index: "defaultCharset",
+      type: String
+    }, {
+      index: "comment",
+      type: String
+    }, {
+      index: "autoIncrement",
+      type: Number
+    }, {
+      index: "fields",
+      type: Array,
+      minLength: 1,
+      elements: tableFieldSchema
+    }]
+  });
+  exports.tableFieldVerify = tableFieldSchema.verify;
+  exports.uniqueKeyVerify = uniqueKeySchema.verify;
+  exports.tableInfoVerify = tableInfoSchema.verify;
+});
+unwrapExports(create_verify);
+var create_verify_1 = create_verify.tableFieldVerify;
+var create_verify_2 = create_verify.uniqueKeyVerify;
+var create_verify_3 = create_verify.tableInfoVerify;
 
 var insert_verify$1 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.fieldDataArrVerify = new schemaVerify.Schema({
+  const fieldDataArrSchema = new schemaVerify.Schema({
     type: Array,
     elements: {
       type: Object,
@@ -1112,7 +1252,8 @@ var insert_verify$1 = createCommonjsModule(function (module, exports) {
         type: Number
       }]]
     }
-  }).verify;
+  });
+  exports.fieldDataArrVerify = fieldDataArrSchema.verify;
 });
 unwrapExports(insert_verify$1);
 var insert_verify_1$1 = insert_verify$1.fieldDataArrVerify;
@@ -1122,7 +1263,7 @@ var combine_verify$1 = createCommonjsModule(function (module, exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.funcInfoVerify = new schemaVerify.Schema({
+  const funcInfoSchema = new schemaVerify.Schema({
     type: Object,
     restrict: true,
     props: [{
@@ -1130,8 +1271,8 @@ var combine_verify$1 = createCommonjsModule(function (module, exports) {
       required: true,
       type: String
     }]
-  }).verify;
-  exports.funcInputVerify = new schemaVerify.Schema({
+  });
+  const funcInputSchema = new schemaVerify.Schema({
     type: Object,
     restrict: true,
     props: [{
@@ -1148,7 +1289,9 @@ var combine_verify$1 = createCommonjsModule(function (module, exports) {
     }, {
       type: Number
     }]]
-  }).verify;
+  });
+  exports.funcInfoVerify = funcInfoSchema.verify;
+  exports.funcInputVerify = funcInputSchema.verify;
 });
 unwrapExports(combine_verify$1);
 var combine_verify_1$1 = combine_verify$1.funcInfoVerify;
@@ -1159,7 +1302,7 @@ var safe_verify$1 = createCommonjsModule(function (module, exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.dialectVerify = new schemaVerify.Schema({
+  exports.dialectSchema = new schemaVerify.Schema({
     type: Object,
     restrict: true,
     props: [{
@@ -1171,31 +1314,35 @@ var safe_verify$1 = createCommonjsModule(function (module, exports) {
       required: true,
       type: Function
     }]
-  }).verify;
-  exports.manualSqlVerify = new schemaVerify.Schema([{
+  });
+  exports.manualSqlSchema = new schemaVerify.Schema([{
     type: String,
     minLength: 1
   }, {
     type: Function
   }, {
     type: Object
-  }]).verify;
+  }]);
+  exports.dialectVerify = exports.dialectSchema.verify;
+  exports.manualSqlVerify = exports.manualSqlSchema.verify;
 });
 unwrapExports(safe_verify$1);
-var safe_verify_1$1 = safe_verify$1.dialectVerify;
-var safe_verify_2$1 = safe_verify$1.manualSqlVerify;
+var safe_verify_1$1 = safe_verify$1.dialectSchema;
+var safe_verify_2$1 = safe_verify$1.manualSqlSchema;
+var safe_verify_3$1 = safe_verify$1.dialectVerify;
+var safe_verify_4$1 = safe_verify$1.manualSqlVerify;
 
 var limit_verify$1 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.pageVerify = new schemaVerify.Schema({
+  exports.pageSchema = new schemaVerify.Schema({
     type: Number,
     integer: true,
     min: 1
-  }).verify;
-  exports.limitInfoVerify = new schemaVerify.Schema({
+  });
+  exports.limitInfoSchema = new schemaVerify.Schema({
     type: Object,
     restrict: true,
     props: [{
@@ -1209,18 +1356,22 @@ var limit_verify$1 = createCommonjsModule(function (module, exports) {
       integer: true,
       required: true
     }]
-  }).verify;
+  });
+  exports.pageVerify = exports.pageSchema.verify;
+  exports.limitInfoVerify = exports.limitInfoSchema.verify;
 });
 unwrapExports(limit_verify$1);
-var limit_verify_1$1 = limit_verify$1.pageVerify;
-var limit_verify_2$1 = limit_verify$1.limitInfoVerify;
+var limit_verify_1$1 = limit_verify$1.pageSchema;
+var limit_verify_2$1 = limit_verify$1.limitInfoSchema;
+var limit_verify_3$1 = limit_verify$1.pageVerify;
+var limit_verify_4$1 = limit_verify$1.limitInfoVerify;
 
 var order_verify$1 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.orderInfoVerify = new schemaVerify.Schema({
+  exports.orderInfoSchema = new schemaVerify.Schema({
     type: Object,
     restrict: true,
     props: [{
@@ -1243,8 +1394,8 @@ var order_verify$1 = createCommonjsModule(function (module, exports) {
         type: Number
       }]]
     }]
-  }).verify;
-  exports.valueListVerify = new schemaVerify.Schema({
+  });
+  exports.valueListSchema = new schemaVerify.Schema({
     type: Array,
     elements: [[{
       type: String,
@@ -1253,18 +1404,22 @@ var order_verify$1 = createCommonjsModule(function (module, exports) {
     }, {
       type: Number
     }]]
-  }).verify;
+  });
+  exports.orderInfoVerify = exports.orderInfoSchema.verify;
+  exports.valueListVerify = exports.valueListSchema.verify;
 });
 unwrapExports(order_verify$1);
-var order_verify_1$1 = order_verify$1.orderInfoVerify;
-var order_verify_2$1 = order_verify$1.valueListVerify;
+var order_verify_1$1 = order_verify$1.orderInfoSchema;
+var order_verify_2$1 = order_verify$1.valueListSchema;
+var order_verify_3$1 = order_verify$1.orderInfoVerify;
+var order_verify_4$1 = order_verify$1.valueListVerify;
 
 var term_verify$1 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.termDataVerify = new schemaVerify.Schema({
+  const termDataSchema = new schemaVerify.Schema({
     type: Object,
     props: [[{
       required: true,
@@ -1281,22 +1436,22 @@ var term_verify$1 = createCommonjsModule(function (module, exports) {
         type: Number
       }]]
     }]]
-  }).verify;
-  exports.termSignVerify = new schemaVerify.Schema({
+  });
+  const termSignSchema = new schemaVerify.Schema({
     type: String,
     enum: _enum$1.TermSign
-  }).verify;
-  exports.termLogicVerify = new schemaVerify.Schema({
+  });
+  const termLogicSchema = new schemaVerify.Schema({
     type: String,
     enum: _enum$1.TermLogic
-  }).verify;
-  exports.termValueVerify = new schemaVerify.Schema([{
+  });
+  const termValueSchema = new schemaVerify.Schema([{
     required: true,
     type: String
   }, {
     type: Number
-  }]).verify;
-  exports.termInVerify = new schemaVerify.Schema({
+  }]);
+  const termInSchema = new schemaVerify.Schema({
     type: Array,
     minLength: 1,
     elements: [[{
@@ -1305,8 +1460,8 @@ var term_verify$1 = createCommonjsModule(function (module, exports) {
     }, {
       type: Number
     }]]
-  }).verify;
-  exports.termBetweenVerify = new schemaVerify.Schema({
+  });
+  const termBetweenSchema = new schemaVerify.Schema({
     type: Array,
     length: 2,
     elements: [[{
@@ -1315,8 +1470,8 @@ var term_verify$1 = createCommonjsModule(function (module, exports) {
     }, {
       type: Number
     }]]
-  }).verify;
-  exports.termBracketVerify = new schemaVerify.Schema({
+  });
+  const termBracketSchema = new schemaVerify.Schema({
     type: Object,
     restrict: true,
     props: [{
@@ -1330,8 +1485,8 @@ var term_verify$1 = createCommonjsModule(function (module, exports) {
       type: String,
       enum: _enum$1.TermLogic
     }]
-  }).verify;
-  exports.termInfoVerify = new schemaVerify.Schema({
+  });
+  const termInfoSchema = new schemaVerify.Schema({
     type: Object,
     restrict: true,
     props: [{
@@ -1365,7 +1520,15 @@ var term_verify$1 = createCommonjsModule(function (module, exports) {
       type: String,
       enum: _enum$1.TermLogic
     }]
-  }).verify;
+  });
+  exports.termDataVerify = termDataSchema.verify;
+  exports.termSignVerify = termSignSchema.verify;
+  exports.termLogicVerify = termLogicSchema.verify;
+  exports.termValueVerify = termValueSchema.verify;
+  exports.termInVerify = termInSchema.verify;
+  exports.termBetweenVerify = termBetweenSchema.verify;
+  exports.termBracketVerify = termBracketSchema.verify;
+  exports.termInfoVerify = termInfoSchema.verify;
 });
 unwrapExports(term_verify$1);
 var term_verify_1$1 = term_verify$1.termDataVerify;
@@ -1382,7 +1545,7 @@ var update_verify$1 = createCommonjsModule(function (module, exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.updateInfoVerify = new schemaVerify.Schema({
+  const updateInfoSchema = new schemaVerify.Schema({
     type: Object,
     props: [[{
       index: "value",
@@ -1396,10 +1559,123 @@ var update_verify$1 = createCommonjsModule(function (module, exports) {
       type: String,
       enum: _enum$1.UpdateTypes
     }]
-  }).verify;
+  });
+  exports.updateInfoVerify = updateInfoSchema.verify;
 });
 unwrapExports(update_verify$1);
 var update_verify_1$1 = update_verify$1.updateInfoVerify;
+
+var create_verify$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const tableFieldSchema = new schemaVerify.Schema({
+    type: Object,
+    props: [{
+      index: "field",
+      required: true,
+      type: String,
+      minLength: 1
+    }, {
+      index: "type",
+      required: true,
+      type: String,
+      minLength: 1
+    }, {
+      index: "length",
+      type: Number,
+      range: {
+        min: 1
+      }
+    }, {
+      index: "unsigned",
+      type: Boolean
+    }, {
+      index: "autoIncrement",
+      type: Boolean
+    }, {
+      index: "notNull",
+      type: Boolean
+    }, [{
+      index: "default",
+      type: String
+    }, {
+      type: Number
+    }], {
+      index: "onUpdate",
+      type: Boolean
+    }, {
+      index: "comment",
+      type: String
+    }, {
+      index: "decimalParam",
+      type: Array,
+      length: 2,
+      elements: {
+        type: Number
+      }
+    }]
+  });
+  const uniqueKeySchema = new schemaVerify.Schema({
+    type: Object,
+    props: [{
+      index: "keyName",
+      required: true,
+      type: String,
+      minLength: 1
+    }, {
+      index: "combineFields",
+      type: Array,
+      minLength: 1,
+      elements: {
+        type: String,
+        minLength: 1
+      }
+    }]
+  });
+  const tableInfoSchema = new schemaVerify.Schema({
+    type: Object,
+    props: [{
+      index: "tableName",
+      required: true,
+      type: String,
+      minLength: 1
+    }, {
+      index: "primaryKey",
+      required: true,
+      type: String,
+      minLength: 1
+    }, {
+      index: "uniqueKey",
+      schema: uniqueKeySchema
+    }, {
+      index: "engine",
+      type: String
+    }, {
+      index: "defaultCharset",
+      type: String
+    }, {
+      index: "comment",
+      type: String
+    }, {
+      index: "autoIncrement",
+      type: Number
+    }, {
+      index: "fields",
+      type: Array,
+      minLength: 1,
+      elements: tableFieldSchema
+    }]
+  });
+  exports.tableFieldVerify = tableFieldSchema.verify;
+  exports.uniqueKeyVerify = uniqueKeySchema.verify;
+  exports.tableInfoVerify = tableInfoSchema.verify;
+});
+unwrapExports(create_verify$1);
+var create_verify_1$1 = create_verify$1.tableFieldVerify;
+var create_verify_2$1 = create_verify$1.uniqueKeyVerify;
+var create_verify_3$1 = create_verify$1.tableInfoVerify;
 
 var D__project_jsSqlQuery_src_verify = createCommonjsModule(function (module, exports) {
 
@@ -1424,6 +1700,7 @@ var D__project_jsSqlQuery_src_verify = createCommonjsModule(function (module, ex
   exports.termBetweenVerify = term_verify$1.termBetweenVerify;
   exports.termInfoVerify = term_verify$1.termInfoVerify;
   exports.updateInfoVerify = update_verify$1.updateInfoVerify;
+  exports.tableFieldVerify = create_verify$1.tableFieldVerify;
   const strArrVerify = new schemaVerify.Schema({
     type: Array,
     elements: {
@@ -1482,11 +1759,12 @@ var D__project_jsSqlQuery_src_verify_15 = D__project_jsSqlQuery_src_verify.termI
 var D__project_jsSqlQuery_src_verify_16 = D__project_jsSqlQuery_src_verify.termBetweenVerify;
 var D__project_jsSqlQuery_src_verify_17 = D__project_jsSqlQuery_src_verify.termInfoVerify;
 var D__project_jsSqlQuery_src_verify_18 = D__project_jsSqlQuery_src_verify.updateInfoVerify;
-var D__project_jsSqlQuery_src_verify_19 = D__project_jsSqlQuery_src_verify.strArrVerify;
-var D__project_jsSqlQuery_src_verify_20 = D__project_jsSqlQuery_src_verify.strObjVerify;
-var D__project_jsSqlQuery_src_verify_21 = D__project_jsSqlQuery_src_verify.naturalVerify;
-var D__project_jsSqlQuery_src_verify_22 = D__project_jsSqlQuery_src_verify.integerVerify;
-var D__project_jsSqlQuery_src_verify_23 = D__project_jsSqlQuery_src_verify.fieldDataVerify;
+var D__project_jsSqlQuery_src_verify_19 = D__project_jsSqlQuery_src_verify.tableFieldVerify;
+var D__project_jsSqlQuery_src_verify_20 = D__project_jsSqlQuery_src_verify.strArrVerify;
+var D__project_jsSqlQuery_src_verify_21 = D__project_jsSqlQuery_src_verify.strObjVerify;
+var D__project_jsSqlQuery_src_verify_22 = D__project_jsSqlQuery_src_verify.naturalVerify;
+var D__project_jsSqlQuery_src_verify_23 = D__project_jsSqlQuery_src_verify.integerVerify;
+var D__project_jsSqlQuery_src_verify_24 = D__project_jsSqlQuery_src_verify.fieldDataVerify;
 
 var dialects$1 = createCommonjsModule(function (module, exports) {
 
@@ -1647,6 +1925,7 @@ var verify = createCommonjsModule(function (module, exports) {
   exports.termBetweenVerify = term_verify$1.termBetweenVerify;
   exports.termInfoVerify = term_verify$1.termInfoVerify;
   exports.updateInfoVerify = update_verify$1.updateInfoVerify;
+  exports.tableFieldVerify = create_verify$1.tableFieldVerify;
   const strArrVerify = new schemaVerify.Schema({
     type: Array,
     elements: {
@@ -1705,11 +1984,12 @@ var verify_15 = verify.termInVerify;
 var verify_16 = verify.termBetweenVerify;
 var verify_17 = verify.termInfoVerify;
 var verify_18 = verify.updateInfoVerify;
-var verify_19 = verify.strArrVerify;
-var verify_20 = verify.strObjVerify;
-var verify_21 = verify.naturalVerify;
-var verify_22 = verify.integerVerify;
-var verify_23 = verify.fieldDataVerify;
+var verify_19 = verify.tableFieldVerify;
+var verify_20 = verify.strArrVerify;
+var verify_21 = verify.strObjVerify;
+var verify_22 = verify.naturalVerify;
+var verify_23 = verify.integerVerify;
+var verify_24 = verify.fieldDataVerify;
 
 var safe = createCommonjsModule(function (module, exports) {
 
@@ -2743,7 +3023,7 @@ var term = createCommonjsModule(function (module, exports) {
         const nextBracket = brackets[i + 1];
 
         if (!verify.termBracketVerify(curBracket)) {
-          continue;
+          throw new Error(error.default.errorTermBracket);
         }
 
         const curPos = curBracket.position;
@@ -2797,7 +3077,7 @@ var term = createCommonjsModule(function (module, exports) {
 
       for (const term of terms) {
         if (!verify.termInfoVerify(term)) {
-          continue;
+          throw new Error(error.default.errorTermInfo);
         }
 
         const field = this.safeKey(term.field);
@@ -3119,7 +3399,7 @@ var term$1 = createCommonjsModule(function (module, exports) {
         const nextBracket = brackets[i + 1];
 
         if (!verify.termBracketVerify(curBracket)) {
-          continue;
+          throw new Error(error.default.errorTermBracket);
         }
 
         const curPos = curBracket.position;
@@ -3173,7 +3453,7 @@ var term$1 = createCommonjsModule(function (module, exports) {
 
       for (const term of terms) {
         if (!verify.termInfoVerify(term)) {
-          continue;
+          throw new Error(error.default.errorTermInfo);
         }
 
         const field = this.safeKey(term.field);

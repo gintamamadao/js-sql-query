@@ -1,7 +1,7 @@
 import { Schema } from "schema-verify";
 import { OrderTypes } from "../constant/enum";
 
-export const orderInfoVerify = new Schema({
+export const orderInfoSchema = new Schema({
     type: Object,
     restrict: true,
     props: [
@@ -33,9 +33,9 @@ export const orderInfoVerify = new Schema({
             ]
         }
     ]
-}).verify;
+});
 
-export const valueListVerify = new Schema({
+export const valueListSchema = new Schema({
     type: Array,
     elements: [
         [
@@ -49,4 +49,7 @@ export const valueListVerify = new Schema({
             }
         ]
     ]
-}).verify;
+});
+
+export const orderInfoVerify = orderInfoSchema.verify;
+export const valueListVerify = valueListSchema.verify;

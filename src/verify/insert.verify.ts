@@ -1,6 +1,6 @@
 import { Schema } from "schema-verify";
 
-export const fieldDataArrVerify = new Schema({
+const fieldDataArrSchema = new Schema({
     type: Array,
     elements: {
         type: Object,
@@ -16,4 +16,6 @@ export const fieldDataArrVerify = new Schema({
             ]
         ]
     }
-}).verify;
+});
+
+export const fieldDataArrVerify = fieldDataArrSchema.verify;

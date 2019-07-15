@@ -1,6 +1,6 @@
 import { Schema } from "schema-verify";
 
-export const dialectVerify = new Schema({
+export const dialectSchema = new Schema({
     type: Object,
     restrict: true,
     props: [
@@ -15,9 +15,9 @@ export const dialectVerify = new Schema({
             type: Function
         }
     ]
-}).verify;
+});
 
-export const manualSqlVerify = new Schema([
+export const manualSqlSchema = new Schema([
     {
         type: String,
         minLength: 1
@@ -28,4 +28,7 @@ export const manualSqlVerify = new Schema([
     {
         type: Object
     }
-]).verify;
+]);
+
+export const dialectVerify = dialectSchema.verify;
+export const manualSqlVerify = manualSqlSchema.verify;
