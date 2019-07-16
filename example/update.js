@@ -36,7 +36,7 @@ var query = builder
         field1: "value1",
         field2: "value2"
     })
-    .where$Equal({
+    .whereEqual({
         field3: "value3"
     }).query;
 console.log(query); // UPDATE `table1` SET `field1` = 'value1', `field2` = 'value2' WHERE `field3` = 'value3'
@@ -47,7 +47,7 @@ var query = builder
     .add({
         field1: 1
     })
-    .where$Equal({
+    .whereEqual({
         field2: "value2"
     }).query;
 console.log(query); // UPDATE `table1` SET `field1` = `field1` + '1' WHERE `field2` = 'value2'
@@ -58,7 +58,7 @@ var query = builder
     .minus({
         field1: 1
     })
-    .where$Equal({
+    .whereEqual({
         field2: "value2"
     }).query;
 console.log(query); // UPDATE `table1` SET `field1` = `field1` - '1' WHERE `field2` = 'value2'

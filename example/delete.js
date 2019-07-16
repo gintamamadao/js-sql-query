@@ -21,7 +21,7 @@ console.log(query); // DELETE FROM `table1` ORDER BY `field1` DESC LIMIT 100
 var query = builder
     .delete()
     .table("table1")
-    .where$Equal({
+    .whereEqual({
         field1: "value1"
     }).query;
 console.log(query); // DELETE FROM `table1` WHERE `field1` = 'value1'
