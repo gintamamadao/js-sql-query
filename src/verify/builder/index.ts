@@ -15,7 +15,11 @@ import {
     termInfoVerify
 } from "./term.verify";
 import { updateInfoVerify } from "./update.verify";
-import { tableFieldVerify } from "./create.verify";
+import {
+    tableFieldVerify,
+    uniqueKeyVerify,
+    tableInfoVerify
+} from "./create.verify";
 
 const strArrVerify = new Schema({
     type: Array,
@@ -84,5 +88,7 @@ export {
     termBetweenVerify,
     termInfoVerify,
     updateInfoVerify,
-    tableFieldVerify
+    tableFieldVerify,
+    uniqueKeyVerify,
+    tableInfoVerify
 };

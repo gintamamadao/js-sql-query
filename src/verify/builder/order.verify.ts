@@ -1,5 +1,5 @@
 import { Schema } from "schema-verify";
-import { OrderTypes } from "../constant/enum";
+import { OrderTypes } from "../../constant/enum";
 
 export const orderInfoSchema = new Schema({
     type: Object,

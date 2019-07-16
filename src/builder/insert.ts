@@ -7,8 +7,8 @@ import {
     fieldDataVerify,
     fieldDataArrVerify,
     strArrVerify
-} from "../verify/index";
-import ErrMsg from "../error/index";
+} from "../verify/builder/index";
+import ErrMsg from "../error/builder/index";
 
 const SQL_NAME = "valuesSql";
 class Insert extends Query {

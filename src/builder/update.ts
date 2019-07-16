@@ -6,8 +6,8 @@ import {
     strArrVerify,
     fieldDataVerify,
     updateInfoVerify
-} from "../verify/index";
-import ErrMsg from "../error/index";
+} from "../verify/builder/index";
+import ErrMsg from "../error/builder/index";
 
 interface UpdateInfo {
     value: string | number;

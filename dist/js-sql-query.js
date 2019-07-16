@@ -277,7 +277,7 @@ var builder_error$1 = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(builder_error$1);
 
-var D__project_jsSqlQuery_src_error = createCommonjsModule(function (module, exports) {
+var D__project_jsSqlQuery_src_error_builder = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
@@ -299,9 +299,9 @@ var D__project_jsSqlQuery_src_error = createCommonjsModule(function (module, exp
   };
   exports.default = ErrMsg;
 });
-unwrapExports(D__project_jsSqlQuery_src_error);
+unwrapExports(D__project_jsSqlQuery_src_error_builder);
 
-var error = createCommonjsModule(function (module, exports) {
+var builder = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
@@ -323,7 +323,7 @@ var error = createCommonjsModule(function (module, exports) {
   };
   exports.default = ErrMsg;
 });
-unwrapExports(error);
+unwrapExports(builder);
 
 var dialects = createCommonjsModule(function (module, exports) {
 
@@ -345,7 +345,7 @@ var dialects = createCommonjsModule(function (module, exports) {
         }
 
         if (!result) {
-          throw new Error(error.default.needNumStr);
+          throw new Error(builder.default.needNumStr);
         }
 
         return result;
@@ -355,7 +355,7 @@ var dialects = createCommonjsModule(function (module, exports) {
         let result;
 
         if (!schemaVerify.Type.string.isNotEmpty(key)) {
-          throw new Error(error.default.needStr);
+          throw new Error(builder.default.needStr);
         }
 
         result = key.replace(/`/g, "``");
@@ -377,7 +377,7 @@ var dialects = createCommonjsModule(function (module, exports) {
         }
 
         if (!result) {
-          throw new Error(error.default.needNumStr);
+          throw new Error(builder.default.needNumStr);
         }
 
         return result;
@@ -385,7 +385,7 @@ var dialects = createCommonjsModule(function (module, exports) {
 
       safeKey(key) {
         if (!schemaVerify.Type.string.isNotEmpty(key)) {
-          throw new Error(error.default.needStr);
+          throw new Error(builder.default.needStr);
         }
 
         return `[${key}]`;
@@ -406,7 +406,7 @@ var dialects = createCommonjsModule(function (module, exports) {
         }
 
         if (!result) {
-          throw new Error(error.default.needNumStr);
+          throw new Error(builder.default.needNumStr);
         }
 
         return result;
@@ -416,7 +416,7 @@ var dialects = createCommonjsModule(function (module, exports) {
         let result;
 
         if (!schemaVerify.Type.string.isNotEmpty(key)) {
-          throw new Error(error.default.needStr);
+          throw new Error(builder.default.needStr);
         }
 
         result = key.replace(/\"/g, '""');
@@ -438,7 +438,7 @@ var dialects = createCommonjsModule(function (module, exports) {
         }
 
         if (!result) {
-          throw new Error(error.default.needNumStr);
+          throw new Error(builder.default.needNumStr);
         }
 
         return result;
@@ -448,7 +448,7 @@ var dialects = createCommonjsModule(function (module, exports) {
         let result;
 
         if (!schemaVerify.Type.string.isNotEmpty(key)) {
-          throw new Error(error.default.needStr);
+          throw new Error(builder.default.needStr);
         }
 
         result = key.replace(/`/g, "``");
@@ -1677,7 +1677,7 @@ var create_verify_1$1 = create_verify$1.tableFieldVerify;
 var create_verify_2$1 = create_verify$1.uniqueKeyVerify;
 var create_verify_3$1 = create_verify$1.tableInfoVerify;
 
-var D__project_jsSqlQuery_src_verify = createCommonjsModule(function (module, exports) {
+var D__project_jsSqlQuery_src_verify_builder = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
@@ -1701,6 +1701,8 @@ var D__project_jsSqlQuery_src_verify = createCommonjsModule(function (module, ex
   exports.termInfoVerify = term_verify$1.termInfoVerify;
   exports.updateInfoVerify = update_verify$1.updateInfoVerify;
   exports.tableFieldVerify = create_verify$1.tableFieldVerify;
+  exports.uniqueKeyVerify = create_verify$1.uniqueKeyVerify;
+  exports.tableInfoVerify = create_verify$1.tableInfoVerify;
   const strArrVerify = new schemaVerify.Schema({
     type: Array,
     elements: {
@@ -1740,31 +1742,33 @@ var D__project_jsSqlQuery_src_verify = createCommonjsModule(function (module, ex
   }).verify;
   exports.fieldDataVerify = fieldDataVerify;
 });
-unwrapExports(D__project_jsSqlQuery_src_verify);
-var D__project_jsSqlQuery_src_verify_1 = D__project_jsSqlQuery_src_verify.fieldDataArrVerify;
-var D__project_jsSqlQuery_src_verify_2 = D__project_jsSqlQuery_src_verify.funcInfoVerify;
-var D__project_jsSqlQuery_src_verify_3 = D__project_jsSqlQuery_src_verify.funcInputVerify;
-var D__project_jsSqlQuery_src_verify_4 = D__project_jsSqlQuery_src_verify.dialectVerify;
-var D__project_jsSqlQuery_src_verify_5 = D__project_jsSqlQuery_src_verify.manualSqlVerify;
-var D__project_jsSqlQuery_src_verify_6 = D__project_jsSqlQuery_src_verify.pageVerify;
-var D__project_jsSqlQuery_src_verify_7 = D__project_jsSqlQuery_src_verify.limitInfoVerify;
-var D__project_jsSqlQuery_src_verify_8 = D__project_jsSqlQuery_src_verify.orderInfoVerify;
-var D__project_jsSqlQuery_src_verify_9 = D__project_jsSqlQuery_src_verify.valueListVerify;
-var D__project_jsSqlQuery_src_verify_10 = D__project_jsSqlQuery_src_verify.termDataVerify;
-var D__project_jsSqlQuery_src_verify_11 = D__project_jsSqlQuery_src_verify.termBracketVerify;
-var D__project_jsSqlQuery_src_verify_12 = D__project_jsSqlQuery_src_verify.termSignVerify;
-var D__project_jsSqlQuery_src_verify_13 = D__project_jsSqlQuery_src_verify.termLogicVerify;
-var D__project_jsSqlQuery_src_verify_14 = D__project_jsSqlQuery_src_verify.termValueVerify;
-var D__project_jsSqlQuery_src_verify_15 = D__project_jsSqlQuery_src_verify.termInVerify;
-var D__project_jsSqlQuery_src_verify_16 = D__project_jsSqlQuery_src_verify.termBetweenVerify;
-var D__project_jsSqlQuery_src_verify_17 = D__project_jsSqlQuery_src_verify.termInfoVerify;
-var D__project_jsSqlQuery_src_verify_18 = D__project_jsSqlQuery_src_verify.updateInfoVerify;
-var D__project_jsSqlQuery_src_verify_19 = D__project_jsSqlQuery_src_verify.tableFieldVerify;
-var D__project_jsSqlQuery_src_verify_20 = D__project_jsSqlQuery_src_verify.strArrVerify;
-var D__project_jsSqlQuery_src_verify_21 = D__project_jsSqlQuery_src_verify.strObjVerify;
-var D__project_jsSqlQuery_src_verify_22 = D__project_jsSqlQuery_src_verify.naturalVerify;
-var D__project_jsSqlQuery_src_verify_23 = D__project_jsSqlQuery_src_verify.integerVerify;
-var D__project_jsSqlQuery_src_verify_24 = D__project_jsSqlQuery_src_verify.fieldDataVerify;
+unwrapExports(D__project_jsSqlQuery_src_verify_builder);
+var D__project_jsSqlQuery_src_verify_builder_1 = D__project_jsSqlQuery_src_verify_builder.fieldDataArrVerify;
+var D__project_jsSqlQuery_src_verify_builder_2 = D__project_jsSqlQuery_src_verify_builder.funcInfoVerify;
+var D__project_jsSqlQuery_src_verify_builder_3 = D__project_jsSqlQuery_src_verify_builder.funcInputVerify;
+var D__project_jsSqlQuery_src_verify_builder_4 = D__project_jsSqlQuery_src_verify_builder.dialectVerify;
+var D__project_jsSqlQuery_src_verify_builder_5 = D__project_jsSqlQuery_src_verify_builder.manualSqlVerify;
+var D__project_jsSqlQuery_src_verify_builder_6 = D__project_jsSqlQuery_src_verify_builder.pageVerify;
+var D__project_jsSqlQuery_src_verify_builder_7 = D__project_jsSqlQuery_src_verify_builder.limitInfoVerify;
+var D__project_jsSqlQuery_src_verify_builder_8 = D__project_jsSqlQuery_src_verify_builder.orderInfoVerify;
+var D__project_jsSqlQuery_src_verify_builder_9 = D__project_jsSqlQuery_src_verify_builder.valueListVerify;
+var D__project_jsSqlQuery_src_verify_builder_10 = D__project_jsSqlQuery_src_verify_builder.termDataVerify;
+var D__project_jsSqlQuery_src_verify_builder_11 = D__project_jsSqlQuery_src_verify_builder.termBracketVerify;
+var D__project_jsSqlQuery_src_verify_builder_12 = D__project_jsSqlQuery_src_verify_builder.termSignVerify;
+var D__project_jsSqlQuery_src_verify_builder_13 = D__project_jsSqlQuery_src_verify_builder.termLogicVerify;
+var D__project_jsSqlQuery_src_verify_builder_14 = D__project_jsSqlQuery_src_verify_builder.termValueVerify;
+var D__project_jsSqlQuery_src_verify_builder_15 = D__project_jsSqlQuery_src_verify_builder.termInVerify;
+var D__project_jsSqlQuery_src_verify_builder_16 = D__project_jsSqlQuery_src_verify_builder.termBetweenVerify;
+var D__project_jsSqlQuery_src_verify_builder_17 = D__project_jsSqlQuery_src_verify_builder.termInfoVerify;
+var D__project_jsSqlQuery_src_verify_builder_18 = D__project_jsSqlQuery_src_verify_builder.updateInfoVerify;
+var D__project_jsSqlQuery_src_verify_builder_19 = D__project_jsSqlQuery_src_verify_builder.tableFieldVerify;
+var D__project_jsSqlQuery_src_verify_builder_20 = D__project_jsSqlQuery_src_verify_builder.uniqueKeyVerify;
+var D__project_jsSqlQuery_src_verify_builder_21 = D__project_jsSqlQuery_src_verify_builder.tableInfoVerify;
+var D__project_jsSqlQuery_src_verify_builder_22 = D__project_jsSqlQuery_src_verify_builder.strArrVerify;
+var D__project_jsSqlQuery_src_verify_builder_23 = D__project_jsSqlQuery_src_verify_builder.strObjVerify;
+var D__project_jsSqlQuery_src_verify_builder_24 = D__project_jsSqlQuery_src_verify_builder.naturalVerify;
+var D__project_jsSqlQuery_src_verify_builder_25 = D__project_jsSqlQuery_src_verify_builder.integerVerify;
+var D__project_jsSqlQuery_src_verify_builder_26 = D__project_jsSqlQuery_src_verify_builder.fieldDataVerify;
 
 var dialects$1 = createCommonjsModule(function (module, exports) {
 
@@ -1786,7 +1790,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
         }
 
         if (!result) {
-          throw new Error(error.default.needNumStr);
+          throw new Error(builder.default.needNumStr);
         }
 
         return result;
@@ -1796,7 +1800,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
         let result;
 
         if (!schemaVerify.Type.string.isNotEmpty(key)) {
-          throw new Error(error.default.needStr);
+          throw new Error(builder.default.needStr);
         }
 
         result = key.replace(/`/g, "``");
@@ -1818,7 +1822,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
         }
 
         if (!result) {
-          throw new Error(error.default.needNumStr);
+          throw new Error(builder.default.needNumStr);
         }
 
         return result;
@@ -1826,7 +1830,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
 
       safeKey(key) {
         if (!schemaVerify.Type.string.isNotEmpty(key)) {
-          throw new Error(error.default.needStr);
+          throw new Error(builder.default.needStr);
         }
 
         return `[${key}]`;
@@ -1847,7 +1851,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
         }
 
         if (!result) {
-          throw new Error(error.default.needNumStr);
+          throw new Error(builder.default.needNumStr);
         }
 
         return result;
@@ -1857,7 +1861,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
         let result;
 
         if (!schemaVerify.Type.string.isNotEmpty(key)) {
-          throw new Error(error.default.needStr);
+          throw new Error(builder.default.needStr);
         }
 
         result = key.replace(/\"/g, '""');
@@ -1879,7 +1883,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
         }
 
         if (!result) {
-          throw new Error(error.default.needNumStr);
+          throw new Error(builder.default.needNumStr);
         }
 
         return result;
@@ -1889,7 +1893,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
         let result;
 
         if (!schemaVerify.Type.string.isNotEmpty(key)) {
-          throw new Error(error.default.needStr);
+          throw new Error(builder.default.needStr);
         }
 
         result = key.replace(/`/g, "``");
@@ -1902,7 +1906,7 @@ var dialects$1 = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(dialects$1);
 
-var verify = createCommonjsModule(function (module, exports) {
+var builder$1 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
@@ -1926,6 +1930,8 @@ var verify = createCommonjsModule(function (module, exports) {
   exports.termInfoVerify = term_verify$1.termInfoVerify;
   exports.updateInfoVerify = update_verify$1.updateInfoVerify;
   exports.tableFieldVerify = create_verify$1.tableFieldVerify;
+  exports.uniqueKeyVerify = create_verify$1.uniqueKeyVerify;
+  exports.tableInfoVerify = create_verify$1.tableInfoVerify;
   const strArrVerify = new schemaVerify.Schema({
     type: Array,
     elements: {
@@ -1965,31 +1971,33 @@ var verify = createCommonjsModule(function (module, exports) {
   }).verify;
   exports.fieldDataVerify = fieldDataVerify;
 });
-unwrapExports(verify);
-var verify_1 = verify.fieldDataArrVerify;
-var verify_2 = verify.funcInfoVerify;
-var verify_3 = verify.funcInputVerify;
-var verify_4 = verify.dialectVerify;
-var verify_5 = verify.manualSqlVerify;
-var verify_6 = verify.pageVerify;
-var verify_7 = verify.limitInfoVerify;
-var verify_8 = verify.orderInfoVerify;
-var verify_9 = verify.valueListVerify;
-var verify_10 = verify.termDataVerify;
-var verify_11 = verify.termBracketVerify;
-var verify_12 = verify.termSignVerify;
-var verify_13 = verify.termLogicVerify;
-var verify_14 = verify.termValueVerify;
-var verify_15 = verify.termInVerify;
-var verify_16 = verify.termBetweenVerify;
-var verify_17 = verify.termInfoVerify;
-var verify_18 = verify.updateInfoVerify;
-var verify_19 = verify.tableFieldVerify;
-var verify_20 = verify.strArrVerify;
-var verify_21 = verify.strObjVerify;
-var verify_22 = verify.naturalVerify;
-var verify_23 = verify.integerVerify;
-var verify_24 = verify.fieldDataVerify;
+unwrapExports(builder$1);
+var builder_1 = builder$1.fieldDataArrVerify;
+var builder_2 = builder$1.funcInfoVerify;
+var builder_3 = builder$1.funcInputVerify;
+var builder_4 = builder$1.dialectVerify;
+var builder_5 = builder$1.manualSqlVerify;
+var builder_6 = builder$1.pageVerify;
+var builder_7 = builder$1.limitInfoVerify;
+var builder_8 = builder$1.orderInfoVerify;
+var builder_9 = builder$1.valueListVerify;
+var builder_10 = builder$1.termDataVerify;
+var builder_11 = builder$1.termBracketVerify;
+var builder_12 = builder$1.termSignVerify;
+var builder_13 = builder$1.termLogicVerify;
+var builder_14 = builder$1.termValueVerify;
+var builder_15 = builder$1.termInVerify;
+var builder_16 = builder$1.termBetweenVerify;
+var builder_17 = builder$1.termInfoVerify;
+var builder_18 = builder$1.updateInfoVerify;
+var builder_19 = builder$1.tableFieldVerify;
+var builder_20 = builder$1.uniqueKeyVerify;
+var builder_21 = builder$1.tableInfoVerify;
+var builder_22 = builder$1.strArrVerify;
+var builder_23 = builder$1.strObjVerify;
+var builder_24 = builder$1.naturalVerify;
+var builder_25 = builder$1.integerVerify;
+var builder_26 = builder$1.fieldDataVerify;
 
 var safe = createCommonjsModule(function (module, exports) {
 
@@ -2011,16 +2019,16 @@ var safe = createCommonjsModule(function (module, exports) {
     get dialectType() {
       const dialectType = this._dialectType;
 
-      if (!verify.dialectVerify(dialects$1.default[dialectType])) {
-        throw new Error(error.default.errorDialect);
+      if (!builder$1.dialectVerify(dialects$1.default[dialectType])) {
+        throw new Error(builder.default.errorDialect);
       }
 
       return dialectType;
     }
 
     set dialectType(dialectType) {
-      if (!verify.dialectVerify(dialects$1.default[dialectType])) {
-        throw new Error(error.default.errorDialect);
+      if (!builder$1.dialectVerify(dialects$1.default[dialectType])) {
+        throw new Error(builder.default.errorDialect);
       }
 
       const dialect = dialects$1.default[dialectType];
@@ -2031,8 +2039,8 @@ var safe = createCommonjsModule(function (module, exports) {
     }
 
     manualSql(sql, key) {
-      if (!verify.manualSqlVerify(sql) && !(sql instanceof Safe)) {
-        throw new Error(error.default.errorManualSql);
+      if (!builder$1.manualSqlVerify(sql) && !(sql instanceof Safe)) {
+        throw new Error(builder.default.errorManualSql);
       }
 
       this[key] = sql;
@@ -2074,7 +2082,7 @@ var safe = createCommonjsModule(function (module, exports) {
 
     table(queryTable) {
       if (!schemaVerify.Type.string.isNotEmpty(queryTable)) {
-        throw new Error(error.default.errorTableName);
+        throw new Error(builder.default.errorTableName);
       }
 
       this._queryTable = queryTable;
@@ -2085,7 +2093,7 @@ var safe = createCommonjsModule(function (module, exports) {
       const queryTable = this._queryTable;
 
       if (!schemaVerify.Type.string.isNotEmpty(queryTable)) {
-        throw new Error(error.default.errorTableName);
+        throw new Error(builder.default.errorTableName);
       }
 
       return this.safeKey(queryTable);
@@ -2107,7 +2115,7 @@ var limit = createCommonjsModule(function (module, exports) {
     limitBuild(query) {
       const limitInfo = this.limitInfo;
 
-      if (!verify.limitInfoVerify(limitInfo)) {
+      if (!builder$1.limitInfoVerify(limitInfo)) {
         return query;
       }
 
@@ -2126,12 +2134,12 @@ var limit = createCommonjsModule(function (module, exports) {
     }
 
     limit(offset, step) {
-      if (!verify.integerVerify(offset)) {
-        throw new Error(error.default.errorOffset);
+      if (!builder$1.integerVerify(offset)) {
+        throw new Error(builder.default.errorOffset);
       }
 
-      if (schemaVerify.Type.undefined.isNot(step) && !verify.integerVerify(step)) {
-        throw new Error(error.default.errorStep);
+      if (schemaVerify.Type.undefined.isNot(step) && !builder$1.integerVerify(step)) {
+        throw new Error(builder.default.errorStep);
       }
 
       let limitInfo;
@@ -2154,8 +2162,8 @@ var limit = createCommonjsModule(function (module, exports) {
     }
 
     offset(offset) {
-      if (!verify.integerVerify(offset)) {
-        throw new Error(error.default.errorOffset);
+      if (!builder$1.integerVerify(offset)) {
+        throw new Error(builder.default.errorOffset);
       }
 
       this.limitInfo = {
@@ -2165,8 +2173,8 @@ var limit = createCommonjsModule(function (module, exports) {
     }
 
     step(step) {
-      if (!verify.integerVerify(step)) {
-        throw new Error(error.default.errorStep);
+      if (!builder$1.integerVerify(step)) {
+        throw new Error(builder.default.errorStep);
       }
 
       this.limitInfo = {
@@ -2176,12 +2184,12 @@ var limit = createCommonjsModule(function (module, exports) {
     }
 
     paging(page, size) {
-      if (!verify.pageVerify(page)) {
-        throw new Error(error.default.errorPage);
+      if (!builder$1.pageVerify(page)) {
+        throw new Error(builder.default.errorPage);
       }
 
-      if (!verify.naturalVerify(size)) {
-        throw new Error(error.default.errorSize);
+      if (!builder$1.naturalVerify(size)) {
+        throw new Error(builder.default.errorSize);
       }
 
       const offset = (page - 1) * size;
@@ -2242,16 +2250,16 @@ var safe$1 = createCommonjsModule(function (module, exports) {
     get dialectType() {
       const dialectType = this._dialectType;
 
-      if (!verify.dialectVerify(dialects$1.default[dialectType])) {
-        throw new Error(error.default.errorDialect);
+      if (!builder$1.dialectVerify(dialects$1.default[dialectType])) {
+        throw new Error(builder.default.errorDialect);
       }
 
       return dialectType;
     }
 
     set dialectType(dialectType) {
-      if (!verify.dialectVerify(dialects$1.default[dialectType])) {
-        throw new Error(error.default.errorDialect);
+      if (!builder$1.dialectVerify(dialects$1.default[dialectType])) {
+        throw new Error(builder.default.errorDialect);
       }
 
       const dialect = dialects$1.default[dialectType];
@@ -2262,8 +2270,8 @@ var safe$1 = createCommonjsModule(function (module, exports) {
     }
 
     manualSql(sql, key) {
-      if (!verify.manualSqlVerify(sql) && !(sql instanceof Safe)) {
-        throw new Error(error.default.errorManualSql);
+      if (!builder$1.manualSqlVerify(sql) && !(sql instanceof Safe)) {
+        throw new Error(builder.default.errorManualSql);
       }
 
       this[key] = sql;
@@ -2305,7 +2313,7 @@ var safe$1 = createCommonjsModule(function (module, exports) {
 
     table(queryTable) {
       if (!schemaVerify.Type.string.isNotEmpty(queryTable)) {
-        throw new Error(error.default.errorTableName);
+        throw new Error(builder.default.errorTableName);
       }
 
       this._queryTable = queryTable;
@@ -2316,7 +2324,7 @@ var safe$1 = createCommonjsModule(function (module, exports) {
       const queryTable = this._queryTable;
 
       if (!schemaVerify.Type.string.isNotEmpty(queryTable)) {
-        throw new Error(error.default.errorTableName);
+        throw new Error(builder.default.errorTableName);
       }
 
       return this.safeKey(queryTable);
@@ -2358,7 +2366,7 @@ var order = createCommonjsModule(function (module, exports) {
       let ordersArr = [];
 
       for (const info of orderInfos) {
-        if (!verify.orderInfoVerify(info)) {
+        if (!builder$1.orderInfoVerify(info)) {
           continue;
         }
 
@@ -2420,8 +2428,8 @@ var order = createCommonjsModule(function (module, exports) {
     }
 
     orderCache(fields, type, fieldOrder) {
-      if (!verify.strArrVerify(fields)) {
-        throw new Error(error.default.errorFields);
+      if (!builder$1.strArrVerify(fields)) {
+        throw new Error(builder.default.errorFields);
       }
 
       fieldOrder = schemaVerify.Type.object.safe(fieldOrder);
@@ -2436,15 +2444,15 @@ var order = createCommonjsModule(function (module, exports) {
         if (type === _enum$1.OrderTypes.field) {
           const list = fieldOrder[field];
 
-          if (!verify.valueListVerify(list)) {
-            throw new Error(error.default.errorValueList);
+          if (!builder$1.valueListVerify(list)) {
+            throw new Error(builder.default.errorValueList);
           }
 
           info["list"] = list;
         }
 
-        if (!verify.orderInfoVerify(info)) {
-          throw new Error(error.default.errorOrderInfo);
+        if (!builder$1.orderInfoVerify(info)) {
+          throw new Error(builder.default.errorOrderInfo);
         }
 
         orderInfos.push(info);
@@ -2470,7 +2478,7 @@ var limit$1 = createCommonjsModule(function (module, exports) {
     limitBuild(query) {
       const limitInfo = this.limitInfo;
 
-      if (!verify.limitInfoVerify(limitInfo)) {
+      if (!builder$1.limitInfoVerify(limitInfo)) {
         return query;
       }
 
@@ -2489,12 +2497,12 @@ var limit$1 = createCommonjsModule(function (module, exports) {
     }
 
     limit(offset, step) {
-      if (!verify.integerVerify(offset)) {
-        throw new Error(error.default.errorOffset);
+      if (!builder$1.integerVerify(offset)) {
+        throw new Error(builder.default.errorOffset);
       }
 
-      if (schemaVerify.Type.undefined.isNot(step) && !verify.integerVerify(step)) {
-        throw new Error(error.default.errorStep);
+      if (schemaVerify.Type.undefined.isNot(step) && !builder$1.integerVerify(step)) {
+        throw new Error(builder.default.errorStep);
       }
 
       let limitInfo;
@@ -2517,8 +2525,8 @@ var limit$1 = createCommonjsModule(function (module, exports) {
     }
 
     offset(offset) {
-      if (!verify.integerVerify(offset)) {
-        throw new Error(error.default.errorOffset);
+      if (!builder$1.integerVerify(offset)) {
+        throw new Error(builder.default.errorOffset);
       }
 
       this.limitInfo = {
@@ -2528,8 +2536,8 @@ var limit$1 = createCommonjsModule(function (module, exports) {
     }
 
     step(step) {
-      if (!verify.integerVerify(step)) {
-        throw new Error(error.default.errorStep);
+      if (!builder$1.integerVerify(step)) {
+        throw new Error(builder.default.errorStep);
       }
 
       this.limitInfo = {
@@ -2539,12 +2547,12 @@ var limit$1 = createCommonjsModule(function (module, exports) {
     }
 
     paging(page, size) {
-      if (!verify.pageVerify(page)) {
-        throw new Error(error.default.errorPage);
+      if (!builder$1.pageVerify(page)) {
+        throw new Error(builder.default.errorPage);
       }
 
-      if (!verify.naturalVerify(size)) {
-        throw new Error(error.default.errorSize);
+      if (!builder$1.naturalVerify(size)) {
+        throw new Error(builder.default.errorSize);
       }
 
       const offset = (page - 1) * size;
@@ -2590,7 +2598,7 @@ var order$1 = createCommonjsModule(function (module, exports) {
       let ordersArr = [];
 
       for (const info of orderInfos) {
-        if (!verify.orderInfoVerify(info)) {
+        if (!builder$1.orderInfoVerify(info)) {
           continue;
         }
 
@@ -2652,8 +2660,8 @@ var order$1 = createCommonjsModule(function (module, exports) {
     }
 
     orderCache(fields, type, fieldOrder) {
-      if (!verify.strArrVerify(fields)) {
-        throw new Error(error.default.errorFields);
+      if (!builder$1.strArrVerify(fields)) {
+        throw new Error(builder.default.errorFields);
       }
 
       fieldOrder = schemaVerify.Type.object.safe(fieldOrder);
@@ -2668,15 +2676,15 @@ var order$1 = createCommonjsModule(function (module, exports) {
         if (type === _enum$1.OrderTypes.field) {
           const list = fieldOrder[field];
 
-          if (!verify.valueListVerify(list)) {
-            throw new Error(error.default.errorValueList);
+          if (!builder$1.valueListVerify(list)) {
+            throw new Error(builder.default.errorValueList);
           }
 
           info["list"] = list;
         }
 
-        if (!verify.orderInfoVerify(info)) {
-          throw new Error(error.default.errorOrderInfo);
+        if (!builder$1.orderInfoVerify(info)) {
+          throw new Error(builder.default.errorOrderInfo);
         }
 
         orderInfos.push(info);
@@ -2858,8 +2866,8 @@ var insert = createCommonjsModule(function (module, exports) {
     }
 
     data(data) {
-      if (!verify.fieldDataVerify(data)) {
-        throw new Error(error.default.errorFieldData);
+      if (!builder$1.fieldDataVerify(data)) {
+        throw new Error(builder.default.errorFieldData);
       }
 
       const insertData = schemaVerify.Type.object.safe(this.insertData);
@@ -2876,8 +2884,8 @@ var insert = createCommonjsModule(function (module, exports) {
     }
 
     multiData(dataArr) {
-      if (!verify.fieldDataArrVerify(dataArr)) {
-        throw new Error(error.default.errorFieldDataArr);
+      if (!builder$1.fieldDataArrVerify(dataArr)) {
+        throw new Error(builder.default.errorFieldDataArr);
       }
 
       const insertDataArr = schemaVerify.Type.array.safe(this.insertDataArr);
@@ -2900,16 +2908,16 @@ var insert = createCommonjsModule(function (module, exports) {
       const insertDataArr = this.insertDataArr;
       let fields;
 
-      if (verify.strArrVerify(insertFields)) {
+      if (builder$1.strArrVerify(insertFields)) {
         fields = insertFields;
-      } else if (verify.fieldDataVerify(insertData)) {
+      } else if (builder$1.fieldDataVerify(insertData)) {
         fields = Object.keys(insertData);
-      } else if (verify.fieldDataArrVerify(insertDataArr)) {
+      } else if (builder$1.fieldDataArrVerify(insertDataArr)) {
         fields = Object.keys(insertDataArr[0]);
       }
 
-      if (!verify.strArrVerify(fields)) {
-        throw new Error(error.default.errorFields);
+      if (!builder$1.strArrVerify(fields)) {
+        throw new Error(builder.default.errorFields);
       }
 
       return fields;
@@ -2940,14 +2948,14 @@ var insert = createCommonjsModule(function (module, exports) {
 
       if (schemaVerify.Type.string.isNotEmpty(valuesSql)) {
         result = valuesSql;
-      } else if (verify.fieldDataVerify(insertData)) {
+      } else if (builder$1.fieldDataVerify(insertData)) {
         result = valuesStrFormat(insertData);
-      } else if (verify.fieldDataArrVerify(insertDataArr)) {
+      } else if (builder$1.fieldDataArrVerify(insertDataArr)) {
         result = valuesArrStrFormat(insertDataArr);
       }
 
       if (!schemaVerify.Type.string.isNotEmpty(result)) {
-        throw new Error(error.default.errorInsertValues);
+        throw new Error(builder.default.errorInsertValues);
       }
 
       return `VALUES ${result}`;
@@ -3022,8 +3030,8 @@ var term = createCommonjsModule(function (module, exports) {
         const perBracket = brackets[i - 1];
         const nextBracket = brackets[i + 1];
 
-        if (!verify.termBracketVerify(curBracket)) {
-          throw new Error(error.default.errorTermBracket);
+        if (!builder$1.termBracketVerify(curBracket)) {
+          throw new Error(builder.default.errorTermBracket);
         }
 
         const curPos = curBracket.position;
@@ -3031,11 +3039,11 @@ var term = createCommonjsModule(function (module, exports) {
         let prePos = 0;
         let nextPos = termsLen;
 
-        if (verify.termBracketVerify(perBracket)) {
+        if (builder$1.termBracketVerify(perBracket)) {
           prePos = perBracket.position;
         }
 
-        if (verify.termBracketVerify(nextBracket)) {
+        if (builder$1.termBracketVerify(nextBracket)) {
           nextPos = nextBracket.position;
         }
 
@@ -3076,8 +3084,8 @@ var term = createCommonjsModule(function (module, exports) {
       let allTermStr = "";
 
       for (const term of terms) {
-        if (!verify.termInfoVerify(term)) {
-          throw new Error(error.default.errorTermInfo);
+        if (!builder$1.termInfoVerify(term)) {
+          throw new Error(builder.default.errorTermInfo);
         }
 
         const field = this.safeKey(term.field);
@@ -3102,8 +3110,8 @@ var term = createCommonjsModule(function (module, exports) {
       let termValue;
 
       if (sign === _enum$1.TermSign.in || sign === _enum$1.TermSign.notIn) {
-        if (!verify.termInVerify(value)) {
-          throw new Error(error.default.errorTermValue);
+        if (!builder$1.termInVerify(value)) {
+          throw new Error(builder.default.errorTermValue);
         }
 
         termValue = value.map(item => this.safeValue(item)).join(", ");
@@ -3111,8 +3119,8 @@ var term = createCommonjsModule(function (module, exports) {
       }
 
       if (sign === _enum$1.TermSign.between || sign === _enum$1.TermSign.notBetween) {
-        if (!verify.termBetweenVerify(value)) {
-          throw new Error(error.default.errorTermValue);
+        if (!builder$1.termBetweenVerify(value)) {
+          throw new Error(builder.default.errorTermValue);
         }
 
         const lower = this.safeValue(value[0]);
@@ -3120,8 +3128,8 @@ var term = createCommonjsModule(function (module, exports) {
         return `${lower} AND ${upper}`;
       }
 
-      if (!verify.termValueVerify(value)) {
-        throw new Error(error.default.errorTermValue);
+      if (!builder$1.termValueVerify(value)) {
+        throw new Error(builder.default.errorTermValue);
       }
 
       if (sign === _enum$1.TermSign.like || sign === _enum$1.TermSign.notlike) {
@@ -3133,16 +3141,16 @@ var term = createCommonjsModule(function (module, exports) {
     }
 
     termCache(data, sign, logic) {
-      if (!verify.termDataVerify(data)) {
-        throw new Error(error.default.errorTermdata);
+      if (!builder$1.termDataVerify(data)) {
+        throw new Error(builder.default.errorTermdata);
       }
 
-      if (!verify.termSignVerify(sign)) {
-        throw new Error(error.default.errorTermSign);
+      if (!builder$1.termSignVerify(sign)) {
+        throw new Error(builder.default.errorTermSign);
       }
 
-      if (!verify.termLogicVerify(logic)) {
-        throw new Error(error.default.errorTermLogic);
+      if (!builder$1.termLogicVerify(logic)) {
+        throw new Error(builder.default.errorTermLogic);
       }
 
       const termInfos = schemaVerify.Type.array.safe(this.termInfos);
@@ -3154,23 +3162,23 @@ var term = createCommonjsModule(function (module, exports) {
         switch (sign) {
           case _enum$1.TermSign.in:
           case _enum$1.TermSign.notIn:
-            if (!verify.termInVerify(value)) {
-              throw new Error(error.default.errorTermValue);
+            if (!builder$1.termInVerify(value)) {
+              throw new Error(builder.default.errorTermValue);
             }
 
             break;
 
           case _enum$1.TermSign.between:
           case _enum$1.TermSign.notBetween:
-            if (!verify.termBetweenVerify(value)) {
-              throw new Error(error.default.errorTermValue);
+            if (!builder$1.termBetweenVerify(value)) {
+              throw new Error(builder.default.errorTermValue);
             }
 
             break;
 
           default:
-            if (!verify.termValueVerify(value)) {
-              throw new Error(error.default.errorTermValue);
+            if (!builder$1.termValueVerify(value)) {
+              throw new Error(builder.default.errorTermValue);
             }
 
             break;
@@ -3199,7 +3207,7 @@ var term = createCommonjsModule(function (module, exports) {
       }
 
       for (const bracket of termBrackets) {
-        if (!verify.termBracketVerify(bracket)) {
+        if (!builder$1.termBracketVerify(bracket)) {
           continue;
         }
 
@@ -3215,7 +3223,7 @@ var term = createCommonjsModule(function (module, exports) {
         logic
       };
 
-      if (verify.termBracketVerify(bracket)) {
+      if (builder$1.termBracketVerify(bracket)) {
         termBrackets.push(bracket);
       }
 
@@ -3398,8 +3406,8 @@ var term$1 = createCommonjsModule(function (module, exports) {
         const perBracket = brackets[i - 1];
         const nextBracket = brackets[i + 1];
 
-        if (!verify.termBracketVerify(curBracket)) {
-          throw new Error(error.default.errorTermBracket);
+        if (!builder$1.termBracketVerify(curBracket)) {
+          throw new Error(builder.default.errorTermBracket);
         }
 
         const curPos = curBracket.position;
@@ -3407,11 +3415,11 @@ var term$1 = createCommonjsModule(function (module, exports) {
         let prePos = 0;
         let nextPos = termsLen;
 
-        if (verify.termBracketVerify(perBracket)) {
+        if (builder$1.termBracketVerify(perBracket)) {
           prePos = perBracket.position;
         }
 
-        if (verify.termBracketVerify(nextBracket)) {
+        if (builder$1.termBracketVerify(nextBracket)) {
           nextPos = nextBracket.position;
         }
 
@@ -3452,8 +3460,8 @@ var term$1 = createCommonjsModule(function (module, exports) {
       let allTermStr = "";
 
       for (const term of terms) {
-        if (!verify.termInfoVerify(term)) {
-          throw new Error(error.default.errorTermInfo);
+        if (!builder$1.termInfoVerify(term)) {
+          throw new Error(builder.default.errorTermInfo);
         }
 
         const field = this.safeKey(term.field);
@@ -3478,8 +3486,8 @@ var term$1 = createCommonjsModule(function (module, exports) {
       let termValue;
 
       if (sign === _enum$1.TermSign.in || sign === _enum$1.TermSign.notIn) {
-        if (!verify.termInVerify(value)) {
-          throw new Error(error.default.errorTermValue);
+        if (!builder$1.termInVerify(value)) {
+          throw new Error(builder.default.errorTermValue);
         }
 
         termValue = value.map(item => this.safeValue(item)).join(", ");
@@ -3487,8 +3495,8 @@ var term$1 = createCommonjsModule(function (module, exports) {
       }
 
       if (sign === _enum$1.TermSign.between || sign === _enum$1.TermSign.notBetween) {
-        if (!verify.termBetweenVerify(value)) {
-          throw new Error(error.default.errorTermValue);
+        if (!builder$1.termBetweenVerify(value)) {
+          throw new Error(builder.default.errorTermValue);
         }
 
         const lower = this.safeValue(value[0]);
@@ -3496,8 +3504,8 @@ var term$1 = createCommonjsModule(function (module, exports) {
         return `${lower} AND ${upper}`;
       }
 
-      if (!verify.termValueVerify(value)) {
-        throw new Error(error.default.errorTermValue);
+      if (!builder$1.termValueVerify(value)) {
+        throw new Error(builder.default.errorTermValue);
       }
 
       if (sign === _enum$1.TermSign.like || sign === _enum$1.TermSign.notlike) {
@@ -3509,16 +3517,16 @@ var term$1 = createCommonjsModule(function (module, exports) {
     }
 
     termCache(data, sign, logic) {
-      if (!verify.termDataVerify(data)) {
-        throw new Error(error.default.errorTermdata);
+      if (!builder$1.termDataVerify(data)) {
+        throw new Error(builder.default.errorTermdata);
       }
 
-      if (!verify.termSignVerify(sign)) {
-        throw new Error(error.default.errorTermSign);
+      if (!builder$1.termSignVerify(sign)) {
+        throw new Error(builder.default.errorTermSign);
       }
 
-      if (!verify.termLogicVerify(logic)) {
-        throw new Error(error.default.errorTermLogic);
+      if (!builder$1.termLogicVerify(logic)) {
+        throw new Error(builder.default.errorTermLogic);
       }
 
       const termInfos = schemaVerify.Type.array.safe(this.termInfos);
@@ -3530,23 +3538,23 @@ var term$1 = createCommonjsModule(function (module, exports) {
         switch (sign) {
           case _enum$1.TermSign.in:
           case _enum$1.TermSign.notIn:
-            if (!verify.termInVerify(value)) {
-              throw new Error(error.default.errorTermValue);
+            if (!builder$1.termInVerify(value)) {
+              throw new Error(builder.default.errorTermValue);
             }
 
             break;
 
           case _enum$1.TermSign.between:
           case _enum$1.TermSign.notBetween:
-            if (!verify.termBetweenVerify(value)) {
-              throw new Error(error.default.errorTermValue);
+            if (!builder$1.termBetweenVerify(value)) {
+              throw new Error(builder.default.errorTermValue);
             }
 
             break;
 
           default:
-            if (!verify.termValueVerify(value)) {
-              throw new Error(error.default.errorTermValue);
+            if (!builder$1.termValueVerify(value)) {
+              throw new Error(builder.default.errorTermValue);
             }
 
             break;
@@ -3575,7 +3583,7 @@ var term$1 = createCommonjsModule(function (module, exports) {
       }
 
       for (const bracket of termBrackets) {
-        if (!verify.termBracketVerify(bracket)) {
+        if (!builder$1.termBracketVerify(bracket)) {
           continue;
         }
 
@@ -3591,7 +3599,7 @@ var term$1 = createCommonjsModule(function (module, exports) {
         logic
       };
 
-      if (verify.termBracketVerify(bracket)) {
+      if (builder$1.termBracketVerify(bracket)) {
         termBrackets.push(bracket);
       }
 
@@ -4684,8 +4692,8 @@ var combine = createCommonjsModule(function (module, exports) {
     groupBy(...fields) {
       let groupByFields = schemaVerify.Type.array.safe(this.groupByFields);
 
-      if (!verify.strArrVerify(fields)) {
-        throw new Error(error.default.errorFields);
+      if (!builder$1.strArrVerify(fields)) {
+        throw new Error(builder.default.errorFields);
       }
 
       groupByFields = groupByFields.concat(fields);
@@ -4710,8 +4718,8 @@ var combine = createCommonjsModule(function (module, exports) {
       let funcs = [];
 
       for (const info of combineFuncs) {
-        if (!verify.funcInfoVerify(info)) {
-          throw new Error(error.default.errorFuncInfo);
+        if (!builder$1.funcInfoVerify(info)) {
+          throw new Error(builder.default.errorFuncInfo);
         }
 
         const funcFeild = info.funcFeild;
@@ -4725,7 +4733,7 @@ var combine = createCommonjsModule(function (module, exports) {
     funcsCache(funcInfo) {
       const combineFuncs = schemaVerify.Type.array.safe(this.combineFuncs);
 
-      if (verify.funcInfoVerify(funcInfo)) {
+      if (builder$1.funcInfoVerify(funcInfo)) {
         combineFuncs.push(funcInfo);
       }
 
@@ -4737,14 +4745,14 @@ var combine = createCommonjsModule(function (module, exports) {
       for (let info of funcInfos) {
         info = schemaVerify.Type.object.safe(info);
 
-        if (verify.funcInfoVerify(info)) {
+        if (builder$1.funcInfoVerify(info)) {
           this.funcsCache(info);
           continue;
         }
 
         const funcCase = this.getFuncCase();
 
-        if (verify.funcInputVerify(info)) {
+        if (builder$1.funcInputVerify(info)) {
           const func = info.func;
           const field = info.field;
 
@@ -4918,8 +4926,8 @@ var combine$1 = createCommonjsModule(function (module, exports) {
     groupBy(...fields) {
       let groupByFields = schemaVerify.Type.array.safe(this.groupByFields);
 
-      if (!verify.strArrVerify(fields)) {
-        throw new Error(error.default.errorFields);
+      if (!builder$1.strArrVerify(fields)) {
+        throw new Error(builder.default.errorFields);
       }
 
       groupByFields = groupByFields.concat(fields);
@@ -4944,8 +4952,8 @@ var combine$1 = createCommonjsModule(function (module, exports) {
       let funcs = [];
 
       for (const info of combineFuncs) {
-        if (!verify.funcInfoVerify(info)) {
-          throw new Error(error.default.errorFuncInfo);
+        if (!builder$1.funcInfoVerify(info)) {
+          throw new Error(builder.default.errorFuncInfo);
         }
 
         const funcFeild = info.funcFeild;
@@ -4959,7 +4967,7 @@ var combine$1 = createCommonjsModule(function (module, exports) {
     funcsCache(funcInfo) {
       const combineFuncs = schemaVerify.Type.array.safe(this.combineFuncs);
 
-      if (verify.funcInfoVerify(funcInfo)) {
+      if (builder$1.funcInfoVerify(funcInfo)) {
         combineFuncs.push(funcInfo);
       }
 
@@ -4971,14 +4979,14 @@ var combine$1 = createCommonjsModule(function (module, exports) {
       for (let info of funcInfos) {
         info = schemaVerify.Type.object.safe(info);
 
-        if (verify.funcInfoVerify(info)) {
+        if (builder$1.funcInfoVerify(info)) {
           this.funcsCache(info);
           continue;
         }
 
         const funcCase = this.getFuncCase();
 
-        if (verify.funcInputVerify(info)) {
+        if (builder$1.funcInputVerify(info)) {
           const func = info.func;
           const field = info.field;
 
@@ -5168,7 +5176,7 @@ var select = createCommonjsModule(function (module, exports) {
       let funcs = this.formatFuncs();
       let result;
 
-      if (verify.strArrVerify(fields) || verify.strArrVerify(funcs)) {
+      if (builder$1.strArrVerify(fields) || builder$1.strArrVerify(funcs)) {
         fields = schemaVerify.Type.array.safe(fields);
         funcs = schemaVerify.Type.array.safe(funcs);
         result = [].concat(fields, funcs).join(", ");
@@ -5220,8 +5228,8 @@ var select = createCommonjsModule(function (module, exports) {
     asFieldMap(map) {
       const asMap = schemaVerify.Type.object.safe(this.fieldsAsMap);
 
-      if (!verify.strObjVerify(map)) {
-        throw new Error(error.default.errorFieldMap);
+      if (!builder$1.strObjVerify(map)) {
+        throw new Error(builder.default.errorFieldMap);
       }
 
       this.fieldsAsMap = Object.assign({}, asMap, map);
@@ -5279,7 +5287,7 @@ var update = createCommonjsModule(function (module, exports) {
       const updateInfos = this.updateInfos;
 
       if (!schemaVerify.Type.object.isNotEmpty(updateInfos)) {
-        throw new Error(error.default.emptyUpdateInfo);
+        throw new Error(builder.default.emptyUpdateInfo);
       }
 
       const result = [];
@@ -5287,7 +5295,7 @@ var update = createCommonjsModule(function (module, exports) {
       for (const field in updateInfos) {
         const info = updateInfos[field];
 
-        if (!verify.updateInfoVerify(info)) {
+        if (!builder$1.updateInfoVerify(info)) {
           continue;
         }
 
@@ -5316,16 +5324,16 @@ var update = createCommonjsModule(function (module, exports) {
         }
       }
 
-      if (!verify.strArrVerify(result)) {
-        throw new Error(error.default.emptyUpdateInfo);
+      if (!builder$1.strArrVerify(result)) {
+        throw new Error(builder.default.emptyUpdateInfo);
       }
 
       return result;
     }
 
     updateCache(data, type) {
-      if (!verify.fieldDataVerify(data)) {
-        throw new Error(error.default.errorFieldData);
+      if (!builder$1.fieldDataVerify(data)) {
+        throw new Error(builder.default.errorFieldData);
       }
 
       const updateInfos = schemaVerify.Type.object.safe(this.updateInfos);
@@ -5337,8 +5345,8 @@ var update = createCommonjsModule(function (module, exports) {
           type
         };
 
-        if (!verify.updateInfoVerify(updateInfo)) {
-          throw new Error(error.default.errorUpdateInfo);
+        if (!builder$1.updateInfoVerify(updateInfo)) {
+          throw new Error(builder.default.errorUpdateInfo);
         }
 
         updateInfos[field] = updateInfo;
@@ -5414,8 +5422,8 @@ var insert$1 = createCommonjsModule(function (module, exports) {
     }
 
     data(data) {
-      if (!verify.fieldDataVerify(data)) {
-        throw new Error(error.default.errorFieldData);
+      if (!builder$1.fieldDataVerify(data)) {
+        throw new Error(builder.default.errorFieldData);
       }
 
       const insertData = schemaVerify.Type.object.safe(this.insertData);
@@ -5432,8 +5440,8 @@ var insert$1 = createCommonjsModule(function (module, exports) {
     }
 
     multiData(dataArr) {
-      if (!verify.fieldDataArrVerify(dataArr)) {
-        throw new Error(error.default.errorFieldDataArr);
+      if (!builder$1.fieldDataArrVerify(dataArr)) {
+        throw new Error(builder.default.errorFieldDataArr);
       }
 
       const insertDataArr = schemaVerify.Type.array.safe(this.insertDataArr);
@@ -5456,16 +5464,16 @@ var insert$1 = createCommonjsModule(function (module, exports) {
       const insertDataArr = this.insertDataArr;
       let fields;
 
-      if (verify.strArrVerify(insertFields)) {
+      if (builder$1.strArrVerify(insertFields)) {
         fields = insertFields;
-      } else if (verify.fieldDataVerify(insertData)) {
+      } else if (builder$1.fieldDataVerify(insertData)) {
         fields = Object.keys(insertData);
-      } else if (verify.fieldDataArrVerify(insertDataArr)) {
+      } else if (builder$1.fieldDataArrVerify(insertDataArr)) {
         fields = Object.keys(insertDataArr[0]);
       }
 
-      if (!verify.strArrVerify(fields)) {
-        throw new Error(error.default.errorFields);
+      if (!builder$1.strArrVerify(fields)) {
+        throw new Error(builder.default.errorFields);
       }
 
       return fields;
@@ -5496,14 +5504,14 @@ var insert$1 = createCommonjsModule(function (module, exports) {
 
       if (schemaVerify.Type.string.isNotEmpty(valuesSql)) {
         result = valuesSql;
-      } else if (verify.fieldDataVerify(insertData)) {
+      } else if (builder$1.fieldDataVerify(insertData)) {
         result = valuesStrFormat(insertData);
-      } else if (verify.fieldDataArrVerify(insertDataArr)) {
+      } else if (builder$1.fieldDataArrVerify(insertDataArr)) {
         result = valuesArrStrFormat(insertDataArr);
       }
 
       if (!schemaVerify.Type.string.isNotEmpty(result)) {
-        throw new Error(error.default.errorInsertValues);
+        throw new Error(builder.default.errorInsertValues);
       }
 
       return `VALUES ${result}`;
@@ -5586,7 +5594,7 @@ var select$1 = createCommonjsModule(function (module, exports) {
       let funcs = this.formatFuncs();
       let result;
 
-      if (verify.strArrVerify(fields) || verify.strArrVerify(funcs)) {
+      if (builder$1.strArrVerify(fields) || builder$1.strArrVerify(funcs)) {
         fields = schemaVerify.Type.array.safe(fields);
         funcs = schemaVerify.Type.array.safe(funcs);
         result = [].concat(fields, funcs).join(", ");
@@ -5638,8 +5646,8 @@ var select$1 = createCommonjsModule(function (module, exports) {
     asFieldMap(map) {
       const asMap = schemaVerify.Type.object.safe(this.fieldsAsMap);
 
-      if (!verify.strObjVerify(map)) {
-        throw new Error(error.default.errorFieldMap);
+      if (!builder$1.strObjVerify(map)) {
+        throw new Error(builder.default.errorFieldMap);
       }
 
       this.fieldsAsMap = Object.assign({}, asMap, map);
@@ -5697,7 +5705,7 @@ var update$1 = createCommonjsModule(function (module, exports) {
       const updateInfos = this.updateInfos;
 
       if (!schemaVerify.Type.object.isNotEmpty(updateInfos)) {
-        throw new Error(error.default.emptyUpdateInfo);
+        throw new Error(builder.default.emptyUpdateInfo);
       }
 
       const result = [];
@@ -5705,7 +5713,7 @@ var update$1 = createCommonjsModule(function (module, exports) {
       for (const field in updateInfos) {
         const info = updateInfos[field];
 
-        if (!verify.updateInfoVerify(info)) {
+        if (!builder$1.updateInfoVerify(info)) {
           continue;
         }
 
@@ -5734,16 +5742,16 @@ var update$1 = createCommonjsModule(function (module, exports) {
         }
       }
 
-      if (!verify.strArrVerify(result)) {
-        throw new Error(error.default.emptyUpdateInfo);
+      if (!builder$1.strArrVerify(result)) {
+        throw new Error(builder.default.emptyUpdateInfo);
       }
 
       return result;
     }
 
     updateCache(data, type) {
-      if (!verify.fieldDataVerify(data)) {
-        throw new Error(error.default.errorFieldData);
+      if (!builder$1.fieldDataVerify(data)) {
+        throw new Error(builder.default.errorFieldData);
       }
 
       const updateInfos = schemaVerify.Type.object.safe(this.updateInfos);
@@ -5755,8 +5763,8 @@ var update$1 = createCommonjsModule(function (module, exports) {
           type
         };
 
-        if (!verify.updateInfoVerify(updateInfo)) {
-          throw new Error(error.default.errorUpdateInfo);
+        if (!builder$1.updateInfoVerify(updateInfo)) {
+          throw new Error(builder.default.errorUpdateInfo);
         }
 
         updateInfos[field] = updateInfo;
@@ -5832,7 +5840,7 @@ var replace$1 = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(replace$1);
 
-var builder = createCommonjsModule(function (module, exports) {
+var builder$2 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
@@ -5933,7 +5941,7 @@ var builder = createCommonjsModule(function (module, exports) {
 
     table(tableName) {
       if (!schemaVerify.Type.string.isNotEmpty(tableName)) {
-        throw new Error(error.default.errorTableName);
+        throw new Error(builder.default.errorTableName);
       }
 
       this.queryTable = tableName;
@@ -5941,7 +5949,7 @@ var builder = createCommonjsModule(function (module, exports) {
     }
 
     build() {
-      throw new Error(error.default.emptyQueryType);
+      throw new Error(builder.default.emptyQueryType);
     }
 
     get query() {
@@ -5952,9 +5960,9 @@ var builder = createCommonjsModule(function (module, exports) {
 
   exports.default = Builder;
 });
-unwrapExports(builder);
+unwrapExports(builder$2);
 
-var builder$1 = createCommonjsModule(function (module, exports) {
+var builder$3 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
@@ -6055,7 +6063,7 @@ var builder$1 = createCommonjsModule(function (module, exports) {
 
     table(tableName) {
       if (!schemaVerify.Type.string.isNotEmpty(tableName)) {
-        throw new Error(error.default.errorTableName);
+        throw new Error(builder.default.errorTableName);
       }
 
       this.queryTable = tableName;
@@ -6063,7 +6071,7 @@ var builder$1 = createCommonjsModule(function (module, exports) {
     }
 
     build() {
-      throw new Error(error.default.emptyQueryType);
+      throw new Error(builder.default.emptyQueryType);
     }
 
     get query() {
@@ -6074,7 +6082,7 @@ var builder$1 = createCommonjsModule(function (module, exports) {
 
   exports.default = Builder;
 });
-unwrapExports(builder$1);
+unwrapExports(builder$3);
 
 var src = createCommonjsModule(function (module, exports) {
 
@@ -6082,7 +6090,7 @@ var src = createCommonjsModule(function (module, exports) {
     value: true
   });
   exports.default = {
-    Builder: builder$1.default
+    Builder: builder$3.default
   };
 });
 var index = unwrapExports(src);

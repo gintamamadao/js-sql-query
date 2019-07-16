@@ -3,12 +3,12 @@ import Func from "./func";
 import { Type } from "schema-verify";
 import { FuncInfo } from "../constant/interface";
 import { DialectTypes } from "../constant/enum";
-import ErrMsg from "../error/index";
+import ErrMsg from "../error/builder/index";
 import {
     strArrVerify,
     funcInfoVerify,
     funcInputVerify
-} from "../verify/index";
+} from "../verify/builder/index";
 
 interface FuncInput {
     func: string;

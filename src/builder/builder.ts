@@ -8,7 +8,7 @@ import Func from "./func";
 import Order from "./order";
 import { Type } from "schema-verify";
 import { QueryTypes, DialectTypes, WidgetTypes } from "../constant/enum";
-import ErrMsg from "../error/index";
+import ErrMsg from "../error/builder/index";
 
 class Builder {
     protected dialectType: DialectTypes;

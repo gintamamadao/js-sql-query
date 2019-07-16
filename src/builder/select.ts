@@ -3,8 +3,8 @@ import Combine from "./combine";
 import { KeyValueStr } from "../constant/interface";
 import { QueryTypes, DialectTypes } from "../constant/enum";
 import { Type } from "schema-verify";
-import { strArrVerify, strObjVerify } from "../verify/index";
-import ErrMsg from "../error/index";
+import { strArrVerify, strObjVerify } from "../verify/builder/index";
+import ErrMsg from "../error/builder/index";
 
 class Select extends Combine {
     protected selectFields: string[];

@@ -4,8 +4,8 @@ import {
     pageVerify,
     naturalVerify,
     limitInfoVerify
-} from "../verify/index";
-import ErrMsg from "../error/index";
+} from "../verify/builder/index";
+import ErrMsg from "../error/builder/index";
 
 interface LimitInfo {
     offset: number;

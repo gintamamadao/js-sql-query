@@ -2,8 +2,8 @@ import Dialects from "../util/dialects";
 import { DialectTypes } from "../constant/enum";
 import { SafeValue, SafeKey, Dialect } from "../constant/interface";
 import { Type } from "schema-verify";
-import { dialectVerify, manualSqlVerify } from "../verify/index";
-import ErrMsg from "../error/index";
+import { dialectVerify, manualSqlVerify } from "../verify/builder/index";
+import ErrMsg from "../error/builder/index";
 
 class Safe {
     protected _queryTable: string;

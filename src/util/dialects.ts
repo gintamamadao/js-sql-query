@@ -1,6 +1,6 @@
 import { Dialects } from "../constant/interface";
 import { Type } from "schema-verify";
-import ErrMsg from "../error/index";
+import ErrMsg from "../error/builder/index";
 
 const DialectsObj: Dialects = {
     mysql: {

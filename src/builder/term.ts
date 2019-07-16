@@ -11,8 +11,8 @@ import {
     termInVerify,
     termBetweenVerify,
     termInfoVerify
-} from "../verify/index";
-import ErrMsg from "../error/index";
+} from "../verify/builder/index";
+import ErrMsg from "../error/builder/index";
 
 const SQL_NAME = "termSql";
 class Term extends Safe {
