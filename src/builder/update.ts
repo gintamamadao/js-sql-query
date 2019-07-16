@@ -1,4 +1,4 @@
-import { QueryTypes, DialectTypes, UpdateTypes } from "../constant/enum";
+import { QueryTypes, UpdateTypes } from "../constant/enum";
 import { FieldData } from "../constant/interface";
 import Where from "./where";
 import { Type } from "schema-verify";
@@ -20,9 +20,8 @@ interface UpdateInfos {
 class Update extends Where {
     protected updateInfos: UpdateInfos;
     readonly queryType: QueryTypes = QueryTypes.update;
-    constructor(dialectType: DialectTypes) {
+    constructor() {
         super();
-        this.dialectType = dialectType;
         this.updateInfos = {};
     }
 

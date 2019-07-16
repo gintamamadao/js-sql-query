@@ -1,9 +1,9 @@
 import Insert from "./insert";
-import { QueryTypes, DialectTypes } from "../constant/enum";
+import { QueryTypes } from "../constant/enum";
 
 class Replace extends Insert {
-    constructor(dialectType: DialectTypes) {
-        super(dialectType);
+    constructor() {
+        super();
         this.queryType = QueryTypes.replace;
     }
 }

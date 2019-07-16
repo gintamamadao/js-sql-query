@@ -19,6 +19,10 @@ class Safe {
     }
 
     set dialectType(dialectType: DialectTypes) {
+        this.setDialect(dialectType);
+    }
+
+    setDialect(dialectType: DialectTypes) {
         if (!dialectVerify(Dialects[dialectType])) {
             throw new Error(ErrMsg.errorDialect);
         }
@@ -27,6 +31,7 @@ class Safe {
         this._dialectType = dialectType;
         this.safeValue = dialect.safeValue;
         this.safeKey = dialect.safeKey;
+        return this;
     }
 
     protected safeValue: SafeValue = function() {

@@ -2027,6 +2027,10 @@ var safe = createCommonjsModule(function (module, exports) {
     }
 
     set dialectType(dialectType) {
+      this.setDialect(dialectType);
+    }
+
+    setDialect(dialectType) {
       if (!builder$1.dialectVerify(dialects$1.default[dialectType])) {
         throw new Error(builder.default.errorDialect);
       }
@@ -2036,6 +2040,7 @@ var safe = createCommonjsModule(function (module, exports) {
       this._dialectType = dialectType;
       this.safeValue = dialect.safeValue;
       this.safeKey = dialect.safeKey;
+      return this;
     }
 
     manualSql(sql, key) {
@@ -2258,6 +2263,10 @@ var safe$1 = createCommonjsModule(function (module, exports) {
     }
 
     set dialectType(dialectType) {
+      this.setDialect(dialectType);
+    }
+
+    setDialect(dialectType) {
       if (!builder$1.dialectVerify(dialects$1.default[dialectType])) {
         throw new Error(builder.default.errorDialect);
       }
@@ -2267,6 +2276,7 @@ var safe$1 = createCommonjsModule(function (module, exports) {
       this._dialectType = dialectType;
       this.safeValue = dialect.safeValue;
       this.safeKey = dialect.safeKey;
+      return this;
     }
 
     manualSql(sql, key) {
@@ -2344,9 +2354,8 @@ var order = createCommonjsModule(function (module, exports) {
   const SQL_NAME = "orderSql";
 
   class Order extends safe$1.default {
-    constructor(dialectType) {
+    constructor() {
       super();
-      this.dialectType = dialectType;
       this.orderInfos = [];
     }
 
@@ -2576,9 +2585,8 @@ var order$1 = createCommonjsModule(function (module, exports) {
   const SQL_NAME = "orderSql";
 
   class Order extends safe$1.default {
-    constructor(dialectType) {
+    constructor() {
       super();
-      this.dialectType = dialectType;
       this.orderInfos = [];
     }
 
@@ -2736,8 +2744,8 @@ var query = createCommonjsModule(function (module, exports) {
       let queryOrder = this.queryOrder;
 
       if (!queryOrder || !(queryOrder instanceof order$1.default)) {
-        const type = this.dialectType;
-        queryOrder = new order$1.default(type);
+        queryOrder = new order$1.default();
+        queryOrder.setDialect(this.dialectType);
         this.queryOrder = queryOrder;
       }
 
@@ -2810,8 +2818,8 @@ var query$1 = createCommonjsModule(function (module, exports) {
       let queryOrder = this.queryOrder;
 
       if (!queryOrder || !(queryOrder instanceof order$1.default)) {
-        const type = this.dialectType;
-        queryOrder = new order$1.default(type);
+        queryOrder = new order$1.default();
+        queryOrder.setDialect(this.dialectType);
         this.queryOrder = queryOrder;
       }
 
@@ -2856,10 +2864,9 @@ var insert = createCommonjsModule(function (module, exports) {
   const SQL_NAME = "valuesSql";
 
   class Insert extends query$1.default {
-    constructor(dialectType) {
+    constructor() {
       super();
       this.queryType = _enum$1.QueryTypes.insert;
-      this.dialectType = dialectType;
       this.insertData = {};
       this.insertFields = [];
       this.insertDataArr = [];
@@ -2985,11 +2992,10 @@ var term = createCommonjsModule(function (module, exports) {
   const SQL_NAME = "termSql";
 
   class Term extends safe$1.default {
-    constructor(dialectType) {
+    constructor() {
       super();
       this.termInfos = [];
       this.termBrackets = [];
-      this.dialectType = dialectType;
     }
 
     build() {
@@ -3361,11 +3367,10 @@ var term$1 = createCommonjsModule(function (module, exports) {
   const SQL_NAME = "termSql";
 
   class Term extends safe$1.default {
-    constructor(dialectType) {
+    constructor() {
       super();
       this.termInfos = [];
       this.termBrackets = [];
-      this.dialectType = dialectType;
     }
 
     build() {
@@ -3878,10 +3883,10 @@ var where = createCommonjsModule(function (module, exports) {
 
     getTermCase(key) {
       let term = this[key];
-      const type = this.dialectType;
 
       if (!term || !(term instanceof term$1.default)) {
-        term = new term$1.default(type);
+        term = new term$1.default();
+        term.setDialect(this.dialectType);
         this[key] = term;
       }
 
@@ -4054,10 +4059,10 @@ var where$1 = createCommonjsModule(function (module, exports) {
 
     getTermCase(key) {
       let term = this[key];
-      const type = this.dialectType;
 
       if (!term || !(term instanceof term$1.default)) {
-        term = new term$1.default(type);
+        term = new term$1.default();
+        term.setDialect(this.dialectType);
         this[key] = term;
       }
 
@@ -4252,9 +4257,8 @@ var func = createCommonjsModule(function (module, exports) {
   });
 
   class Func extends safe$1.default {
-    constructor(dialectType) {
+    constructor() {
       super();
-      this.dialectType = dialectType;
     }
 
     funcField(func, field) {
@@ -4544,9 +4548,8 @@ var func$1 = createCommonjsModule(function (module, exports) {
   });
 
   class Func extends safe$1.default {
-    constructor(dialectType) {
+    constructor() {
       super();
-      this.dialectType = dialectType;
     }
 
     funcField(func, field) {
@@ -4703,10 +4706,10 @@ var combine = createCommonjsModule(function (module, exports) {
 
     getFuncCase() {
       let func = this.funcInstance;
-      const dialectType = this.dialectType;
 
       if (!func || !(func instanceof func$1.default)) {
-        func = new func$1.default(dialectType);
+        func = new func$1.default();
+        func.setDialect(this.dialectType);
         this.funcInstance = func;
       }
 
@@ -4937,10 +4940,10 @@ var combine$1 = createCommonjsModule(function (module, exports) {
 
     getFuncCase() {
       let func = this.funcInstance;
-      const dialectType = this.dialectType;
 
       if (!func || !(func instanceof func$1.default)) {
-        func = new func$1.default(dialectType);
+        func = new func$1.default();
+        func.setDialect(this.dialectType);
         this.funcInstance = func;
       }
 
@@ -5140,12 +5143,11 @@ var select = createCommonjsModule(function (module, exports) {
   });
 
   class Select extends combine$1.default {
-    constructor(dialectType) {
+    constructor() {
       super();
       this.queryType = _enum$1.QueryTypes.select;
       this.selectFields = [];
       this.fieldsAsMap = {};
-      this.dialectType = dialectType;
     }
 
     formatFields() {
@@ -5264,10 +5266,9 @@ var update = createCommonjsModule(function (module, exports) {
   });
 
   class Update extends where$1.default {
-    constructor(dialectType) {
+    constructor() {
       super();
       this.queryType = _enum$1.QueryTypes.update;
-      this.dialectType = dialectType;
       this.updateInfos = {};
     }
 
@@ -5381,10 +5382,9 @@ var _delete = createCommonjsModule(function (module, exports) {
   });
 
   class Delete extends where$1.default {
-    constructor(dialectType) {
+    constructor() {
       super();
       this.queryType = _enum$1.QueryTypes.delete;
-      this.dialectType = dialectType;
     }
 
     build() {
@@ -5412,10 +5412,9 @@ var insert$1 = createCommonjsModule(function (module, exports) {
   const SQL_NAME = "valuesSql";
 
   class Insert extends query$1.default {
-    constructor(dialectType) {
+    constructor() {
       super();
       this.queryType = _enum$1.QueryTypes.insert;
-      this.dialectType = dialectType;
       this.insertData = {};
       this.insertFields = [];
       this.insertDataArr = [];
@@ -5540,8 +5539,8 @@ var replace = createCommonjsModule(function (module, exports) {
   });
 
   class Replace extends insert$1.default {
-    constructor(dialectType) {
-      super(dialectType);
+    constructor() {
+      super();
       this.queryType = _enum$1.QueryTypes.replace;
     }
 
@@ -5551,6 +5550,36 @@ var replace = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(replace);
 
+var create = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  class Create extends safe$1.default {
+    constructor() {
+      super();
+      this.queryType = _enum$1.QueryTypes.create;
+    }
+
+    info(tableInfo) {
+      if (schemaVerify.Type.string.isNotEmpty(tableInfo)) {
+        this.createSqlStr = tableInfo;
+      }
+
+      if (builder$1.tableInfoVerify(tableInfo, true)) {
+        this.createInfo = tableInfo;
+      }
+
+      return this;
+    }
+
+  }
+
+  exports.default = Create;
+});
+unwrapExports(create);
+
 var select$1 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -5558,12 +5587,11 @@ var select$1 = createCommonjsModule(function (module, exports) {
   });
 
   class Select extends combine$1.default {
-    constructor(dialectType) {
+    constructor() {
       super();
       this.queryType = _enum$1.QueryTypes.select;
       this.selectFields = [];
       this.fieldsAsMap = {};
-      this.dialectType = dialectType;
     }
 
     formatFields() {
@@ -5682,10 +5710,9 @@ var update$1 = createCommonjsModule(function (module, exports) {
   });
 
   class Update extends where$1.default {
-    constructor(dialectType) {
+    constructor() {
       super();
       this.queryType = _enum$1.QueryTypes.update;
-      this.dialectType = dialectType;
       this.updateInfos = {};
     }
 
@@ -5799,10 +5826,9 @@ var _delete$1 = createCommonjsModule(function (module, exports) {
   });
 
   class Delete extends where$1.default {
-    constructor(dialectType) {
+    constructor() {
       super();
       this.queryType = _enum$1.QueryTypes.delete;
-      this.dialectType = dialectType;
     }
 
     build() {
@@ -5829,8 +5855,8 @@ var replace$1 = createCommonjsModule(function (module, exports) {
   });
 
   class Replace extends insert$1.default {
-    constructor(dialectType) {
-      super(dialectType);
+    constructor() {
+      super();
       this.queryType = _enum$1.QueryTypes.replace;
     }
 
@@ -5840,11 +5866,42 @@ var replace$1 = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(replace$1);
 
+var create$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  class Create extends safe$1.default {
+    constructor() {
+      super();
+      this.queryType = _enum$1.QueryTypes.create;
+    }
+
+    info(tableInfo) {
+      if (schemaVerify.Type.string.isNotEmpty(tableInfo)) {
+        this.createSqlStr = tableInfo;
+      }
+
+      if (builder$1.tableInfoVerify(tableInfo, true)) {
+        this.createInfo = tableInfo;
+      }
+
+      return this;
+    }
+
+  }
+
+  exports.default = Create;
+});
+unwrapExports(create$1);
+
 var builder$2 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
+  const TABLE_QUERY_TYPE = [_enum$1.QueryTypes.insert, _enum$1.QueryTypes.replace, _enum$1.QueryTypes.select, _enum$1.QueryTypes.update, _enum$1.QueryTypes.delete];
 
   class Builder {
     constructor(dialectType) {
@@ -5872,6 +5929,10 @@ var builder$2 = createCommonjsModule(function (module, exports) {
       return this.queryInstance(_enum$1.QueryTypes.replace);
     }
 
+    create() {
+      return this.queryInstance(_enum$1.QueryTypes.create);
+    }
+
     get func() {
       return this.widgetInstance(_enum$1.WidgetTypes.func);
     }
@@ -5885,55 +5946,70 @@ var builder$2 = createCommonjsModule(function (module, exports) {
     }
 
     queryInstance(type) {
-      const dialectType = this.dialectType;
-      const queryTable = this.queryTable;
-      let instance = {};
+      let instance;
 
       switch (type) {
         case _enum$1.QueryTypes.insert:
-          instance = new insert$1.default(dialectType);
+          instance = new insert$1.default();
           break;
 
         case _enum$1.QueryTypes.replace:
-          instance = new replace$1.default(dialectType);
+          instance = new replace$1.default();
           break;
 
         case _enum$1.QueryTypes.select:
-          instance = new select$1.default(dialectType);
+          instance = new select$1.default();
           break;
 
         case _enum$1.QueryTypes.update:
-          instance = new update$1.default(dialectType);
+          instance = new update$1.default();
           break;
 
         case _enum$1.QueryTypes.delete:
-          instance = new _delete$1.default(dialectType);
+          instance = new _delete$1.default();
+          break;
+
+        case _enum$1.QueryTypes.create:
+          instance = new create$1.default();
           break;
       }
 
-      if (schemaVerify.Type.string.isNotEmpty(queryTable)) {
-        schemaVerify.Type.function.is(instance.table) && instance.table(queryTable);
-      }
-
-      return instance;
+      return this.initInstance(type, instance);
     }
 
     widgetInstance(type) {
-      const dialectType = this.dialectType;
-      let instance = {};
+      let instance;
 
       switch (type) {
         case _enum$1.WidgetTypes.func:
-          instance = new func$1.default(dialectType);
+          instance = new func$1.default();
           break;
 
         case _enum$1.WidgetTypes.term:
-          instance = new term$1.default(dialectType);
+          instance = new term$1.default();
           break;
 
         case _enum$1.WidgetTypes.order:
-          instance = new order$1.default(dialectType);
+          instance = new order$1.default();
           break;
+      }
+
+      return this.initInstance(type, instance);
+    }
+
+    initInstance(type, instance) {
+      instance = schemaVerify.Type.object.safe(instance);
+      const dialectType = this.dialectType;
+      const queryTable = this.queryTable;
+
+      if (schemaVerify.Type.string.isNotEmpty(queryTable) && schemaVerify.Type.function.is(instance.table)) {
+        if (TABLE_QUERY_TYPE.includes(type)) {
+          instance.table(queryTable);
+        }
+      }
+
+      if (schemaVerify.Type.function.is(instance.setDialect)) {
+        instance.setDialect(dialectType);
       }
 
       return instance;
@@ -5967,6 +6043,7 @@ var builder$3 = createCommonjsModule(function (module, exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
+  const TABLE_QUERY_TYPE = [_enum$1.QueryTypes.insert, _enum$1.QueryTypes.replace, _enum$1.QueryTypes.select, _enum$1.QueryTypes.update, _enum$1.QueryTypes.delete];
 
   class Builder {
     constructor(dialectType) {
@@ -5994,6 +6071,10 @@ var builder$3 = createCommonjsModule(function (module, exports) {
       return this.queryInstance(_enum$1.QueryTypes.replace);
     }
 
+    create() {
+      return this.queryInstance(_enum$1.QueryTypes.create);
+    }
+
     get func() {
       return this.widgetInstance(_enum$1.WidgetTypes.func);
     }
@@ -6007,55 +6088,70 @@ var builder$3 = createCommonjsModule(function (module, exports) {
     }
 
     queryInstance(type) {
-      const dialectType = this.dialectType;
-      const queryTable = this.queryTable;
-      let instance = {};
+      let instance;
 
       switch (type) {
         case _enum$1.QueryTypes.insert:
-          instance = new insert$1.default(dialectType);
+          instance = new insert$1.default();
           break;
 
         case _enum$1.QueryTypes.replace:
-          instance = new replace$1.default(dialectType);
+          instance = new replace$1.default();
           break;
 
         case _enum$1.QueryTypes.select:
-          instance = new select$1.default(dialectType);
+          instance = new select$1.default();
           break;
 
         case _enum$1.QueryTypes.update:
-          instance = new update$1.default(dialectType);
+          instance = new update$1.default();
           break;
 
         case _enum$1.QueryTypes.delete:
-          instance = new _delete$1.default(dialectType);
+          instance = new _delete$1.default();
+          break;
+
+        case _enum$1.QueryTypes.create:
+          instance = new create$1.default();
           break;
       }
 
-      if (schemaVerify.Type.string.isNotEmpty(queryTable)) {
-        schemaVerify.Type.function.is(instance.table) && instance.table(queryTable);
-      }
-
-      return instance;
+      return this.initInstance(type, instance);
     }
 
     widgetInstance(type) {
-      const dialectType = this.dialectType;
-      let instance = {};
+      let instance;
 
       switch (type) {
         case _enum$1.WidgetTypes.func:
-          instance = new func$1.default(dialectType);
+          instance = new func$1.default();
           break;
 
         case _enum$1.WidgetTypes.term:
-          instance = new term$1.default(dialectType);
+          instance = new term$1.default();
           break;
 
         case _enum$1.WidgetTypes.order:
-          instance = new order$1.default(dialectType);
+          instance = new order$1.default();
           break;
+      }
+
+      return this.initInstance(type, instance);
+    }
+
+    initInstance(type, instance) {
+      instance = schemaVerify.Type.object.safe(instance);
+      const dialectType = this.dialectType;
+      const queryTable = this.queryTable;
+
+      if (schemaVerify.Type.string.isNotEmpty(queryTable) && schemaVerify.Type.function.is(instance.table)) {
+        if (TABLE_QUERY_TYPE.includes(type)) {
+          instance.table(queryTable);
+        }
+      }
+
+      if (schemaVerify.Type.function.is(instance.setDialect)) {
+        instance.setDialect(dialectType);
       }
 
       return instance;

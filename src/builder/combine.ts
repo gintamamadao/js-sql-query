@@ -2,7 +2,6 @@ import Having from "./having";
 import Func from "./func";
 import { Type } from "schema-verify";
 import { FuncInfo } from "../constant/interface";
-import { DialectTypes } from "../constant/enum";
 import ErrMsg from "../error/builder/index";
 import {
     strArrVerify,
@@ -48,9 +47,9 @@ class Combine extends Having {
 
     protected getFuncCase() {
         let func: Func = this.funcInstance;
-        const dialectType: DialectTypes = this.dialectType;
         if (!func || !(func instanceof Func)) {
-            func = new Func(dialectType);
+            func = new Func();
+            func.setDialect(this.dialectType);
             this.funcInstance = func;
         }
         return func;

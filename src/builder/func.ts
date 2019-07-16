@@ -1,12 +1,11 @@
-import { FuncTypes, DialectTypes } from "../constant/enum";
+import { FuncTypes } from "../constant/enum";
 import { FuncInfo } from "../constant/interface";
 import { Type } from "schema-verify";
 import Safe from "./safe";
 
 class Func extends Safe {
-    constructor(dialectType: DialectTypes) {
+    constructor() {
         super();
-        this.dialectType = dialectType;
     }
 
     protected funcField(func: FuncTypes, field: number | string): FuncInfo {

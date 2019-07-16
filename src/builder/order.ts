@@ -1,5 +1,5 @@
 import { argStrArrTrans } from "../util/util";
-import { OrderTypes, DialectTypes } from "../constant/enum";
+import { OrderTypes } from "../constant/enum";
 import { OrderInfo, FieldOrder } from "../constant/interface";
 import { Type } from "schema-verify";
 import Safe from "./safe";
@@ -15,9 +15,8 @@ const SQL_NAME = "orderSql";
 class Order extends Safe {
     protected orderInfos: OrderInfo[];
     protected orderSql: string | Function;
-    constructor(dialectType: DialectTypes) {
+    constructor() {
         super();
-        this.dialectType = dialectType;
         this.orderInfos = [];
     }
 

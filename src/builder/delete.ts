@@ -1,11 +1,10 @@
-import { QueryTypes, DialectTypes } from "../constant/enum";
+import { QueryTypes } from "../constant/enum";
 import Where from "./where";
 
 class Delete extends Where {
     readonly queryType: QueryTypes = QueryTypes.delete;
-    constructor(dialectType: DialectTypes) {
+    constructor() {
         super();
-        this.dialectType = dialectType;
     }
 
     build(): string {

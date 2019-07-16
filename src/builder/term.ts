@@ -1,4 +1,4 @@
-import { TermSign, TermLogic, DialectTypes } from "../constant/enum";
+import { TermSign, TermLogic } from "../constant/enum";
 import { TermData, TermInfo, TermBracket } from "../constant/interface";
 import Safe from "./safe";
 import { Type } from "schema-verify";
@@ -19,11 +19,10 @@ class Term extends Safe {
     protected termInfos: TermInfo[];
     protected termBrackets: TermBracket[];
     protected termSql: string | Function;
-    constructor(dialectType: DialectTypes) {
+    constructor() {
         super();
         this.termInfos = [];
         this.termBrackets = [];
-        this.dialectType = dialectType;
     }
 
     build(): string {

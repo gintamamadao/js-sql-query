@@ -1,4 +1,3 @@
-import { DialectTypes } from "../constant/enum";
 import { FieldOrder } from "../constant/interface";
 import Safe from "./safe";
 import Limit from "./limit";
@@ -34,8 +33,8 @@ class Query extends Safe {
     protected getOrderCase() {
         let queryOrder: Order = this.queryOrder;
         if (!queryOrder || !(queryOrder instanceof Order)) {
-            const type: DialectTypes = this.dialectType;
-            queryOrder = new Order(type);
+            queryOrder = new Order();
+            queryOrder.setDialect(this.dialectType);
             this.queryOrder = queryOrder;
         }
         return queryOrder;

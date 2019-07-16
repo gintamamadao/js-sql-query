@@ -1,5 +1,4 @@
 import { TermData } from "../constant/interface";
-import { DialectTypes } from "../constant/enum";
 import Query from "./query";
 import Term from "./term";
 import { Type } from "schema-verify";
@@ -148,9 +147,9 @@ class Where extends Query {
 
     protected getTermCase(key: string) {
         let term: Term = this[key];
-        const type: DialectTypes = this.dialectType;
         if (!term || !(term instanceof Term)) {
-            term = new Term(type);
+            term = new Term();
+            term.setDialect(this.dialectType);
             this[key] = term;
         }
         return term;

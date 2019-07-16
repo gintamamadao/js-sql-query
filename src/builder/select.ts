@@ -1,7 +1,7 @@
 import { argStrArrTrans } from "../util/util";
 import Combine from "./combine";
 import { KeyValueStr } from "../constant/interface";
-import { QueryTypes, DialectTypes } from "../constant/enum";
+import { QueryTypes } from "../constant/enum";
 import { Type } from "schema-verify";
 import { strArrVerify, strObjVerify } from "../verify/builder/index";
 import ErrMsg from "../error/builder/index";
@@ -10,11 +10,10 @@ class Select extends Combine {
     protected selectFields: string[];
     protected fieldsAsMap: KeyValueStr;
     readonly queryType: QueryTypes = QueryTypes.select;
-    constructor(dialectType: DialectTypes) {
+    constructor() {
         super();
         this.selectFields = [];
         this.fieldsAsMap = {};
-        this.dialectType = dialectType;
     }
 
     protected formatFields(): string[] {

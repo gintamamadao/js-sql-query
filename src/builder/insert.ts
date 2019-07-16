@@ -1,6 +1,6 @@
 import { argStrArrTrans } from "../util/util";
 import Query from "./query";
-import { QueryTypes, DialectTypes } from "../constant/enum";
+import { QueryTypes } from "../constant/enum";
 import { FieldData } from "../constant/interface";
 import { Type } from "schema-verify";
 import {
@@ -17,10 +17,9 @@ class Insert extends Query {
     protected insertDataArr: FieldData[];
     protected queryType: QueryTypes;
     protected valuesSql: string | Function;
-    constructor(dialectType: DialectTypes) {
+    constructor() {
         super();
         this.queryType = QueryTypes.insert;
-        this.dialectType = dialectType;
         this.insertData = {};
         this.insertFields = [];
         this.insertDataArr = [];

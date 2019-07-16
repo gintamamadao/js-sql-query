@@ -3,6 +3,7 @@ import Select from "./select";
 import Update from "./update";
 import Delete from "./delete";
 import Replace from "./replace";
+import Create from "./create";
 import Term from "./term";
 import Func from "./func";
 import Order from "./order";
@@ -10,6 +11,13 @@ import { Type } from "schema-verify";
 import { QueryTypes, DialectTypes, WidgetTypes } from "../constant/enum";
 import ErrMsg from "../error/builder/index";
 
+const TABLE_QUERY_TYPE = [
+    QueryTypes.insert,
+    QueryTypes.replace,
+    QueryTypes.select,
+    QueryTypes.update,
+    QueryTypes.delete
+];
 class Builder {
     protected dialectType: DialectTypes;
     public queryStore: string[];
@@ -39,6 +47,10 @@ class Builder {
         return this.queryInstance(QueryTypes.replace);
     }
 
+    create() {
+        return this.queryInstance(QueryTypes.create);
+    }
+
     get func() {
         return this.widgetInstance(WidgetTypes.func);
     }
@@ -52,45 +64,60 @@ class Builder {
     }
 
     queryInstance(type: QueryTypes) {
-        const dialectType: DialectTypes = this.dialectType;
-        const queryTable: string = this.queryTable;
-        let instance: any = {};
+        let instance;
         switch (type) {
             case QueryTypes.insert:
-                instance = new Insert(dialectType);
+                instance = new Insert();
                 break;
             case QueryTypes.replace:
-                instance = new Replace(dialectType);
+                instance = new Replace();
                 break;
             case QueryTypes.select:
-                instance = new Select(dialectType);
+                instance = new Select();
                 break;
             case QueryTypes.update:
-                instance = new Update(dialectType);
+                instance = new Update();
                 break;
             case QueryTypes.delete:
-                instance = new Delete(dialectType);
+                instance = new Delete();
+                break;
+            case QueryTypes.create:
+                instance = new Create();
                 break;
         }
-        if (Type.string.isNotEmpty(queryTable)) {
-            Type.function.is(instance.table) && instance.table(queryTable);
-        }
-        return instance;
+        return this.initInstance(type, instance);
     }
 
     widgetInstance(type: WidgetTypes) {
-        const dialectType: DialectTypes = this.dialectType;
-        let instance: any = {};
+        let instance;
         switch (type) {
             case WidgetTypes.func:
-                instance = new Func(dialectType);
+                instance = new Func();
                 break;
             case WidgetTypes.term:
-                instance = new Term(dialectType);
+                instance = new Term();
                 break;
             case WidgetTypes.order:
-                instance = new Order(dialectType);
+                instance = new Order();
                 break;
+        }
+        return this.initInstance(type, instance);
+    }
+
+    protected initInstance(type, instance) {
+        instance = Type.object.safe(instance);
+        const dialectType: DialectTypes = this.dialectType;
+        const queryTable: string = this.queryTable;
+        if (
+            Type.string.isNotEmpty(queryTable) &&
+            Type.function.is(instance.table)
+        ) {
+            if (TABLE_QUERY_TYPE.includes(type)) {
+                instance.table(queryTable);
+            }
+        }
+        if (Type.function.is(instance.setDialect)) {
+            instance.setDialect(dialectType);
         }
         return instance;
     }
