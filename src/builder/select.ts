@@ -9,7 +9,6 @@ import ErrMsg from "../error/builder/index";
 class Select extends Combine {
     protected selectFields: string[];
     protected fieldsAsMap: KeyValueStr;
-    readonly queryType: QueryTypes = QueryTypes.select;
     constructor() {
         super();
         this.selectFields = [];
@@ -50,10 +49,9 @@ class Select extends Combine {
     }
 
     build(): string {
-        const type: string = this.queryType;
         const table: string = this.getQueryTable();
         const fieldsStr: string = this.formatFieldStr();
-        let query: string = `${type} ${fieldsStr} FROM ${table}`;
+        let query: string = `${QueryTypes.select} ${fieldsStr} FROM ${table}`;
         query = this.whereBuild(query);
         query = this.groupBuild(query);
         query = this.havingBuild(query);

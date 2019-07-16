@@ -16,13 +16,6 @@ const tableFieldSchema = new Schema({
             minLength: 1
         },
         {
-            index: "length",
-            type: Number,
-            range: {
-                min: 1
-            }
-        },
-        {
             index: "unsigned",
             type: Boolean
         },
@@ -45,19 +38,11 @@ const tableFieldSchema = new Schema({
         ],
         {
             index: "onUpdate",
-            type: Boolean
+            type: String
         },
         {
             index: "comment",
             type: String
-        },
-        {
-            index: "decimalParam",
-            type: Array,
-            length: 2,
-            elements: {
-                type: Number
-            }
         }
     ]
 });

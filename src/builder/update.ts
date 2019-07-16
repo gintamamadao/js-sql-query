@@ -19,18 +19,16 @@ interface UpdateInfos {
 
 class Update extends Where {
     protected updateInfos: UpdateInfos;
-    readonly queryType: QueryTypes = QueryTypes.update;
     constructor() {
         super();
         this.updateInfos = {};
     }
 
     build(): string {
-        const type: string = this.queryType;
         const table: string = this.getQueryTable();
         const data: string[] = this.formatData();
         const dataStr: string = data.join(", ");
-        let query: string = `${type} ${table} SET ${dataStr}`;
+        let query: string = `${QueryTypes.update} ${table} SET ${dataStr}`;
         query = this.whereBuild(query);
         query = this.orderBuild(query);
         query = this.limitBuild(query);

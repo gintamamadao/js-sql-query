@@ -119,7 +119,7 @@ class Insert extends Query {
     }
 
     build(): string {
-        const type: string = this.queryType;
+        const type: QueryTypes = this.queryType;
         const table: string = this.getQueryTable();
 
         const fields: string[] = this.formatFields();

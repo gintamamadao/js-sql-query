@@ -45,14 +45,12 @@ export interface FieldOrder {
 export interface TableField {
     field: string;
     type: string;
-    length?: number;
     unsigned?: boolean;
     autoIncrement?: boolean;
     notNull?: boolean;
     default?: string | number;
-    onUpdate?: boolean;
+    onUpdate?: string;
     comment?: string;
-    decimalParam?: number[];
 }
 export interface uniqueKey {
     index: string;

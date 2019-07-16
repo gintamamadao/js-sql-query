@@ -1142,12 +1142,6 @@ var create_verify = createCommonjsModule(function (module, exports) {
       type: String,
       minLength: 1
     }, {
-      index: "length",
-      type: Number,
-      range: {
-        min: 1
-      }
-    }, {
       index: "unsigned",
       type: Boolean
     }, {
@@ -1163,17 +1157,10 @@ var create_verify = createCommonjsModule(function (module, exports) {
       type: Number
     }], {
       index: "onUpdate",
-      type: Boolean
+      type: String
     }, {
       index: "comment",
       type: String
-    }, {
-      index: "decimalParam",
-      type: Array,
-      length: 2,
-      elements: {
-        type: Number
-      }
     }]
   });
   const uniqueKeySchema = new schemaVerify.Schema({
@@ -1583,12 +1570,6 @@ var create_verify$1 = createCommonjsModule(function (module, exports) {
       type: String,
       minLength: 1
     }, {
-      index: "length",
-      type: Number,
-      range: {
-        min: 1
-      }
-    }, {
       index: "unsigned",
       type: Boolean
     }, {
@@ -1604,17 +1585,10 @@ var create_verify$1 = createCommonjsModule(function (module, exports) {
       type: Number
     }], {
       index: "onUpdate",
-      type: Boolean
+      type: String
     }, {
       index: "comment",
       type: String
-    }, {
-      index: "decimalParam",
-      type: Array,
-      length: 2,
-      elements: {
-        type: Number
-      }
     }]
   });
   const uniqueKeySchema = new schemaVerify.Schema({
@@ -5145,7 +5119,6 @@ var select = createCommonjsModule(function (module, exports) {
   class Select extends combine$1.default {
     constructor() {
       super();
-      this.queryType = _enum$1.QueryTypes.select;
       this.selectFields = [];
       this.fieldsAsMap = {};
     }
@@ -5190,10 +5163,9 @@ var select = createCommonjsModule(function (module, exports) {
     }
 
     build() {
-      const type = this.queryType;
       const table = this.getQueryTable();
       const fieldsStr = this.formatFieldStr();
-      let query = `${type} ${fieldsStr} FROM ${table}`;
+      let query = `${_enum$1.QueryTypes.select} ${fieldsStr} FROM ${table}`;
       query = this.whereBuild(query);
       query = this.groupBuild(query);
       query = this.havingBuild(query);
@@ -5268,16 +5240,14 @@ var update = createCommonjsModule(function (module, exports) {
   class Update extends where$1.default {
     constructor() {
       super();
-      this.queryType = _enum$1.QueryTypes.update;
       this.updateInfos = {};
     }
 
     build() {
-      const type = this.queryType;
       const table = this.getQueryTable();
       const data = this.formatData();
       const dataStr = data.join(", ");
-      let query = `${type} ${table} SET ${dataStr}`;
+      let query = `${_enum$1.QueryTypes.update} ${table} SET ${dataStr}`;
       query = this.whereBuild(query);
       query = this.orderBuild(query);
       query = this.limitBuild(query);
@@ -5384,13 +5354,11 @@ var _delete = createCommonjsModule(function (module, exports) {
   class Delete extends where$1.default {
     constructor() {
       super();
-      this.queryType = _enum$1.QueryTypes.delete;
     }
 
     build() {
-      const type = this.queryType;
       const table = this.getQueryTable();
-      let query = `${type} FROM ${table}`;
+      let query = `${_enum$1.QueryTypes.delete} FROM ${table}`;
       query = this.whereBuild(query);
       query = this.orderBuild(query);
       query = this.limitBuild(query);
@@ -5559,7 +5527,6 @@ var create = createCommonjsModule(function (module, exports) {
   class Create extends safe$1.default {
     constructor() {
       super();
-      this.queryType = _enum$1.QueryTypes.create;
     }
 
     info(tableInfo) {
@@ -5572,6 +5539,11 @@ var create = createCommonjsModule(function (module, exports) {
       }
 
       return this;
+    }
+
+    build() {
+      let query = ``;
+      return query;
     }
 
   }
@@ -5589,7 +5561,6 @@ var select$1 = createCommonjsModule(function (module, exports) {
   class Select extends combine$1.default {
     constructor() {
       super();
-      this.queryType = _enum$1.QueryTypes.select;
       this.selectFields = [];
       this.fieldsAsMap = {};
     }
@@ -5634,10 +5605,9 @@ var select$1 = createCommonjsModule(function (module, exports) {
     }
 
     build() {
-      const type = this.queryType;
       const table = this.getQueryTable();
       const fieldsStr = this.formatFieldStr();
-      let query = `${type} ${fieldsStr} FROM ${table}`;
+      let query = `${_enum$1.QueryTypes.select} ${fieldsStr} FROM ${table}`;
       query = this.whereBuild(query);
       query = this.groupBuild(query);
       query = this.havingBuild(query);
@@ -5712,16 +5682,14 @@ var update$1 = createCommonjsModule(function (module, exports) {
   class Update extends where$1.default {
     constructor() {
       super();
-      this.queryType = _enum$1.QueryTypes.update;
       this.updateInfos = {};
     }
 
     build() {
-      const type = this.queryType;
       const table = this.getQueryTable();
       const data = this.formatData();
       const dataStr = data.join(", ");
-      let query = `${type} ${table} SET ${dataStr}`;
+      let query = `${_enum$1.QueryTypes.update} ${table} SET ${dataStr}`;
       query = this.whereBuild(query);
       query = this.orderBuild(query);
       query = this.limitBuild(query);
@@ -5828,13 +5796,11 @@ var _delete$1 = createCommonjsModule(function (module, exports) {
   class Delete extends where$1.default {
     constructor() {
       super();
-      this.queryType = _enum$1.QueryTypes.delete;
     }
 
     build() {
-      const type = this.queryType;
       const table = this.getQueryTable();
-      let query = `${type} FROM ${table}`;
+      let query = `${_enum$1.QueryTypes.delete} FROM ${table}`;
       query = this.whereBuild(query);
       query = this.orderBuild(query);
       query = this.limitBuild(query);
@@ -5875,7 +5841,6 @@ var create$1 = createCommonjsModule(function (module, exports) {
   class Create extends safe$1.default {
     constructor() {
       super();
-      this.queryType = _enum$1.QueryTypes.create;
     }
 
     info(tableInfo) {
@@ -5888,6 +5853,11 @@ var create$1 = createCommonjsModule(function (module, exports) {
       }
 
       return this;
+    }
+
+    build() {
+      let query = ``;
+      return query;
     }
 
   }

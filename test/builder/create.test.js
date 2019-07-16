@@ -17,27 +17,23 @@ describe("CREATE", () => {
             fields: [
                 {
                     field: "Fanomal_id",
-                    type: "bigint",
-                    length: 20,
+                    type: "bigint(20)",
                     unsigned: true,
                     autoIncrement: true,
                     notNull: true,
                     default: "0",
-                    onUpdate: true,
-                    comment: "页面标志",
-                    decimalParam: [1, 2]
+                    onUpdate: "true",
+                    comment: "页面标志"
                 },
                 {
                     field: "Fpage_sign",
-                    type: "varchar",
-                    length: 32,
+                    type: "varchar(32)",
                     unsigned: true,
                     autoIncrement: true,
                     notNull: true,
                     default: "0",
-                    onUpdate: true,
-                    comment: "页面标志",
-                    decimalParam: [1, 2]
+                    onUpdate: "true",
+                    comment: "页面标志"
                 }
             ]
         };
