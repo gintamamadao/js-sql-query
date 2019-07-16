@@ -117,7 +117,8 @@ export enum TableOptions {
     unsigned = "UNSIGNED",
     notNull = "NOT NULL",
     default = "DEFAULT",
-    onUpdate = "ON UPDATE"
+    onUpdate = "ON UPDATE",
+    constraint = "CONSTRAINT"
 }
 
 export enum TableOptionValue {

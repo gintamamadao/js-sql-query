@@ -47,17 +47,18 @@ const tableFieldSchema = new Schema({
     ]
 });
 
-const uniqueKeySchema = new Schema({
+const combineKeySchema = new Schema({
     type: Object,
     props: [
         {
-            index: "index",
+            index: "keyName",
             required: true,
             type: String,
             minLength: 1
         },
         {
             index: "combineFields",
+            required: true,
             type: Array,
             minLength: 1,
             elements: {
@@ -77,16 +78,23 @@ const tableInfoSchema = new Schema({
             type: String,
             minLength: 1
         },
-        {
-            index: "primaryKey",
-            required: true,
-            type: String,
-            minLength: 1
-        },
-        {
-            index: "uniqueKey",
-            schema: uniqueKeySchema
-        },
+        [
+            {
+                index: "primaryKey",
+                required: true,
+                type: String,
+                minLength: 1
+            },
+            combineKeySchema
+        ],
+        [
+            {
+                index: "uniqueKey",
+                type: String,
+                minLength: 1
+            },
+            combineKeySchema
+        ],
         {
             index: "engine",
             type: String
@@ -112,5 +120,5 @@ const tableInfoSchema = new Schema({
     ]
 });
 export const tableFieldVerify = tableFieldSchema.verify;
-export const uniqueKeyVerify = uniqueKeySchema.verify;
+export const uniqueKeyVerify = combineKeySchema.verify;
 export const tableInfoVerify = tableInfoSchema.verify;

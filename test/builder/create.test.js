@@ -2,12 +2,12 @@ const { Builder } = require("../../dist/js-sql-query");
 
 describe("CREATE", () => {
     const builder = new Builder();
-    test("groupBy", () => {
+    test("test", () => {
         const info = {
             tableName: "t_anomaly_banner_info",
             primaryKey: "Fanomal_id",
             uniqueKey: {
-                index: "Fpage_sign",
+                keyName: "Fpage_sign",
                 combineFields: ["Fpage_sign"]
             },
             engine: "InnoDB",
@@ -22,7 +22,7 @@ describe("CREATE", () => {
                     autoIncrement: true,
                     notNull: true,
                     default: "0",
-                    onUpdate: "true",
+                    onUpdate: "CURRENT_TIMESTAMP",
                     comment: "页面标志"
                 },
                 {
@@ -32,13 +32,11 @@ describe("CREATE", () => {
                     autoIncrement: true,
                     notNull: true,
                     default: "0",
-                    onUpdate: "true",
+                    onUpdate: "CURRENT_TIMESTAMP",
                     comment: "页面标志"
                 }
             ]
         };
-        // expect(() => builder.create().info(info)).toThrowError(
-        //     "错误的字段，需要非空字符串或非空字符串数组"
-        // );
+        builder.create().info(info).query;
     });
 });

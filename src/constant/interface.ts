@@ -52,14 +52,14 @@ export interface TableField {
     onUpdate?: string;
     comment?: string;
 }
-export interface uniqueKey {
-    index: string;
+export interface combineKey {
+    keyName: string;
     combineFields: string[];
 }
 export interface TableInfo {
     tableName: string;
-    primaryKey: string;
-    uniqueKey?: uniqueKey;
+    primaryKey: string | combineKey;
+    uniqueKey?: string | combineKey;
     engine?: string;
     autoIncrement?: number;
     defaultCharset?: string;

@@ -18,6 +18,18 @@ var util = createCommonjsModule(function (module, exports) {
     value: true
   });
 
+  function analyTmpl(tmpl, opts) {
+    return tmpl.replace(/\{\{([a-zA-Z_0-9]+)\}\}/g, function (match, key) {
+      if (opts.hasOwnProperty(key) && schemaVerify.Type.string.isNotEmpty(opts[key])) {
+        return opts[key];
+      } else {
+        return "";
+      }
+    });
+  }
+
+  exports.analyTmpl = analyTmpl;
+
   function argStrArrTrans(arg, otherArgs) {
     let args = [];
 
@@ -35,7 +47,8 @@ var util = createCommonjsModule(function (module, exports) {
   exports.argStrArrTrans = argStrArrTrans;
 });
 unwrapExports(util);
-var util_1 = util.argStrArrTrans;
+var util_1 = util.analyTmpl;
+var util_2 = util.argStrArrTrans;
 
 var combine_error = createCommonjsModule(function (module, exports) {
 
@@ -157,6 +170,18 @@ var builder_error = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(builder_error);
 
+var create_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorTableInfo: "错误的表信息"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(create_error);
+
 var combine_error$1 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -277,6 +302,18 @@ var builder_error$1 = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(builder_error$1);
 
+var create_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorTableInfo: "错误的表信息"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(create_error$1);
+
 var D__project_jsSqlQuery_src_error_builder = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -291,6 +328,7 @@ var D__project_jsSqlQuery_src_error_builder = createCommonjsModule(function (mod
     ...term_error$1.default,
     ...update_error$1.default,
     ...builder_error$1.default,
+    ...create_error$1.default,
     errorTableName: "错误的表名，需要非空字符串",
     errorFields: "错误的字段，需要非空字符串或非空字符串数组",
     errorFieldData: "错误的字段数据",
@@ -315,6 +353,7 @@ var builder = createCommonjsModule(function (module, exports) {
     ...term_error$1.default,
     ...update_error$1.default,
     ...builder_error$1.default,
+    ...create_error$1.default,
     errorTableName: "错误的表名，需要非空字符串",
     errorFields: "错误的字段，需要非空字符串或非空字符串数组",
     errorFieldData: "错误的字段数据",
@@ -628,6 +667,7 @@ var _enum = createCommonjsModule(function (module, exports) {
     TableOptions["notNull"] = "NOT NULL";
     TableOptions["default"] = "DEFAULT";
     TableOptions["onUpdate"] = "ON UPDATE";
+    TableOptions["constraint"] = "CONSTRAINT";
   })(TableOptions = exports.TableOptions || (exports.TableOptions = {}));
 
   var TableOptionValue;
@@ -795,6 +835,7 @@ var _enum$1 = createCommonjsModule(function (module, exports) {
     TableOptions["notNull"] = "NOT NULL";
     TableOptions["default"] = "DEFAULT";
     TableOptions["onUpdate"] = "ON UPDATE";
+    TableOptions["constraint"] = "CONSTRAINT";
   })(TableOptions = exports.TableOptions || (exports.TableOptions = {}));
 
   var TableOptionValue;
@@ -1163,15 +1204,16 @@ var create_verify = createCommonjsModule(function (module, exports) {
       type: String
     }]
   });
-  const uniqueKeySchema = new schemaVerify.Schema({
+  const combineKeySchema = new schemaVerify.Schema({
     type: Object,
     props: [{
-      index: "index",
+      index: "keyName",
       required: true,
       type: String,
       minLength: 1
     }, {
       index: "combineFields",
+      required: true,
       type: Array,
       minLength: 1,
       elements: {
@@ -1187,15 +1229,16 @@ var create_verify = createCommonjsModule(function (module, exports) {
       required: true,
       type: String,
       minLength: 1
-    }, {
+    }, [{
       index: "primaryKey",
       required: true,
       type: String,
       minLength: 1
-    }, {
+    }, combineKeySchema], [{
       index: "uniqueKey",
-      schema: uniqueKeySchema
-    }, {
+      type: String,
+      minLength: 1
+    }, combineKeySchema], {
       index: "engine",
       type: String
     }, {
@@ -1215,7 +1258,7 @@ var create_verify = createCommonjsModule(function (module, exports) {
     }]
   });
   exports.tableFieldVerify = tableFieldSchema.verify;
-  exports.uniqueKeyVerify = uniqueKeySchema.verify;
+  exports.uniqueKeyVerify = combineKeySchema.verify;
   exports.tableInfoVerify = tableInfoSchema.verify;
 });
 unwrapExports(create_verify);
@@ -1591,15 +1634,16 @@ var create_verify$1 = createCommonjsModule(function (module, exports) {
       type: String
     }]
   });
-  const uniqueKeySchema = new schemaVerify.Schema({
+  const combineKeySchema = new schemaVerify.Schema({
     type: Object,
     props: [{
-      index: "index",
+      index: "keyName",
       required: true,
       type: String,
       minLength: 1
     }, {
       index: "combineFields",
+      required: true,
       type: Array,
       minLength: 1,
       elements: {
@@ -1615,15 +1659,16 @@ var create_verify$1 = createCommonjsModule(function (module, exports) {
       required: true,
       type: String,
       minLength: 1
-    }, {
+    }, [{
       index: "primaryKey",
       required: true,
       type: String,
       minLength: 1
-    }, {
+    }, combineKeySchema], [{
       index: "uniqueKey",
-      schema: uniqueKeySchema
-    }, {
+      type: String,
+      minLength: 1
+    }, combineKeySchema], {
       index: "engine",
       type: String
     }, {
@@ -1643,7 +1688,7 @@ var create_verify$1 = createCommonjsModule(function (module, exports) {
     }]
   });
   exports.tableFieldVerify = tableFieldSchema.verify;
-  exports.uniqueKeyVerify = uniqueKeySchema.verify;
+  exports.uniqueKeyVerify = combineKeySchema.verify;
   exports.tableInfoVerify = tableInfoSchema.verify;
 });
 unwrapExports(create_verify$1);
@@ -2190,6 +2235,18 @@ var util$1 = createCommonjsModule(function (module, exports) {
     value: true
   });
 
+  function analyTmpl(tmpl, opts) {
+    return tmpl.replace(/\{\{([a-zA-Z_0-9]+)\}\}/g, function (match, key) {
+      if (opts.hasOwnProperty(key) && schemaVerify.Type.string.isNotEmpty(opts[key])) {
+        return opts[key];
+      } else {
+        return "";
+      }
+    });
+  }
+
+  exports.analyTmpl = analyTmpl;
+
   function argStrArrTrans(arg, otherArgs) {
     let args = [];
 
@@ -2207,7 +2264,8 @@ var util$1 = createCommonjsModule(function (module, exports) {
   exports.argStrArrTrans = argStrArrTrans;
 });
 unwrapExports(util$1);
-var util_1$1 = util$1.argStrArrTrans;
+var util_1$1 = util$1.analyTmpl;
+var util_2$1 = util$1.argStrArrTrans;
 
 var safe$1 = createCommonjsModule(function (module, exports) {
 
@@ -5523,6 +5581,9 @@ var create = createCommonjsModule(function (module, exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
+  const TABLE_TEMPLATE = `CREATE TABLE {{tableName}} ( {{feildsStr}} ) {{tableOptionsStr}}`;
+  const TABLE_OPTIONS_TEMPLATE = `{{engine}} {{autoIncrement}} {{defaultCharset}} {{comment}}`;
+  const FEILD_TEMPLATE = `{{field}} {{type}} {{unsigned}} {{notNull}} {{default}} {{autoIncrement}} {{onUpdate}} {{comment}}`;
 
   class Create extends safe$1.default {
     constructor() {
@@ -5531,19 +5592,180 @@ var create = createCommonjsModule(function (module, exports) {
 
     info(tableInfo) {
       if (schemaVerify.Type.string.isNotEmpty(tableInfo)) {
-        this.createSqlStr = tableInfo;
-      }
-
-      if (builder$1.tableInfoVerify(tableInfo, true)) {
-        this.createInfo = tableInfo;
+        this.createTableSqlStr = tableInfo;
+      } else if (builder$1.tableInfoVerify(tableInfo, true)) {
+        this.createTableInfo = tableInfo;
       }
 
       return this;
     }
 
     build() {
-      let query = ``;
+      const tableSqlStr = this.createTableSqlStr;
+
+      if (schemaVerify.Type.string.isNotEmpty(tableSqlStr)) {
+        return tableSqlStr;
+      }
+
+      const tableInfo = this.createTableInfo;
+      builder$1.tableInfoVerify(tableInfo, true);
+      const query = this.tableTmpl(tableInfo);
       return query;
+    }
+
+    tableTmpl(info) {
+      const tableName = info.tableName;
+      const feildsStr = this.feildsStr(info);
+      const tableOptionsStr = this.tableOptsStr(info);
+      const tmplOpts = {
+        tableName,
+        feildsStr,
+        tableOptionsStr
+      };
+      const tableInfoStr = util$1.analyTmpl(TABLE_TEMPLATE, tmplOpts);
+      return tableInfoStr;
+    }
+
+    feildsStr(info) {
+      const primaryKey = info.primaryKey;
+      const uniqueKey = info.uniqueKey;
+      const fields = info.fields;
+      const feildTmplArr = [];
+
+      for (const fieldInfo of fields) {
+        const feildStr = this.feildTmpl(fieldInfo);
+        feildTmplArr.push(feildStr);
+      }
+
+      const primaryKeyStr = this.primaryKeyStr(primaryKey);
+      const uniqueKeyStr = this.uniqueKeyStr(uniqueKey);
+
+      if (schemaVerify.Type.string.isNotEmpty(primaryKeyStr)) {
+        feildTmplArr.push(primaryKeyStr);
+      }
+
+      if (schemaVerify.Type.string.isNotEmpty(uniqueKeyStr)) {
+        feildTmplArr.push(uniqueKeyStr);
+      }
+
+      return feildTmplArr.join(",");
+    }
+
+    feildTmpl(fieldInfo) {
+      const field = this.safeKey(fieldInfo.field);
+      const type = fieldInfo.type;
+      const unsigned = fieldInfo.unsigned;
+      const notNull = fieldInfo.notNull;
+      let defaultValue = fieldInfo.default;
+      const autoIncrement = fieldInfo.autoIncrement;
+      const onUpdate = fieldInfo.onUpdate;
+      let comment = fieldInfo.comment;
+      const tmplOpts = {
+        field,
+        type
+      };
+
+      if (unsigned === true) {
+        tmplOpts["unsigned"] = _enum$1.TableOptions.unsigned;
+      }
+
+      if (notNull === true) {
+        tmplOpts["notNull"] = _enum$1.TableOptions.notNull;
+      }
+
+      if (schemaVerify.Type.string.is(defaultValue) || schemaVerify.Type.number.is(defaultValue)) {
+        defaultValue = this.safeValue(defaultValue);
+        tmplOpts["default"] = `${_enum$1.TableOptions.default} ${defaultValue}`;
+      }
+
+      if (autoIncrement === true) {
+        tmplOpts["autoIncrement"] = _enum$1.TableOptions.autoIncrement;
+      }
+
+      if (schemaVerify.Type.string.isNotEmpty(onUpdate)) {
+        tmplOpts["onUpdate"] = `${_enum$1.TableOptions.onUpdate} ${onUpdate}`;
+      }
+
+      if (schemaVerify.Type.string.isNotEmpty(comment)) {
+        comment = this.safeValue(comment);
+        tmplOpts["comment"] = `${_enum$1.TableOptions.comment} ${comment}`;
+      }
+
+      const feildStr = util$1.analyTmpl(FEILD_TEMPLATE, tmplOpts);
+      return feildStr;
+    }
+
+    primaryKeyStr(keyInfo) {
+      let result;
+      const primaryKey = _enum$1.TableOptions.primaryKey;
+
+      if (schemaVerify.Type.string.isNotEmpty(keyInfo)) {
+        const value = this.safeKey(keyInfo);
+        result = `${value} ${primaryKey} (${value})`;
+      }
+
+      if (schemaVerify.Type.object.is(keyInfo)) {
+        const keyName = this.safeKey(keyInfo.keyName);
+        const combineFields = keyInfo.combineFields;
+        const combineFieldsStr = combineFields.map(field => this.safeKey(field)).join(",");
+        result = `${keyName} ${primaryKey} (${combineFieldsStr})`;
+      }
+
+      return `${_enum$1.TableOptions.constraint} ${result}`;
+    }
+
+    uniqueKeyStr(keyInfo) {
+      let result;
+      const uniqueKey = _enum$1.TableOptions.uniqueKey;
+
+      if (schemaVerify.Type.string.isNotEmpty(keyInfo)) {
+        const value = this.safeKey(keyInfo);
+        result = `${value} ${uniqueKey} (${value})`;
+      }
+
+      if (schemaVerify.Type.object.is(keyInfo)) {
+        const keyName = this.safeKey(keyInfo.keyName);
+        const combineFields = keyInfo.combineFields;
+        const combineFieldsStr = combineFields.map(field => this.safeKey(field)).join(",");
+        result = `${keyName} ${uniqueKey} (${combineFieldsStr})`;
+      }
+
+      return `${_enum$1.TableOptions.constraint} ${result}`;
+    }
+
+    tableOptsStr(info) {
+      const engine = info.engine;
+      const autoIncrement = info.autoIncrement;
+      const defaultCharset = info.defaultCharset;
+      const comment = info.comment;
+      const tmplOpts = {};
+
+      if (schemaVerify.Type.string.isNotEmpty(engine)) {
+        const key = _enum$1.TableOptions.engine;
+        const value = engine;
+        tmplOpts["engine"] = `${key}=${value}`;
+      }
+
+      if (schemaVerify.Type.number.is(autoIncrement)) {
+        const key = _enum$1.TableOptions.autoIncrement;
+        const value = autoIncrement;
+        tmplOpts["autoIncrement"] = `${key}=${value}`;
+      }
+
+      if (schemaVerify.Type.string.isNotEmpty(defaultCharset)) {
+        const key = _enum$1.TableOptions.defaultCharset;
+        const value = defaultCharset;
+        tmplOpts["defaultCharset"] = `${key}=${value}`;
+      }
+
+      if (schemaVerify.Type.string.isNotEmpty(comment)) {
+        const key = _enum$1.TableOptions.comment;
+        const value = this.safeValue(comment);
+        tmplOpts["comment"] = `${key}=${value}`;
+      }
+
+      const tableOptionsStr = util$1.analyTmpl(TABLE_OPTIONS_TEMPLATE, tmplOpts);
+      return tableOptionsStr;
     }
 
   }
@@ -5837,6 +6059,9 @@ var create$1 = createCommonjsModule(function (module, exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
+  const TABLE_TEMPLATE = `CREATE TABLE {{tableName}} ( {{feildsStr}} ) {{tableOptionsStr}}`;
+  const TABLE_OPTIONS_TEMPLATE = `{{engine}} {{autoIncrement}} {{defaultCharset}} {{comment}}`;
+  const FEILD_TEMPLATE = `{{field}} {{type}} {{unsigned}} {{notNull}} {{default}} {{autoIncrement}} {{onUpdate}} {{comment}}`;
 
   class Create extends safe$1.default {
     constructor() {
@@ -5845,19 +6070,180 @@ var create$1 = createCommonjsModule(function (module, exports) {
 
     info(tableInfo) {
       if (schemaVerify.Type.string.isNotEmpty(tableInfo)) {
-        this.createSqlStr = tableInfo;
-      }
-
-      if (builder$1.tableInfoVerify(tableInfo, true)) {
-        this.createInfo = tableInfo;
+        this.createTableSqlStr = tableInfo;
+      } else if (builder$1.tableInfoVerify(tableInfo, true)) {
+        this.createTableInfo = tableInfo;
       }
 
       return this;
     }
 
     build() {
-      let query = ``;
+      const tableSqlStr = this.createTableSqlStr;
+
+      if (schemaVerify.Type.string.isNotEmpty(tableSqlStr)) {
+        return tableSqlStr;
+      }
+
+      const tableInfo = this.createTableInfo;
+      builder$1.tableInfoVerify(tableInfo, true);
+      const query = this.tableTmpl(tableInfo);
       return query;
+    }
+
+    tableTmpl(info) {
+      const tableName = info.tableName;
+      const feildsStr = this.feildsStr(info);
+      const tableOptionsStr = this.tableOptsStr(info);
+      const tmplOpts = {
+        tableName,
+        feildsStr,
+        tableOptionsStr
+      };
+      const tableInfoStr = util$1.analyTmpl(TABLE_TEMPLATE, tmplOpts);
+      return tableInfoStr;
+    }
+
+    feildsStr(info) {
+      const primaryKey = info.primaryKey;
+      const uniqueKey = info.uniqueKey;
+      const fields = info.fields;
+      const feildTmplArr = [];
+
+      for (const fieldInfo of fields) {
+        const feildStr = this.feildTmpl(fieldInfo);
+        feildTmplArr.push(feildStr);
+      }
+
+      const primaryKeyStr = this.primaryKeyStr(primaryKey);
+      const uniqueKeyStr = this.uniqueKeyStr(uniqueKey);
+
+      if (schemaVerify.Type.string.isNotEmpty(primaryKeyStr)) {
+        feildTmplArr.push(primaryKeyStr);
+      }
+
+      if (schemaVerify.Type.string.isNotEmpty(uniqueKeyStr)) {
+        feildTmplArr.push(uniqueKeyStr);
+      }
+
+      return feildTmplArr.join(",");
+    }
+
+    feildTmpl(fieldInfo) {
+      const field = this.safeKey(fieldInfo.field);
+      const type = fieldInfo.type;
+      const unsigned = fieldInfo.unsigned;
+      const notNull = fieldInfo.notNull;
+      let defaultValue = fieldInfo.default;
+      const autoIncrement = fieldInfo.autoIncrement;
+      const onUpdate = fieldInfo.onUpdate;
+      let comment = fieldInfo.comment;
+      const tmplOpts = {
+        field,
+        type
+      };
+
+      if (unsigned === true) {
+        tmplOpts["unsigned"] = _enum$1.TableOptions.unsigned;
+      }
+
+      if (notNull === true) {
+        tmplOpts["notNull"] = _enum$1.TableOptions.notNull;
+      }
+
+      if (schemaVerify.Type.string.is(defaultValue) || schemaVerify.Type.number.is(defaultValue)) {
+        defaultValue = this.safeValue(defaultValue);
+        tmplOpts["default"] = `${_enum$1.TableOptions.default} ${defaultValue}`;
+      }
+
+      if (autoIncrement === true) {
+        tmplOpts["autoIncrement"] = _enum$1.TableOptions.autoIncrement;
+      }
+
+      if (schemaVerify.Type.string.isNotEmpty(onUpdate)) {
+        tmplOpts["onUpdate"] = `${_enum$1.TableOptions.onUpdate} ${onUpdate}`;
+      }
+
+      if (schemaVerify.Type.string.isNotEmpty(comment)) {
+        comment = this.safeValue(comment);
+        tmplOpts["comment"] = `${_enum$1.TableOptions.comment} ${comment}`;
+      }
+
+      const feildStr = util$1.analyTmpl(FEILD_TEMPLATE, tmplOpts);
+      return feildStr;
+    }
+
+    primaryKeyStr(keyInfo) {
+      let result;
+      const primaryKey = _enum$1.TableOptions.primaryKey;
+
+      if (schemaVerify.Type.string.isNotEmpty(keyInfo)) {
+        const value = this.safeKey(keyInfo);
+        result = `${value} ${primaryKey} (${value})`;
+      }
+
+      if (schemaVerify.Type.object.is(keyInfo)) {
+        const keyName = this.safeKey(keyInfo.keyName);
+        const combineFields = keyInfo.combineFields;
+        const combineFieldsStr = combineFields.map(field => this.safeKey(field)).join(",");
+        result = `${keyName} ${primaryKey} (${combineFieldsStr})`;
+      }
+
+      return `${_enum$1.TableOptions.constraint} ${result}`;
+    }
+
+    uniqueKeyStr(keyInfo) {
+      let result;
+      const uniqueKey = _enum$1.TableOptions.uniqueKey;
+
+      if (schemaVerify.Type.string.isNotEmpty(keyInfo)) {
+        const value = this.safeKey(keyInfo);
+        result = `${value} ${uniqueKey} (${value})`;
+      }
+
+      if (schemaVerify.Type.object.is(keyInfo)) {
+        const keyName = this.safeKey(keyInfo.keyName);
+        const combineFields = keyInfo.combineFields;
+        const combineFieldsStr = combineFields.map(field => this.safeKey(field)).join(",");
+        result = `${keyName} ${uniqueKey} (${combineFieldsStr})`;
+      }
+
+      return `${_enum$1.TableOptions.constraint} ${result}`;
+    }
+
+    tableOptsStr(info) {
+      const engine = info.engine;
+      const autoIncrement = info.autoIncrement;
+      const defaultCharset = info.defaultCharset;
+      const comment = info.comment;
+      const tmplOpts = {};
+
+      if (schemaVerify.Type.string.isNotEmpty(engine)) {
+        const key = _enum$1.TableOptions.engine;
+        const value = engine;
+        tmplOpts["engine"] = `${key}=${value}`;
+      }
+
+      if (schemaVerify.Type.number.is(autoIncrement)) {
+        const key = _enum$1.TableOptions.autoIncrement;
+        const value = autoIncrement;
+        tmplOpts["autoIncrement"] = `${key}=${value}`;
+      }
+
+      if (schemaVerify.Type.string.isNotEmpty(defaultCharset)) {
+        const key = _enum$1.TableOptions.defaultCharset;
+        const value = defaultCharset;
+        tmplOpts["defaultCharset"] = `${key}=${value}`;
+      }
+
+      if (schemaVerify.Type.string.isNotEmpty(comment)) {
+        const key = _enum$1.TableOptions.comment;
+        const value = this.safeValue(comment);
+        tmplOpts["comment"] = `${key}=${value}`;
+      }
+
+      const tableOptionsStr = util$1.analyTmpl(TABLE_OPTIONS_TEMPLATE, tmplOpts);
+      return tableOptionsStr;
     }
 
   }
