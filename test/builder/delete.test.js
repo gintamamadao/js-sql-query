@@ -35,7 +35,7 @@ describe("DELETE", () => {
                 builder
                     .delete()
                     .table("table1")
-                    .where$Equal({
+                    .whereEqual({
                         field1: "value1"
                     }).query)()
         ).toBe(QUERY);

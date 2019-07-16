@@ -232,7 +232,7 @@ builder
         field1: "value1",
         field2: "value2"
     })
-    .where$Equal({
+    .whereEqual({
         field3: "value3"
     }).query;
 // UPDATE `table1` SET `field1` = 'value1', `field2` = 'value2' WHERE `field3` = 'value3'
@@ -243,7 +243,7 @@ builder
     .add({
         field1: 1
     })
-    .where$Equal({
+    .whereEqual({
         field2: "value2"
     }).query;
 // UPDATE `table1` SET `field1` = `field1` + '1' WHERE `field2` = 'value2'
@@ -254,7 +254,7 @@ builder
     .minus({
         field1: 1
     })
-    .where$Equal({
+    .whereEqual({
         field2: "value2"
     }).query;
 // UPDATE `table1` SET `field1` = `field1` - '1' WHERE `field2` = 'value2'
@@ -430,7 +430,7 @@ builder
 builder
     .delete()
     .table("table1")
-    .where$Equal({
+    .whereEqual({
         field1: "value1"
     }).query;
 // DELETE FROM `table1` WHERE `field1` = 'value1'
@@ -440,113 +440,113 @@ builder
 
 -   UPDATE、SELECT、DELETE 的条件逻辑拼装 api 是一样的。
 -   条件之间的逻辑根据后面的 api 决定，api 名中有 Or 这个词就代表，该条件与前一个条件为或关系，否则为与
--   where$Bracket 和 where$OrBracket 是特殊的 api，表示将 api 前后的条件分别用括号括起来，Or 代表括号之间的逻辑是或关系
+-   whereBracket 和 whereOrBracket 是特殊的 api，表示将 api 前后的条件分别用括号括起来，Or 代表括号之间的逻辑是或关系
 
 #### where
 
 -   添加手打的条件或者 Term 类型的 api
 
-#### where\$Equal
+#### whereEqual
 
 -   条件 =
 
-#### where\$NotEqual
+#### whereNotEqual
 
 -   条件 <>
 
-#### where\$In
+#### whereIn
 
 -   条件 IN
 
-#### where\$NotIn
+#### whereNotIn
 
 -   条件 NOT IN
 
-#### where\$More
+#### whereMore
 
 -   条件 >
 
-#### where\$Less
+#### whereLess
 
 -   条件 <
 
-#### where\$MoreEqual
+#### whereMoreEqual
 
 -   条件 >=
 
-#### where\$LessEqual
+#### whereLessEqual
 
 -   条件 <=
 
-#### where\$Like
+#### whereLike
 
 -   条件 LIKE
 
-#### where\$NotLike
+#### whereNotLike
 
 -   条件 NOT LIKE
 
-#### where\$Between
+#### whereBetween
 
 -   条件 BETWEEN
 
-#### where\$NotBetween
+#### whereNotBetween
 
 -   条件 NOT BETWEEN
 
-#### where\$OrEqual
+#### whereOrEqual
 
 -   条件 =，和前一条件逻辑为或
 
-#### where\$OrNotEqual
+#### whereOrNotEqual
 
 -   条件 <>，和前一条件逻辑为或
 
-#### where\$OrIn
+#### whereOrIn
 
 -   条件 IN，和前一条件逻辑为或
 
-#### where\$OrNotIn
+#### whereOrNotIn
 
 -   条件 NOT IN，和前一条件逻辑为或
 
-#### where\$OrMore
+#### whereOrMore
 
 -   条件 >，和前一条件逻辑为或
 
-#### where\$OrLess
+#### whereOrLess
 
 -   条件 <，和前一条件逻辑为或
 
-#### where\$OrMoreEqual
+#### whereOrMoreEqual
 
 -   条件 >=，和前一条件逻辑为或
 
-#### where\$OrLessEqual
+#### whereOrLessEqual
 
 -   条件 <=，和前一条件逻辑为或
 
-#### where\$OrLike
+#### whereOrLike
 
 -   条件 LIKE，和前一条件逻辑为或
 
-#### where\$OrNotLike
+#### whereOrNotLike
 
 -   条件 NOT LIKE，和前一条件逻辑为或
 
-#### where\$OrBetween
+#### whereOrBetween
 
 -   条件 BETWEEN，和前一条件逻辑为或
 
-#### where\$OrNotBetween
+#### whereOrNotBetween
 
 -   条件 NOT BETWEEN，和前一条件逻辑为或
 
-#### where\$Bracket
+#### whereBracket
 
 -   前后的条件分别用括号括起来
 
-#### where\$OrBracket
+#### whereOrBracket
 
 -   前后的条件分别用括号括起来，和前一括号逻辑为或
 
@@ -562,7 +562,7 @@ builder
 builder
     .select()
     .table("table1")
-    .where$Equal({
+    .whereEqual({
         field1: "value1"
     }).query;
 // SELECT * FROM `table1` WHERE `field1` = 'value1'
@@ -570,7 +570,7 @@ builder
 builder
     .select()
     .table("table1")
-    .where$NotEqual({
+    .whereNotEqual({
         field1: "value1"
     }).query;
 // SELECT * FROM `table1` WHERE `field1` <> 'value1'
@@ -578,7 +578,7 @@ builder
 builder
     .select()
     .table("table1")
-    .where$In({
+    .whereIn({
         field1: ["value1", "value2"]
     }).query;
 // SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' )
@@ -586,7 +586,7 @@ builder
 builder
     .select()
     .table("table1")
-    .where$NotIn({
+    .whereNotIn({
         field1: ["value1", "value2"]
     }).query;
 // SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' )
@@ -594,7 +594,7 @@ builder
 builder
     .select()
     .table("table1")
-    .where$More({
+    .whereMore({
         field1: "value1"
     }).query;
 // SELECT * FROM `table1` WHERE `field1` > 'value1'
@@ -602,7 +602,7 @@ builder
 builder
     .select()
     .table("table1")
-    .where$Less({
+    .whereLess({
         field1: "value1"
     }).query;
 // SELECT * FROM `table1` WHERE `field1` < 'value1'
@@ -610,7 +610,7 @@ builder
 builder
     .select()
     .table("table1")
-    .where$MoreEqual({
+    .whereMoreEqual({
         field1: "value1"
     }).query;
 // SELECT * FROM `table1` WHERE `field1` >= 'value1'
@@ -618,7 +618,7 @@ builder
 builder
     .select()
     .table("table1")
-    .where$LessEqual({
+    .whereLessEqual({
         field1: "value1"
     }).query;
 // SELECT * FROM `table1` WHERE `field1` <= 'value1'
@@ -626,7 +626,7 @@ builder
 builder
     .select()
     .table("table1")
-    .where$Like({
+    .whereLike({
         field1: "value1"
     }).query;
 // SELECT * FROM `table1` WHERE `field1` LIKE '%value1%'
@@ -634,7 +634,7 @@ builder
 builder
     .select()
     .table("table1")
-    .where$NotLike({
+    .whereNotLike({
         field1: "value1"
     }).query;
 // SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%'
@@ -642,7 +642,7 @@ builder
 builder
     .select()
     .table("table1")
-    .where$Between({
+    .whereBetween({
         field1: ["value1", "value2"]
     }).query;
 // SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2'
@@ -650,7 +650,7 @@ builder
 builder
     .select()
     .table("table1")
-    .where$NotBetween({
+    .whereNotBetween({
         field1: ["value1", "value2"]
     }).query;
 // SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1' AND 'value2'
@@ -658,7 +658,7 @@ builder
 builder
     .select()
     .table("table1")
-    .where$Equal({
+    .whereEqual({
         field1: "value1",
         field2: "value2"
     }).query;
@@ -667,10 +667,10 @@ builder
 builder
     .select()
     .table("table1")
-    .where$Equal({
+    .whereEqual({
         field1: "value1"
     })
-    .where$NotEqual({
+    .whereNotEqual({
         field2: "value2"
     }).query;
 // SELECT * FROM `table1` WHERE `field1` = 'value1' AND `field2` <> 'value2'
@@ -678,10 +678,10 @@ builder
 builder
     .select()
     .table("table1")
-    .where$NotEqual({
+    .whereNotEqual({
         field1: "value1"
     })
-    .where$NotEqual({
+    .whereNotEqual({
         field1: "value2"
     }).query;
 // SELECT * FROM `table1` WHERE `field1` <> 'value1' AND `field1` <> 'value2'
@@ -689,7 +689,7 @@ builder
 builder
     .select()
     .table("table1")
-    .where$OrEqual({
+    .whereOrEqual({
         field1: "value1",
         field2: "value2"
     }).query;
@@ -698,10 +698,10 @@ builder
 builder
     .select()
     .table("table1")
-    .where$OrEqual({
+    .whereOrEqual({
         field1: "value1"
     })
-    .where$OrEqual({
+    .whereOrEqual({
         field1: "value2"
     }).query;
 // SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field1` = 'value2'
@@ -709,14 +709,14 @@ builder
 builder
     .select()
     .table("table1")
-    .where$OrEqual({
+    .whereOrEqual({
         field1: "value1"
     })
-    .where$OrEqual({
+    .whereOrEqual({
         field2: "value2"
     })
-    .where$Bracket()
-    .where$OrEqual({
+    .whereBracket()
+    .whereOrEqual({
         field3: "value3"
     }).query;
 // SELECT * FROM `table1` WHERE ( `field1` = 'value1' OR `field2` = 'value2' ) AND ( `field3` = 'value3' )
@@ -724,12 +724,12 @@ builder
 builder
     .select()
     .table("table1")
-    .where$Equal({
+    .whereEqual({
         field1: "value1",
         field2: "value2"
     })
-    .where$OrBracket()
-    .where$Equal({
+    .whereOrBracket()
+    .whereEqual({
         field3: "value3"
     }).query;
 // SELECT * FROM `table1` WHERE ( `field1` = 'value1' AND `field2` = 'value2' ) OR ( `field3` = 'value3' )
@@ -744,107 +744,107 @@ builder
 
 -   添加手打的条件或者 Term 类型的 api
 
-#### having\$Equal
+#### havingEqual
 
 -   条件 =
 
-#### having\$NotEqual
+#### havingNotEqual
 
 -   条件 <>
 
-#### having\$In
+#### havingIn
 
 -   条件 IN
 
-#### having\$NotIn
+#### havingNotIn
 
 -   条件 NOT IN
 
-#### having\$More
+#### havingMore
 
 -   条件 >
 
-#### having\$Less
+#### havingLess
 
 -   条件 <
 
-#### having\$MoreEqual
+#### havingMoreEqual
 
 -   条件 >=
 
-#### having\$LessEqual
+#### havingLessEqual
 
 -   条件 <=
 
-#### having\$Like
+#### havingLike
 
 -   条件 LIKE
 
-#### having\$NotLike
+#### havingNotLike
 
 -   条件 NOT LIKE
 
-#### having\$Between
+#### havingBetween
 
 -   条件 BETWEEN
 
-#### having\$NotBetween
+#### havingNotBetween
 
 -   条件 NOT BETWEEN
 
-#### having\$OrEqual
+#### havingOrEqual
 
 -   条件 =，和前一条件逻辑为或
 
-#### having\$OrNotEqual
+#### havingOrNotEqual
 
 -   条件 <>，和前一条件逻辑为或
 
-#### having\$OrIn
+#### havingOrIn
 
 -   条件 IN，和前一条件逻辑为或
 
-#### having\$OrNotIn
+#### havingOrNotIn
 
 -   条件 NOT IN，和前一条件逻辑为或
 
-#### having\$OrMore
+#### havingOrMore
 
 -   条件 >，和前一条件逻辑为或
 
-#### having\$OrLess
+#### havingOrLess
 
 -   条件 <，和前一条件逻辑为或
 
-#### having\$OrMoreEqual
+#### havingOrMoreEqual
 
 -   条件 >=，和前一条件逻辑为或
 
-#### having\$OrLessEqual
+#### havingOrLessEqual
 
 -   条件 <=，和前一条件逻辑为或
 
-#### having\$OrLike
+#### havingOrLike
 
 -   条件 LIKE，和前一条件逻辑为或
 
-#### having\$OrNotLike
+#### havingOrNotLike
 
 -   条件 NOT LIKE，和前一条件逻辑为或
 
-#### having\$OrBetween
+#### havingOrBetween
 
 -   条件 BETWEEN，和前一条件逻辑为或
 
-#### having\$OrNotBetween
+#### havingOrNotBetween
 
 -   条件 NOT BETWEEN，和前一条件逻辑为或
 
-#### having\$Bracket
+#### havingBracket
 
 -   前后的条件分别用括号括起来
 
-#### having\$OrBracket
+#### havingOrBracket
 
 -   前后的条件分别用括号括起来，和前一括号逻辑为或
 

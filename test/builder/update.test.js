@@ -65,7 +65,7 @@ describe("UPDATE", () => {
                         field1: "value1",
                         field2: "value2"
                     })
-                    .where$Equal({
+                    .whereEqual({
                         field3: "value3"
                     }).query)()
         ).toBe(QUERY);
@@ -81,7 +81,7 @@ describe("UPDATE", () => {
                     .add({
                         field1: 1
                     })
-                    .where$Equal({
+                    .whereEqual({
                         field2: "value2"
                     }).query)()
         ).toBe(QUERY);
@@ -97,7 +97,7 @@ describe("UPDATE", () => {
                     .minus({
                         field1: 1
                     })
-                    .where$Equal({
+                    .whereEqual({
                         field2: "value2"
                     }).query)()
         ).toBe(QUERY);

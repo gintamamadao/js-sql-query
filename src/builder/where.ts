@@ -10,132 +10,132 @@ class Where extends Query {
         super();
     }
 
-    where$Equal(data: TermData) {
+    whereEqual(data: TermData) {
         this.getTermCase(TERM_NAME).equal(data);
         return this;
     }
 
-    where$NotEqual(data: TermData) {
+    whereNotEqual(data: TermData) {
         this.getTermCase(TERM_NAME).notEqual(data);
         return this;
     }
 
-    where$In(data: TermData) {
+    whereIn(data: TermData) {
         this.getTermCase(TERM_NAME).in(data);
         return this;
     }
 
-    where$NotIn(data: TermData) {
+    whereNotIn(data: TermData) {
         this.getTermCase(TERM_NAME).notIn(data);
         return this;
     }
 
-    where$More(data: TermData) {
+    whereMore(data: TermData) {
         this.getTermCase(TERM_NAME).more(data);
         return this;
     }
 
-    where$Less(data: TermData) {
+    whereLess(data: TermData) {
         this.getTermCase(TERM_NAME).less(data);
         return this;
     }
 
-    where$MoreEqual(data: TermData) {
+    whereMoreEqual(data: TermData) {
         this.getTermCase(TERM_NAME).moreEqual(data);
         return this;
     }
 
-    where$LessEqual(data: TermData) {
+    whereLessEqual(data: TermData) {
         this.getTermCase(TERM_NAME).lessEqual(data);
         return this;
     }
 
-    where$Like(data: TermData) {
+    whereLike(data: TermData) {
         this.getTermCase(TERM_NAME).like(data);
         return this;
     }
 
-    where$NotLike(data: TermData) {
+    whereNotLike(data: TermData) {
         this.getTermCase(TERM_NAME).notLike(data);
         return this;
     }
 
-    where$Between(data: TermData) {
+    whereBetween(data: TermData) {
         this.getTermCase(TERM_NAME).between(data);
         return this;
     }
 
-    where$NotBetween(data: TermData) {
+    whereNotBetween(data: TermData) {
         this.getTermCase(TERM_NAME).notBetween(data);
         return this;
     }
 
-    where$OrEqual(data: TermData) {
+    whereOrEqual(data: TermData) {
         this.getTermCase(TERM_NAME).orEqual(data);
         return this;
     }
 
-    where$OrNotEqual(data: TermData) {
+    whereOrNotEqual(data: TermData) {
         this.getTermCase(TERM_NAME).orNotEqual(data);
         return this;
     }
 
-    where$OrIn(data: TermData) {
+    whereOrIn(data: TermData) {
         this.getTermCase(TERM_NAME).orIn(data);
         return this;
     }
 
-    where$OrNotIn(data: TermData) {
+    whereOrNotIn(data: TermData) {
         this.getTermCase(TERM_NAME).orNotIn(data);
         return this;
     }
 
-    where$OrMore(data: TermData) {
+    whereOrMore(data: TermData) {
         this.getTermCase(TERM_NAME).orMore(data);
         return this;
     }
 
-    where$OrLess(data: TermData) {
+    whereOrLess(data: TermData) {
         this.getTermCase(TERM_NAME).orLess(data);
         return this;
     }
 
-    where$OrMoreEqual(data: TermData) {
+    whereOrMoreEqual(data: TermData) {
         this.getTermCase(TERM_NAME).orMoreEqual(data);
         return this;
     }
 
-    where$OrLessEqual(data: TermData) {
+    whereOrLessEqual(data: TermData) {
         this.getTermCase(TERM_NAME).orLessEqual(data);
         return this;
     }
 
-    where$OrLike(data: TermData) {
+    whereOrLike(data: TermData) {
         this.getTermCase(TERM_NAME).orLike(data);
         return this;
     }
 
-    where$OrNotLike(data: TermData) {
+    whereOrNotLike(data: TermData) {
         this.getTermCase(TERM_NAME).orNotLike(data);
         return this;
     }
 
-    where$OrBetween(data: TermData) {
+    whereOrBetween(data: TermData) {
         this.getTermCase(TERM_NAME).orBetween(data);
         return this;
     }
 
-    where$OrNotBetween(data: TermData) {
+    whereOrNotBetween(data: TermData) {
         this.getTermCase(TERM_NAME).orNotBetween(data);
         return this;
     }
 
-    where$Bracket() {
+    whereBracket() {
         this.getTermCase(TERM_NAME).bracket();
         return this;
     }
 
-    where$OrBracket() {
+    whereOrBracket() {
         this.getTermCase(TERM_NAME).orBracket();
         return this;
     }

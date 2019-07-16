@@ -5,7 +5,7 @@ var builder = new Builder();
 var query = builder
     .select()
     .table("table1")
-    .where$Equal({
+    .whereEqual({
         field1: "value1"
     }).query;
 console.log(query); // SELECT * FROM `table1` WHERE `field1` = 'value1'
@@ -13,7 +13,7 @@ console.log(query); // SELECT * FROM `table1` WHERE `field1` = 'value1'
 var query = builder
     .select()
     .table("table1")
-    .where$NotEqual({
+    .whereNotEqual({
         field1: "value1"
     }).query;
 console.log(query); // SELECT * FROM `table1` WHERE `field1` <> 'value1'
@@ -21,7 +21,7 @@ console.log(query); // SELECT * FROM `table1` WHERE `field1` <> 'value1'
 var query = builder
     .select()
     .table("table1")
-    .where$In({
+    .whereIn({
         field1: ["value1", "value2"]
     }).query;
 console.log(query); // SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' )
@@ -29,7 +29,7 @@ console.log(query); // SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'val
 var query = builder
     .select()
     .table("table1")
-    .where$NotIn({
+    .whereNotIn({
         field1: ["value1", "value2"]
     }).query;
 console.log(query); // SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' )
@@ -37,7 +37,7 @@ console.log(query); // SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 
 var query = builder
     .select()
     .table("table1")
-    .where$More({
+    .whereMore({
         field1: "value1"
     }).query;
 console.log(query); // SELECT * FROM `table1` WHERE `field1` > 'value1'
@@ -45,7 +45,7 @@ console.log(query); // SELECT * FROM `table1` WHERE `field1` > 'value1'
 var query = builder
     .select()
     .table("table1")
-    .where$Less({
+    .whereLess({
         field1: "value1"
     }).query;
 console.log(query); // SELECT * FROM `table1` WHERE `field1` < 'value1'
@@ -53,7 +53,7 @@ console.log(query); // SELECT * FROM `table1` WHERE `field1` < 'value1'
 var query = builder
     .select()
     .table("table1")
-    .where$MoreEqual({
+    .whereMoreEqual({
         field1: "value1"
     }).query;
 console.log(query); // SELECT * FROM `table1` WHERE `field1` >= 'value1'
@@ -61,7 +61,7 @@ console.log(query); // SELECT * FROM `table1` WHERE `field1` >= 'value1'
 var query = builder
     .select()
     .table("table1")
-    .where$LessEqual({
+    .whereLessEqual({
         field1: "value1"
     }).query;
 console.log(query); // SELECT * FROM `table1` WHERE `field1` <= 'value1'
@@ -69,7 +69,7 @@ console.log(query); // SELECT * FROM `table1` WHERE `field1` <= 'value1'
 var query = builder
     .select()
     .table("table1")
-    .where$Like({
+    .whereLike({
         field1: "value1"
     }).query;
 console.log(query); // SELECT * FROM `table1` WHERE `field1` LIKE '%value1%'
@@ -77,7 +77,7 @@ console.log(query); // SELECT * FROM `table1` WHERE `field1` LIKE '%value1%'
 var query = builder
     .select()
     .table("table1")
-    .where$NotLike({
+    .whereNotLike({
         field1: "value1"
     }).query;
 console.log(query); // SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%'
@@ -85,7 +85,7 @@ console.log(query); // SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%'
 var query = builder
     .select()
     .table("table1")
-    .where$Between({
+    .whereBetween({
         field1: ["value1", "value2"]
     }).query;
 console.log(query); // SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2'
@@ -93,7 +93,7 @@ console.log(query); // SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AN
 var query = builder
     .select()
     .table("table1")
-    .where$NotBetween({
+    .whereNotBetween({
         field1: ["value1", "value2"]
     }).query;
 console.log(query); // SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1' AND 'value2'
@@ -101,7 +101,7 @@ console.log(query); // SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1
 var query = builder
     .select()
     .table("table1")
-    .where$Equal({
+    .whereEqual({
         field1: "value1",
         field2: "value2"
     }).query;
@@ -110,10 +110,10 @@ console.log(query); // SELECT * FROM `table1` WHERE `field1` = 'value1' AND `fie
 var query = builder
     .select()
     .table("table1")
-    .where$Equal({
+    .whereEqual({
         field1: "value1"
     })
-    .where$NotEqual({
+    .whereNotEqual({
         field2: "value2"
     }).query;
 console.log(query); // SELECT * FROM `table1` WHERE `field1` = 'value1' AND `field2` <> 'value2'
@@ -121,10 +121,10 @@ console.log(query); // SELECT * FROM `table1` WHERE `field1` = 'value1' AND `fie
 var query = builder
     .select()
     .table("table1")
-    .where$NotEqual({
+    .whereNotEqual({
         field1: "value1"
     })
-    .where$NotEqual({
+    .whereNotEqual({
         field1: "value2"
     }).query;
 console.log(query); // SELECT * FROM `table1` WHERE `field1` <> 'value1' AND `field1` <> 'value2'
@@ -132,7 +132,7 @@ console.log(query); // SELECT * FROM `table1` WHERE `field1` <> 'value1' AND `fi
 var query = builder
     .select()
     .table("table1")
-    .where$OrEqual({
+    .whereOrEqual({
         field1: "value1",
         field2: "value2"
     }).query;
@@ -141,10 +141,10 @@ console.log(query); // SELECT * FROM `table1` WHERE `field1` = 'value1' OR `fiel
 var query = builder
     .select()
     .table("table1")
-    .where$OrEqual({
+    .whereOrEqual({
         field1: "value1"
     })
-    .where$OrEqual({
+    .whereOrEqual({
         field1: "value2"
     }).query;
 console.log(query); // SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field1` = 'value2'
@@ -152,14 +152,14 @@ console.log(query); // SELECT * FROM `table1` WHERE `field1` = 'value1' OR `fiel
 var query = builder
     .select()
     .table("table1")
-    .where$OrEqual({
+    .whereOrEqual({
         field1: "value1"
     })
-    .where$OrEqual({
+    .whereOrEqual({
         field2: "value2"
     })
-    .where$Bracket()
-    .where$OrEqual({
+    .whereBracket()
+    .whereOrEqual({
         field3: "value3"
     }).query;
 console.log(query); // SELECT * FROM `table1` WHERE ( `field1` = 'value1' OR `field2` = 'value2' ) AND ( `field3` = 'value3' )
@@ -167,12 +167,12 @@ console.log(query); // SELECT * FROM `table1` WHERE ( `field1` = 'value1' OR `fi
 var query = builder
     .select()
     .table("table1")
-    .where$Equal({
+    .whereEqual({
         field1: "value1",
         field2: "value2"
     })
-    .where$OrBracket()
-    .where$Equal({
+    .whereOrBracket()
+    .whereEqual({
         field3: "value3"
     }).query;
 console.log(query); // SELECT * FROM `table1` WHERE ( `field1` = 'value1' AND `field2` = 'value2' ) OR ( `field3` = 'value3' )

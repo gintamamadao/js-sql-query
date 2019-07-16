@@ -9,7 +9,7 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$Equal({
+                    .havingEqual({
                         field1: "value1"
                     }).query)()
         ).toBe(QUERY);
@@ -57,7 +57,7 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$NotEqual({
+                    .havingNotEqual({
                         field1: "value1"
                     }).query)()
         ).toBe(QUERY);
@@ -70,7 +70,7 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$In({
+                    .havingIn({
                         field1: ["value1", "value2"]
                     }).query)()
         ).toBe(QUERY);
@@ -83,7 +83,7 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$NotIn({
+                    .havingNotIn({
                         field1: ["value1", "value2"]
                     }).query)()
         ).toBe(QUERY);
@@ -95,7 +95,7 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$More({
+                    .havingMore({
                         field1: "value1"
                     }).query)()
         ).toBe(QUERY);
@@ -107,7 +107,7 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$Less({
+                    .havingLess({
                         field1: "value1"
                     }).query)()
         ).toBe(QUERY);
@@ -119,7 +119,7 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$MoreEqual({
+                    .havingMoreEqual({
                         field1: "value1"
                     }).query)()
         ).toBe(QUERY);
@@ -131,7 +131,7 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$LessEqual({
+                    .havingLessEqual({
                         field1: "value1"
                     }).query)()
         ).toBe(QUERY);
@@ -143,7 +143,7 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$Like({
+                    .havingLike({
                         field1: "value1"
                     }).query)()
         ).toBe(QUERY);
@@ -156,7 +156,7 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$NotLike({
+                    .havingNotLike({
                         field1: "value1"
                     }).query)()
         ).toBe(QUERY);
@@ -169,7 +169,7 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$Between({
+                    .havingBetween({
                         field1: ["value1", "value2"]
                     }).query)()
         ).toBe(QUERY);
@@ -182,7 +182,7 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$NotBetween({
+                    .havingNotBetween({
                         field1: ["value1", "value2"]
                     }).query)()
         ).toBe(QUERY);
@@ -195,7 +195,7 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$Equal({
+                    .havingEqual({
                         field1: "value1",
                         field2: "value2"
                     }).query)()
@@ -205,10 +205,10 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$Equal({
+                    .havingEqual({
                         field1: "value1"
                     })
-                    .having$Equal({
+                    .havingEqual({
                         field2: "value2"
                     }).query)()
         ).toBe(QUERY);
@@ -221,10 +221,10 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$Equal({
+                    .havingEqual({
                         field1: "value1"
                     })
-                    .having$NotEqual({
+                    .havingNotEqual({
                         field2: "value2"
                     }).query)()
         ).toBe(QUERY);
@@ -237,10 +237,10 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$NotEqual({
+                    .havingNotEqual({
                         field1: "value1"
                     })
-                    .having$NotEqual({
+                    .havingNotEqual({
                         field1: "value2"
                     }).query)()
         ).toBe(QUERY);
@@ -253,7 +253,7 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$OrEqual({
+                    .havingOrEqual({
                         field1: "value1",
                         field2: "value2"
                     }).query)()
@@ -263,10 +263,10 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$OrEqual({
+                    .havingOrEqual({
                         field1: "value1"
                     })
-                    .having$OrEqual({
+                    .havingOrEqual({
                         field2: "value2"
                     }).query)()
         ).toBe(QUERY);
@@ -279,12 +279,12 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$OrEqual({
+                    .havingOrEqual({
                         field1: "value1",
                         field2: "value2"
                     })
-                    .having$Bracket()
-                    .having$OrEqual({
+                    .havingBracket()
+                    .havingOrEqual({
                         field3: "value3"
                     }).query)()
         ).toBe(QUERY);
@@ -297,12 +297,12 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$Equal({
+                    .havingEqual({
                         field1: "value1",
                         field2: "value2"
                     })
-                    .having$OrBracket()
-                    .having$Equal({
+                    .havingOrBracket()
+                    .havingEqual({
                         field3: "value3"
                     }).query)()
         ).toBe(QUERY);
@@ -315,12 +315,12 @@ describe("SELECT:HAVING", () => {
                 builder
                     .select()
                     .table("table1")
-                    .having$Equal({
+                    .havingEqual({
                         field1: "value1",
                         field2: "value2"
                     })
-                    .having$OrBracket()
-                    .having$In({
+                    .havingOrBracket()
+                    .havingIn({
                         field3: ["value3", "value4"]
                     }).query)()
         ).toBe(QUERY);

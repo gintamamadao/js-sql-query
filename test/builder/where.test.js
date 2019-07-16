@@ -9,7 +9,7 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$Equal({
+                    .whereEqual({
                         field1: "value1"
                     }).query)()
         ).toBe(QUERY);
@@ -57,7 +57,7 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$NotEqual({
+                    .whereNotEqual({
                         field1: "value1"
                     }).query)()
         ).toBe(QUERY);
@@ -70,7 +70,7 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$In({
+                    .whereIn({
                         field1: ["value1", "value2"]
                     }).query)()
         ).toBe(QUERY);
@@ -83,7 +83,7 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$NotIn({
+                    .whereNotIn({
                         field1: ["value1", "value2"]
                     }).query)()
         ).toBe(QUERY);
@@ -95,7 +95,7 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$More({
+                    .whereMore({
                         field1: "value1"
                     }).query)()
         ).toBe(QUERY);
@@ -107,7 +107,7 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$Less({
+                    .whereLess({
                         field1: "value1"
                     }).query)()
         ).toBe(QUERY);
@@ -119,7 +119,7 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$MoreEqual({
+                    .whereMoreEqual({
                         field1: "value1"
                     }).query)()
         ).toBe(QUERY);
@@ -131,7 +131,7 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$LessEqual({
+                    .whereLessEqual({
                         field1: "value1"
                     }).query)()
         ).toBe(QUERY);
@@ -143,7 +143,7 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$Like({
+                    .whereLike({
                         field1: "value1"
                     }).query)()
         ).toBe(QUERY);
@@ -156,7 +156,7 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$NotLike({
+                    .whereNotLike({
                         field1: "value1"
                     }).query)()
         ).toBe(QUERY);
@@ -169,7 +169,7 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$Between({
+                    .whereBetween({
                         field1: ["value1", "value2"]
                     }).query)()
         ).toBe(QUERY);
@@ -182,7 +182,7 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$NotBetween({
+                    .whereNotBetween({
                         field1: ["value1", "value2"]
                     }).query)()
         ).toBe(QUERY);
@@ -195,7 +195,7 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$Equal({
+                    .whereEqual({
                         field1: "value1",
                         field2: "value2"
                     }).query)()
@@ -205,10 +205,10 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$Equal({
+                    .whereEqual({
                         field1: "value1"
                     })
-                    .where$Equal({
+                    .whereEqual({
                         field2: "value2"
                     }).query)()
         ).toBe(QUERY);
@@ -221,10 +221,10 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$Equal({
+                    .whereEqual({
                         field1: "value1"
                     })
-                    .where$NotEqual({
+                    .whereNotEqual({
                         field2: "value2"
                     }).query)()
         ).toBe(QUERY);
@@ -237,10 +237,10 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$NotEqual({
+                    .whereNotEqual({
                         field1: "value1"
                     })
-                    .where$NotEqual({
+                    .whereNotEqual({
                         field1: "value2"
                     }).query)()
         ).toBe(QUERY);
@@ -253,7 +253,7 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$OrEqual({
+                    .whereOrEqual({
                         field1: "value1",
                         field2: "value2"
                     }).query)()
@@ -263,10 +263,10 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$OrEqual({
+                    .whereOrEqual({
                         field1: "value1"
                     })
-                    .where$OrEqual({
+                    .whereOrEqual({
                         field2: "value2"
                     }).query)()
         ).toBe(QUERY);
@@ -279,12 +279,12 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$OrEqual({
+                    .whereOrEqual({
                         field1: "value1",
                         field2: "value2"
                     })
-                    .where$Bracket()
-                    .where$OrEqual({
+                    .whereBracket()
+                    .whereOrEqual({
                         field3: "value3"
                     }).query)()
         ).toBe(QUERY);
@@ -297,12 +297,12 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$Equal({
+                    .whereEqual({
                         field1: "value1",
                         field2: "value2"
                     })
-                    .where$OrBracket()
-                    .where$Equal({
+                    .whereOrBracket()
+                    .whereEqual({
                         field3: "value3"
                     }).query)()
         ).toBe(QUERY);
@@ -315,12 +315,12 @@ describe("SELECT:WHERE", () => {
                 builder
                     .select()
                     .table("table1")
-                    .where$Equal({
+                    .whereEqual({
                         field1: "value1",
                         field2: "value2"
                     })
-                    .where$OrBracket()
-                    .where$In({
+                    .whereOrBracket()
+                    .whereIn({
                         field3: ["value3", "value4"]
                     }).query)()
         ).toBe(QUERY);

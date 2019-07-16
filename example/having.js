@@ -5,7 +5,7 @@ var builder = new Builder();
 var query = builder
     .select()
     .table("table1")
-    .having$Equal({
+    .havingEqual({
         field1: "value1"
     }).query;
 console.log(query); // SELECT * FROM `table1` HAVING `field1` = 'value1'
@@ -13,7 +13,7 @@ console.log(query); // SELECT * FROM `table1` HAVING `field1` = 'value1'
 var query = builder
     .select()
     .table("table1")
-    .having$NotEqual({
+    .havingNotEqual({
         field1: "value1"
     }).query;
 console.log(query); // SELECT * FROM `table1` HAVING `field1` <> 'value1'
@@ -21,7 +21,7 @@ console.log(query); // SELECT * FROM `table1` HAVING `field1` <> 'value1'
 var query = builder
     .select()
     .table("table1")
-    .having$In({
+    .havingIn({
         field1: ["value1", "value2"]
     }).query;
 console.log(query); // SELECT * FROM `table1` HAVING `field1` IN ( 'value1', 'value2' )
@@ -29,7 +29,7 @@ console.log(query); // SELECT * FROM `table1` HAVING `field1` IN ( 'value1', 'va
 var query = builder
     .select()
     .table("table1")
-    .having$NotIn({
+    .havingNotIn({
         field1: ["value1", "value2"]
     }).query;
 console.log(query); // SELECT * FROM `table1` HAVING `field1` NOT IN ( 'value1', 'value2' )
@@ -37,7 +37,7 @@ console.log(query); // SELECT * FROM `table1` HAVING `field1` NOT IN ( 'value1',
 var query = builder
     .select()
     .table("table1")
-    .having$More({
+    .havingMore({
         field1: "value1"
     }).query;
 console.log(query); // SELECT * FROM `table1` HAVING `field1` > 'value1'
@@ -45,7 +45,7 @@ console.log(query); // SELECT * FROM `table1` HAVING `field1` > 'value1'
 var query = builder
     .select()
     .table("table1")
-    .having$Less({
+    .havingLess({
         field1: "value1"
     }).query;
 console.log(query); // SELECT * FROM `table1` HAVING `field1` < 'value1'
@@ -53,7 +53,7 @@ console.log(query); // SELECT * FROM `table1` HAVING `field1` < 'value1'
 var query = builder
     .select()
     .table("table1")
-    .having$MoreEqual({
+    .havingMoreEqual({
         field1: "value1"
     }).query;
 console.log(query); // SELECT * FROM `table1` HAVING `field1` >= 'value1'
@@ -61,7 +61,7 @@ console.log(query); // SELECT * FROM `table1` HAVING `field1` >= 'value1'
 var query = builder
     .select()
     .table("table1")
-    .having$LessEqual({
+    .havingLessEqual({
         field1: "value1"
     }).query;
 console.log(query); // SELECT * FROM `table1` HAVING `field1` <= 'value1'
@@ -69,7 +69,7 @@ console.log(query); // SELECT * FROM `table1` HAVING `field1` <= 'value1'
 var query = builder
     .select()
     .table("table1")
-    .having$Like({
+    .havingLike({
         field1: "value1"
     }).query;
 console.log(query); // SELECT * FROM `table1` HAVING `field1` LIKE '%value1%'
@@ -77,7 +77,7 @@ console.log(query); // SELECT * FROM `table1` HAVING `field1` LIKE '%value1%'
 var query = builder
     .select()
     .table("table1")
-    .having$NotLike({
+    .havingNotLike({
         field1: "value1"
     }).query;
 console.log(query); // SELECT * FROM `table1` HAVING `field1` NOT LIKE '%value1%'
@@ -85,7 +85,7 @@ console.log(query); // SELECT * FROM `table1` HAVING `field1` NOT LIKE '%value1%
 var query = builder
     .select()
     .table("table1")
-    .having$Between({
+    .havingBetween({
         field1: ["value1", "value2"]
     }).query;
 console.log(query); // SELECT * FROM `table1` HAVING `field1` BETWEEN 'value1' AND 'value2'
@@ -93,7 +93,7 @@ console.log(query); // SELECT * FROM `table1` HAVING `field1` BETWEEN 'value1' A
 var query = builder
     .select()
     .table("table1")
-    .having$NotBetween({
+    .havingNotBetween({
         field1: ["value1", "value2"]
     }).query;
 console.log(query); // SELECT * FROM `table1` HAVING `field1` NOT BETWEEN 'value1' AND 'value2'
@@ -101,7 +101,7 @@ console.log(query); // SELECT * FROM `table1` HAVING `field1` NOT BETWEEN 'value
 var query = builder
     .select()
     .table("table1")
-    .having$Equal({
+    .havingEqual({
         field1: "value1",
         field2: "value2"
     }).query;
@@ -110,10 +110,10 @@ console.log(query); // SELECT * FROM `table1` HAVING `field1` = 'value1' AND `fi
 var query = builder
     .select()
     .table("table1")
-    .having$Equal({
+    .havingEqual({
         field1: "value1"
     })
-    .having$NotEqual({
+    .havingNotEqual({
         field2: "value2"
     }).query;
 console.log(query); // SELECT * FROM `table1` HAVING `field1` = 'value1' AND `field2` <> 'value2'
@@ -121,10 +121,10 @@ console.log(query); // SELECT * FROM `table1` HAVING `field1` = 'value1' AND `fi
 var query = builder
     .select()
     .table("table1")
-    .having$NotEqual({
+    .havingNotEqual({
         field1: "value1"
     })
-    .having$NotEqual({
+    .havingNotEqual({
         field1: "value2"
     }).query;
 console.log(query); // SELECT * FROM `table1` HAVING `field1` <> 'value1' AND `field1` <> 'value2'
@@ -132,7 +132,7 @@ console.log(query); // SELECT * FROM `table1` HAVING `field1` <> 'value1' AND `f
 var query = builder
     .select()
     .table("table1")
-    .having$OrEqual({
+    .havingOrEqual({
         field1: "value1",
         field2: "value2"
     }).query;
@@ -141,10 +141,10 @@ console.log(query); // SELECT * FROM `table1` HAVING `field1` = 'value1' OR `fie
 var query = builder
     .select()
     .table("table1")
-    .having$OrEqual({
+    .havingOrEqual({
         field1: "value1"
     })
-    .having$OrEqual({
+    .havingOrEqual({
         field1: "value2"
     }).query;
 console.log(query); // SELECT * FROM `table1` HAVING `field1` = 'value1' OR `field1` = 'value2'
@@ -152,14 +152,14 @@ console.log(query); // SELECT * FROM `table1` HAVING `field1` = 'value1' OR `fie
 var query = builder
     .select()
     .table("table1")
-    .having$OrEqual({
+    .havingOrEqual({
         field1: "value1"
     })
-    .having$OrEqual({
+    .havingOrEqual({
         field2: "value2"
     })
-    .having$Bracket()
-    .having$OrEqual({
+    .havingBracket()
+    .havingOrEqual({
         field3: "value3"
     }).query;
 console.log(query); // SELECT * FROM `table1` HAVING ( `field1` = 'value1' OR `field2` = 'value2' ) AND ( `field3` = 'value3' )
@@ -167,12 +167,12 @@ console.log(query); // SELECT * FROM `table1` HAVING ( `field1` = 'value1' OR `f
 var query = builder
     .select()
     .table("table1")
-    .having$Equal({
+    .havingEqual({
         field1: "value1",
         field2: "value2"
     })
-    .having$OrBracket()
-    .having$Equal({
+    .havingOrBracket()
+    .havingEqual({
         field3: "value3"
     }).query;
 console.log(query); // SELECT * FROM `table1` HAVING ( `field1` = 'value1' AND `field2` = 'value2' ) OR ( `field3` = 'value3' )

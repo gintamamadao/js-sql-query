@@ -10,132 +10,132 @@ class Having extends Where {
         super();
     }
 
-    having$Equal(data: TermData) {
+    havingEqual(data: TermData) {
         this.getTermCase(TERM_NAME).equal(data);
         return this;
     }
 
-    having$NotEqual(data: TermData) {
+    havingNotEqual(data: TermData) {
         this.getTermCase(TERM_NAME).notEqual(data);
         return this;
     }
 
-    having$In(data: TermData) {
+    havingIn(data: TermData) {
         this.getTermCase(TERM_NAME).in(data);
         return this;
     }
 
-    having$NotIn(data: TermData) {
+    havingNotIn(data: TermData) {
         this.getTermCase(TERM_NAME).notIn(data);
         return this;
     }
 
-    having$More(data: TermData) {
+    havingMore(data: TermData) {
         this.getTermCase(TERM_NAME).more(data);
         return this;
     }
 
-    having$Less(data: TermData) {
+    havingLess(data: TermData) {
         this.getTermCase(TERM_NAME).less(data);
         return this;
     }
 
-    having$MoreEqual(data: TermData) {
+    havingMoreEqual(data: TermData) {
         this.getTermCase(TERM_NAME).moreEqual(data);
         return this;
     }
 
-    having$LessEqual(data: TermData) {
+    havingLessEqual(data: TermData) {
         this.getTermCase(TERM_NAME).lessEqual(data);
         return this;
     }
 
-    having$Like(data: TermData) {
+    havingLike(data: TermData) {
         this.getTermCase(TERM_NAME).like(data);
         return this;
     }
 
-    having$NotLike(data: TermData) {
+    havingNotLike(data: TermData) {
         this.getTermCase(TERM_NAME).notLike(data);
         return this;
     }
 
-    having$Between(data: TermData) {
+    havingBetween(data: TermData) {
         this.getTermCase(TERM_NAME).between(data);
         return this;
     }
 
-    having$NotBetween(data: TermData) {
+    havingNotBetween(data: TermData) {
         this.getTermCase(TERM_NAME).notBetween(data);
         return this;
     }
 
-    having$OrEqual(data: TermData) {
+    havingOrEqual(data: TermData) {
         this.getTermCase(TERM_NAME).orEqual(data);
         return this;
     }
 
-    having$OrNotEqual(data: TermData) {
+    havingOrNotEqual(data: TermData) {
         this.getTermCase(TERM_NAME).orNotEqual(data);
         return this;
     }
 
-    having$OrIn(data: TermData) {
+    havingOrIn(data: TermData) {
         this.getTermCase(TERM_NAME).orIn(data);
         return this;
     }
 
-    having$OrNotIn(data: TermData) {
+    havingOrNotIn(data: TermData) {
         this.getTermCase(TERM_NAME).orNotIn(data);
         return this;
     }
 
-    having$OrMore(data: TermData) {
+    havingOrMore(data: TermData) {
         this.getTermCase(TERM_NAME).orMore(data);
         return this;
     }
 
-    having$OrLess(data: TermData) {
+    havingOrLess(data: TermData) {
         this.getTermCase(TERM_NAME).orLess(data);
         return this;
     }
 
-    having$OrMoreEqual(data: TermData) {
+    havingOrMoreEqual(data: TermData) {
         this.getTermCase(TERM_NAME).orMoreEqual(data);
         return this;
     }
 
-    having$OrLessEqual(data: TermData) {
+    havingOrLessEqual(data: TermData) {
         this.getTermCase(TERM_NAME).orLessEqual(data);
         return this;
     }
 
-    having$OrLike(data: TermData) {
+    havingOrLike(data: TermData) {
         this.getTermCase(TERM_NAME).orLike(data);
         return this;
     }
 
-    having$OrNotLike(data: TermData) {
+    havingOrNotLike(data: TermData) {
         this.getTermCase(TERM_NAME).orNotLike(data);
         return this;
     }
 
-    having$OrBetween(data: TermData) {
+    havingOrBetween(data: TermData) {
         this.getTermCase(TERM_NAME).orBetween(data);
         return this;
     }
 
-    having$OrNotBetween(data: TermData) {
+    havingOrNotBetween(data: TermData) {
         this.getTermCase(TERM_NAME).orNotBetween(data);
         return this;
     }
 
-    having$Bracket() {
+    havingBracket() {
         this.getTermCase(TERM_NAME).bracket();
         return this;
     }
 
-    having$OrBracket() {
+    havingOrBracket() {
         this.getTermCase(TERM_NAME).orBracket();
         return this;
     }

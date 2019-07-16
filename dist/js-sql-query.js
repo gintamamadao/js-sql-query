@@ -3746,132 +3746,132 @@ var where = createCommonjsModule(function (module, exports) {
       super();
     }
 
-    where$Equal(data) {
+    whereEqual(data) {
       this.getTermCase(TERM_NAME).equal(data);
       return this;
     }
 
-    where$NotEqual(data) {
+    whereNotEqual(data) {
       this.getTermCase(TERM_NAME).notEqual(data);
       return this;
     }
 
-    where$In(data) {
+    whereIn(data) {
       this.getTermCase(TERM_NAME).in(data);
       return this;
     }
 
-    where$NotIn(data) {
+    whereNotIn(data) {
       this.getTermCase(TERM_NAME).notIn(data);
       return this;
     }
 
-    where$More(data) {
+    whereMore(data) {
       this.getTermCase(TERM_NAME).more(data);
       return this;
     }
 
-    where$Less(data) {
+    whereLess(data) {
       this.getTermCase(TERM_NAME).less(data);
       return this;
     }
 
-    where$MoreEqual(data) {
+    whereMoreEqual(data) {
       this.getTermCase(TERM_NAME).moreEqual(data);
       return this;
     }
 
-    where$LessEqual(data) {
+    whereLessEqual(data) {
       this.getTermCase(TERM_NAME).lessEqual(data);
       return this;
     }
 
-    where$Like(data) {
+    whereLike(data) {
       this.getTermCase(TERM_NAME).like(data);
       return this;
     }
 
-    where$NotLike(data) {
+    whereNotLike(data) {
       this.getTermCase(TERM_NAME).notLike(data);
       return this;
     }
 
-    where$Between(data) {
+    whereBetween(data) {
       this.getTermCase(TERM_NAME).between(data);
       return this;
     }
 
-    where$NotBetween(data) {
+    whereNotBetween(data) {
       this.getTermCase(TERM_NAME).notBetween(data);
       return this;
     }
 
-    where$OrEqual(data) {
+    whereOrEqual(data) {
       this.getTermCase(TERM_NAME).orEqual(data);
       return this;
     }
 
-    where$OrNotEqual(data) {
+    whereOrNotEqual(data) {
       this.getTermCase(TERM_NAME).orNotEqual(data);
       return this;
     }
 
-    where$OrIn(data) {
+    whereOrIn(data) {
       this.getTermCase(TERM_NAME).orIn(data);
       return this;
     }
 
-    where$OrNotIn(data) {
+    whereOrNotIn(data) {
       this.getTermCase(TERM_NAME).orNotIn(data);
       return this;
     }
 
-    where$OrMore(data) {
+    whereOrMore(data) {
       this.getTermCase(TERM_NAME).orMore(data);
       return this;
     }
 
-    where$OrLess(data) {
+    whereOrLess(data) {
       this.getTermCase(TERM_NAME).orLess(data);
       return this;
     }
 
-    where$OrMoreEqual(data) {
+    whereOrMoreEqual(data) {
       this.getTermCase(TERM_NAME).orMoreEqual(data);
       return this;
     }
 
-    where$OrLessEqual(data) {
+    whereOrLessEqual(data) {
       this.getTermCase(TERM_NAME).orLessEqual(data);
       return this;
     }
 
-    where$OrLike(data) {
+    whereOrLike(data) {
       this.getTermCase(TERM_NAME).orLike(data);
       return this;
     }
 
-    where$OrNotLike(data) {
+    whereOrNotLike(data) {
       this.getTermCase(TERM_NAME).orNotLike(data);
       return this;
     }
 
-    where$OrBetween(data) {
+    whereOrBetween(data) {
       this.getTermCase(TERM_NAME).orBetween(data);
       return this;
     }
 
-    where$OrNotBetween(data) {
+    whereOrNotBetween(data) {
       this.getTermCase(TERM_NAME).orNotBetween(data);
       return this;
     }
 
-    where$Bracket() {
+    whereBracket() {
       this.getTermCase(TERM_NAME).bracket();
       return this;
     }
 
-    where$OrBracket() {
+    whereOrBracket() {
       this.getTermCase(TERM_NAME).orBracket();
       return this;
     }
@@ -3922,132 +3922,132 @@ var where$1 = createCommonjsModule(function (module, exports) {
       super();
     }
 
-    where$Equal(data) {
+    whereEqual(data) {
       this.getTermCase(TERM_NAME).equal(data);
       return this;
     }
 
-    where$NotEqual(data) {
+    whereNotEqual(data) {
       this.getTermCase(TERM_NAME).notEqual(data);
       return this;
     }
 
-    where$In(data) {
+    whereIn(data) {
       this.getTermCase(TERM_NAME).in(data);
       return this;
     }
 
-    where$NotIn(data) {
+    whereNotIn(data) {
       this.getTermCase(TERM_NAME).notIn(data);
       return this;
     }
 
-    where$More(data) {
+    whereMore(data) {
       this.getTermCase(TERM_NAME).more(data);
       return this;
     }
 
-    where$Less(data) {
+    whereLess(data) {
       this.getTermCase(TERM_NAME).less(data);
       return this;
     }
 
-    where$MoreEqual(data) {
+    whereMoreEqual(data) {
       this.getTermCase(TERM_NAME).moreEqual(data);
       return this;
     }
 
-    where$LessEqual(data) {
+    whereLessEqual(data) {
       this.getTermCase(TERM_NAME).lessEqual(data);
       return this;
     }
 
-    where$Like(data) {
+    whereLike(data) {
       this.getTermCase(TERM_NAME).like(data);
       return this;
     }
 
-    where$NotLike(data) {
+    whereNotLike(data) {
       this.getTermCase(TERM_NAME).notLike(data);
       return this;
     }
 
-    where$Between(data) {
+    whereBetween(data) {
       this.getTermCase(TERM_NAME).between(data);
       return this;
     }
 
-    where$NotBetween(data) {
+    whereNotBetween(data) {
       this.getTermCase(TERM_NAME).notBetween(data);
       return this;
     }
 
-    where$OrEqual(data) {
+    whereOrEqual(data) {
       this.getTermCase(TERM_NAME).orEqual(data);
       return this;
     }
 
-    where$OrNotEqual(data) {
+    whereOrNotEqual(data) {
       this.getTermCase(TERM_NAME).orNotEqual(data);
       return this;
     }
 
-    where$OrIn(data) {
+    whereOrIn(data) {
       this.getTermCase(TERM_NAME).orIn(data);
       return this;
     }
 
-    where$OrNotIn(data) {
+    whereOrNotIn(data) {
       this.getTermCase(TERM_NAME).orNotIn(data);
       return this;
     }
 
-    where$OrMore(data) {
+    whereOrMore(data) {
       this.getTermCase(TERM_NAME).orMore(data);
       return this;
     }
 
-    where$OrLess(data) {
+    whereOrLess(data) {
       this.getTermCase(TERM_NAME).orLess(data);
       return this;
     }
 
-    where$OrMoreEqual(data) {
+    whereOrMoreEqual(data) {
       this.getTermCase(TERM_NAME).orMoreEqual(data);
       return this;
     }
 
-    where$OrLessEqual(data) {
+    whereOrLessEqual(data) {
       this.getTermCase(TERM_NAME).orLessEqual(data);
       return this;
     }
 
-    where$OrLike(data) {
+    whereOrLike(data) {
       this.getTermCase(TERM_NAME).orLike(data);
       return this;
     }
 
-    where$OrNotLike(data) {
+    whereOrNotLike(data) {
       this.getTermCase(TERM_NAME).orNotLike(data);
       return this;
     }
 
-    where$OrBetween(data) {
+    whereOrBetween(data) {
       this.getTermCase(TERM_NAME).orBetween(data);
       return this;
     }
 
-    where$OrNotBetween(data) {
+    whereOrNotBetween(data) {
       this.getTermCase(TERM_NAME).orNotBetween(data);
       return this;
     }
 
-    where$Bracket() {
+    whereBracket() {
       this.getTermCase(TERM_NAME).bracket();
       return this;
     }
 
-    where$OrBracket() {
+    whereOrBracket() {
       this.getTermCase(TERM_NAME).orBracket();
       return this;
     }
@@ -4098,132 +4098,132 @@ var having = createCommonjsModule(function (module, exports) {
       super();
     }
 
-    having$Equal(data) {
+    havingEqual(data) {
       this.getTermCase(TERM_NAME).equal(data);
       return this;
     }
 
-    having$NotEqual(data) {
+    havingNotEqual(data) {
       this.getTermCase(TERM_NAME).notEqual(data);
       return this;
     }
 
-    having$In(data) {
+    havingIn(data) {
       this.getTermCase(TERM_NAME).in(data);
       return this;
     }
 
-    having$NotIn(data) {
+    havingNotIn(data) {
       this.getTermCase(TERM_NAME).notIn(data);
       return this;
     }
 
-    having$More(data) {
+    havingMore(data) {
       this.getTermCase(TERM_NAME).more(data);
       return this;
     }
 
-    having$Less(data) {
+    havingLess(data) {
       this.getTermCase(TERM_NAME).less(data);
       return this;
     }
 
-    having$MoreEqual(data) {
+    havingMoreEqual(data) {
       this.getTermCase(TERM_NAME).moreEqual(data);
       return this;
     }
 
-    having$LessEqual(data) {
+    havingLessEqual(data) {
       this.getTermCase(TERM_NAME).lessEqual(data);
       return this;
     }
 
-    having$Like(data) {
+    havingLike(data) {
       this.getTermCase(TERM_NAME).like(data);
       return this;
     }
 
-    having$NotLike(data) {
+    havingNotLike(data) {
       this.getTermCase(TERM_NAME).notLike(data);
       return this;
     }
 
-    having$Between(data) {
+    havingBetween(data) {
       this.getTermCase(TERM_NAME).between(data);
       return this;
     }
 
-    having$NotBetween(data) {
+    havingNotBetween(data) {
       this.getTermCase(TERM_NAME).notBetween(data);
       return this;
     }
 
-    having$OrEqual(data) {
+    havingOrEqual(data) {
       this.getTermCase(TERM_NAME).orEqual(data);
       return this;
     }
 
-    having$OrNotEqual(data) {
+    havingOrNotEqual(data) {
       this.getTermCase(TERM_NAME).orNotEqual(data);
       return this;
     }
 
-    having$OrIn(data) {
+    havingOrIn(data) {
       this.getTermCase(TERM_NAME).orIn(data);
       return this;
     }
 
-    having$OrNotIn(data) {
+    havingOrNotIn(data) {
       this.getTermCase(TERM_NAME).orNotIn(data);
       return this;
     }
 
-    having$OrMore(data) {
+    havingOrMore(data) {
       this.getTermCase(TERM_NAME).orMore(data);
       return this;
     }
 
-    having$OrLess(data) {
+    havingOrLess(data) {
       this.getTermCase(TERM_NAME).orLess(data);
       return this;
     }
 
-    having$OrMoreEqual(data) {
+    havingOrMoreEqual(data) {
       this.getTermCase(TERM_NAME).orMoreEqual(data);
       return this;
     }
 
-    having$OrLessEqual(data) {
+    havingOrLessEqual(data) {
       this.getTermCase(TERM_NAME).orLessEqual(data);
       return this;
     }
 
-    having$OrLike(data) {
+    havingOrLike(data) {
       this.getTermCase(TERM_NAME).orLike(data);
       return this;
     }
 
-    having$OrNotLike(data) {
+    havingOrNotLike(data) {
       this.getTermCase(TERM_NAME).orNotLike(data);
       return this;
     }
 
-    having$OrBetween(data) {
+    havingOrBetween(data) {
       this.getTermCase(TERM_NAME).orBetween(data);
       return this;
     }
 
-    having$OrNotBetween(data) {
+    havingOrNotBetween(data) {
       this.getTermCase(TERM_NAME).orNotBetween(data);
       return this;
     }
 
-    having$Bracket() {
+    havingBracket() {
       this.getTermCase(TERM_NAME).bracket();
       return this;
     }
 
-    having$OrBracket() {
+    havingOrBracket() {
       this.getTermCase(TERM_NAME).orBracket();
       return this;
     }
@@ -4389,132 +4389,132 @@ var having$1 = createCommonjsModule(function (module, exports) {
       super();
     }
 
-    having$Equal(data) {
+    havingEqual(data) {
       this.getTermCase(TERM_NAME).equal(data);
       return this;
     }
 
-    having$NotEqual(data) {
+    havingNotEqual(data) {
       this.getTermCase(TERM_NAME).notEqual(data);
       return this;
     }
 
-    having$In(data) {
+    havingIn(data) {
       this.getTermCase(TERM_NAME).in(data);
       return this;
     }
 
-    having$NotIn(data) {
+    havingNotIn(data) {
       this.getTermCase(TERM_NAME).notIn(data);
       return this;
     }
 
-    having$More(data) {
+    havingMore(data) {
       this.getTermCase(TERM_NAME).more(data);
       return this;
     }
 
-    having$Less(data) {
+    havingLess(data) {
       this.getTermCase(TERM_NAME).less(data);
       return this;
     }
 
-    having$MoreEqual(data) {
+    havingMoreEqual(data) {
       this.getTermCase(TERM_NAME).moreEqual(data);
       return this;
     }
 
-    having$LessEqual(data) {
+    havingLessEqual(data) {
       this.getTermCase(TERM_NAME).lessEqual(data);
       return this;
     }
 
-    having$Like(data) {
+    havingLike(data) {
       this.getTermCase(TERM_NAME).like(data);
       return this;
     }
 
-    having$NotLike(data) {
+    havingNotLike(data) {
       this.getTermCase(TERM_NAME).notLike(data);
       return this;
     }
 
-    having$Between(data) {
+    havingBetween(data) {
       this.getTermCase(TERM_NAME).between(data);
       return this;
     }
 
-    having$NotBetween(data) {
+    havingNotBetween(data) {
       this.getTermCase(TERM_NAME).notBetween(data);
       return this;
     }
 
-    having$OrEqual(data) {
+    havingOrEqual(data) {
       this.getTermCase(TERM_NAME).orEqual(data);
       return this;
     }
 
-    having$OrNotEqual(data) {
+    havingOrNotEqual(data) {
       this.getTermCase(TERM_NAME).orNotEqual(data);
       return this;
     }
 
-    having$OrIn(data) {
+    havingOrIn(data) {
       this.getTermCase(TERM_NAME).orIn(data);
       return this;
     }
 
-    having$OrNotIn(data) {
+    havingOrNotIn(data) {
       this.getTermCase(TERM_NAME).orNotIn(data);
       return this;
     }
 
-    having$OrMore(data) {
+    havingOrMore(data) {
       this.getTermCase(TERM_NAME).orMore(data);
       return this;
     }
 
-    having$OrLess(data) {
+    havingOrLess(data) {
       this.getTermCase(TERM_NAME).orLess(data);
       return this;
     }
 
-    having$OrMoreEqual(data) {
+    havingOrMoreEqual(data) {
       this.getTermCase(TERM_NAME).orMoreEqual(data);
       return this;
     }
 
-    having$OrLessEqual(data) {
+    havingOrLessEqual(data) {
       this.getTermCase(TERM_NAME).orLessEqual(data);
       return this;
     }
 
-    having$OrLike(data) {
+    havingOrLike(data) {
       this.getTermCase(TERM_NAME).orLike(data);
       return this;
     }
 
-    having$OrNotLike(data) {
+    havingOrNotLike(data) {
       this.getTermCase(TERM_NAME).orNotLike(data);
       return this;
     }
 
-    having$OrBetween(data) {
+    havingOrBetween(data) {
       this.getTermCase(TERM_NAME).orBetween(data);
       return this;
     }
 
-    having$OrNotBetween(data) {
+    havingOrNotBetween(data) {
       this.getTermCase(TERM_NAME).orNotBetween(data);
       return this;
     }
 
-    having$Bracket() {
+    havingBracket() {
       this.getTermCase(TERM_NAME).bracket();
       return this;
     }
 
-    having$OrBracket() {
+    havingOrBracket() {
       this.getTermCase(TERM_NAME).orBracket();
       return this;
     }
