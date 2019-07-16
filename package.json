@@ -21,7 +21,7 @@
         "query"
     ],
     "dependencies": {
-        "schema-verify": "^1.0.22"
+        "schema-verify": "^1.0.25"
     },
     "devDependencies": {
         "babel-runtime": "^6.26.0",

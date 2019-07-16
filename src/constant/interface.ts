@@ -55,7 +55,7 @@ export interface TableField {
     decimalParam?: number[];
 }
 export interface uniqueKey {
-    keyName: string;
+    index: string;
     combineFields: string[];
 }
 export interface TableInfo {

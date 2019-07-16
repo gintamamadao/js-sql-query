@@ -1179,7 +1179,7 @@ var create_verify = createCommonjsModule(function (module, exports) {
   const uniqueKeySchema = new schemaVerify.Schema({
     type: Object,
     props: [{
-      index: "keyName",
+      index: "index",
       required: true,
       type: String,
       minLength: 1
@@ -1620,7 +1620,7 @@ var create_verify$1 = createCommonjsModule(function (module, exports) {
   const uniqueKeySchema = new schemaVerify.Schema({
     type: Object,
     props: [{
-      index: "keyName",
+      index: "index",
       required: true,
       type: String,
       minLength: 1

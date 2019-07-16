@@ -66,7 +66,7 @@ const uniqueKeySchema = new Schema({
     type: Object,
     props: [
         {
-            index: "keyName",
+            index: "index",
             required: true,
             type: String,
             minLength: 1
