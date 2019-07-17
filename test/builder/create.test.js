@@ -4,8 +4,8 @@ describe("CREATE", () => {
     const builder = new Builder();
     test("test", () => {
         const info = {
-            tableName: "t_anomaly_banner_info",
-            primaryKey: "Fanomal_id",
+            tableName: "a",
+            primaryKey: "b",
             uniqueKey: {
                 keyName: "Fpage_sign",
                 combineFields: ["Fpage_sign"]
@@ -13,27 +13,27 @@ describe("CREATE", () => {
             engine: "InnoDB",
             autoIncrement: 10000,
             defaultCharset: "utf8",
-            comment: "页面的不规则banner信息",
+            comment: "bbb",
             fields: [
                 {
-                    field: "Fanomal_id",
+                    field: "c",
                     type: "bigint(20)",
                     unsigned: true,
                     autoIncrement: true,
                     notNull: true,
                     default: "0",
                     onUpdate: "CURRENT_TIMESTAMP",
-                    comment: "页面标志"
+                    comment: "dd"
                 },
                 {
-                    field: "Fpage_sign",
+                    field: "d",
                     type: "varchar(32)",
                     unsigned: true,
                     autoIncrement: true,
                     notNull: true,
                     default: "0",
                     onUpdate: "CURRENT_TIMESTAMP",
-                    comment: "页面标志"
+                    comment: "d"
                 }
             ]
         };
