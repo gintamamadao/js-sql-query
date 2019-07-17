@@ -2,41 +2,43 @@ const { Builder } = require("../../dist/js-sql-query");
 
 describe("CREATE", () => {
     const builder = new Builder();
-    test("test", () => {
-        const info = {
-            tableName: "a",
-            primaryKey: "b",
-            uniqueKey: {
-                keyName: "Fpage_sign",
-                combineFields: ["Fpage_sign"]
+    const info = {
+        tableName: "student",
+        primaryKey: "id",
+        uniqueKey: "name",
+        engine: "InnoDB",
+        autoIncrement: 10000,
+        defaultCharset: "utf8",
+        comment: "学生信息表",
+        fields: [
+            {
+                field: "id",
+                type: "bigint",
+                unsigned: true,
+                notNull: true,
+                autoIncrement: true,
+                comment: "学生id"
             },
-            engine: "InnoDB",
-            autoIncrement: 10000,
-            defaultCharset: "utf8",
-            comment: "bbb",
-            fields: [
-                {
-                    field: "c",
-                    type: "bigint(20)",
-                    unsigned: true,
-                    autoIncrement: true,
-                    notNull: true,
-                    default: "0",
-                    onUpdate: "CURRENT_TIMESTAMP",
-                    comment: "dd"
-                },
-                {
-                    field: "d",
-                    type: "varchar(32)",
-                    unsigned: true,
-                    autoIncrement: true,
-                    notNull: true,
-                    default: "0",
-                    onUpdate: "CURRENT_TIMESTAMP",
-                    comment: "d"
-                }
-            ]
-        };
-        builder.create().info(info).query;
+            {
+                field: "name",
+                type: "varchar(32)",
+                default: "",
+                notNull: true,
+                comment: "学生名字"
+            },
+            {
+                field: "update_time",
+                type: "timestamp",
+                notNull: true,
+                default: "CURRENT_TIMESTAMP",
+                onUpdate: "CURRENT_TIMESTAMP",
+                comment: "最后更新时间"
+            }
+        ]
+    };
+    test("test", () => {
+        const QUERY =
+            "CREATE TABLE student ( `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '学生id',`name` VARCHAR(32) NOT NULL DEFAULT '' COMMENT '学生名字',`update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',CONSTRAINT `id` PRIMARY KEY (`id`),CONSTRAINT `name` UNIQUE KEY (`name`) ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='学生信息表';";
+        expect((() => builder.create().info(info).query)()).toBe(QUERY);
     });
 });

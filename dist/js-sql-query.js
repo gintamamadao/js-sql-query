@@ -5654,7 +5654,7 @@ var create = createCommonjsModule(function (module, exports) {
 
     feildTmpl(fieldInfo) {
       const field = this.safeKey(fieldInfo.field);
-      const type = fieldInfo.type;
+      const type = fieldInfo.type.toUpperCase();
       const unsigned = fieldInfo.unsigned;
       const notNull = fieldInfo.notNull;
       let defaultValue = fieldInfo.default;
@@ -6141,7 +6141,7 @@ var create$1 = createCommonjsModule(function (module, exports) {
 
     feildTmpl(fieldInfo) {
       const field = this.safeKey(fieldInfo.field);
-      const type = fieldInfo.type;
+      const type = fieldInfo.type.toUpperCase();
       const unsigned = fieldInfo.unsigned;
       const notNull = fieldInfo.notNull;
       let defaultValue = fieldInfo.default;

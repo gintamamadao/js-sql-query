@@ -80,7 +80,7 @@ class Create extends Safe {
 
     feildTmpl(fieldInfo: TableField): string {
         const field: string = this.safeKey(fieldInfo.field);
-        const type: string = fieldInfo.type;
+        const type: string = fieldInfo.type.toUpperCase();
         const unsigned: boolean = fieldInfo.unsigned;
         const notNull: boolean = fieldInfo.notNull;
         let defaultValue: string | number = fieldInfo.default;
