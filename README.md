@@ -23,7 +23,7 @@ var instance = builder
     .table("table1")
     .fields("field1", "field2");
 
-console.log(instance.query);
+instance.query;
 // SELECT `field1`, `field2` FROM `table1`
 ```
 
@@ -41,17 +41,17 @@ console.log(instance.query);
 <!-- TOC -->
 
 -   [api](#api)
-    -   [Builder](#Builder)
-        -   [CREATE](#CREATE)
-        -   [INSERT/REPLACE](#INSERTREPLACE)
-        -   [UPDATE](#UPDATE)
-        -   [SELECT](#SELECT)
-        -   [DELETE](#DELETE)
-        -   [WHERE](#WHERE)
-        -   [HAVING](#HAVING)
-        -   [Term](#Term)
-        -   [ORDER](#ORDER)
-        -   [LIMIT/OFFSET](#LIMITOFFSET)
+    -   [Builder](#builder)
+        -   [CREATE](#create)
+        -   [INSERT/REPLACE](#insertreplace)
+        -   [UPDATE](#update)
+        -   [SELECT](#select)
+        -   [DELETE](#delete)
+        -   [WHERE](#where)
+        -   [HAVING](#having)
+        -   [TERM](#term)
+        -   [ORDER](#order)
+        -   [LIMIT/OFFSET](#limitoffset)
 
 # api
 
@@ -105,7 +105,7 @@ builder.table("table1");
   ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='学生信息表';
 ```
 
--   转换为 json 格式
+-   将上面的表信息用 json 结构保存
 
 ```js
 const tableInfo = {
@@ -152,6 +152,23 @@ const tableInfo = {
 ```js
 builder.create().info(tableInfo).query;
 ```
+
+#### 结构说明
+
+-   tableName，表名
+-   primaryKey，主键
+-   uniqueKey，索引
+-   engine，即 ENGINE
+-   autoIncrement，即 AUTO_INCREMENT，设置自增位置或者是否是自增字段
+-   defaultCharset，即 DEFAULT CHARSET
+-   comment，备注
+-   fields，字段信息
+-   field，字段名
+-   type，数据类型
+-   unsigned，无符号数值
+-   notNull，不允许为空
+-   default，设置默认值
+-   onUpdate，数据更新字段的更新值
 
 ### INSERT/REPLACE
 
@@ -898,7 +915,7 @@ builder
 
 -   基本和 where 一样，可以看项目中的 example 文件夹下的例子
 
-### Term
+### TERM
 
 -   Term 也是用于拼装语句的条件部分，拼装逻辑和 WHERE 和 HAVING 是一样的。
 -   Term 的 api 与 WHERE 和 HAVING 也是基本一样的，只是没有前缀。
