@@ -13,12 +13,36 @@ js sql query builder
 npm i js-sql-query --save
 ```
 
+## 使用例子
+
+```js
+var { Builder } = require("js-sql-query");
+var builder = new Builder();
+var instance = builder
+    .select()
+    .table("table1")
+    .fields("field1", "field2");
+
+console.log(instance.query);
+// SELECT `field1`, `field2` FROM `table1`
+```
+
+### 变量说明
+
+-   builder，是新建的组装工具的实例
+-   select，选择 sql 语句类型为 select
+-   table，设置要操作的表
+-   fields，设置要选择的字段
+-   instance，是调用 api 后返回的一个语句实例
+-   query，生成最后的 sql 的语句，也可以调用 instance.build()，效果是一样的
+
 ## 目录
 
 <!-- TOC -->
 
 -   [api](#api)
     -   [Builder](#Builder)
+        -   [CREATE](#CREATE)
         -   [INSERT/REPLACE](#INSERTREPLACE)
         -   [UPDATE](#UPDATE)
         -   [SELECT](#SELECT)
@@ -38,13 +62,13 @@ var { Builder } = require("js-sql-query");
 var builder = new Builder();
 ```
 
--   新建时指定数据库类型 mysql，mssql，postgresql，sqlite
+-   新建时指定数据库类型 mysql，mssql，postgresql，sqlite，默认为 mysql
 
 ```js
 var builder = new Builder("mysql");
 ```
 
--   设置要操作的表名
+-   设置默认要操作的表
 
 ```js
 builder.table("table1");
@@ -52,18 +76,90 @@ builder.table("table1");
 
 -   语句类型
 
-语句的基本类型有 INSERT，REPLACE， UPDATE，SELECT，DELETE，其中 INSERT 和 REPLACE 的拼装逻辑是完全一样的，就合在一起讲
+语句的基本类型有 CREATE，INSERT，REPLACE， UPDATE，SELECT，DELETE，其中 INSERT 和 REPLACE 的拼装逻辑是完全一样的，就合在一起讲
 不同的基本类型可以调用的 api 不完全一样，有些是公用的，有些是仅限某些基本类型才能调用。
+
+### CREATE
+
+-   新建表语句，把表的信息用一定的 json 结构保存，然后可以通过 api 转换成 sql 语句
+
+#### create
+
+-   指定 sql 语句为 CREATE 类型
+
+#### info
+
+-   设置新建表的信息
+
+#### create 例子：
+
+-   表结构信息
+
+```sql
+  CREATE TABLE student (
+         `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '学生id',
+        `name` VARCHAR(32) NOT NULL DEFAULT '' COMMENT '学生名字',
+        `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
+        CONSTRAINT `id` PRIMARY KEY (`id`),
+       CONSTRAINT `pk_id` UNIQUE KEY (`id`,`name`)
+  ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='学生信息表';
+```
+
+-   转换为 json 格式
+
+```js
+const tableInfo = {
+    tableName: "student",
+    primaryKey: "id",
+    uniqueKey: {
+        keyName: "pk_id",
+        combineFields: ["id", "name"]
+    },
+    engine: "InnoDB",
+    autoIncrement: 10000,
+    defaultCharset: "utf8",
+    comment: "学生信息表",
+    fields: [
+        {
+            field: "id",
+            type: "bigint",
+            unsigned: true,
+            notNull: true,
+            autoIncrement: true,
+            comment: "学生id"
+        },
+        {
+            field: "name",
+            type: "varchar(32)",
+            default: "",
+            notNull: true,
+            comment: "学生名字"
+        },
+        {
+            field: "update_time",
+            type: "timestamp",
+            notNull: true,
+            default: "CURRENT_TIMESTAMP",
+            onUpdate: "CURRENT_TIMESTAMP",
+            comment: "最后更新时间"
+        }
+    ]
+};
+```
+
+-   将 json 格式转换成 sql 语句
+
+```js
+builder.create().info(tableInfo).query;
+```
 
 ### INSERT/REPLACE
 
+-   插入数据类型语句
+
 #### insert/replace
 
--   指定 sql 语句为 INSERT/REPLACE
-
-#### table
-
--   设置 sql 语句的表名
+-   指定 sql 语句为 INSERT/REPLACE 类型
 
 #### data
 
@@ -81,27 +177,9 @@ builder.table("table1");
 
 -   设置 sql 语句的插入值的字段
 
-#### build
-
--   获取拼装后的 sql 语句
-
-#### query
-
--   获取拼装后的 sql 语句
-
 #### insert 例子：
 
 ```js
-builder
-    .insert()
-    .table("table1")
-    .data({
-        field1: "value1",
-        field2: "value2"
-    })
-    .build();
-// INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
-
 builder
     .replace()
     .table("table1")
@@ -166,13 +244,11 @@ builder
 
 ### UPDATE
 
+-   更新数据类型语句
+
 #### update
 
--   指定 sql 语句为 UPDATE
-
-#### table
-
--   设置 sql 语句的表名
+-   指定 sql 语句为 UPDATE 类型
 
 #### set
 
@@ -186,14 +262,6 @@ builder
 
 -   设置 sql 语句的更新信息，更新方式为减少
 
-#### build
-
--   获取拼装后的 sql 语句
-
-#### query
-
--   获取拼装后的 sql 语句
-
 #### update 例子：
 
 ```js
@@ -202,8 +270,7 @@ builder
     .table("table1")
     .set({
         field1: "value1"
-    })
-    .build();
+    }).query;
 // UPDATE `table1` SET `field1` = 'value1'
 
 builder
@@ -262,13 +329,11 @@ builder
 
 ### SELECT
 
+-   查询数据类型语句
+
 #### select
 
--   指定 sql 语句为 SELECT
-
-#### table
-
--   设置 sql 语句的表名
+-   指定 sql 语句为 SELECT 类型
 
 #### fields
 
@@ -286,22 +351,13 @@ builder
 
 -   设置 sql 语句根据某个字段聚合
 
-#### build
-
--   获取拼装后的 sql 语句
-
-#### query
-
--   获取拼装后的 sql 语句
-
 #### select 例子：
 
 ```js
 builder
     .select()
     .table("table1")
-    .fields("*")
-    .build();
+    .fields("*").query;
 // SELECT * FROM `table1`
 
 builder
@@ -395,21 +451,11 @@ builder
 
 ### DELETE
 
+-   删除数据类型语句
+
 #### delete
 
--   指定 sql 语句为 DELETE
-
-#### table
-
--   设置 sql 语句的表名
-
-#### build
-
--   获取拼装后的 sql 语句
-
-#### query
-
--   获取拼装后的 sql 语句
+-   指定 sql 语句为 DELETE 类型
 
 #### delete 例子：
 
