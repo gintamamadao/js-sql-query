@@ -21,11 +21,11 @@ var util = createCommonjsModule(function (module, exports) {
   function analyTmpl(tmpl, opts) {
     return tmpl.replace(/\{\{([a-zA-Z_0-9]+)\}\}/g, function (match, key) {
       if (opts.hasOwnProperty(key) && schemaVerify.Type.string.isNotEmpty(opts[key])) {
-        return opts[key];
+        return opts[key] + " ";
       } else {
         return "";
       }
-    });
+    }).trim();
   }
 
   exports.analyTmpl = analyTmpl;
@@ -314,7 +314,7 @@ var create_error$1 = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(create_error$1);
 
-var D__project_jsSqlQuery_src_error_builder = createCommonjsModule(function (module, exports) {
+var D__vmproject_jsSqlQuery_src_error_builder = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
@@ -337,7 +337,7 @@ var D__project_jsSqlQuery_src_error_builder = createCommonjsModule(function (mod
   };
   exports.default = ErrMsg;
 });
-unwrapExports(D__project_jsSqlQuery_src_error_builder);
+unwrapExports(D__vmproject_jsSqlQuery_src_error_builder);
 
 var builder = createCommonjsModule(function (module, exports) {
 
@@ -1696,7 +1696,7 @@ var create_verify_1$1 = create_verify$1.tableFieldVerify;
 var create_verify_2$1 = create_verify$1.uniqueKeyVerify;
 var create_verify_3$1 = create_verify$1.tableInfoVerify;
 
-var D__project_jsSqlQuery_src_verify_builder = createCommonjsModule(function (module, exports) {
+var D__vmproject_jsSqlQuery_src_verify_builder = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
@@ -1761,33 +1761,33 @@ var D__project_jsSqlQuery_src_verify_builder = createCommonjsModule(function (mo
   }).verify;
   exports.fieldDataVerify = fieldDataVerify;
 });
-unwrapExports(D__project_jsSqlQuery_src_verify_builder);
-var D__project_jsSqlQuery_src_verify_builder_1 = D__project_jsSqlQuery_src_verify_builder.fieldDataArrVerify;
-var D__project_jsSqlQuery_src_verify_builder_2 = D__project_jsSqlQuery_src_verify_builder.funcInfoVerify;
-var D__project_jsSqlQuery_src_verify_builder_3 = D__project_jsSqlQuery_src_verify_builder.funcInputVerify;
-var D__project_jsSqlQuery_src_verify_builder_4 = D__project_jsSqlQuery_src_verify_builder.dialectVerify;
-var D__project_jsSqlQuery_src_verify_builder_5 = D__project_jsSqlQuery_src_verify_builder.manualSqlVerify;
-var D__project_jsSqlQuery_src_verify_builder_6 = D__project_jsSqlQuery_src_verify_builder.pageVerify;
-var D__project_jsSqlQuery_src_verify_builder_7 = D__project_jsSqlQuery_src_verify_builder.limitInfoVerify;
-var D__project_jsSqlQuery_src_verify_builder_8 = D__project_jsSqlQuery_src_verify_builder.orderInfoVerify;
-var D__project_jsSqlQuery_src_verify_builder_9 = D__project_jsSqlQuery_src_verify_builder.valueListVerify;
-var D__project_jsSqlQuery_src_verify_builder_10 = D__project_jsSqlQuery_src_verify_builder.termDataVerify;
-var D__project_jsSqlQuery_src_verify_builder_11 = D__project_jsSqlQuery_src_verify_builder.termBracketVerify;
-var D__project_jsSqlQuery_src_verify_builder_12 = D__project_jsSqlQuery_src_verify_builder.termSignVerify;
-var D__project_jsSqlQuery_src_verify_builder_13 = D__project_jsSqlQuery_src_verify_builder.termLogicVerify;
-var D__project_jsSqlQuery_src_verify_builder_14 = D__project_jsSqlQuery_src_verify_builder.termValueVerify;
-var D__project_jsSqlQuery_src_verify_builder_15 = D__project_jsSqlQuery_src_verify_builder.termInVerify;
-var D__project_jsSqlQuery_src_verify_builder_16 = D__project_jsSqlQuery_src_verify_builder.termBetweenVerify;
-var D__project_jsSqlQuery_src_verify_builder_17 = D__project_jsSqlQuery_src_verify_builder.termInfoVerify;
-var D__project_jsSqlQuery_src_verify_builder_18 = D__project_jsSqlQuery_src_verify_builder.updateInfoVerify;
-var D__project_jsSqlQuery_src_verify_builder_19 = D__project_jsSqlQuery_src_verify_builder.tableFieldVerify;
-var D__project_jsSqlQuery_src_verify_builder_20 = D__project_jsSqlQuery_src_verify_builder.uniqueKeyVerify;
-var D__project_jsSqlQuery_src_verify_builder_21 = D__project_jsSqlQuery_src_verify_builder.tableInfoVerify;
-var D__project_jsSqlQuery_src_verify_builder_22 = D__project_jsSqlQuery_src_verify_builder.strArrVerify;
-var D__project_jsSqlQuery_src_verify_builder_23 = D__project_jsSqlQuery_src_verify_builder.strObjVerify;
-var D__project_jsSqlQuery_src_verify_builder_24 = D__project_jsSqlQuery_src_verify_builder.naturalVerify;
-var D__project_jsSqlQuery_src_verify_builder_25 = D__project_jsSqlQuery_src_verify_builder.integerVerify;
-var D__project_jsSqlQuery_src_verify_builder_26 = D__project_jsSqlQuery_src_verify_builder.fieldDataVerify;
+unwrapExports(D__vmproject_jsSqlQuery_src_verify_builder);
+var D__vmproject_jsSqlQuery_src_verify_builder_1 = D__vmproject_jsSqlQuery_src_verify_builder.fieldDataArrVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_2 = D__vmproject_jsSqlQuery_src_verify_builder.funcInfoVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_3 = D__vmproject_jsSqlQuery_src_verify_builder.funcInputVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_4 = D__vmproject_jsSqlQuery_src_verify_builder.dialectVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_5 = D__vmproject_jsSqlQuery_src_verify_builder.manualSqlVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_6 = D__vmproject_jsSqlQuery_src_verify_builder.pageVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_7 = D__vmproject_jsSqlQuery_src_verify_builder.limitInfoVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_8 = D__vmproject_jsSqlQuery_src_verify_builder.orderInfoVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_9 = D__vmproject_jsSqlQuery_src_verify_builder.valueListVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_10 = D__vmproject_jsSqlQuery_src_verify_builder.termDataVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_11 = D__vmproject_jsSqlQuery_src_verify_builder.termBracketVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_12 = D__vmproject_jsSqlQuery_src_verify_builder.termSignVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_13 = D__vmproject_jsSqlQuery_src_verify_builder.termLogicVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_14 = D__vmproject_jsSqlQuery_src_verify_builder.termValueVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_15 = D__vmproject_jsSqlQuery_src_verify_builder.termInVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_16 = D__vmproject_jsSqlQuery_src_verify_builder.termBetweenVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_17 = D__vmproject_jsSqlQuery_src_verify_builder.termInfoVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_18 = D__vmproject_jsSqlQuery_src_verify_builder.updateInfoVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_19 = D__vmproject_jsSqlQuery_src_verify_builder.tableFieldVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_20 = D__vmproject_jsSqlQuery_src_verify_builder.uniqueKeyVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_21 = D__vmproject_jsSqlQuery_src_verify_builder.tableInfoVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_22 = D__vmproject_jsSqlQuery_src_verify_builder.strArrVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_23 = D__vmproject_jsSqlQuery_src_verify_builder.strObjVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_24 = D__vmproject_jsSqlQuery_src_verify_builder.naturalVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_25 = D__vmproject_jsSqlQuery_src_verify_builder.integerVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_26 = D__vmproject_jsSqlQuery_src_verify_builder.fieldDataVerify;
 
 var dialects$1 = createCommonjsModule(function (module, exports) {
 
@@ -2238,11 +2238,11 @@ var util$1 = createCommonjsModule(function (module, exports) {
   function analyTmpl(tmpl, opts) {
     return tmpl.replace(/\{\{([a-zA-Z_0-9]+)\}\}/g, function (match, key) {
       if (opts.hasOwnProperty(key) && schemaVerify.Type.string.isNotEmpty(opts[key])) {
-        return opts[key];
+        return opts[key] + " ";
       } else {
         return "";
       }
-    });
+    }).trim();
   }
 
   exports.analyTmpl = analyTmpl;
@@ -5581,9 +5581,10 @@ var create = createCommonjsModule(function (module, exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  const TABLE_TEMPLATE = `CREATE TABLE {{tableName}} ( {{feildsStr}} ) {{tableOptionsStr}}`;
-  const TABLE_OPTIONS_TEMPLATE = `{{engine}} {{autoIncrement}} {{defaultCharset}} {{comment}}`;
-  const FEILD_TEMPLATE = `{{field}} {{type}} {{unsigned}} {{notNull}} {{default}} {{autoIncrement}} {{onUpdate}} {{comment}}`;
+  const TABLE_TEMPLATE = `CREATE TABLE {{tableName}}( {{feildsStr}}) {{tableOptionsStr}}`;
+  const TABLE_OPTIONS_TEMPLATE = `{{engine}}{{autoIncrement}}{{defaultCharset}}{{comment}}`;
+  const FEILD_TEMPLATE = `{{field}}{{type}}{{unsigned}}{{notNull}}{{default}}{{autoIncrement}}{{onUpdate}}{{comment}}`;
+  const TABLE_OPT_VALUES = Object.keys(_enum$1.TableOptionValue).map(key => _enum$1.TableOptionValue[key]);
 
   class Create extends safe$1.default {
     constructor() {
@@ -5622,7 +5623,7 @@ var create = createCommonjsModule(function (module, exports) {
         feildsStr,
         tableOptionsStr
       };
-      const tableInfoStr = util$1.analyTmpl(TABLE_TEMPLATE, tmplOpts);
+      const tableInfoStr = util$1.analyTmpl(TABLE_TEMPLATE, tmplOpts) + ";";
       return tableInfoStr;
     }
 
@@ -5674,7 +5675,15 @@ var create = createCommonjsModule(function (module, exports) {
       }
 
       if (schemaVerify.Type.string.is(defaultValue) || schemaVerify.Type.number.is(defaultValue)) {
-        defaultValue = this.safeValue(defaultValue);
+        let needSafe = true;
+        let upperValue;
+
+        if (schemaVerify.Type.string.is(defaultValue)) {
+          upperValue = defaultValue.toUpperCase();
+          needSafe = !TABLE_OPT_VALUES.includes(upperValue);
+        }
+
+        defaultValue = needSafe ? this.safeValue(defaultValue) : upperValue;
         tmplOpts["default"] = `${_enum$1.TableOptions.default} ${defaultValue}`;
       }
 
@@ -6059,9 +6068,10 @@ var create$1 = createCommonjsModule(function (module, exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  const TABLE_TEMPLATE = `CREATE TABLE {{tableName}} ( {{feildsStr}} ) {{tableOptionsStr}}`;
-  const TABLE_OPTIONS_TEMPLATE = `{{engine}} {{autoIncrement}} {{defaultCharset}} {{comment}}`;
-  const FEILD_TEMPLATE = `{{field}} {{type}} {{unsigned}} {{notNull}} {{default}} {{autoIncrement}} {{onUpdate}} {{comment}}`;
+  const TABLE_TEMPLATE = `CREATE TABLE {{tableName}}( {{feildsStr}}) {{tableOptionsStr}}`;
+  const TABLE_OPTIONS_TEMPLATE = `{{engine}}{{autoIncrement}}{{defaultCharset}}{{comment}}`;
+  const FEILD_TEMPLATE = `{{field}}{{type}}{{unsigned}}{{notNull}}{{default}}{{autoIncrement}}{{onUpdate}}{{comment}}`;
+  const TABLE_OPT_VALUES = Object.keys(_enum$1.TableOptionValue).map(key => _enum$1.TableOptionValue[key]);
 
   class Create extends safe$1.default {
     constructor() {
@@ -6100,7 +6110,7 @@ var create$1 = createCommonjsModule(function (module, exports) {
         feildsStr,
         tableOptionsStr
       };
-      const tableInfoStr = util$1.analyTmpl(TABLE_TEMPLATE, tmplOpts);
+      const tableInfoStr = util$1.analyTmpl(TABLE_TEMPLATE, tmplOpts) + ";";
       return tableInfoStr;
     }
 
@@ -6152,7 +6162,15 @@ var create$1 = createCommonjsModule(function (module, exports) {
       }
 
       if (schemaVerify.Type.string.is(defaultValue) || schemaVerify.Type.number.is(defaultValue)) {
-        defaultValue = this.safeValue(defaultValue);
+        let needSafe = true;
+        let upperValue;
+
+        if (schemaVerify.Type.string.is(defaultValue)) {
+          upperValue = defaultValue.toUpperCase();
+          needSafe = !TABLE_OPT_VALUES.includes(upperValue);
+        }
+
+        defaultValue = needSafe ? this.safeValue(defaultValue) : upperValue;
         tmplOpts["default"] = `${_enum$1.TableOptions.default} ${defaultValue}`;
       }
 

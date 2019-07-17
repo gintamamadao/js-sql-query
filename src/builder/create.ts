@@ -1,13 +1,17 @@
 import Safe from "./safe";
-import { TableOptions } from "../constant/enum";
+import { TableOptions, TableOptionValue } from "../constant/enum";
 import { TableInfo, combineKey, TableField } from "../constant/interface";
 import { Type } from "schema-verify";
 import { tableInfoVerify } from "../verify/builder/index";
 import { analyTmpl } from "../util/util";
 
-const TABLE_TEMPLATE = `CREATE TABLE {{tableName}} ( {{feildsStr}} ) {{tableOptionsStr}}`;
-const TABLE_OPTIONS_TEMPLATE = `{{engine}} {{autoIncrement}} {{defaultCharset}} {{comment}}`;
-const FEILD_TEMPLATE = `{{field}} {{type}} {{unsigned}} {{notNull}} {{default}} {{autoIncrement}} {{onUpdate}} {{comment}}`;
+const TABLE_TEMPLATE = `CREATE TABLE {{tableName}}( {{feildsStr}}) {{tableOptionsStr}}`;
+const TABLE_OPTIONS_TEMPLATE = `{{engine}}{{autoIncrement}}{{defaultCharset}}{{comment}}`;
+const FEILD_TEMPLATE = `{{field}}{{type}}{{unsigned}}{{notNull}}{{default}}{{autoIncrement}}{{onUpdate}}{{comment}}`;
+
+const TABLE_OPT_VALUES = Object.keys(TableOptionValue).map(
+    key => TableOptionValue[key]
+);
 
 class Create extends Safe {
     protected createTableSqlStr: string;
@@ -45,8 +49,7 @@ class Create extends Safe {
             feildsStr,
             tableOptionsStr
         };
-        const tableInfoStr: string = analyTmpl(TABLE_TEMPLATE, tmplOpts);
-
+        const tableInfoStr: string = analyTmpl(TABLE_TEMPLATE, tmplOpts) + ";";
         return tableInfoStr;
     }
 
@@ -57,7 +60,7 @@ class Create extends Safe {
         const feildTmplArr: string[] = [];
 
         for (const fieldInfo of fields) {
-            const feildStr = this.feildTmpl(fieldInfo);
+            const feildStr: string = this.feildTmpl(fieldInfo);
             feildTmplArr.push(feildStr);
         }
 
@@ -99,7 +102,13 @@ class Create extends Safe {
         }
 
         if (Type.string.is(defaultValue) || Type.number.is(defaultValue)) {
-            defaultValue = this.safeValue(defaultValue);
+            let needSafe = true;
+            let upperValue;
+            if (Type.string.is(defaultValue)) {
+                upperValue = (<string>defaultValue).toUpperCase();
+                needSafe = !TABLE_OPT_VALUES.includes(upperValue);
+            }
+            defaultValue = needSafe ? this.safeValue(defaultValue) : upperValue;
             tmplOpts["default"] = `${TableOptions.default} ${defaultValue}`;
         }
 
