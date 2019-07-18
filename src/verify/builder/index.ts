@@ -20,6 +20,7 @@ import {
     uniqueKeyVerify,
     tableInfoVerify
 } from "./create.verify";
+import { alterFieldVerify, alterInfosVerify } from "./alter.verify";
 
 const strArrVerify = new Schema({
     type: Array,
@@ -90,5 +91,7 @@ export {
     updateInfoVerify,
     tableFieldVerify,
     uniqueKeyVerify,
-    tableInfoVerify
+    tableInfoVerify,
+    alterFieldVerify,
+    alterInfosVerify
 };

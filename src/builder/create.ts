@@ -1,5 +1,6 @@
 import Safe from "./safe";
-import { TableOptions, TableOptionValue } from "../constant/enum";
+import { TableOptions } from "../constant/enum";
+import { TABLE_OPT_VALUES, FEILD_TEMPLATE } from "../constant/constant";
 import { TableInfo, combineKey, TableField } from "../constant/interface";
 import { Type } from "schema-verify";
 import { tableInfoVerify } from "../verify/builder/index";
@@ -7,18 +8,10 @@ import { analyTmpl } from "../util/util";
 
 const TABLE_TEMPLATE = `CREATE TABLE {{tableName}}( {{feildsStr}}) {{tableOptionsStr}}`;
 const TABLE_OPTIONS_TEMPLATE = `{{engine}}{{autoIncrement}}{{defaultCharset}}{{comment}}`;
-const FEILD_TEMPLATE = `{{field}}{{type}}{{unsigned}}{{notNull}}{{default}}{{autoIncrement}}{{onUpdate}}{{comment}}`;
-
-const TABLE_OPT_VALUES = Object.keys(TableOptionValue).map(
-    key => TableOptionValue[key]
-);
 
 class Create extends Safe {
     protected createTableSqlStr: string;
     protected createTableInfo: TableInfo;
-    constructor() {
-        super();
-    }
 
     info(tableInfo: TableInfo | string) {
         if (Type.string.isNotEmpty(tableInfo)) {
@@ -40,7 +33,7 @@ class Create extends Safe {
         return query;
     }
 
-    tableTmpl(info: TableInfo): string {
+    protected tableTmpl(info: TableInfo): string {
         const tableName: string = info.tableName;
         const feildsStr: string = this.feildsStr(info);
         const tableOptionsStr: string = this.tableOptsStr(info);
@@ -53,7 +46,7 @@ class Create extends Safe {
         return tableInfoStr;
     }
 
-    feildsStr(info: TableInfo): string {
+    protected feildsStr(info: TableInfo): string {
         const primaryKey: string | combineKey = info.primaryKey;
         const uniqueKey: string | combineKey = info.uniqueKey;
         const fields: TableField[] = info.fields;
@@ -78,7 +71,7 @@ class Create extends Safe {
         return feildTmplArr.join(",");
     }
 
-    feildTmpl(fieldInfo: TableField): string {
+    protected feildTmpl(fieldInfo: TableField): string {
         const field: string = this.safeKey(fieldInfo.field);
         const type: string = fieldInfo.type.toUpperCase();
         const unsigned: boolean = fieldInfo.unsigned;
@@ -130,7 +123,7 @@ class Create extends Safe {
         return feildStr;
     }
 
-    primaryKeyStr(keyInfo: string | combineKey): string {
+    protected primaryKeyStr(keyInfo: string | combineKey): string {
         let result: string;
         const primaryKey = TableOptions.primaryKey;
 
@@ -151,7 +144,7 @@ class Create extends Safe {
         return `${TableOptions.constraint} ${result}`;
     }
 
-    uniqueKeyStr(keyInfo: string | combineKey): string {
+    protected uniqueKeyStr(keyInfo: string | combineKey): string {
         let result: string;
         const uniqueKey = TableOptions.uniqueKey;
 
@@ -172,7 +165,7 @@ class Create extends Safe {
         return `${TableOptions.constraint} ${result}`;
     }
 
-    tableOptsStr(info: TableInfo): string {
+    protected tableOptsStr(info: TableInfo): string {
         const engine: string = info.engine;
         const autoIncrement: number = info.autoIncrement;
         const defaultCharset: string = info.defaultCharset;

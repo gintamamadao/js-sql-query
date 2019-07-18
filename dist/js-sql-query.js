@@ -182,6 +182,19 @@ var create_error = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(create_error);
 
+var alter_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorAlterField: "错误的修改配置",
+    emptyAlterInfos: "空的修改配置"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(alter_error);
+
 var combine_error$1 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -314,6 +327,19 @@ var create_error$1 = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(create_error$1);
 
+var alter_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorAlterField: "错误的修改配置",
+    emptyAlterInfos: "空的修改配置"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(alter_error$1);
+
 var D__vmproject_jsSqlQuery_src_error_builder = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -329,7 +355,9 @@ var D__vmproject_jsSqlQuery_src_error_builder = createCommonjsModule(function (m
     ...update_error$1.default,
     ...builder_error$1.default,
     ...create_error$1.default,
+    ...alter_error$1.default,
     errorTableName: "错误的表名，需要非空字符串",
+    errorField: "错误的表名，需要非空字符串",
     errorFields: "错误的字段，需要非空字符串或非空字符串数组",
     errorFieldData: "错误的字段数据",
     needStr: "需要字符串",
@@ -354,7 +382,9 @@ var builder = createCommonjsModule(function (module, exports) {
     ...update_error$1.default,
     ...builder_error$1.default,
     ...create_error$1.default,
+    ...alter_error$1.default,
     errorTableName: "错误的表名，需要非空字符串",
+    errorField: "错误的表名，需要非空字符串",
     errorFields: "错误的字段，需要非空字符串或非空字符串数组",
     errorFieldData: "错误的字段数据",
     needStr: "需要字符串",
@@ -545,6 +575,7 @@ var _enum = createCommonjsModule(function (module, exports) {
     QueryTypes["update"] = "UPDATE";
     QueryTypes["delete"] = "DELETE";
     QueryTypes["create"] = "CREATE";
+    QueryTypes["alter"] = "ALTER";
   })(QueryTypes = exports.QueryTypes || (exports.QueryTypes = {}));
 
   var FuncTypes;
@@ -670,11 +701,14 @@ var _enum = createCommonjsModule(function (module, exports) {
     TableOptions["constraint"] = "CONSTRAINT";
   })(TableOptions = exports.TableOptions || (exports.TableOptions = {}));
 
-  var TableOptionValue;
+  var AlterMethods;
 
-  (function (TableOptionValue) {
-    TableOptionValue["currentTimestamp"] = "CURRENT_TIMESTAMP";
-  })(TableOptionValue = exports.TableOptionValue || (exports.TableOptionValue = {}));
+  (function (AlterMethods) {
+    AlterMethods["add"] = "ADD";
+    AlterMethods["drop"] = "DROP";
+    AlterMethods["modify"] = "MODIFY";
+    AlterMethods["change"] = "CHANGE";
+  })(AlterMethods = exports.AlterMethods || (exports.AlterMethods = {}));
 });
 
 unwrapExports(_enum);
@@ -688,7 +722,7 @@ var _enum_7 = _enum.UpdateTypes;
 var _enum_8 = _enum.WidgetTypes;
 var _enum_9 = _enum.SqlDataTypes;
 var _enum_10 = _enum.TableOptions;
-var _enum_11 = _enum.TableOptionValue;
+var _enum_11 = _enum.AlterMethods;
 
 var _enum$1 = createCommonjsModule(function (module, exports) {
 
@@ -713,6 +747,7 @@ var _enum$1 = createCommonjsModule(function (module, exports) {
     QueryTypes["update"] = "UPDATE";
     QueryTypes["delete"] = "DELETE";
     QueryTypes["create"] = "CREATE";
+    QueryTypes["alter"] = "ALTER";
   })(QueryTypes = exports.QueryTypes || (exports.QueryTypes = {}));
 
   var FuncTypes;
@@ -838,11 +873,14 @@ var _enum$1 = createCommonjsModule(function (module, exports) {
     TableOptions["constraint"] = "CONSTRAINT";
   })(TableOptions = exports.TableOptions || (exports.TableOptions = {}));
 
-  var TableOptionValue;
+  var AlterMethods;
 
-  (function (TableOptionValue) {
-    TableOptionValue["currentTimestamp"] = "CURRENT_TIMESTAMP";
-  })(TableOptionValue = exports.TableOptionValue || (exports.TableOptionValue = {}));
+  (function (AlterMethods) {
+    AlterMethods["add"] = "ADD";
+    AlterMethods["drop"] = "DROP";
+    AlterMethods["modify"] = "MODIFY";
+    AlterMethods["change"] = "CHANGE";
+  })(AlterMethods = exports.AlterMethods || (exports.AlterMethods = {}));
 });
 
 unwrapExports(_enum$1);
@@ -856,7 +894,7 @@ var _enum_7$1 = _enum$1.UpdateTypes;
 var _enum_8$1 = _enum$1.WidgetTypes;
 var _enum_9$1 = _enum$1.SqlDataTypes;
 var _enum_10$1 = _enum$1.TableOptions;
-var _enum_11$1 = _enum$1.TableOptionValue;
+var _enum_11$1 = _enum$1.AlterMethods;
 
 var combine_verify = createCommonjsModule(function (module, exports) {
 
@@ -1265,6 +1303,68 @@ unwrapExports(create_verify);
 var create_verify_1 = create_verify.tableFieldVerify;
 var create_verify_2 = create_verify.uniqueKeyVerify;
 var create_verify_3 = create_verify.tableInfoVerify;
+
+var alter_verify = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const alterFieldSchema = new schemaVerify.Schema({
+    type: Object,
+    props: [{
+      index: "field",
+      type: String,
+      minLength: 1
+    }, {
+      index: "type",
+      type: String,
+      minLength: 1
+    }, {
+      index: "unsigned",
+      type: Boolean
+    }, {
+      index: "autoIncrement",
+      type: Boolean
+    }, {
+      index: "notNull",
+      type: Boolean
+    }, [{
+      index: "default",
+      type: String
+    }, {
+      type: Number
+    }], {
+      index: "onUpdate",
+      type: String
+    }, {
+      index: "comment",
+      type: String
+    }]
+  });
+  const alterInfosSchema = new schemaVerify.Schema({
+    type: Object,
+    props: [{
+      index: "method",
+      required: true,
+      type: String,
+      enum: _enum$1.AlterMethods
+    }, {
+      index: "field",
+      required: true,
+      type: String,
+      minLength: 1
+    }, {
+      index: "alterField",
+      required: true,
+      schema: alterFieldSchema
+    }]
+  });
+  exports.alterFieldVerify = alterFieldSchema.verify;
+  exports.alterInfosVerify = alterInfosSchema.verify;
+});
+unwrapExports(alter_verify);
+var alter_verify_1 = alter_verify.alterFieldVerify;
+var alter_verify_2 = alter_verify.alterInfosVerify;
 
 var insert_verify$1 = createCommonjsModule(function (module, exports) {
 
@@ -1696,6 +1796,68 @@ var create_verify_1$1 = create_verify$1.tableFieldVerify;
 var create_verify_2$1 = create_verify$1.uniqueKeyVerify;
 var create_verify_3$1 = create_verify$1.tableInfoVerify;
 
+var alter_verify$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const alterFieldSchema = new schemaVerify.Schema({
+    type: Object,
+    props: [{
+      index: "field",
+      type: String,
+      minLength: 1
+    }, {
+      index: "type",
+      type: String,
+      minLength: 1
+    }, {
+      index: "unsigned",
+      type: Boolean
+    }, {
+      index: "autoIncrement",
+      type: Boolean
+    }, {
+      index: "notNull",
+      type: Boolean
+    }, [{
+      index: "default",
+      type: String
+    }, {
+      type: Number
+    }], {
+      index: "onUpdate",
+      type: String
+    }, {
+      index: "comment",
+      type: String
+    }]
+  });
+  const alterInfosSchema = new schemaVerify.Schema({
+    type: Object,
+    props: [{
+      index: "method",
+      required: true,
+      type: String,
+      enum: _enum$1.AlterMethods
+    }, {
+      index: "field",
+      required: true,
+      type: String,
+      minLength: 1
+    }, {
+      index: "alterField",
+      required: true,
+      schema: alterFieldSchema
+    }]
+  });
+  exports.alterFieldVerify = alterFieldSchema.verify;
+  exports.alterInfosVerify = alterInfosSchema.verify;
+});
+unwrapExports(alter_verify$1);
+var alter_verify_1$1 = alter_verify$1.alterFieldVerify;
+var alter_verify_2$1 = alter_verify$1.alterInfosVerify;
+
 var D__vmproject_jsSqlQuery_src_verify_builder = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -1722,6 +1884,8 @@ var D__vmproject_jsSqlQuery_src_verify_builder = createCommonjsModule(function (
   exports.tableFieldVerify = create_verify$1.tableFieldVerify;
   exports.uniqueKeyVerify = create_verify$1.uniqueKeyVerify;
   exports.tableInfoVerify = create_verify$1.tableInfoVerify;
+  exports.alterFieldVerify = alter_verify$1.alterFieldVerify;
+  exports.alterInfosVerify = alter_verify$1.alterInfosVerify;
   const strArrVerify = new schemaVerify.Schema({
     type: Array,
     elements: {
@@ -1783,11 +1947,13 @@ var D__vmproject_jsSqlQuery_src_verify_builder_18 = D__vmproject_jsSqlQuery_src_
 var D__vmproject_jsSqlQuery_src_verify_builder_19 = D__vmproject_jsSqlQuery_src_verify_builder.tableFieldVerify;
 var D__vmproject_jsSqlQuery_src_verify_builder_20 = D__vmproject_jsSqlQuery_src_verify_builder.uniqueKeyVerify;
 var D__vmproject_jsSqlQuery_src_verify_builder_21 = D__vmproject_jsSqlQuery_src_verify_builder.tableInfoVerify;
-var D__vmproject_jsSqlQuery_src_verify_builder_22 = D__vmproject_jsSqlQuery_src_verify_builder.strArrVerify;
-var D__vmproject_jsSqlQuery_src_verify_builder_23 = D__vmproject_jsSqlQuery_src_verify_builder.strObjVerify;
-var D__vmproject_jsSqlQuery_src_verify_builder_24 = D__vmproject_jsSqlQuery_src_verify_builder.naturalVerify;
-var D__vmproject_jsSqlQuery_src_verify_builder_25 = D__vmproject_jsSqlQuery_src_verify_builder.integerVerify;
-var D__vmproject_jsSqlQuery_src_verify_builder_26 = D__vmproject_jsSqlQuery_src_verify_builder.fieldDataVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_22 = D__vmproject_jsSqlQuery_src_verify_builder.alterFieldVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_23 = D__vmproject_jsSqlQuery_src_verify_builder.alterInfosVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_24 = D__vmproject_jsSqlQuery_src_verify_builder.strArrVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_25 = D__vmproject_jsSqlQuery_src_verify_builder.strObjVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_26 = D__vmproject_jsSqlQuery_src_verify_builder.naturalVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_27 = D__vmproject_jsSqlQuery_src_verify_builder.integerVerify;
+var D__vmproject_jsSqlQuery_src_verify_builder_28 = D__vmproject_jsSqlQuery_src_verify_builder.fieldDataVerify;
 
 var dialects$1 = createCommonjsModule(function (module, exports) {
 
@@ -1951,6 +2117,8 @@ var builder$1 = createCommonjsModule(function (module, exports) {
   exports.tableFieldVerify = create_verify$1.tableFieldVerify;
   exports.uniqueKeyVerify = create_verify$1.uniqueKeyVerify;
   exports.tableInfoVerify = create_verify$1.tableInfoVerify;
+  exports.alterFieldVerify = alter_verify$1.alterFieldVerify;
+  exports.alterInfosVerify = alter_verify$1.alterInfosVerify;
   const strArrVerify = new schemaVerify.Schema({
     type: Array,
     elements: {
@@ -2012,11 +2180,13 @@ var builder_18 = builder$1.updateInfoVerify;
 var builder_19 = builder$1.tableFieldVerify;
 var builder_20 = builder$1.uniqueKeyVerify;
 var builder_21 = builder$1.tableInfoVerify;
-var builder_22 = builder$1.strArrVerify;
-var builder_23 = builder$1.strObjVerify;
-var builder_24 = builder$1.naturalVerify;
-var builder_25 = builder$1.integerVerify;
-var builder_26 = builder$1.fieldDataVerify;
+var builder_22 = builder$1.alterFieldVerify;
+var builder_23 = builder$1.alterInfosVerify;
+var builder_24 = builder$1.strArrVerify;
+var builder_25 = builder$1.strObjVerify;
+var builder_26 = builder$1.naturalVerify;
+var builder_27 = builder$1.integerVerify;
+var builder_28 = builder$1.fieldDataVerify;
 
 var safe = createCommonjsModule(function (module, exports) {
 
@@ -5576,6 +5746,30 @@ var replace = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(replace);
 
+var constant = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.TABLE_OPT_VALUES = ["CURRENT_TIMESTAMP"];
+  exports.FEILD_TEMPLATE = `{{field}}{{type}}{{unsigned}}{{notNull}}{{default}}{{autoIncrement}}{{onUpdate}}{{comment}}`;
+});
+unwrapExports(constant);
+var constant_1 = constant.TABLE_OPT_VALUES;
+var constant_2 = constant.FEILD_TEMPLATE;
+
+var constant$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.TABLE_OPT_VALUES = ["CURRENT_TIMESTAMP"];
+  exports.FEILD_TEMPLATE = `{{field}}{{type}}{{unsigned}}{{notNull}}{{default}}{{autoIncrement}}{{onUpdate}}{{comment}}`;
+});
+unwrapExports(constant$1);
+var constant_1$1 = constant$1.TABLE_OPT_VALUES;
+var constant_2$1 = constant$1.FEILD_TEMPLATE;
+
 var create = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -5583,14 +5777,8 @@ var create = createCommonjsModule(function (module, exports) {
   });
   const TABLE_TEMPLATE = `CREATE TABLE {{tableName}}( {{feildsStr}}) {{tableOptionsStr}}`;
   const TABLE_OPTIONS_TEMPLATE = `{{engine}}{{autoIncrement}}{{defaultCharset}}{{comment}}`;
-  const FEILD_TEMPLATE = `{{field}}{{type}}{{unsigned}}{{notNull}}{{default}}{{autoIncrement}}{{onUpdate}}{{comment}}`;
-  const TABLE_OPT_VALUES = Object.keys(_enum$1.TableOptionValue).map(key => _enum$1.TableOptionValue[key]);
 
   class Create extends safe$1.default {
-    constructor() {
-      super();
-    }
-
     info(tableInfo) {
       if (schemaVerify.Type.string.isNotEmpty(tableInfo)) {
         this.createTableSqlStr = tableInfo;
@@ -5680,7 +5868,7 @@ var create = createCommonjsModule(function (module, exports) {
 
         if (schemaVerify.Type.string.is(defaultValue)) {
           upperValue = defaultValue.toUpperCase();
-          needSafe = !TABLE_OPT_VALUES.includes(upperValue);
+          needSafe = !constant$1.TABLE_OPT_VALUES.includes(upperValue);
         }
 
         defaultValue = needSafe ? this.safeValue(defaultValue) : upperValue;
@@ -5700,7 +5888,7 @@ var create = createCommonjsModule(function (module, exports) {
         tmplOpts["comment"] = `${_enum$1.TableOptions.comment} ${comment}`;
       }
 
-      const feildStr = util$1.analyTmpl(FEILD_TEMPLATE, tmplOpts);
+      const feildStr = util$1.analyTmpl(constant$1.FEILD_TEMPLATE, tmplOpts);
       return feildStr;
     }
 
@@ -5782,6 +5970,152 @@ var create = createCommonjsModule(function (module, exports) {
   exports.default = Create;
 });
 unwrapExports(create);
+
+var alter = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ALTER_TEMPLATE = `ALTER TABLE {{queryTable}}{{alterInfosStr}}`;
+  const ALTER_INFOS_TEMPLATE = `{{method}}COLUMN {{field}}{{alterFieldStr}}`;
+
+  class Alter extends safe$1.default {
+    add(field, alterField) {
+      delete alterField["field"];
+      return this.alterCache(_enum$1.AlterMethods.add, field, alterField);
+    }
+
+    drop(field) {
+      return this.alterCache(_enum$1.AlterMethods.drop, field, {});
+    }
+
+    modify(field, alterField) {
+      delete alterField["field"];
+      return this.alterCache(_enum$1.AlterMethods.modify, field, alterField);
+    }
+
+    change(field, alterField) {
+      return this.alterCache(_enum$1.AlterMethods.change, field, alterField);
+    }
+
+    alterCache(method, field, alterField) {
+      if (!builder$1.alterFieldVerify(alterField)) {
+        throw new Error(builder.default.errorAlterField);
+      }
+
+      if (!schemaVerify.Type.string.isNotEmpty(field)) {
+        throw new Error(builder.default.errorField);
+      }
+
+      const alterInfo = {
+        method,
+        field,
+        alterField
+      };
+      const alterInfos = schemaVerify.Type.array.safe(this.alterInfos);
+      alterInfos.push(alterInfo);
+      this.alterInfos = alterInfos;
+      return this;
+    }
+
+    build() {
+      const alterInfos = schemaVerify.Type.array.safe(this.alterInfos);
+      const infosStrArr = [];
+
+      for (const item of alterInfos) {
+        if (!builder$1.alterInfosVerify(item)) {
+          continue;
+        }
+
+        const method = item.method;
+        const field = this.safeKey(item.field);
+        const alterField = item.alterField;
+        const alterFieldStr = this.feildTmpl(alterField);
+        const tmplOpts = {
+          method,
+          field,
+          alterFieldStr
+        };
+        const alterInfoStr = util$1.analyTmpl(ALTER_INFOS_TEMPLATE, tmplOpts);
+        infosStrArr.push(alterInfoStr);
+      }
+
+      if (!schemaVerify.Type.array.isNotEmpty(infosStrArr)) {
+        throw new Error(builder.default.emptyAlterInfos);
+      }
+
+      const alterInfosStr = infosStrArr.join(",");
+      const queryTable = this.getQueryTable();
+      const tmplOpts = {
+        queryTable,
+        alterInfosStr
+      };
+      const query = util$1.analyTmpl(ALTER_TEMPLATE, tmplOpts);
+      return query;
+    }
+
+    feildTmpl(fieldInfo) {
+      const field = fieldInfo.field;
+      const type = fieldInfo.type;
+      const unsigned = fieldInfo.unsigned;
+      const notNull = fieldInfo.notNull;
+      let defaultValue = fieldInfo.default;
+      const autoIncrement = fieldInfo.autoIncrement;
+      const onUpdate = fieldInfo.onUpdate;
+      let comment = fieldInfo.comment;
+      const tmplOpts = {};
+
+      if (schemaVerify.Type.string.isNotEmpty(field)) {
+        tmplOpts["field"] = this.safeKey(field);
+      }
+
+      if (schemaVerify.Type.string.isNotEmpty(type)) {
+        tmplOpts["type"] = type.toUpperCase();
+      }
+
+      if (unsigned === true) {
+        tmplOpts["unsigned"] = _enum$1.TableOptions.unsigned;
+      }
+
+      if (notNull === true) {
+        tmplOpts["notNull"] = _enum$1.TableOptions.notNull;
+      }
+
+      if (schemaVerify.Type.string.is(defaultValue) || schemaVerify.Type.number.is(defaultValue)) {
+        let needSafe = true;
+        let upperValue;
+
+        if (schemaVerify.Type.string.is(defaultValue)) {
+          upperValue = defaultValue.toUpperCase();
+          needSafe = !constant$1.TABLE_OPT_VALUES.includes(upperValue);
+        }
+
+        defaultValue = needSafe ? this.safeValue(defaultValue) : upperValue;
+        tmplOpts["default"] = `${_enum$1.TableOptions.default} ${defaultValue}`;
+      }
+
+      if (autoIncrement === true) {
+        tmplOpts["autoIncrement"] = _enum$1.TableOptions.autoIncrement;
+      }
+
+      if (schemaVerify.Type.string.isNotEmpty(onUpdate)) {
+        tmplOpts["onUpdate"] = `${_enum$1.TableOptions.onUpdate} ${onUpdate}`;
+      }
+
+      if (schemaVerify.Type.string.isNotEmpty(comment)) {
+        comment = this.safeValue(comment);
+        tmplOpts["comment"] = `${_enum$1.TableOptions.comment} ${comment}`;
+      }
+
+      const feildStr = util$1.analyTmpl(constant$1.FEILD_TEMPLATE, tmplOpts);
+      return feildStr;
+    }
+
+  }
+
+  exports.default = Alter;
+});
+unwrapExports(alter);
 
 var select$1 = createCommonjsModule(function (module, exports) {
 
@@ -6070,14 +6404,8 @@ var create$1 = createCommonjsModule(function (module, exports) {
   });
   const TABLE_TEMPLATE = `CREATE TABLE {{tableName}}( {{feildsStr}}) {{tableOptionsStr}}`;
   const TABLE_OPTIONS_TEMPLATE = `{{engine}}{{autoIncrement}}{{defaultCharset}}{{comment}}`;
-  const FEILD_TEMPLATE = `{{field}}{{type}}{{unsigned}}{{notNull}}{{default}}{{autoIncrement}}{{onUpdate}}{{comment}}`;
-  const TABLE_OPT_VALUES = Object.keys(_enum$1.TableOptionValue).map(key => _enum$1.TableOptionValue[key]);
 
   class Create extends safe$1.default {
-    constructor() {
-      super();
-    }
-
     info(tableInfo) {
       if (schemaVerify.Type.string.isNotEmpty(tableInfo)) {
         this.createTableSqlStr = tableInfo;
@@ -6167,7 +6495,7 @@ var create$1 = createCommonjsModule(function (module, exports) {
 
         if (schemaVerify.Type.string.is(defaultValue)) {
           upperValue = defaultValue.toUpperCase();
-          needSafe = !TABLE_OPT_VALUES.includes(upperValue);
+          needSafe = !constant$1.TABLE_OPT_VALUES.includes(upperValue);
         }
 
         defaultValue = needSafe ? this.safeValue(defaultValue) : upperValue;
@@ -6187,7 +6515,7 @@ var create$1 = createCommonjsModule(function (module, exports) {
         tmplOpts["comment"] = `${_enum$1.TableOptions.comment} ${comment}`;
       }
 
-      const feildStr = util$1.analyTmpl(FEILD_TEMPLATE, tmplOpts);
+      const feildStr = util$1.analyTmpl(constant$1.FEILD_TEMPLATE, tmplOpts);
       return feildStr;
     }
 
@@ -6270,6 +6598,152 @@ var create$1 = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(create$1);
 
+var alter$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ALTER_TEMPLATE = `ALTER TABLE {{queryTable}}{{alterInfosStr}}`;
+  const ALTER_INFOS_TEMPLATE = `{{method}}COLUMN {{field}}{{alterFieldStr}}`;
+
+  class Alter extends safe$1.default {
+    add(field, alterField) {
+      delete alterField["field"];
+      return this.alterCache(_enum$1.AlterMethods.add, field, alterField);
+    }
+
+    drop(field) {
+      return this.alterCache(_enum$1.AlterMethods.drop, field, {});
+    }
+
+    modify(field, alterField) {
+      delete alterField["field"];
+      return this.alterCache(_enum$1.AlterMethods.modify, field, alterField);
+    }
+
+    change(field, alterField) {
+      return this.alterCache(_enum$1.AlterMethods.change, field, alterField);
+    }
+
+    alterCache(method, field, alterField) {
+      if (!builder$1.alterFieldVerify(alterField)) {
+        throw new Error(builder.default.errorAlterField);
+      }
+
+      if (!schemaVerify.Type.string.isNotEmpty(field)) {
+        throw new Error(builder.default.errorField);
+      }
+
+      const alterInfo = {
+        method,
+        field,
+        alterField
+      };
+      const alterInfos = schemaVerify.Type.array.safe(this.alterInfos);
+      alterInfos.push(alterInfo);
+      this.alterInfos = alterInfos;
+      return this;
+    }
+
+    build() {
+      const alterInfos = schemaVerify.Type.array.safe(this.alterInfos);
+      const infosStrArr = [];
+
+      for (const item of alterInfos) {
+        if (!builder$1.alterInfosVerify(item)) {
+          continue;
+        }
+
+        const method = item.method;
+        const field = this.safeKey(item.field);
+        const alterField = item.alterField;
+        const alterFieldStr = this.feildTmpl(alterField);
+        const tmplOpts = {
+          method,
+          field,
+          alterFieldStr
+        };
+        const alterInfoStr = util$1.analyTmpl(ALTER_INFOS_TEMPLATE, tmplOpts);
+        infosStrArr.push(alterInfoStr);
+      }
+
+      if (!schemaVerify.Type.array.isNotEmpty(infosStrArr)) {
+        throw new Error(builder.default.emptyAlterInfos);
+      }
+
+      const alterInfosStr = infosStrArr.join(",");
+      const queryTable = this.getQueryTable();
+      const tmplOpts = {
+        queryTable,
+        alterInfosStr
+      };
+      const query = util$1.analyTmpl(ALTER_TEMPLATE, tmplOpts);
+      return query;
+    }
+
+    feildTmpl(fieldInfo) {
+      const field = fieldInfo.field;
+      const type = fieldInfo.type;
+      const unsigned = fieldInfo.unsigned;
+      const notNull = fieldInfo.notNull;
+      let defaultValue = fieldInfo.default;
+      const autoIncrement = fieldInfo.autoIncrement;
+      const onUpdate = fieldInfo.onUpdate;
+      let comment = fieldInfo.comment;
+      const tmplOpts = {};
+
+      if (schemaVerify.Type.string.isNotEmpty(field)) {
+        tmplOpts["field"] = this.safeKey(field);
+      }
+
+      if (schemaVerify.Type.string.isNotEmpty(type)) {
+        tmplOpts["type"] = type.toUpperCase();
+      }
+
+      if (unsigned === true) {
+        tmplOpts["unsigned"] = _enum$1.TableOptions.unsigned;
+      }
+
+      if (notNull === true) {
+        tmplOpts["notNull"] = _enum$1.TableOptions.notNull;
+      }
+
+      if (schemaVerify.Type.string.is(defaultValue) || schemaVerify.Type.number.is(defaultValue)) {
+        let needSafe = true;
+        let upperValue;
+
+        if (schemaVerify.Type.string.is(defaultValue)) {
+          upperValue = defaultValue.toUpperCase();
+          needSafe = !constant$1.TABLE_OPT_VALUES.includes(upperValue);
+        }
+
+        defaultValue = needSafe ? this.safeValue(defaultValue) : upperValue;
+        tmplOpts["default"] = `${_enum$1.TableOptions.default} ${defaultValue}`;
+      }
+
+      if (autoIncrement === true) {
+        tmplOpts["autoIncrement"] = _enum$1.TableOptions.autoIncrement;
+      }
+
+      if (schemaVerify.Type.string.isNotEmpty(onUpdate)) {
+        tmplOpts["onUpdate"] = `${_enum$1.TableOptions.onUpdate} ${onUpdate}`;
+      }
+
+      if (schemaVerify.Type.string.isNotEmpty(comment)) {
+        comment = this.safeValue(comment);
+        tmplOpts["comment"] = `${_enum$1.TableOptions.comment} ${comment}`;
+      }
+
+      const feildStr = util$1.analyTmpl(constant$1.FEILD_TEMPLATE, tmplOpts);
+      return feildStr;
+    }
+
+  }
+
+  exports.default = Alter;
+});
+unwrapExports(alter$1);
+
 var builder$2 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -6305,6 +6779,10 @@ var builder$2 = createCommonjsModule(function (module, exports) {
 
     create() {
       return this.queryInstance(_enum$1.QueryTypes.create);
+    }
+
+    alter() {
+      return this.queryInstance(_enum$1.QueryTypes.alter);
     }
 
     get func() {
@@ -6345,6 +6823,10 @@ var builder$2 = createCommonjsModule(function (module, exports) {
 
         case _enum$1.QueryTypes.create:
           instance = new create$1.default();
+          break;
+
+        case _enum$1.QueryTypes.alter:
+          instance = new alter$1.default();
           break;
       }
 
@@ -6449,6 +6931,10 @@ var builder$3 = createCommonjsModule(function (module, exports) {
       return this.queryInstance(_enum$1.QueryTypes.create);
     }
 
+    alter() {
+      return this.queryInstance(_enum$1.QueryTypes.alter);
+    }
+
     get func() {
       return this.widgetInstance(_enum$1.WidgetTypes.func);
     }
@@ -6487,6 +6973,10 @@ var builder$3 = createCommonjsModule(function (module, exports) {
 
         case _enum$1.QueryTypes.create:
           instance = new create$1.default();
+          break;
+
+        case _enum$1.QueryTypes.alter:
+          instance = new alter$1.default();
           break;
       }
 

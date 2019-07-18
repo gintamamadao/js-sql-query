@@ -4,6 +4,7 @@ import Update from "./update";
 import Delete from "./delete";
 import Replace from "./replace";
 import Create from "./create";
+import Alter from "./alter";
 import Term from "./term";
 import Func from "./func";
 import Order from "./order";
@@ -51,6 +52,10 @@ class Builder {
         return this.queryInstance(QueryTypes.create);
     }
 
+    alter() {
+        return this.queryInstance(QueryTypes.alter);
+    }
+
     get func() {
         return this.widgetInstance(WidgetTypes.func);
     }
@@ -83,6 +88,9 @@ class Builder {
                 break;
             case QueryTypes.create:
                 instance = new Create();
+                break;
+            case QueryTypes.alter:
+                instance = new Alter();
                 break;
         }
         return this.initInstance(type, instance);

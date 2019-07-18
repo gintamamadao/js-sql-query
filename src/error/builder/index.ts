@@ -8,6 +8,7 @@ import TermError from "./term.error";
 import UpdateError from "./update.error";
 import BuilderError from "./builder.error";
 import CreateError from "./create.error";
+import AlterError from "./alter.error";
 
 const ErrMsg = {
     ...CombineError,
@@ -20,7 +21,9 @@ const ErrMsg = {
     ...UpdateError,
     ...BuilderError,
     ...CreateError,
+    ...AlterError,
     errorTableName: "错误的表名，需要非空字符串",
+    errorField: "错误的表名，需要非空字符串",
     errorFields: "错误的字段，需要非空字符串或非空字符串数组",
     errorFieldData: "错误的字段数据",
     needStr: "需要字符串",

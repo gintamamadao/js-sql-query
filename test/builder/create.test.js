@@ -42,7 +42,7 @@ describe("CREATE", () => {
             "CREATE TABLE student ( `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '学生id',`name` VARCHAR(32) NOT NULL DEFAULT '' COMMENT '学生名字',`update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',CONSTRAINT `id` PRIMARY KEY (`id`),CONSTRAINT `name` UNIQUE KEY (`name`) ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='学生信息表';";
         expect((() => builder.create().info(info).query)()).toBe(QUERY);
     });
-    test("CREATE", () => {
+    test("CREATE:primaryKey", () => {
         const info = JSON.parse(JSON.stringify(tableInfo));
         info.primaryKey = {
             keyName: "pk_id",
@@ -52,7 +52,7 @@ describe("CREATE", () => {
             "CREATE TABLE student ( `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '学生id',`name` VARCHAR(32) NOT NULL DEFAULT '' COMMENT '学生名字',`update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',CONSTRAINT `pk_id` PRIMARY KEY (`id`,`name`),CONSTRAINT `name` UNIQUE KEY (`name`) ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='学生信息表';";
         expect((() => builder.create().info(info).query)()).toBe(QUERY);
     });
-    test("CREATE", () => {
+    test("CREATE:error", () => {
         const info = JSON.parse(JSON.stringify(tableInfo));
         info.tableName = 0;
         expect(() => builder.create().info(info).query).toThrowError(

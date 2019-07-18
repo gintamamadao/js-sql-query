@@ -11,7 +11,8 @@ export enum QueryTypes {
     select = "SELECT",
     update = "UPDATE",
     delete = "DELETE",
-    create = "CREATE"
+    create = "CREATE",
+    alter = "ALTER"
 }
 
 export enum FuncTypes {
@@ -121,6 +122,9 @@ export enum TableOptions {
     constraint = "CONSTRAINT"
 }
 
-export enum TableOptionValue {
-    currentTimestamp = "CURRENT_TIMESTAMP"
+export enum AlterMethods {
+    add = "ADD",
+    drop = "DROP",
+    modify = "MODIFY",
+    change = "CHANGE"
 }
