@@ -711,7 +711,7 @@ builder
 ### HAVING
 
 -   HAVING 的逻辑和 WHERE 是一样的，但仅限 SELECT 能调用
--   为和 WHERE 做区分，HAVING 的 api 的前缀都是 HAVING
+-   为和 WHERE 做区分，HAVING 的 api 的前缀都是 having
 
 #### having
 
