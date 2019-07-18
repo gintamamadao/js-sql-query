@@ -42,7 +42,6 @@ instance.query;
 
 -   [api](#api)
     -   [Builder](#builder)
-        -   [CREATE](#create)
         -   [INSERT/REPLACE](#insertreplace)
         -   [UPDATE](#update)
         -   [SELECT](#select)
@@ -52,6 +51,7 @@ instance.query;
         -   [TERM](#term)
         -   [ORDER](#order)
         -   [LIMIT/OFFSET](#limitoffset)
+        -   [CREATE](#create)
 
 # api
 
@@ -78,97 +78,6 @@ builder.table("table1");
 
 语句的基本类型有 CREATE，INSERT，REPLACE， UPDATE，SELECT，DELETE，其中 INSERT 和 REPLACE 的拼装逻辑是完全一样的，就合在一起讲
 不同的基本类型可以调用的 api 不完全一样，有些是公用的，有些是仅限某些基本类型才能调用。
-
-### CREATE
-
--   新建表语句，把表的信息用一定的 json 结构保存，然后可以通过 api 转换成 sql 语句
-
-#### create
-
--   指定 sql 语句为 CREATE 类型
-
-#### info
-
--   设置新建表的信息
-
-#### create 例子：
-
--   表结构信息
-
-```sql
-  CREATE TABLE student (
-         `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '学生id',
-        `name` VARCHAR(32) NOT NULL DEFAULT '' COMMENT '学生名字',
-        `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
-        CONSTRAINT `id` PRIMARY KEY (`id`),
-       CONSTRAINT `pk_id` UNIQUE KEY (`id`,`name`)
-  ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='学生信息表';
-```
-
--   将上面的表信息用 json 结构保存
-
-```js
-const tableInfo = {
-    tableName: "student",
-    primaryKey: "id",
-    uniqueKey: {
-        keyName: "pk_id",
-        combineFields: ["id", "name"]
-    },
-    engine: "InnoDB",
-    autoIncrement: 10000,
-    defaultCharset: "utf8",
-    comment: "学生信息表",
-    fields: [
-        {
-            field: "id",
-            type: "bigint",
-            unsigned: true,
-            notNull: true,
-            autoIncrement: true,
-            comment: "学生id"
-        },
-        {
-            field: "name",
-            type: "varchar(32)",
-            default: "",
-            notNull: true,
-            comment: "学生名字"
-        },
-        {
-            field: "update_time",
-            type: "timestamp",
-            notNull: true,
-            default: "CURRENT_TIMESTAMP",
-            onUpdate: "CURRENT_TIMESTAMP",
-            comment: "最后更新时间"
-        }
-    ]
-};
-```
-
--   将 json 格式转换成 sql 语句
-
-```js
-builder.create().info(tableInfo).query;
-```
-
-#### 结构说明
-
--   tableName，表名
--   primaryKey，主键
--   uniqueKey，索引
--   engine，即 ENGINE
--   autoIncrement，即 AUTO_INCREMENT，设置自增位置或者是否是自增字段
--   defaultCharset，即 DEFAULT CHARSET
--   comment，备注
--   fields，字段信息
--   field，字段名
--   type，数据类型
--   unsigned，无符号数值
--   notNull，不允许为空
--   default，设置默认值
--   onUpdate，数据更新字段的更新值
 
 ### INSERT/REPLACE
 
@@ -1404,3 +1313,95 @@ builder
     .findOne().query;
 // SELECT * FROM `table1` LIMIT 1
 ```
+
+### CREATE
+
+-   新建表语句，把表的信息用一定的 json 结构保存，然后可以通过 api 转换成 sql 语句
+
+#### create
+
+-   指定 sql 语句为 CREATE 类型
+
+#### info
+
+-   设置新建表的信息
+
+#### create 例子：
+
+-   表结构信息
+
+```sql
+  CREATE TABLE student (
+         `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '学生id',
+        `name` VARCHAR(32) NOT NULL DEFAULT '' COMMENT '学生名字',
+        `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',
+        CONSTRAINT `id` PRIMARY KEY (`id`),
+       CONSTRAINT `pk_id` UNIQUE KEY (`id`,`name`)
+  ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='学生信息表';
+```
+
+-   将上面的表信息用 json 结构保存
+
+```js
+const tableInfo = {
+    tableName: "student",
+    primaryKey: "id",
+    uniqueKey: {
+        keyName: "pk_id",
+        combineFields: ["id", "name"]
+    },
+    engine: "InnoDB",
+    autoIncrement: 10000,
+    defaultCharset: "utf8",
+    comment: "学生信息表",
+    fields: [
+        {
+            field: "id",
+            type: "bigint",
+            unsigned: true,
+            notNull: true,
+            autoIncrement: true,
+            comment: "学生id"
+        },
+        {
+            field: "name",
+            type: "varchar(32)",
+            default: "",
+            notNull: true,
+            comment: "学生名字"
+        },
+        {
+            field: "update_time",
+            type: "timestamp",
+            notNull: true,
+            default: "CURRENT_TIMESTAMP",
+            onUpdate: "CURRENT_TIMESTAMP",
+            comment: "最后更新时间"
+        }
+    ]
+};
+```
+
+-   将 json 格式转换成 sql 语句
+
+```js
+builder.create().info(tableInfo).query;
+//CREATE TABLE student ( `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '学生id',`name` VARCHAR(32) NOT NULL DEFAULT '' COMMENT '学生名字',`update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',CONSTRAINT `id` PRIMARY KEY (`id`),CONSTRAINT `pk_id` UNIQUE KEY (`id`,`name`) ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='学生信息表';
+```
+
+#### 结构说明
+
+-   tableName，表名
+-   primaryKey，主键
+-   uniqueKey，索引
+-   engine，即 ENGINE
+-   autoIncrement，即 AUTO_INCREMENT，设置自增位置或者是否是自增字段
+-   defaultCharset，即 DEFAULT CHARSET
+-   comment，备注
+-   fields，字段信息
+-   field，字段名
+-   type，数据类型
+-   unsigned，无符号数值
+-   notNull，不允许为空
+-   default，设置默认值
+-   onUpdate，数据更新字段的更新值
