@@ -42,27 +42,3 @@ export interface OrderInfo {
 export interface FieldOrder {
     [propName: string]: string[];
 }
-export interface TableField {
-    field: string;
-    type: string;
-    unsigned?: boolean;
-    autoIncrement?: boolean;
-    notNull?: boolean;
-    default?: string | number;
-    onUpdate?: string;
-    comment?: string;
-}
-export interface combineKey {
-    keyName: string;
-    combineFields: string[];
-}
-export interface TableInfo {
-    tableName: string;
-    primaryKey: string | combineKey;
-    uniqueKey?: string | combineKey;
-    engine?: string;
-    autoIncrement?: number;
-    defaultCharset?: string;
-    comment?: string;
-    fields: TableField[];
-}

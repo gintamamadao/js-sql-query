@@ -1,10 +1,34 @@
 import Safe from "./safe";
 import { TableOptions } from "../constant/enum";
 import { TABLE_OPT_VALUES, FEILD_TEMPLATE } from "../constant/constant";
-import { TableInfo, combineKey, TableField } from "../constant/interface";
 import { Type } from "schema-verify";
 import { tableInfoVerify } from "../verify/builder/index";
 import { analyTmpl } from "../util/util";
+
+export interface TableField {
+    field: string;
+    type: string;
+    unsigned?: boolean;
+    autoIncrement?: boolean;
+    notNull?: boolean;
+    default?: string | number;
+    onUpdate?: string;
+    comment?: string;
+}
+export interface combineKey {
+    keyName: string;
+    combineFields: string[];
+}
+export interface TableInfo {
+    tableName: string;
+    primaryKey: string | combineKey;
+    uniqueKey?: string | combineKey;
+    engine?: string;
+    autoIncrement?: number;
+    defaultCharset?: string;
+    comment?: string;
+    fields: TableField[];
+}
 
 const TABLE_TEMPLATE = `CREATE TABLE {{tableName}}( {{feildsStr}}) {{tableOptionsStr}}`;
 const TABLE_OPTIONS_TEMPLATE = `{{engine}}{{autoIncrement}}{{defaultCharset}}{{comment}}`;
