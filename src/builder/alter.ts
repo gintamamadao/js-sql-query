@@ -3,7 +3,7 @@ import { TableOptions, AlterMethods } from "../constant/enum";
 import { TABLE_OPT_VALUES, FEILD_TEMPLATE } from "../constant/constant";
 import { Type } from "schema-verify";
 import { analyTmpl } from "../util/util";
-import { alterFieldVerify, alterInfosVerify } from "../verify/builder/index";
+import { alterInfosVerify } from "../verify/builder/index";
 import ErrMsg from "../error/builder/index";
 
 const ALTER_TEMPLATE = `ALTER TABLE {{queryTable}}{{alterInfosStr}}`;
@@ -51,17 +51,20 @@ class Alter extends Safe {
         field: string,
         alterField: AlterField
     ) {
-        if (!alterFieldVerify(alterField)) {
+        if (
+            AlterMethods.drop !== method &&
+            !Type.object.isNotEmpty(alterField)
+        ) {
             throw new Error(ErrMsg.errorAlterField);
-        }
-        if (!Type.string.isNotEmpty(field)) {
-            throw new Error(ErrMsg.errorField);
         }
         const alterInfo: AlterInfo = {
             method,
             field,
             alterField
         };
+        if (!alterInfosVerify(alterInfo)) {
+            throw new Error(ErrMsg.errorAlterField);
+        }
         const alterInfos: AlterInfo[] = Type.array.safe(this.alterInfos);
         alterInfos.push(alterInfo);
         this.alterInfos = alterInfos;

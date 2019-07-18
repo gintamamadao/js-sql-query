@@ -54,4 +54,22 @@ describe("ALTER", () => {
                     }).query)()
         ).toBe(QUERY);
     });
+    test("ALTER:change", () => {
+        expect(
+            () =>
+                builder
+                    .alter()
+                    .table("table1")
+                    .change("field1").query
+        ).toThrowError("错误的修改配置");
+    });
+    test("ALTER:change error", () => {
+        expect(
+            () =>
+                builder
+                    .alter()
+                    .table("table1")
+                    .change("field1", {}).query
+        ).toThrowError("错误的修改配置");
+    });
 });

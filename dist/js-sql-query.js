@@ -5999,12 +5999,8 @@ var alter = createCommonjsModule(function (module, exports) {
     }
 
     alterCache(method, field, alterField) {
-      if (!builder$1.alterFieldVerify(alterField)) {
+      if (_enum$1.AlterMethods.drop !== method && !schemaVerify.Type.object.isNotEmpty(alterField)) {
         throw new Error(builder.default.errorAlterField);
-      }
-
-      if (!schemaVerify.Type.string.isNotEmpty(field)) {
-        throw new Error(builder.default.errorField);
       }
 
       const alterInfo = {
@@ -6012,6 +6008,11 @@ var alter = createCommonjsModule(function (module, exports) {
         field,
         alterField
       };
+
+      if (!builder$1.alterInfosVerify(alterInfo)) {
+        throw new Error(builder.default.errorAlterField);
+      }
+
       const alterInfos = schemaVerify.Type.array.safe(this.alterInfos);
       alterInfos.push(alterInfo);
       this.alterInfos = alterInfos;
@@ -6626,12 +6627,8 @@ var alter$1 = createCommonjsModule(function (module, exports) {
     }
 
     alterCache(method, field, alterField) {
-      if (!builder$1.alterFieldVerify(alterField)) {
+      if (_enum$1.AlterMethods.drop !== method && !schemaVerify.Type.object.isNotEmpty(alterField)) {
         throw new Error(builder.default.errorAlterField);
-      }
-
-      if (!schemaVerify.Type.string.isNotEmpty(field)) {
-        throw new Error(builder.default.errorField);
       }
 
       const alterInfo = {
@@ -6639,6 +6636,11 @@ var alter$1 = createCommonjsModule(function (module, exports) {
         field,
         alterField
       };
+
+      if (!builder$1.alterInfosVerify(alterInfo)) {
+        throw new Error(builder.default.errorAlterField);
+      }
+
       const alterInfos = schemaVerify.Type.array.safe(this.alterInfos);
       alterInfos.push(alterInfo);
       this.alterInfos = alterInfos;
