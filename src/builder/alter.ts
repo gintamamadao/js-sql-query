@@ -28,9 +28,13 @@ interface AlterInfo {
 class Alter extends Safe {
     protected alterInfos: AlterInfo[];
 
-    add(field: string, alterField: AlterField) {
+    add(field: string | AlterField, alterField: AlterField) {
+        if (Type.object.is(field)) {
+            alterField = <AlterField>field;
+            field = alterField.field;
+        }
         delete alterField["field"];
-        return this.alterCache(AlterMethods.add, field, alterField);
+        return this.alterCache(AlterMethods.add, <string>field, alterField);
     }
 
     drop(field: string) {

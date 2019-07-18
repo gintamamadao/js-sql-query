@@ -5981,6 +5981,11 @@ var alter = createCommonjsModule(function (module, exports) {
 
   class Alter extends safe$1.default {
     add(field, alterField) {
+      if (schemaVerify.Type.object.is(field)) {
+        alterField = field;
+        field = alterField.field;
+      }
+
       delete alterField["field"];
       return this.alterCache(_enum$1.AlterMethods.add, field, alterField);
     }
@@ -6609,6 +6614,11 @@ var alter$1 = createCommonjsModule(function (module, exports) {
 
   class Alter extends safe$1.default {
     add(field, alterField) {
+      if (schemaVerify.Type.object.is(field)) {
+        alterField = field;
+        field = alterField.field;
+      }
+
       delete alterField["field"];
       return this.alterCache(_enum$1.AlterMethods.add, field, alterField);
     }

@@ -52,6 +52,7 @@ instance.query;
         -   [ORDER](#order)
         -   [LIMIT/OFFSET](#limitoffset)
         -   [CREATE](#create)
+        -   [ALTER](#alter)
 
 # api
 
@@ -1405,3 +1406,61 @@ builder.create().info(tableInfo).query;
 -   notNull，不允许为空
 -   default，设置默认值
 -   onUpdate，数据更新字段的更新值
+
+### ALTER
+
+#### add
+
+-   添加字段
+
+#### drop
+
+-   删除字段
+
+#### modify
+
+-   修改字段
+
+#### change
+
+-   修改字段
+
+#### ALTER 例子：
+
+```js
+builder
+    .alter()
+    .table("table1")
+    .add({
+        field: "field1",
+        type: "bigint",
+        unsigned: true,
+        notNull: true,
+        autoIncrement: true,
+        comment: "学生id"
+    }).query;
+// ALTER TABLE `table1` ADD COLUMN `field1` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '学生id'
+
+builder
+    .alter()
+    .table("table1")
+    .drop("field1").query;
+// ALTER TABLE `table1` DROP COLUMN `field1`
+
+builder
+    .alter()
+    .table("table1")
+    .modify("field1", {
+        type: "varchar(32)"
+    }).query;
+// ALTER TABLE `table1` MODIFY COLUMN `field1` VARCHAR(32)
+
+builder
+    .alter()
+    .table("table1")
+    .change("field1", {
+        field: "id",
+        type: "bigint"
+    }).query;
+// ALTER TABLE `table1` CHANGE COLUMN `field1` `id` BIGINT
+```

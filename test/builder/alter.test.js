@@ -18,6 +18,20 @@ describe("ALTER", () => {
                         comment: "学生id"
                     }).query)()
         ).toBe(QUERY);
+        expect(
+            (() =>
+                builder
+                    .alter()
+                    .table("table1")
+                    .add({
+                        field: "field1",
+                        type: "bigint",
+                        unsigned: true,
+                        notNull: true,
+                        autoIncrement: true,
+                        comment: "学生id"
+                    }).query)()
+        ).toBe(QUERY);
     });
     test("ALTER:drop", () => {
         const QUERY = "ALTER TABLE `table1` DROP COLUMN `field1`";
