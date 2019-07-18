@@ -1390,7 +1390,7 @@ builder.create().info(tableInfo).query;
 //CREATE TABLE student ( `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '学生id',`name` VARCHAR(32) NOT NULL DEFAULT '' COMMENT '学生名字',`update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',CONSTRAINT `id` PRIMARY KEY (`id`),CONSTRAINT `pk_id` UNIQUE KEY (`id`,`name`) ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='学生信息表';
 ```
 
-#### 结构说明
+#### 字段结构说明
 
 -   tableName，表名
 -   primaryKey，主键
@@ -1405,7 +1405,7 @@ builder.create().info(tableInfo).query;
 -   unsigned，无符号数值
 -   notNull，不允许为空
 -   default，设置默认值
--   onUpdate，数据更新字段的更新值
+-   onUpdate，数据更新时字段的更新值
 
 ### ALTER
 
@@ -1464,3 +1464,16 @@ builder
     }).query;
 // ALTER TABLE `table1` CHANGE COLUMN `field1` `id` BIGINT
 ```
+
+#### 字段结构说明
+
+数据字段结构和 CREATE 是基本一样的，但没有 table 相关的字段
+
+-   autoIncrement，设置是否是自增字段
+-   comment，备注
+-   field，字段名
+-   type，数据类型
+-   unsigned，无符号数值
+-   notNull，不允许为空
+-   default，设置默认值
+-   onUpdate，数据更新时字段的更新值
