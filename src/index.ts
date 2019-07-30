@@ -1,5 +1,10 @@
 import Builder from "./builder/builder";
 
-export default {
-    Builder
-};
+function SqlQuery() {
+    this.builder = new Builder();
+    return this;
+}
+
+SqlQuery.Builder = Builder;
+
+export default SqlQuery;
