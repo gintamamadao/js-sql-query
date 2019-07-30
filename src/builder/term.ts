@@ -1,6 +1,6 @@
 import { TermSign, TermLogic } from "../constant/builder/enum";
 import { TermData, TermInfo, TermBracket } from "../constant/builder/interface";
-import Safe from "./safe";
+import Base from "./base";
 import { Type } from "schema-verify";
 import {
     termDataVerify,
@@ -15,7 +15,7 @@ import {
 import ErrMsg from "../error/builder/index";
 
 const SQL_NAME = "termSql";
-class Term extends Safe {
+class Term extends Base {
     protected termInfos: TermInfo[];
     protected termBrackets: TermBracket[];
     protected termSql: string | Function;

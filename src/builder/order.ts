@@ -2,7 +2,7 @@ import { argStrArrTrans } from "../util/util";
 import { OrderTypes } from "../constant/builder/enum";
 import { OrderInfo, FieldOrder } from "../constant/builder/interface";
 import { Type } from "schema-verify";
-import Safe from "./safe";
+import Base from "./base";
 import {
     orderInfoVerify,
     valueListVerify,
@@ -12,7 +12,7 @@ import ErrMsg from "../error/builder/index";
 
 const SQL_NAME = "orderSql";
 
-class Order extends Safe {
+class Order extends Base {
     protected orderInfos: OrderInfo[];
     protected orderSql: string | Function;
     constructor() {

@@ -5,7 +5,7 @@ import { Type } from "schema-verify";
 import { dialectVerify, manualSqlVerify } from "../verify/builder/index";
 import ErrMsg from "../error/builder/index";
 
-class Safe {
+class Base {
     protected _queryTable: string;
     protected _dialect: Dialect;
     protected _dialectType: DialectTypes;
@@ -43,7 +43,7 @@ class Safe {
     };
 
     protected manualSql(sql: string | Function, key: string) {
-        if (!manualSqlVerify(sql) && !(sql instanceof Safe)) {
+        if (!manualSqlVerify(sql) && !(sql instanceof Base)) {
             throw new Error(ErrMsg.errorManualSql);
         }
         this[key] = sql;
@@ -60,7 +60,7 @@ class Safe {
                 return <string>sql;
             }
         }
-        if (Type.object.isNotEmpty(sql) && sql instanceof Safe) {
+        if (Type.object.isNotEmpty(sql) && sql instanceof Base) {
             sql = sql.query;
             if (Type.string.isNotEmpty(sql)) {
                 return <string>sql;
@@ -94,4 +94,4 @@ class Safe {
     }
 }
 
-export default Safe;
+export default Base;

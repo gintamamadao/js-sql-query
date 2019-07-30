@@ -1,4 +1,4 @@
-import Safe from "./safe";
+import Base from "./base";
 import { TableOptions, AlterMethods } from "../constant/builder/enum";
 import { TABLE_OPT_VALUES, FEILD_TEMPLATE } from "../constant/builder/constant";
 import { Type } from "schema-verify";
@@ -25,7 +25,7 @@ interface AlterInfo {
     alterField: AlterField;
 }
 
-class Alter extends Safe {
+class Alter extends Base {
     protected alterInfos: AlterInfo[];
 
     add(field: string | AlterField, alterField: AlterField) {

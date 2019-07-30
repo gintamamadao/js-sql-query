@@ -1,9 +1,9 @@
 import { FieldOrder } from "../constant/builder/interface";
-import Safe from "./safe";
+import Base from "./base";
 import Limit from "./limit";
 import Order from "./order";
 
-class Query extends Safe {
+class Query extends Base {
     protected queryLimit: Limit;
     protected queryOrder: Order;
 

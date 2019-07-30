@@ -1,4 +1,4 @@
-import Safe from "./safe";
+import Base from "./base";
 import { TableOptions } from "../constant/builder/enum";
 import { TABLE_OPT_VALUES, FEILD_TEMPLATE } from "../constant/builder/constant";
 import { Type } from "schema-verify";
@@ -33,7 +33,7 @@ export interface TableInfo {
 const TABLE_TEMPLATE = `CREATE TABLE IF NOT EXISTS {{tableName}}( {{feildsStr}}) {{tableOptionsStr}}`;
 const TABLE_OPTIONS_TEMPLATE = `{{engine}}{{autoIncrement}}{{defaultCharset}}{{comment}}`;
 
-class Create extends Safe {
+class Create extends Base {
     protected createTableSqlStr: string;
     protected createTableInfo: TableInfo;
 

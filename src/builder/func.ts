@@ -1,9 +1,9 @@
 import { FuncTypes } from "../constant/builder/enum";
 import { FuncInfo } from "../constant/builder/interface";
 import { Type } from "schema-verify";
-import Safe from "./safe";
+import Base from "./base";
 
-class Func extends Safe {
+class Func extends Base {
     constructor() {
         super();
     }

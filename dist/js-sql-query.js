@@ -2188,13 +2188,13 @@ var builder_26 = builder$1.naturalVerify;
 var builder_27 = builder$1.integerVerify;
 var builder_28 = builder$1.fieldDataVerify;
 
-var safe = createCommonjsModule(function (module, exports) {
+var base = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
 
-  class Safe {
+  class Base {
     constructor() {
       this.safeValue = function () {
         return "";
@@ -2233,7 +2233,7 @@ var safe = createCommonjsModule(function (module, exports) {
     }
 
     manualSql(sql, key) {
-      if (!builder$1.manualSqlVerify(sql) && !(sql instanceof Safe)) {
+      if (!builder$1.manualSqlVerify(sql) && !(sql instanceof Base)) {
         throw new Error(builder.default.errorManualSql);
       }
 
@@ -2255,7 +2255,7 @@ var safe = createCommonjsModule(function (module, exports) {
         }
       }
 
-      if (schemaVerify.Type.object.isNotEmpty(sql) && sql instanceof Safe) {
+      if (schemaVerify.Type.object.isNotEmpty(sql) && sql instanceof Base) {
         sql = sql.query;
 
         if (schemaVerify.Type.string.isNotEmpty(sql)) {
@@ -2295,9 +2295,9 @@ var safe = createCommonjsModule(function (module, exports) {
 
   }
 
-  exports.default = Safe;
+  exports.default = Base;
 });
-unwrapExports(safe);
+unwrapExports(base);
 
 var limit = createCommonjsModule(function (module, exports) {
 
@@ -2437,13 +2437,13 @@ unwrapExports(util$1);
 var util_1$1 = util$1.analyTmpl;
 var util_2$1 = util$1.argStrArrTrans;
 
-var safe$1 = createCommonjsModule(function (module, exports) {
+var base$1 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
 
-  class Safe {
+  class Base {
     constructor() {
       this.safeValue = function () {
         return "";
@@ -2482,7 +2482,7 @@ var safe$1 = createCommonjsModule(function (module, exports) {
     }
 
     manualSql(sql, key) {
-      if (!builder$1.manualSqlVerify(sql) && !(sql instanceof Safe)) {
+      if (!builder$1.manualSqlVerify(sql) && !(sql instanceof Base)) {
         throw new Error(builder.default.errorManualSql);
       }
 
@@ -2504,7 +2504,7 @@ var safe$1 = createCommonjsModule(function (module, exports) {
         }
       }
 
-      if (schemaVerify.Type.object.isNotEmpty(sql) && sql instanceof Safe) {
+      if (schemaVerify.Type.object.isNotEmpty(sql) && sql instanceof Base) {
         sql = sql.query;
 
         if (schemaVerify.Type.string.isNotEmpty(sql)) {
@@ -2544,9 +2544,9 @@ var safe$1 = createCommonjsModule(function (module, exports) {
 
   }
 
-  exports.default = Safe;
+  exports.default = Base;
 });
-unwrapExports(safe$1);
+unwrapExports(base$1);
 
 var order = createCommonjsModule(function (module, exports) {
 
@@ -2555,7 +2555,7 @@ var order = createCommonjsModule(function (module, exports) {
   });
   const SQL_NAME = "orderSql";
 
-  class Order extends safe$1.default {
+  class Order extends base$1.default {
     constructor() {
       super();
       this.orderInfos = [];
@@ -2786,7 +2786,7 @@ var order$1 = createCommonjsModule(function (module, exports) {
   });
   const SQL_NAME = "orderSql";
 
-  class Order extends safe$1.default {
+  class Order extends base$1.default {
     constructor() {
       super();
       this.orderInfos = [];
@@ -2916,7 +2916,7 @@ var query = createCommonjsModule(function (module, exports) {
     value: true
   });
 
-  class Query extends safe$1.default {
+  class Query extends base$1.default {
     getLimitCase() {
       let queryLimit = this.queryLimit;
 
@@ -2990,7 +2990,7 @@ var query$1 = createCommonjsModule(function (module, exports) {
     value: true
   });
 
-  class Query extends safe$1.default {
+  class Query extends base$1.default {
     getLimitCase() {
       let queryLimit = this.queryLimit;
 
@@ -3193,7 +3193,7 @@ var term = createCommonjsModule(function (module, exports) {
   });
   const SQL_NAME = "termSql";
 
-  class Term extends safe$1.default {
+  class Term extends base$1.default {
     constructor() {
       super();
       this.termInfos = [];
@@ -3568,7 +3568,7 @@ var term$1 = createCommonjsModule(function (module, exports) {
   });
   const SQL_NAME = "termSql";
 
-  class Term extends safe$1.default {
+  class Term extends base$1.default {
     constructor() {
       super();
       this.termInfos = [];
@@ -4458,7 +4458,7 @@ var func = createCommonjsModule(function (module, exports) {
     value: true
   });
 
-  class Func extends safe$1.default {
+  class Func extends base$1.default {
     constructor() {
       super();
     }
@@ -4749,7 +4749,7 @@ var func$1 = createCommonjsModule(function (module, exports) {
     value: true
   });
 
-  class Func extends safe$1.default {
+  class Func extends base$1.default {
     constructor() {
       super();
     }
@@ -5778,7 +5778,7 @@ var create = createCommonjsModule(function (module, exports) {
   const TABLE_TEMPLATE = `CREATE TABLE IF NOT EXISTS {{tableName}}( {{feildsStr}}) {{tableOptionsStr}}`;
   const TABLE_OPTIONS_TEMPLATE = `{{engine}}{{autoIncrement}}{{defaultCharset}}{{comment}}`;
 
-  class Create extends safe$1.default {
+  class Create extends base$1.default {
     info(tableInfo) {
       if (schemaVerify.Type.string.isNotEmpty(tableInfo)) {
         this.createTableSqlStr = tableInfo;
@@ -5979,7 +5979,7 @@ var alter = createCommonjsModule(function (module, exports) {
   const ALTER_TEMPLATE = `ALTER TABLE {{queryTable}}{{alterInfosStr}}`;
   const ALTER_INFOS_TEMPLATE = `{{method}}COLUMN {{field}}{{alterFieldStr}}`;
 
-  class Alter extends safe$1.default {
+  class Alter extends base$1.default {
     add(field, alterField) {
       if (schemaVerify.Type.object.is(field)) {
         alterField = field;
@@ -6411,7 +6411,7 @@ var create$1 = createCommonjsModule(function (module, exports) {
   const TABLE_TEMPLATE = `CREATE TABLE IF NOT EXISTS {{tableName}}( {{feildsStr}}) {{tableOptionsStr}}`;
   const TABLE_OPTIONS_TEMPLATE = `{{engine}}{{autoIncrement}}{{defaultCharset}}{{comment}}`;
 
-  class Create extends safe$1.default {
+  class Create extends base$1.default {
     info(tableInfo) {
       if (schemaVerify.Type.string.isNotEmpty(tableInfo)) {
         this.createTableSqlStr = tableInfo;
@@ -6612,7 +6612,7 @@ var alter$1 = createCommonjsModule(function (module, exports) {
   const ALTER_TEMPLATE = `ALTER TABLE {{queryTable}}{{alterInfosStr}}`;
   const ALTER_INFOS_TEMPLATE = `{{method}}COLUMN {{field}}{{alterFieldStr}}`;
 
-  class Alter extends safe$1.default {
+  class Alter extends base$1.default {
     add(field, alterField) {
       if (schemaVerify.Type.object.is(field)) {
         alterField = field;
@@ -7061,9 +7061,14 @@ var src = createCommonjsModule(function (module, exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = {
-    Builder: builder$3.default
-  };
+
+  function SqlQuery() {
+    const o = new builder$3.default();
+    return o;
+  }
+
+  SqlQuery.Builder = builder$3.default;
+  exports.default = SqlQuery;
 });
 var index = unwrapExports(src);
 
