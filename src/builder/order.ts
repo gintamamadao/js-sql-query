@@ -1,6 +1,6 @@
 import { argStrArrTrans } from "../util/util";
-import { OrderTypes } from "../constant/enum";
-import { OrderInfo, FieldOrder } from "../constant/interface";
+import { OrderTypes } from "../constant/builder/enum";
+import { OrderInfo, FieldOrder } from "../constant/builder/interface";
 import { Type } from "schema-verify";
 import Safe from "./safe";
 import {

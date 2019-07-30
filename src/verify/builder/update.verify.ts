@@ -1,5 +1,5 @@
 import { Schema } from "schema-verify";
-import { UpdateTypes } from "../../constant/enum";
+import { UpdateTypes } from "../../constant/builder/enum";
 
 const updateInfoSchema = new Schema({
     type: Object,

@@ -1,4 +1,4 @@
-import { FieldOrder } from "../constant/interface";
+import { FieldOrder } from "../constant/builder/interface";
 import Safe from "./safe";
 import Limit from "./limit";
 import Order from "./order";

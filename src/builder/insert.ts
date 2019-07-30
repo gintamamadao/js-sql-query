@@ -1,7 +1,7 @@
 import { argStrArrTrans } from "../util/util";
 import Query from "./query";
-import { QueryTypes } from "../constant/enum";
-import { FieldData } from "../constant/interface";
+import { QueryTypes } from "../constant/builder/enum";
+import { FieldData } from "../constant/builder/interface";
 import { Type } from "schema-verify";
 import {
     fieldDataVerify,

@@ -1,7 +1,7 @@
 import { argStrArrTrans } from "../util/util";
 import Combine from "./combine";
-import { KeyValueStr } from "../constant/interface";
-import { QueryTypes } from "../constant/enum";
+import { KeyValueStr } from "../constant/builder/interface";
+import { QueryTypes } from "../constant/builder/enum";
 import { Type } from "schema-verify";
 import { strArrVerify, strObjVerify } from "../verify/builder/index";
 import ErrMsg from "../error/builder/index";

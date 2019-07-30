@@ -1,5 +1,5 @@
-import { QueryTypes, UpdateTypes } from "../constant/enum";
-import { FieldData } from "../constant/interface";
+import { QueryTypes, UpdateTypes } from "../constant/builder/enum";
+import { FieldData } from "../constant/builder/interface";
 import Where from "./where";
 import { Type } from "schema-verify";
 import {

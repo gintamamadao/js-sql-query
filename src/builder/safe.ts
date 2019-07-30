@@ -1,6 +1,6 @@
 import Dialects from "../util/dialects";
-import { DialectTypes } from "../constant/enum";
-import { SafeValue, SafeKey, Dialect } from "../constant/interface";
+import { DialectTypes } from "../constant/builder/enum";
+import { SafeValue, SafeKey, Dialect } from "../constant/builder/interface";
 import { Type } from "schema-verify";
 import { dialectVerify, manualSqlVerify } from "../verify/builder/index";
 import ErrMsg from "../error/builder/index";

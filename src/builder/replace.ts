@@ -1,5 +1,5 @@
 import Insert from "./insert";
-import { QueryTypes } from "../constant/enum";
+import { QueryTypes } from "../constant/builder/enum";
 
 class Replace extends Insert {
     constructor() {

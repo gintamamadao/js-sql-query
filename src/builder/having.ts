@@ -1,4 +1,4 @@
-import { TermData } from "../constant/interface";
+import { TermData } from "../constant/builder/interface";
 import Where from "./where";
 import Term from "./term";
 import { Type } from "schema-verify";

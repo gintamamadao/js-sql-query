@@ -1,4 +1,4 @@
-import { QueryTypes } from "../constant/enum";
+import { QueryTypes } from "../constant/builder/enum";
 import Where from "./where";
 
 class Delete extends Where {

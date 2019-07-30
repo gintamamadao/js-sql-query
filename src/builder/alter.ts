@@ -1,6 +1,6 @@
 import Safe from "./safe";
-import { TableOptions, AlterMethods } from "../constant/enum";
-import { TABLE_OPT_VALUES, FEILD_TEMPLATE } from "../constant/constant";
+import { TableOptions, AlterMethods } from "../constant/builder/enum";
+import { TABLE_OPT_VALUES, FEILD_TEMPLATE } from "../constant/builder/constant";
 import { Type } from "schema-verify";
 import { analyTmpl } from "../util/util";
 import { alterInfosVerify } from "../verify/builder/index";

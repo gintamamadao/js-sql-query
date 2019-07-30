@@ -1,7 +1,7 @@
 import Having from "./having";
 import Func from "./func";
 import { Type } from "schema-verify";
-import { FuncInfo } from "../constant/interface";
+import { FuncInfo } from "../constant/builder/interface";
 import ErrMsg from "../error/builder/index";
 import {
     strArrVerify,

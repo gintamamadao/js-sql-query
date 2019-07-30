@@ -9,7 +9,7 @@ import Term from "./term";
 import Func from "./func";
 import Order from "./order";
 import { Type } from "schema-verify";
-import { QueryTypes, DialectTypes, WidgetTypes } from "../constant/enum";
+import { QueryTypes, DialectTypes, WidgetTypes } from "../constant/builder/enum";
 import ErrMsg from "../error/builder/index";
 
 const TABLE_QUERY_TYPE = [

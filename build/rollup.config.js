@@ -37,5 +37,5 @@ module.exports = {
         commonjs({ extensions }),
         babel(babelOptions)
     ],
-    external: ["schema-verify"]
+    external: ["schema-verify", "mysql", "rxjs"]
 };
