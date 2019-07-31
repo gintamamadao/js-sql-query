@@ -42,7 +42,7 @@ const conConfigSchema = new Schema({
             enum: DialectTypes
         },
         {
-            index: "pool",
+            index: "connectionLimit",
             type: Number,
             natural: true
         }

@@ -1,6 +1,6 @@
 import CombineError from "./combine.error";
 import InsertError from "./insert.error";
-import SafeError from "./safe.error";
+import BaseError from "./base.error";
 import LimitError from "./limit.error";
 import OrderError from "./order.error";
 import SelectError from "./select.error";
@@ -13,7 +13,7 @@ import AlterError from "./alter.error";
 const ErrMsg = {
     ...CombineError,
     ...InsertError,
-    ...SafeError,
+    ...BaseError,
     ...LimitError,
     ...OrderError,
     ...SelectError,

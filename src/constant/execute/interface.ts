@@ -5,6 +5,10 @@ export interface ConnectConfig {
     user: string;
     password?: string;
     database: string;
+    connectionLimit?: number;
     dialect?: DialectTypes;
-    pool?: number;
+}
+export interface DbConnect {
+    query: Function;
+    release: Function;
 }

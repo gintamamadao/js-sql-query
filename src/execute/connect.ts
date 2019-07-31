@@ -5,19 +5,10 @@ import { ConnectConfig } from "../constant/execute/interface";
 import { DialectTypes } from "../constant/builder/enum";
 import ErrMsg from "../error/execute/index";
 
-const DB = {
-    host: "localhost",
-    user: "root",
-    password: "root@1234",
-    port: 3306,
-    database: "static"
-};
 class Connect {
     dbConfig: ConnectConfig;
-    dialect: DialectTypes;
-    pool: number;
-    idleConnects: [];
-    busyConnects: [];
+    dialectType: DialectTypes;
+    pool;
     constructor(config: ConnectConfig) {
         this.setConfig(config);
     }
@@ -32,39 +23,43 @@ class Connect {
         const port: string | number = config.port;
         const database: string = config.database;
         const dialect: DialectTypes = config.dialect;
-        const pool: number = config.pool;
-        const dbConfig = {
+        let connectionLimit: number = config.connectionLimit;
+        connectionLimit = Type.number.isNatural(connectionLimit)
+            ? connectionLimit
+            : 1;
+        let dbConfig = {
             host,
             user,
             password,
             port,
-            database
+            database,
+            connectionLimit
         };
-        this.dbConfig = Type.object.pure(dbConfig);
-        this.dialect = dialect;
-        this.pool = pool;
-        this.idleConnects = [];
-        this.busyConnects = [];
+        dbConfig = Type.object.pure(dbConfig);
+        this.pool = mysql.createPool(dbConfig);
+        this.dialectType = dialect;
     }
 
-    getDbConnect() {
-        const dbConfig = this.dbConfig;
-        const idleConnects = Type.array.safe(this.idleConnects);
-        const busyConnects = Type.array.safe(this.busyConnects);
-
-        let dbConnection;
-        if (idleConnects.length > 0) {
-            dbConnection = idleConnects.unshift();
-        } else {
-            if (!conConfigVerify(dbConfig)) {
-                throw new Error(ErrMsg.errorConnectConfig);
-            }
-            dbConnection = mysql.createConnection(dbConfig);
+    async getDbConnect() {
+        const pool = this.pool || {};
+        if (Type.function.isNot(pool.getConnection)) {
+            throw new Error(ErrMsg.emptyConnectPool);
         }
-        busyConnects.push(dbConnection);
-        this.idleConnects = idleConnects;
-        this.busyConnects = busyConnects;
-        return dbConnection;
+        return new Promise((relsove, reject) => {
+            pool.getConnection((err, connection) => {
+                if (err) {
+                    reject(err);
+                }
+                if (
+                    !connection ||
+                    Type.function.isNot(connection.query) ||
+                    Type.function.isNot(connection.release)
+                ) {
+                    reject(new Error(ErrMsg.errorConnect));
+                }
+                relsove(connection);
+            });
+        });
     }
 }
 

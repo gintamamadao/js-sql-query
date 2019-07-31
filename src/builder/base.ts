@@ -97,10 +97,10 @@ class Base {
     execute() {
         const execute: Execute = this._execute;
         const query = this.build();
-        if (Type.object.is(execute) && Type.function.is(execute.do)) {
-            execute.do(query);
+        if (Type.object.isNot(execute) || Type.function.isNot(execute.run)) {
+            throw new Error(ErrMsg.errorExecute);
         }
-        return this;
+        return execute.run(query);
     }
 
     setExecute(execute: Execute) {
