@@ -4,11 +4,13 @@ import { SafeValue, SafeKey, Dialect } from "../constant/builder/interface";
 import { Type } from "schema-verify";
 import { dialectVerify, manualSqlVerify } from "../verify/builder/index";
 import ErrMsg from "../error/builder/index";
+import Execute from "../execute/execute";
 
 class Base {
     protected _queryTable: string;
     protected _dialect: Dialect;
     protected _dialectType: DialectTypes;
+    protected _execute: Execute;
 
     get dialectType(): DialectTypes {
         const dialectType: DialectTypes = this._dialectType;
@@ -31,7 +33,6 @@ class Base {
         this._dialectType = dialectType;
         this.safeValue = dialect.safeValue;
         this.safeKey = dialect.safeKey;
-        return this;
     }
 
     protected safeValue: SafeValue = function() {
@@ -91,6 +92,19 @@ class Base {
             throw new Error(ErrMsg.errorTableName);
         }
         return this.safeKey(queryTable);
+    }
+
+    execute() {
+        const execute: Execute = this._execute;
+        const query = this.build();
+        if (Type.object.is(execute) && Type.function.is(execute.do)) {
+            execute.do(query);
+        }
+        return this;
+    }
+
+    setExecute(execute: Execute) {
+        this._execute = execute;
     }
 }
 

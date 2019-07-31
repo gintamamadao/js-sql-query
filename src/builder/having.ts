@@ -6,9 +6,6 @@ import { Type } from "schema-verify";
 const TERM_NAME = "havingTerm";
 class Having extends Where {
     protected havingTerm: Term;
-    constructor() {
-        super();
-    }
 
     havingEqual(data: TermData) {
         this.getTermCase(TERM_NAME).equal(data);

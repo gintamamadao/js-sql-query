@@ -4,10 +4,6 @@ import { Type } from "schema-verify";
 import Base from "./base";
 
 class Func extends Base {
-    constructor() {
-        super();
-    }
-
     protected funcField(func: FuncTypes, field: number | string): FuncInfo {
         const needSafeTrans: boolean =
             Type.string.isNotEmpty(field) && field !== "*";

@@ -6,9 +6,6 @@ import { Type } from "schema-verify";
 const TERM_NAME = "whereTerm";
 class Where extends Query {
     protected whereTerm: Term;
-    constructor() {
-        super();
-    }
 
     whereEqual(data: TermData) {
         this.getTermCase(TERM_NAME).equal(data);
