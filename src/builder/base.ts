@@ -94,7 +94,11 @@ class Base {
         return this.safeKey(queryTable);
     }
 
-    execute() {
+    setExecute(execute: Execute) {
+        this._execute = execute;
+    }
+
+    run() {
         const execute: Execute = this._execute;
         const query = this.build();
         if (!Type.string.isNotEmpty(query)) {
@@ -104,10 +108,6 @@ class Base {
             throw new Error(ErrMsg.errorExecute);
         }
         return execute.run(query);
-    }
-
-    setExecute(execute: Execute) {
-        this._execute = execute;
     }
 }
 

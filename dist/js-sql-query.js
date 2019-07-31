@@ -2297,7 +2297,11 @@ var base = createCommonjsModule(function (module, exports) {
       return this.safeKey(queryTable);
     }
 
-    execute() {
+    setExecute(execute) {
+      this._execute = execute;
+    }
+
+    run() {
       const execute = this._execute;
       const query = this.build();
 
@@ -2310,10 +2314,6 @@ var base = createCommonjsModule(function (module, exports) {
       }
 
       return execute.run(query);
-    }
-
-    setExecute(execute) {
-      this._execute = execute;
     }
 
   }
@@ -2564,7 +2564,11 @@ var base$1 = createCommonjsModule(function (module, exports) {
       return this.safeKey(queryTable);
     }
 
-    execute() {
+    setExecute(execute) {
+      this._execute = execute;
+    }
+
+    run() {
       const execute = this._execute;
       const query = this.build();
 
@@ -2577,10 +2581,6 @@ var base$1 = createCommonjsModule(function (module, exports) {
       }
 
       return execute.run(query);
-    }
-
-    setExecute(execute) {
-      this._execute = execute;
     }
 
   }
