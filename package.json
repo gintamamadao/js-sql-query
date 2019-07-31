@@ -1,6 +1,6 @@
 {
     "name": "js-sql-query",
-    "version": "1.0.21",
+    "version": "1.0.22",
     "description": "",
     "main": "./dist/js-sql-query.js",
     "scripts": {
