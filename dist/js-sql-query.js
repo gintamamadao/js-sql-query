@@ -3,6 +3,7 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var schemaVerify = _interopDefault(require('schema-verify'));
+var mysql = _interopDefault(require('mysql'));
 
 function unwrapExports (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
@@ -75,18 +76,19 @@ var insert_error = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(insert_error);
 
-var safe_error = createCommonjsModule(function (module, exports) {
+var base_error = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
   const ErrMsg = {
     errorDialect: "错误的数据库类型",
-    errorManualSql: "错误的自定义sql"
+    errorManualSql: "错误的自定义sql",
+    errorExecute: "错误的数据库连接"
   };
   exports.default = ErrMsg;
 });
-unwrapExports(safe_error);
+unwrapExports(base_error);
 
 var limit_error = createCommonjsModule(function (module, exports) {
 
@@ -220,18 +222,19 @@ var insert_error$1 = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(insert_error$1);
 
-var safe_error$1 = createCommonjsModule(function (module, exports) {
+var base_error$1 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
   const ErrMsg = {
     errorDialect: "错误的数据库类型",
-    errorManualSql: "错误的自定义sql"
+    errorManualSql: "错误的自定义sql",
+    errorExecute: "错误的数据库连接"
   };
   exports.default = ErrMsg;
 });
-unwrapExports(safe_error$1);
+unwrapExports(base_error$1);
 
 var limit_error$1 = createCommonjsModule(function (module, exports) {
 
@@ -347,7 +350,7 @@ var D__vmproject_jsSqlQuery_src_error_builder = createCommonjsModule(function (m
   });
   const ErrMsg = { ...combine_error$1.default,
     ...insert_error$1.default,
-    ...safe_error$1.default,
+    ...base_error$1.default,
     ...limit_error$1.default,
     ...order_error$1.default,
     ...select_error$1.default,
@@ -374,7 +377,7 @@ var builder = createCommonjsModule(function (module, exports) {
   });
   const ErrMsg = { ...combine_error$1.default,
     ...insert_error$1.default,
-    ...safe_error$1.default,
+    ...base_error$1.default,
     ...limit_error$1.default,
     ...order_error$1.default,
     ...select_error$1.default,
@@ -2229,7 +2232,6 @@ var base = createCommonjsModule(function (module, exports) {
       this._dialectType = dialectType;
       this.safeValue = dialect.safeValue;
       this.safeKey = dialect.safeKey;
-      return this;
     }
 
     manualSql(sql, key) {
@@ -2291,6 +2293,21 @@ var base = createCommonjsModule(function (module, exports) {
       }
 
       return this.safeKey(queryTable);
+    }
+
+    execute() {
+      const execute = this._execute;
+      const query = this.build();
+
+      if (schemaVerify.Type.object.isNot(execute) || schemaVerify.Type.function.isNot(execute.run)) {
+        throw new Error(builder.default.errorExecute);
+      }
+
+      return execute.run(query);
+    }
+
+    setExecute(execute) {
+      this._execute = execute;
     }
 
   }
@@ -2478,7 +2495,6 @@ var base$1 = createCommonjsModule(function (module, exports) {
       this._dialectType = dialectType;
       this.safeValue = dialect.safeValue;
       this.safeKey = dialect.safeKey;
-      return this;
     }
 
     manualSql(sql, key) {
@@ -2540,6 +2556,21 @@ var base$1 = createCommonjsModule(function (module, exports) {
       }
 
       return this.safeKey(queryTable);
+    }
+
+    execute() {
+      const execute = this._execute;
+      const query = this.build();
+
+      if (schemaVerify.Type.object.isNot(execute) || schemaVerify.Type.function.isNot(execute.run)) {
+        throw new Error(builder.default.errorExecute);
+      }
+
+      return execute.run(query);
+    }
+
+    setExecute(execute) {
+      this._execute = execute;
     }
 
   }
@@ -3944,10 +3975,6 @@ var where = createCommonjsModule(function (module, exports) {
   const TERM_NAME = "whereTerm";
 
   class Where extends query$1.default {
-    constructor() {
-      super();
-    }
-
     whereEqual(data) {
       this.getTermCase(TERM_NAME).equal(data);
       return this;
@@ -4120,10 +4147,6 @@ var where$1 = createCommonjsModule(function (module, exports) {
   const TERM_NAME = "whereTerm";
 
   class Where extends query$1.default {
-    constructor() {
-      super();
-    }
-
     whereEqual(data) {
       this.getTermCase(TERM_NAME).equal(data);
       return this;
@@ -4296,10 +4319,6 @@ var having = createCommonjsModule(function (module, exports) {
   const TERM_NAME = "havingTerm";
 
   class Having extends where$1.default {
-    constructor() {
-      super();
-    }
-
     havingEqual(data) {
       this.getTermCase(TERM_NAME).equal(data);
       return this;
@@ -4459,10 +4478,6 @@ var func = createCommonjsModule(function (module, exports) {
   });
 
   class Func extends base$1.default {
-    constructor() {
-      super();
-    }
-
     funcField(func, field) {
       const needSafeTrans = schemaVerify.Type.string.isNotEmpty(field) && field !== "*";
       const fieldStr = needSafeTrans ? field : schemaVerify.Type.number.is(field) ? field + "" : "*";
@@ -4587,10 +4602,6 @@ var having$1 = createCommonjsModule(function (module, exports) {
   const TERM_NAME = "havingTerm";
 
   class Having extends where$1.default {
-    constructor() {
-      super();
-    }
-
     havingEqual(data) {
       this.getTermCase(TERM_NAME).equal(data);
       return this;
@@ -4750,10 +4761,6 @@ var func$1 = createCommonjsModule(function (module, exports) {
   });
 
   class Func extends base$1.default {
-    constructor() {
-      super();
-    }
-
     funcField(func, field) {
       const needSafeTrans = schemaVerify.Type.string.isNotEmpty(field) && field !== "*";
       const fieldStr = needSafeTrans ? field : schemaVerify.Type.number.is(field) ? field + "" : "*";
@@ -5580,10 +5587,6 @@ var _delete = createCommonjsModule(function (module, exports) {
   });
 
   class Delete extends where$1.default {
-    constructor() {
-      super();
-    }
-
     build() {
       const table = this.getQueryTable();
       let query = `${_enum$1.QueryTypes.delete} FROM ${table}`;
@@ -6365,10 +6368,6 @@ var _delete$1 = createCommonjsModule(function (module, exports) {
   });
 
   class Delete extends where$1.default {
-    constructor() {
-      super();
-    }
-
     build() {
       const table = this.getQueryTable();
       let query = `${_enum$1.QueryTypes.delete} FROM ${table}`;
@@ -6764,8 +6763,9 @@ var builder$2 = createCommonjsModule(function (module, exports) {
   const TABLE_QUERY_TYPE = [_enum$1.QueryTypes.insert, _enum$1.QueryTypes.replace, _enum$1.QueryTypes.select, _enum$1.QueryTypes.update, _enum$1.QueryTypes.delete];
 
   class Builder {
-    constructor(dialectType) {
+    constructor(dialectType, execute) {
       this.dialectType = dialectType || _enum$1.DialectTypes.mysql;
+      this.execute = execute;
       this.queryStore = [];
     }
 
@@ -6868,6 +6868,7 @@ var builder$2 = createCommonjsModule(function (module, exports) {
     initInstance(type, instance) {
       instance = schemaVerify.Type.object.safe(instance);
       const dialectType = this.dialectType;
+      const execute = this.execute;
       const queryTable = this.queryTable;
 
       if (schemaVerify.Type.string.isNotEmpty(queryTable) && schemaVerify.Type.function.is(instance.table)) {
@@ -6878,6 +6879,10 @@ var builder$2 = createCommonjsModule(function (module, exports) {
 
       if (schemaVerify.Type.function.is(instance.setDialect)) {
         instance.setDialect(dialectType);
+      }
+
+      if (schemaVerify.Type.function.is(instance.setExecute)) {
+        instance.setExecute(execute);
       }
 
       return instance;
@@ -6906,6 +6911,330 @@ var builder$2 = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(builder$2);
 
+var connect_verify = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const conConfigSchema = new schemaVerify.Schema({
+    type: Object,
+    props: [{
+      index: "host",
+      required: true,
+      type: String,
+      minLength: 1
+    }, [{
+      index: "port",
+      type: String
+    }, {
+      type: Number
+    }], {
+      index: "user",
+      required: true,
+      type: String,
+      minLength: 1
+    }, {
+      index: "password",
+      type: String,
+      minLength: 1
+    }, {
+      index: "database",
+      required: true,
+      type: String,
+      minLength: 1
+    }, {
+      index: "dialect",
+      type: String,
+      enum: _enum$1.DialectTypes
+    }, {
+      index: "connectionLimit",
+      type: Number,
+      natural: true
+    }]
+  });
+  exports.conConfigVerify = conConfigSchema.verify;
+});
+unwrapExports(connect_verify);
+var connect_verify_1 = connect_verify.conConfigVerify;
+
+var connect_verify$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const conConfigSchema = new schemaVerify.Schema({
+    type: Object,
+    props: [{
+      index: "host",
+      required: true,
+      type: String,
+      minLength: 1
+    }, [{
+      index: "port",
+      type: String
+    }, {
+      type: Number
+    }], {
+      index: "user",
+      required: true,
+      type: String,
+      minLength: 1
+    }, {
+      index: "password",
+      type: String,
+      minLength: 1
+    }, {
+      index: "database",
+      required: true,
+      type: String,
+      minLength: 1
+    }, {
+      index: "dialect",
+      type: String,
+      enum: _enum$1.DialectTypes
+    }, {
+      index: "connectionLimit",
+      type: Number,
+      natural: true
+    }]
+  });
+  exports.conConfigVerify = conConfigSchema.verify;
+});
+unwrapExports(connect_verify$1);
+var connect_verify_1$1 = connect_verify$1.conConfigVerify;
+
+var D__vmproject_jsSqlQuery_src_verify_execute = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.conConfigVerify = connect_verify$1.conConfigVerify;
+});
+unwrapExports(D__vmproject_jsSqlQuery_src_verify_execute);
+var D__vmproject_jsSqlQuery_src_verify_execute_1 = D__vmproject_jsSqlQuery_src_verify_execute.conConfigVerify;
+
+var connect_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorConnectConfig: "错误的连接配置",
+    emptyConnectPool: "未连接数据库",
+    errorConnect: "错误的连接"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(connect_error);
+
+var connect_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorConnectConfig: "错误的连接配置",
+    emptyConnectPool: "未连接数据库",
+    errorConnect: "错误的连接"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(connect_error$1);
+
+var D__vmproject_jsSqlQuery_src_error_execute = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = { ...connect_error$1.default
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(D__vmproject_jsSqlQuery_src_error_execute);
+
+var execute = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.conConfigVerify = connect_verify$1.conConfigVerify;
+});
+unwrapExports(execute);
+var execute_1 = execute.conConfigVerify;
+
+var execute$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = { ...connect_error$1.default
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(execute$1);
+
+var connect = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  class Connect {
+    constructor(config) {
+      this.setConfig(config);
+    }
+
+    setConfig(config) {
+      if (!execute.conConfigVerify(config)) {
+        throw new Error(execute$1.default.errorConnectConfig);
+      }
+
+      const host = config.host;
+      const user = config.user;
+      const password = config.password;
+      const port = config.port;
+      const database = config.database;
+      const dialect = config.dialect;
+      let connectionLimit = config.connectionLimit;
+      connectionLimit = schemaVerify.Type.number.isNatural(connectionLimit) ? connectionLimit : 1;
+      let dbConfig = {
+        host,
+        user,
+        password,
+        port,
+        database,
+        connectionLimit
+      };
+      dbConfig = schemaVerify.Type.object.pure(dbConfig);
+      this.pool = mysql.default.createPool(dbConfig);
+      this.dialectType = dialect;
+    }
+
+    async getDbConnect() {
+      const pool = this.pool || {};
+
+      if (schemaVerify.Type.function.isNot(pool.getConnection)) {
+        throw new Error(execute$1.default.emptyConnectPool);
+      }
+
+      return new Promise((relsove, reject) => {
+        pool.getConnection((err, connection) => {
+          if (err) {
+            reject(err);
+          }
+
+          if (!connection || schemaVerify.Type.function.isNot(connection.query) || schemaVerify.Type.function.isNot(connection.release)) {
+            reject(new Error(execute$1.default.errorConnect));
+          }
+
+          relsove(connection);
+        });
+      });
+    }
+
+  }
+
+  exports.default = Connect;
+});
+unwrapExports(connect);
+
+var connect$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  class Connect {
+    constructor(config) {
+      this.setConfig(config);
+    }
+
+    setConfig(config) {
+      if (!execute.conConfigVerify(config)) {
+        throw new Error(execute$1.default.errorConnectConfig);
+      }
+
+      const host = config.host;
+      const user = config.user;
+      const password = config.password;
+      const port = config.port;
+      const database = config.database;
+      const dialect = config.dialect;
+      let connectionLimit = config.connectionLimit;
+      connectionLimit = schemaVerify.Type.number.isNatural(connectionLimit) ? connectionLimit : 1;
+      let dbConfig = {
+        host,
+        user,
+        password,
+        port,
+        database,
+        connectionLimit
+      };
+      dbConfig = schemaVerify.Type.object.pure(dbConfig);
+      this.pool = mysql.default.createPool(dbConfig);
+      this.dialectType = dialect;
+    }
+
+    async getDbConnect() {
+      const pool = this.pool || {};
+
+      if (schemaVerify.Type.function.isNot(pool.getConnection)) {
+        throw new Error(execute$1.default.emptyConnectPool);
+      }
+
+      return new Promise((relsove, reject) => {
+        pool.getConnection((err, connection) => {
+          if (err) {
+            reject(err);
+          }
+
+          if (!connection || schemaVerify.Type.function.isNot(connection.query) || schemaVerify.Type.function.isNot(connection.release)) {
+            reject(new Error(execute$1.default.errorConnect));
+          }
+
+          relsove(connection);
+        });
+      });
+    }
+
+  }
+
+  exports.default = Connect;
+});
+unwrapExports(connect$1);
+
+var execute$2 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  class Execute extends connect$1.default {
+    constructor(config) {
+      super(config);
+    }
+
+    async run(query) {
+      const dbConnection = await this.getDbConnect();
+      return new Promise((relsove, reject) => {
+        dbConnection.query(query, function (err, results) {
+          dbConnection.release();
+
+          if (err) {
+            reject(err);
+          }
+
+          relsove(results);
+        });
+      });
+    }
+
+  }
+
+  exports.default = Execute;
+});
+unwrapExports(execute$2);
+
 var builder$3 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -6914,8 +7243,9 @@ var builder$3 = createCommonjsModule(function (module, exports) {
   const TABLE_QUERY_TYPE = [_enum$1.QueryTypes.insert, _enum$1.QueryTypes.replace, _enum$1.QueryTypes.select, _enum$1.QueryTypes.update, _enum$1.QueryTypes.delete];
 
   class Builder {
-    constructor(dialectType) {
+    constructor(dialectType, execute) {
       this.dialectType = dialectType || _enum$1.DialectTypes.mysql;
+      this.execute = execute;
       this.queryStore = [];
     }
 
@@ -7018,6 +7348,7 @@ var builder$3 = createCommonjsModule(function (module, exports) {
     initInstance(type, instance) {
       instance = schemaVerify.Type.object.safe(instance);
       const dialectType = this.dialectType;
+      const execute = this.execute;
       const queryTable = this.queryTable;
 
       if (schemaVerify.Type.string.isNotEmpty(queryTable) && schemaVerify.Type.function.is(instance.table)) {
@@ -7028,6 +7359,10 @@ var builder$3 = createCommonjsModule(function (module, exports) {
 
       if (schemaVerify.Type.function.is(instance.setDialect)) {
         instance.setDialect(dialectType);
+      }
+
+      if (schemaVerify.Type.function.is(instance.setExecute)) {
+        instance.setExecute(execute);
       }
 
       return instance;
@@ -7056,14 +7391,48 @@ var builder$3 = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(builder$3);
 
+var execute$3 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  class Execute extends connect$1.default {
+    constructor(config) {
+      super(config);
+    }
+
+    async run(query) {
+      const dbConnection = await this.getDbConnect();
+      return new Promise((relsove, reject) => {
+        dbConnection.query(query, function (err, results) {
+          dbConnection.release();
+
+          if (err) {
+            reject(err);
+          }
+
+          relsove(results);
+        });
+      });
+    }
+
+  }
+
+  exports.default = Execute;
+});
+unwrapExports(execute$3);
+
 var src = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
 
-  function SqlQuery() {
-    const o = new builder$3.default();
+  function SqlQuery(config) {
+    config = schemaVerify.Type.object.safe(config);
+    const execute = new execute$3.default(config);
+    const o = new builder$3.default(config.dialect, execute);
     return o;
   }
 

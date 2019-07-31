@@ -9,8 +9,13 @@ import Term from "./term";
 import Func from "./func";
 import Order from "./order";
 import { Type } from "schema-verify";
-import { QueryTypes, DialectTypes, WidgetTypes } from "../constant/builder/enum";
+import {
+    QueryTypes,
+    DialectTypes,
+    WidgetTypes
+} from "../constant/builder/enum";
 import ErrMsg from "../error/builder/index";
+import Execute from "../execute/execute";
 
 const TABLE_QUERY_TYPE = [
     QueryTypes.insert,
@@ -21,10 +26,12 @@ const TABLE_QUERY_TYPE = [
 ];
 class Builder {
     protected dialectType: DialectTypes;
+    protected execute: Execute;
     public queryStore: string[];
     protected queryTable: string;
-    constructor(dialectType?: DialectTypes) {
+    constructor(dialectType?: DialectTypes, execute?: Execute) {
         this.dialectType = dialectType || DialectTypes.mysql;
+        this.execute = execute;
         this.queryStore = [];
     }
 
@@ -115,6 +122,7 @@ class Builder {
     protected initInstance(type, instance) {
         instance = Type.object.safe(instance);
         const dialectType: DialectTypes = this.dialectType;
+        const execute: Execute = this.execute;
         const queryTable: string = this.queryTable;
         if (
             Type.string.isNotEmpty(queryTable) &&
@@ -126,6 +134,9 @@ class Builder {
         }
         if (Type.function.is(instance.setDialect)) {
             instance.setDialect(dialectType);
+        }
+        if (Type.function.is(instance.setExecute)) {
+            instance.setExecute(execute);
         }
         return instance;
     }
