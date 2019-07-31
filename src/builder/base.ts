@@ -97,6 +97,9 @@ class Base {
     execute() {
         const execute: Execute = this._execute;
         const query = this.build();
+        if (!Type.string.isNotEmpty(query)) {
+            throw new Error(ErrMsg.emptySqlQuery);
+        }
         if (Type.object.isNot(execute) || Type.function.isNot(execute.run)) {
             throw new Error(ErrMsg.errorExecute);
         }

@@ -84,7 +84,8 @@ var base_error = createCommonjsModule(function (module, exports) {
   const ErrMsg = {
     errorDialect: "错误的数据库类型",
     errorManualSql: "错误的自定义sql",
-    errorExecute: "错误的数据库连接"
+    errorExecute: "错误的数据库连接",
+    emptySqlQuery: "缺少sql语句"
   };
   exports.default = ErrMsg;
 });
@@ -230,7 +231,8 @@ var base_error$1 = createCommonjsModule(function (module, exports) {
   const ErrMsg = {
     errorDialect: "错误的数据库类型",
     errorManualSql: "错误的自定义sql",
-    errorExecute: "错误的数据库连接"
+    errorExecute: "错误的数据库连接",
+    emptySqlQuery: "缺少sql语句"
   };
   exports.default = ErrMsg;
 });
@@ -2299,6 +2301,10 @@ var base = createCommonjsModule(function (module, exports) {
       const execute = this._execute;
       const query = this.build();
 
+      if (!schemaVerify.Type.string.isNotEmpty(query)) {
+        throw new Error(builder.default.emptySqlQuery);
+      }
+
       if (schemaVerify.Type.object.isNot(execute) || schemaVerify.Type.function.isNot(execute.run)) {
         throw new Error(builder.default.errorExecute);
       }
@@ -2561,6 +2567,10 @@ var base$1 = createCommonjsModule(function (module, exports) {
     execute() {
       const execute = this._execute;
       const query = this.build();
+
+      if (!schemaVerify.Type.string.isNotEmpty(query)) {
+        throw new Error(builder.default.emptySqlQuery);
+      }
 
       if (schemaVerify.Type.object.isNot(execute) || schemaVerify.Type.function.isNot(execute.run)) {
         throw new Error(builder.default.errorExecute);
@@ -7106,7 +7116,7 @@ var connect = createCommonjsModule(function (module, exports) {
         connectionLimit
       };
       dbConfig = schemaVerify.Type.object.pure(dbConfig);
-      this.pool = mysql.default.createPool(dbConfig);
+      this.pool = mysql.createPool(dbConfig);
       this.dialectType = dialect;
     }
 
@@ -7171,7 +7181,7 @@ var connect$1 = createCommonjsModule(function (module, exports) {
         connectionLimit
       };
       dbConfig = schemaVerify.Type.object.pure(dbConfig);
-      this.pool = mysql.default.createPool(dbConfig);
+      this.pool = mysql.createPool(dbConfig);
       this.dialectType = dialect;
     }
 

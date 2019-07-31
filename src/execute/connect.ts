@@ -1,4 +1,4 @@
-import mysql from "mysql";
+const mysql = require("mysql");
 import { Type } from "schema-verify";
 import { conConfigVerify } from "../verify/execute/index";
 import { ConnectConfig } from "../constant/execute/interface";
