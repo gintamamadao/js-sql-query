@@ -3,7 +3,10 @@
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var schemaVerify = _interopDefault(require('schema-verify'));
-var mysql = _interopDefault(require('mysql'));
+
+function commonjsRequire () {
+	throw new Error('Dynamic requires are not currently supported by rollup-plugin-commonjs');
+}
 
 function unwrapExports (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
@@ -6921,6 +6924,63 @@ var builder$2 = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(builder$2);
 
+var _enum$2 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  var DialectModules;
+
+  (function (DialectModules) {
+    DialectModules["mysql"] = "mysql";
+    DialectModules["mssql"] = "mssql";
+    DialectModules["postgresql"] = "postgresql";
+    DialectModules["sqlite"] = "sqlite";
+  })(DialectModules = exports.DialectModules || (exports.DialectModules = {}));
+});
+
+unwrapExports(_enum$2);
+var _enum_1$2 = _enum$2.DialectModules;
+
+var connect_error = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorConnectConfig: "错误的连接配置",
+    emptyConnectPool: "未连接数据库",
+    errorConnect: "错误的连接"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(connect_error);
+
+var connect_error$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = {
+    errorConnectConfig: "错误的连接配置",
+    emptyConnectPool: "未连接数据库",
+    errorConnect: "错误的连接"
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(connect_error$1);
+
+var D__vmproject_jsSqlQuery_src_error_execute = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  const ErrMsg = { ...connect_error$1.default
+  };
+  exports.default = ErrMsg;
+});
+unwrapExports(D__vmproject_jsSqlQuery_src_error_execute);
+
 var connect_verify = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -7023,45 +7083,6 @@ var D__vmproject_jsSqlQuery_src_verify_execute = createCommonjsModule(function (
 unwrapExports(D__vmproject_jsSqlQuery_src_verify_execute);
 var D__vmproject_jsSqlQuery_src_verify_execute_1 = D__vmproject_jsSqlQuery_src_verify_execute.conConfigVerify;
 
-var connect_error = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = {
-    errorConnectConfig: "错误的连接配置",
-    emptyConnectPool: "未连接数据库",
-    errorConnect: "错误的连接"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(connect_error);
-
-var connect_error$1 = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = {
-    errorConnectConfig: "错误的连接配置",
-    emptyConnectPool: "未连接数据库",
-    errorConnect: "错误的连接"
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(connect_error$1);
-
-var D__vmproject_jsSqlQuery_src_error_execute = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  const ErrMsg = { ...connect_error$1.default
-  };
-  exports.default = ErrMsg;
-});
-unwrapExports(D__vmproject_jsSqlQuery_src_error_execute);
-
 var execute = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -7083,13 +7104,13 @@ var execute$1 = createCommonjsModule(function (module, exports) {
 });
 unwrapExports(execute$1);
 
-var connect = createCommonjsModule(function (module, exports) {
+var base_connect = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
 
-  class Connect {
+  class BaseConnect {
     constructor(config) {
       this.setConfig(config);
     }
@@ -7104,7 +7125,6 @@ var connect = createCommonjsModule(function (module, exports) {
       const password = config.password;
       const port = config.port;
       const database = config.database;
-      const dialect = config.dialect;
       let connectionLimit = config.connectionLimit;
       connectionLimit = schemaVerify.Type.number.isNatural(connectionLimit) ? connectionLimit : 1;
       let dbConfig = {
@@ -7115,13 +7135,124 @@ var connect = createCommonjsModule(function (module, exports) {
         database,
         connectionLimit
       };
-      dbConfig = schemaVerify.Type.object.pure(dbConfig);
-      this.pool = mysql.createPool(dbConfig);
-      this.dialectType = dialect;
+      this.dbConfig = schemaVerify.Type.object.pure(dbConfig);
     }
 
-    async getDbConnect() {
-      const pool = this.pool || {};
+    loadModule(moduleName) {
+      try {
+        return commonjsRequire(moduleName);
+      } catch (e) {
+        if (e && e.code === "MODULE_NOT_FOUND") {
+          throw new Error(`请先安装模块 ${moduleName}`);
+        }
+
+        throw e;
+      }
+    }
+
+  }
+
+  exports.default = BaseConnect;
+});
+unwrapExports(base_connect);
+
+var _enum$3 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  var DialectModules;
+
+  (function (DialectModules) {
+    DialectModules["mysql"] = "mysql";
+    DialectModules["mssql"] = "mssql";
+    DialectModules["postgresql"] = "postgresql";
+    DialectModules["sqlite"] = "sqlite";
+  })(DialectModules = exports.DialectModules || (exports.DialectModules = {}));
+});
+
+unwrapExports(_enum$3);
+var _enum_1$3 = _enum$3.DialectModules;
+
+var base_connect$1 = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  class BaseConnect {
+    constructor(config) {
+      this.setConfig(config);
+    }
+
+    setConfig(config) {
+      if (!execute.conConfigVerify(config)) {
+        throw new Error(execute$1.default.errorConnectConfig);
+      }
+
+      const host = config.host;
+      const user = config.user;
+      const password = config.password;
+      const port = config.port;
+      const database = config.database;
+      let connectionLimit = config.connectionLimit;
+      connectionLimit = schemaVerify.Type.number.isNatural(connectionLimit) ? connectionLimit : 1;
+      let dbConfig = {
+        host,
+        user,
+        password,
+        port,
+        database,
+        connectionLimit
+      };
+      this.dbConfig = schemaVerify.Type.object.pure(dbConfig);
+    }
+
+    loadModule(moduleName) {
+      try {
+        return commonjsRequire(moduleName);
+      } catch (e) {
+        if (e && e.code === "MODULE_NOT_FOUND") {
+          throw new Error(`请先安装模块 ${moduleName}`);
+        }
+
+        throw e;
+      }
+    }
+
+  }
+
+  exports.default = BaseConnect;
+});
+unwrapExports(base_connect$1);
+
+var mysql_connect = createCommonjsModule(function (module, exports) {
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+
+  class MysqlConnect extends base_connect$1.default {
+    constructor(config) {
+      super(config);
+      this.pool = this.getPool();
+    }
+
+    getPool() {
+      let pool = this.pool;
+      const dbConfig = this.dbConfig;
+
+      if (schemaVerify.Type.object.is(pool) && schemaVerify.Type.function.is(pool.getConnection)) {
+        return pool;
+      }
+
+      const msyqlModule = this.loadModule(_enum$3.DialectModules.mysql);
+      pool = msyqlModule.createPool(dbConfig);
+      return pool;
+    }
+
+    getDbConnect() {
+      const pool = this.getPool() || {};
 
       if (schemaVerify.Type.function.isNot(pool.getConnection)) {
         throw new Error(execute$1.default.emptyConnectPool);
@@ -7144,49 +7275,37 @@ var connect = createCommonjsModule(function (module, exports) {
 
   }
 
-  exports.default = Connect;
+  exports.default = MysqlConnect;
 });
-unwrapExports(connect);
+unwrapExports(mysql_connect);
 
-var connect$1 = createCommonjsModule(function (module, exports) {
+var mysql_connect$1 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
 
-  class Connect {
+  class MysqlConnect extends base_connect$1.default {
     constructor(config) {
-      this.setConfig(config);
+      super(config);
+      this.pool = this.getPool();
     }
 
-    setConfig(config) {
-      if (!execute.conConfigVerify(config)) {
-        throw new Error(execute$1.default.errorConnectConfig);
+    getPool() {
+      let pool = this.pool;
+      const dbConfig = this.dbConfig;
+
+      if (schemaVerify.Type.object.is(pool) && schemaVerify.Type.function.is(pool.getConnection)) {
+        return pool;
       }
 
-      const host = config.host;
-      const user = config.user;
-      const password = config.password;
-      const port = config.port;
-      const database = config.database;
-      const dialect = config.dialect;
-      let connectionLimit = config.connectionLimit;
-      connectionLimit = schemaVerify.Type.number.isNatural(connectionLimit) ? connectionLimit : 1;
-      let dbConfig = {
-        host,
-        user,
-        password,
-        port,
-        database,
-        connectionLimit
-      };
-      dbConfig = schemaVerify.Type.object.pure(dbConfig);
-      this.pool = mysql.createPool(dbConfig);
-      this.dialectType = dialect;
+      const msyqlModule = this.loadModule(_enum$3.DialectModules.mysql);
+      pool = msyqlModule.createPool(dbConfig);
+      return pool;
     }
 
-    async getDbConnect() {
-      const pool = this.pool || {};
+    getDbConnect() {
+      const pool = this.getPool() || {};
 
       if (schemaVerify.Type.function.isNot(pool.getConnection)) {
         throw new Error(execute$1.default.emptyConnectPool);
@@ -7209,9 +7328,9 @@ var connect$1 = createCommonjsModule(function (module, exports) {
 
   }
 
-  exports.default = Connect;
+  exports.default = MysqlConnect;
 });
-unwrapExports(connect$1);
+unwrapExports(mysql_connect$1);
 
 var execute$2 = createCommonjsModule(function (module, exports) {
 
@@ -7219,13 +7338,33 @@ var execute$2 = createCommonjsModule(function (module, exports) {
     value: true
   });
 
-  class Execute extends connect$1.default {
+  class Execute {
     constructor(config) {
-      super(config);
+      this.dialectType = config.dialect;
+      this.connect = this.getConnect(config);
+    }
+
+    getConnect(config) {
+      const dialect = config.dialect;
+      let connect;
+
+      switch (dialect) {
+        case _enum$1.DialectTypes.mysql:
+          connect = new mysql_connect$1.default(config);
+          break;
+      }
+
+      return connect;
     }
 
     async run(query) {
-      const dbConnection = await this.getDbConnect();
+      const connect = this.connect || {};
+
+      if (schemaVerify.Type.function.isNot(connect.getDbConnect)) {
+        throw new Error(execute$1.default.emptyConnectPool);
+      }
+
+      const dbConnection = await connect.getDbConnect();
       return new Promise((relsove, reject) => {
         dbConnection.query(query, function (err, results) {
           dbConnection.release();
@@ -7407,13 +7546,33 @@ var execute$3 = createCommonjsModule(function (module, exports) {
     value: true
   });
 
-  class Execute extends connect$1.default {
+  class Execute {
     constructor(config) {
-      super(config);
+      this.dialectType = config.dialect;
+      this.connect = this.getConnect(config);
+    }
+
+    getConnect(config) {
+      const dialect = config.dialect;
+      let connect;
+
+      switch (dialect) {
+        case _enum$1.DialectTypes.mysql:
+          connect = new mysql_connect$1.default(config);
+          break;
+      }
+
+      return connect;
     }
 
     async run(query) {
-      const dbConnection = await this.getDbConnect();
+      const connect = this.connect || {};
+
+      if (schemaVerify.Type.function.isNot(connect.getDbConnect)) {
+        throw new Error(execute$1.default.emptyConnectPool);
+      }
+
+      const dbConnection = await connect.getDbConnect();
       return new Promise((relsove, reject) => {
         dbConnection.query(query, function (err, results) {
           dbConnection.release();
