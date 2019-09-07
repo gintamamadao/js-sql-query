@@ -16,6 +16,7 @@ import {
 } from "../constant/builder/enum";
 import ErrMsg from "../error/builder/index";
 import Execute from "../execute/execute";
+import { ConnectConfig } from "../constant/execute/interface";
 
 const TABLE_QUERY_TYPE = [
     QueryTypes.insert,
@@ -151,6 +152,17 @@ class Builder {
 
     build(): string {
         throw new Error(ErrMsg.emptyQueryType);
+    }
+
+    setConnect(config: ConnectConfig) {
+        if (Type.object.isNot(config)) {
+            return this;
+        }
+        config = Type.object.safe(config);
+        const execute = new Execute(config);
+        this.dialectType = config.dialect || DialectTypes.mysql;
+        this.execute = execute;
+        return this;
     }
 
     get query(): string {
