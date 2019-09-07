@@ -1,6 +1,7 @@
 export enum DialectModules {
     mysql = "mysql",
-    mssql = "mssql",
+    mssqlPool = "tedious-connection-pool",
+    mssql = "tedious",
     postgresql = "postgresql",
     sqlite = "sqlite"
 }

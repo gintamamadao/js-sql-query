@@ -16,8 +16,8 @@ class MysqlConnect extends BaseConnect {
         if (Type.object.is(pool) && Type.function.is(pool.getConnection)) {
             return pool;
         }
-        const msyqlModule = this.loadModule(DialectModules.mysql);
-        pool = msyqlModule.createPool(dbConfig);
+        const MysqlModule = this.loadModule(DialectModules.mysql);
+        pool = MysqlModule.createPool(dbConfig);
         return pool;
     }
 

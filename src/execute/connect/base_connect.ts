@@ -37,11 +37,11 @@ class BaseConnect {
     loadModule(moduleName) {
         try {
             return require(moduleName);
-        } catch (e) {
-            if (e && e.code === "MODULE_NOT_FOUND") {
+        } catch (err) {
+            if (err && err.code === "MODULE_NOT_FOUND") {
                 throw new Error(`请先安装模块 ${moduleName}`);
             }
-            throw e;
+            throw err;
         }
     }
 }
