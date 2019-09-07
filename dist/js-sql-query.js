@@ -37,7 +37,7 @@ const ErrMsg$1 = {
 const ErrMsg$2 = {
   errorDialect: "错误的数据库类型",
   errorManualSql: "错误的自定义sql",
-  errorExecute: "错误的数据库连接",
+  errorExecute: "缺少或错误的数据库连接",
   emptySqlQuery: "缺少sql语句"
 };
 
@@ -2919,6 +2919,270 @@ class Alter extends Base {
 
 }
 
+var DialectModules;
+
+(function (DialectModules) {
+  DialectModules["mysql"] = "mysql";
+  DialectModules["mssql"] = "tedious";
+  DialectModules["mssqlPool"] = "tedious-connection-pool";
+})(DialectModules || (DialectModules = {}));
+
+const ErrMsg$c = {
+  errorConnectConfig: "错误的连接配置",
+  emptyConnectPool: "未连接数据库",
+  errorDialectType: "错误的数据库类型",
+  errorConnect: "错误的连接"
+};
+
+const ErrMsg$d = { ...ErrMsg$c
+};
+
+const conConfigSchema = new schemaVerify.Schema({
+  type: Object,
+  props: [{
+    index: "host",
+    required: true,
+    type: String,
+    minLength: 1
+  }, [{
+    index: "port",
+    type: String
+  }, {
+    type: Number
+  }], {
+    index: "user",
+    required: true,
+    type: String,
+    minLength: 1
+  }, {
+    index: "password",
+    type: String,
+    minLength: 1
+  }, {
+    index: "database",
+    required: true,
+    type: String,
+    minLength: 1
+  }, {
+    index: "dialect",
+    type: String,
+    enum: DialectTypes
+  }, {
+    index: "connectionLimit",
+    type: Number,
+    natural: true
+  }]
+});
+const conConfigVerify = conConfigSchema.verify;
+
+class BaseConnect {
+  constructor(config) {
+    this.setConfig(config);
+  }
+
+  setConfig(config) {
+    if (!conConfigVerify(config)) {
+      throw new Error(ErrMsg$d.errorConnectConfig);
+    }
+
+    const host = config.host;
+    const user = config.user;
+    const password = config.password;
+    const port = config.port;
+    const database = config.database;
+    let connectionLimit = config.connectionLimit;
+    connectionLimit = schemaVerify.Type.number.isNatural(connectionLimit) ? connectionLimit : 1;
+    let dbConfig = {
+      host,
+      user,
+      password,
+      port,
+      database,
+      connectionLimit
+    };
+    this.dbConfig = schemaVerify.Type.object.pure(dbConfig);
+  }
+
+  loadModule(moduleName) {
+    try {
+      return require(moduleName);
+    } catch (err) {
+      if (err && err.code === "MODULE_NOT_FOUND") {
+        throw new Error(`请先安装模块 ${moduleName}`);
+      }
+
+      throw err;
+    }
+  }
+
+}
+
+class MysqlConnect extends BaseConnect {
+  constructor(config) {
+    super(config);
+    this.pool = this.getPool();
+  }
+
+  getPool() {
+    let pool = this.pool;
+    const dbConfig = this.dbConfig;
+
+    if (schemaVerify.Type.object.is(pool) && schemaVerify.Type.function.is(pool.getConnection)) {
+      return pool;
+    }
+
+    const MysqlModule = this.loadModule(DialectModules.mysql);
+    pool = MysqlModule.createPool(dbConfig);
+    return pool;
+  }
+
+  getDbConnect() {
+    const pool = this.getPool() || {};
+
+    if (schemaVerify.Type.function.isNot(pool.getConnection)) {
+      throw new Error(ErrMsg$d.emptyConnectPool);
+    }
+
+    return new Promise((relsove, reject) => {
+      pool.getConnection((err, connection) => {
+        if (err) {
+          reject(err);
+        }
+
+        if (!connection || schemaVerify.Type.function.isNot(connection.query) || schemaVerify.Type.function.isNot(connection.release)) {
+          reject(new Error(ErrMsg$d.errorConnect));
+        }
+
+        relsove(connection);
+      });
+    });
+  }
+
+}
+
+class MyssqlConnect extends BaseConnect {
+  constructor(config) {
+    super(config);
+    this.pool = this.getPool();
+    this.mssqlRequest = this.loadModule(DialectModules.mssql).Request;
+  }
+
+  getPool() {
+    let pool = this.pool;
+    const dbConfig = this.dbConfig;
+
+    if (schemaVerify.Type.object.is(pool) && schemaVerify.Type.function.is(pool.acquire)) {
+      return pool;
+    }
+
+    const poolConfig = {
+      min: 1,
+      max: dbConfig.connectionLimit || 0
+    };
+    const connectionConfig = {
+      userName: dbConfig.user,
+      password: dbConfig.password,
+      server: dbConfig.host,
+      options: {
+        port: dbConfig.port,
+        database: dbConfig.database
+      }
+    };
+    const MssqlPoolModule = this.loadModule(DialectModules.mssqlPool);
+    pool = new MssqlPoolModule(poolConfig, connectionConfig);
+    return pool;
+  }
+
+  getDbConnect() {
+    const pool = this.getPool() || {};
+    const mssqlRequest = this.mssqlRequest;
+
+    if (schemaVerify.Type.function.isNot(pool.acquire)) {
+      throw new Error(ErrMsg$d.emptyConnectPool);
+    }
+
+    return new Promise((relsove, reject) => {
+      pool.acquire((err, connection) => {
+        if (err) {
+          reject(err);
+        }
+
+        if (!connection || schemaVerify.Type.function.isNot(connection.execSql) || schemaVerify.Type.function.isNot(connection.release)) {
+          reject(new Error(ErrMsg$d.errorConnect));
+        }
+
+        connection.query = function (query, fn) {
+          const request = new mssqlRequest(query, function (err, rowCount) {
+            if (err) {
+              fn(err);
+              return;
+            }
+
+            fn(null, rowCount);
+          });
+          request.on("row", function (columns) {
+            fn(null, columns);
+          });
+          connection.execSql(request);
+        };
+
+        relsove(connection);
+      });
+    });
+  }
+
+}
+
+class Execute {
+  constructor(config) {
+    this.dialectType = config.dialect || DialectTypes.mysql;
+    this.connect = this.getConnect(config);
+  }
+
+  getConnect(config) {
+    const dialect = this.dialectType;
+    let connect;
+
+    switch (dialect) {
+      case DialectTypes.mysql:
+        connect = new MysqlConnect(config);
+        break;
+
+      case DialectTypes.mssql:
+        connect = new MyssqlConnect(config);
+        break;
+    }
+
+    if (schemaVerify.Type.undefinedNull.is(connect)) {
+      throw new Error(ErrMsg$d.errorDialectType);
+    }
+
+    return connect;
+  }
+
+  async run(query) {
+    const connect = this.connect || {};
+
+    if (schemaVerify.Type.function.isNot(connect.getDbConnect)) {
+      throw new Error(ErrMsg$d.emptyConnectPool);
+    }
+
+    const dbConnection = await connect.getDbConnect();
+    return new Promise((relsove, reject) => {
+      dbConnection.query(query, function (err, results) {
+        dbConnection.release();
+
+        if (err) {
+          reject(err);
+        }
+
+        relsove(results);
+      });
+    });
+  }
+
+}
+
 const TABLE_QUERY_TYPE = [QueryTypes.insert, QueryTypes.replace, QueryTypes.select, QueryTypes.update, QueryTypes.delete];
 
 class Builder {
@@ -3060,201 +3324,29 @@ class Builder {
     throw new Error(ErrMsg$b.emptyQueryType);
   }
 
+  setConnect(config) {
+    if (schemaVerify.Type.object.isNot(config)) {
+      return this;
+    }
+
+    config = schemaVerify.Type.object.safe(config);
+    const execute = new Execute(config);
+    this.dialectType = config.dialect || DialectTypes.mysql;
+    this.execute = execute;
+    return this;
+  }
+
   get query() {
     return this.build();
   }
 
 }
 
-var DialectModules;
-
-(function (DialectModules) {
-  DialectModules["mysql"] = "mysql";
-  DialectModules["mssql"] = "mssql";
-  DialectModules["postgresql"] = "postgresql";
-  DialectModules["sqlite"] = "sqlite";
-})(DialectModules || (DialectModules = {}));
-
-const ErrMsg$c = {
-  errorConnectConfig: "错误的连接配置",
-  emptyConnectPool: "未连接数据库",
-  errorDialectType: "错误的数据库类型",
-  errorConnect: "错误的连接"
-};
-
-const ErrMsg$d = { ...ErrMsg$c
-};
-
-const conConfigSchema = new schemaVerify.Schema({
-  type: Object,
-  props: [{
-    index: "host",
-    required: true,
-    type: String,
-    minLength: 1
-  }, [{
-    index: "port",
-    type: String
-  }, {
-    type: Number
-  }], {
-    index: "user",
-    required: true,
-    type: String,
-    minLength: 1
-  }, {
-    index: "password",
-    type: String,
-    minLength: 1
-  }, {
-    index: "database",
-    required: true,
-    type: String,
-    minLength: 1
-  }, {
-    index: "dialect",
-    type: String,
-    enum: DialectTypes
-  }, {
-    index: "connectionLimit",
-    type: Number,
-    natural: true
-  }]
-});
-const conConfigVerify = conConfigSchema.verify;
-
-class BaseConnect {
-  constructor(config) {
-    this.setConfig(config);
-  }
-
-  setConfig(config) {
-    if (!conConfigVerify(config)) {
-      throw new Error(ErrMsg$d.errorConnectConfig);
-    }
-
-    const host = config.host;
-    const user = config.user;
-    const password = config.password;
-    const port = config.port;
-    const database = config.database;
-    let connectionLimit = config.connectionLimit;
-    connectionLimit = schemaVerify.Type.number.isNatural(connectionLimit) ? connectionLimit : 1;
-    let dbConfig = {
-      host,
-      user,
-      password,
-      port,
-      database,
-      connectionLimit
-    };
-    this.dbConfig = schemaVerify.Type.object.pure(dbConfig);
-  }
-
-  loadModule(moduleName) {
-    try {
-      return require(moduleName);
-    } catch (e) {
-      if (e && e.code === "MODULE_NOT_FOUND") {
-        throw new Error(`请先安装模块 ${moduleName}`);
-      }
-
-      throw e;
-    }
-  }
-
-}
-
-class MysqlConnect extends BaseConnect {
-  constructor(config) {
-    super(config);
-    this.pool = this.getPool();
-  }
-
-  getPool() {
-    let pool = this.pool;
-    const dbConfig = this.dbConfig;
-
-    if (schemaVerify.Type.object.is(pool) && schemaVerify.Type.function.is(pool.getConnection)) {
-      return pool;
-    }
-
-    const msyqlModule = this.loadModule(DialectModules.mysql);
-    pool = msyqlModule.createPool(dbConfig);
-    return pool;
-  }
-
-  getDbConnect() {
-    const pool = this.getPool() || {};
-
-    if (schemaVerify.Type.function.isNot(pool.getConnection)) {
-      throw new Error(ErrMsg$d.emptyConnectPool);
-    }
-
-    return new Promise((relsove, reject) => {
-      pool.getConnection((err, connection) => {
-        if (err) {
-          reject(err);
-        }
-
-        if (!connection || schemaVerify.Type.function.isNot(connection.query) || schemaVerify.Type.function.isNot(connection.release)) {
-          reject(new Error(ErrMsg$d.errorConnect));
-        }
-
-        relsove(connection);
-      });
-    });
-  }
-
-}
-
-class Execute {
-  constructor(config) {
-    this.dialectType = config.dialect || DialectTypes.mysql;
-    this.connect = this.getConnect(config);
-  }
-
-  getConnect(config) {
-    const dialect = this.dialectType;
-    let connect;
-
-    switch (dialect) {
-      case DialectTypes.mysql:
-        connect = new MysqlConnect(config);
-        break;
-    }
-
-    if (schemaVerify.Type.undefinedNull.is(connect)) {
-      throw new Error(ErrMsg$d.errorDialectType);
-    }
-
-    return connect;
-  }
-
-  async run(query) {
-    const connect = this.connect || {};
-
-    if (schemaVerify.Type.function.isNot(connect.getDbConnect)) {
-      throw new Error(ErrMsg$d.emptyConnectPool);
-    }
-
-    const dbConnection = await connect.getDbConnect();
-    return new Promise((relsove, reject) => {
-      dbConnection.query(query, function (err, results) {
-        dbConnection.release();
-
-        if (err) {
-          reject(err);
-        }
-
-        relsove(results);
-      });
-    });
-  }
-
-}
-
 function SqlQuery(config) {
+  if (schemaVerify.Type.object.isNot(config)) {
+    return new Builder();
+  }
+
   config = schemaVerify.Type.object.safe(config);
   const execute = new Execute(config);
   const o = new Builder(config.dialect, execute);
