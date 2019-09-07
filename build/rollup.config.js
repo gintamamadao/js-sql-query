@@ -25,7 +25,7 @@ const babelOptions = {
 
 const typescriptOptions = {
     strict: true,
-    module: "CommonJS",
+    module: "ES6",
     target: "ESNext"
 };
 
@@ -37,6 +37,5 @@ module.exports = {
         commonjs({ extensions, ignore: ["conditional-runtime-dependency"] }),
         babel(babelOptions)
     ],
-
     external: ["schema-verify"]
 };
