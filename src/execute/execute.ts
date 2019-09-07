@@ -1,4 +1,5 @@
 import MysqlConnect from "./connect/mysql_connect";
+import MyssqlConnect from "./connect/mssql_connect";
 import { ConnectConfig, DbConnect } from "../constant/execute/interface";
 import { DialectTypes } from "../constant/builder/enum";
 import { Type } from "schema-verify";
@@ -17,6 +18,9 @@ class Execute {
         switch (dialect) {
             case DialectTypes.mysql:
                 connect = new MysqlConnect(config);
+                break;
+            case DialectTypes.mssql:
+                connect = new MyssqlConnect(config);
                 break;
         }
         if (Type.undefinedNull.is(connect)) {
