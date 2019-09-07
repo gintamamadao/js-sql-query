@@ -4,10 +4,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var schemaVerify = _interopDefault(require('schema-verify'));
 
-function commonjsRequire () {
-	throw new Error('Dynamic requires are not currently supported by rollup-plugin-commonjs');
-}
-
 function unwrapExports (x) {
 	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
 }
@@ -6950,6 +6946,7 @@ var connect_error = createCommonjsModule(function (module, exports) {
   const ErrMsg = {
     errorConnectConfig: "错误的连接配置",
     emptyConnectPool: "未连接数据库",
+    errorDialectType: "错误的数据库类型",
     errorConnect: "错误的连接"
   };
   exports.default = ErrMsg;
@@ -6964,6 +6961,7 @@ var connect_error$1 = createCommonjsModule(function (module, exports) {
   const ErrMsg = {
     errorConnectConfig: "错误的连接配置",
     emptyConnectPool: "未连接数据库",
+    errorDialectType: "错误的数据库类型",
     errorConnect: "错误的连接"
   };
   exports.default = ErrMsg;
@@ -7140,7 +7138,7 @@ var base_connect = createCommonjsModule(function (module, exports) {
 
     loadModule(moduleName) {
       try {
-        return commonjsRequire(moduleName);
+        return require(moduleName);
       } catch (e) {
         if (e && e.code === "MODULE_NOT_FOUND") {
           throw new Error(`请先安装模块 ${moduleName}`);
@@ -7210,7 +7208,7 @@ var base_connect$1 = createCommonjsModule(function (module, exports) {
 
     loadModule(moduleName) {
       try {
-        return commonjsRequire(moduleName);
+        return require(moduleName);
       } catch (e) {
         if (e && e.code === "MODULE_NOT_FOUND") {
           throw new Error(`请先安装模块 ${moduleName}`);
@@ -7340,18 +7338,22 @@ var execute$2 = createCommonjsModule(function (module, exports) {
 
   class Execute {
     constructor(config) {
-      this.dialectType = config.dialect;
+      this.dialectType = config.dialect || _enum$1.DialectTypes.mysql;
       this.connect = this.getConnect(config);
     }
 
     getConnect(config) {
-      const dialect = config.dialect;
+      const dialect = this.dialectType;
       let connect;
 
       switch (dialect) {
         case _enum$1.DialectTypes.mysql:
           connect = new mysql_connect$1.default(config);
           break;
+      }
+
+      if (schemaVerify.Type.undefinedNull.is(connect)) {
+        throw new Error(execute$1.default.errorDialectType);
       }
 
       return connect;
@@ -7548,18 +7550,22 @@ var execute$3 = createCommonjsModule(function (module, exports) {
 
   class Execute {
     constructor(config) {
-      this.dialectType = config.dialect;
+      this.dialectType = config.dialect || _enum$1.DialectTypes.mysql;
       this.connect = this.getConnect(config);
     }
 
     getConnect(config) {
-      const dialect = config.dialect;
+      const dialect = this.dialectType;
       let connect;
 
       switch (dialect) {
         case _enum$1.DialectTypes.mysql:
           connect = new mysql_connect$1.default(config);
           break;
+      }
+
+      if (schemaVerify.Type.undefinedNull.is(connect)) {
+        throw new Error(execute$1.default.errorDialectType);
       }
 
       return connect;

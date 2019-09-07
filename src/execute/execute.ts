@@ -8,16 +8,19 @@ class Execute {
     dialectType: DialectTypes;
     connect;
     constructor(config: ConnectConfig) {
-        this.dialectType = config.dialect;
+        this.dialectType = config.dialect || DialectTypes.mysql;
         this.connect = this.getConnect(config);
     }
     getConnect(config: ConnectConfig) {
-        const dialect = config.dialect;
+        const dialect = this.dialectType;
         let connect;
         switch (dialect) {
             case DialectTypes.mysql:
                 connect = new MysqlConnect(config);
                 break;
+        }
+        if (Type.undefinedNull.is(connect)) {
+            throw new Error(ErrMsg.errorDialectType);
         }
         return connect;
     }

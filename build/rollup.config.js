@@ -34,8 +34,9 @@ module.exports = {
     plugins: [
         typescript(typescriptOptions),
         nodeResolve({ extensions }),
-        commonjs({ extensions }),
+        commonjs({ extensions, ignore: ["conditional-runtime-dependency"] }),
         babel(babelOptions)
     ],
-    external: ["schema-verify", "mysql"]
+
+    external: ["schema-verify"]
 };
