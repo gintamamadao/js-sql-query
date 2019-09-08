@@ -99,6 +99,25 @@ var sqlQuery = new SqlQuery("mssql");
 sqlQuery.table("test_table");
 ```
 
+可以通过读取属性 query 来获取当前拼接的 sql 语句，注意 query 属性 是惰性的，所以只有在读取时才开始拼接。
+也可以调用 build 属性方法。
+
+```js
+var insertSql = sqlQuery
+    .insert()
+    .table("table1")
+    .data({
+        field1: "value1",
+        field2: "value2"
+    });
+
+console.log(insertSql.query);
+// 后台输出 REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
+
+console.log(insertSql.build());
+// 和上面的输出是一样的
+```
+
 ### INSERT/REPLACE
 
 -   插入数据类型语句
@@ -126,7 +145,7 @@ sqlQuery.table("test_table");
 #### insert 例子：
 
 ```js
-builder
+sqlQuery
     .replace()
     .table("table1")
     .data({
@@ -135,7 +154,7 @@ builder
     }).query;
 // REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
 
-builder
+sqlQuery
     .insert()
     .table("table1")
     .fields("field1", "field2")
@@ -146,7 +165,7 @@ builder
     }).query;
 // INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
 
-builder
+sqlQuery
     .insert()
     .table("table1")
     .fields(["field1", "field2"])
@@ -157,7 +176,7 @@ builder
     }).query;
 // INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
 
-builder
+sqlQuery
     .insert()
     .table("table1")
     .fields(["field1", "field2"])
@@ -175,12 +194,12 @@ builder
     ]).query;
 // INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' ), ( 'value4', 'value5' )
 
-builder
+sqlQuery
     .insert()
     .table("table1")
     .fields(["field1", "field2"])
     .values(() =>
-        builder
+        sqlQuery
             .select()
             .table("table1")
             .fields(["field1", "field2"])
@@ -211,7 +230,7 @@ builder
 #### update 例子：
 
 ```js
-builder
+sqlQuery
     .update()
     .table("table1")
     .set({
@@ -219,7 +238,7 @@ builder
     }).query;
 // UPDATE `table1` SET `field1` = 'value1'
 
-builder
+sqlQuery
     .update()
     .table("table1")
     .set({
@@ -228,7 +247,7 @@ builder
     .step(100).query;
 // UPDATE `table1` SET `field1` = 'value1' LIMIT 100
 
-builder
+sqlQuery
     .update()
     .table("table1")
     .set({
@@ -238,7 +257,7 @@ builder
     .descBy("field1").query;
 // UPDATE `table1` SET `field1` = 'value1' ORDER BY `field1` DESC LIMIT 100
 
-builder
+sqlQuery
     .update()
     .table("table1")
     .set({
@@ -250,7 +269,7 @@ builder
     }).query;
 // UPDATE `table1` SET `field1` = 'value1', `field2` = 'value2' WHERE `field3` = 'value3'
 
-builder
+sqlQuery
     .update()
     .table("table1")
     .add({
@@ -261,7 +280,7 @@ builder
     }).query;
 // UPDATE `table1` SET `field1` = `field1` + '1' WHERE `field2` = 'value2'
 
-builder
+sqlQuery
     .update()
     .table("table1")
     .minus({
@@ -300,60 +319,60 @@ builder
 #### select 例子：
 
 ```js
-builder
+sqlQuery
     .select()
     .table("table1")
     .fields("*").query;
 // SELECT * FROM `table1`
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .fields("field1", "field2").query;
 // SELECT `field1`, `field2` FROM `table1`
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .fields(["field1", "field2"]).query;
 // SELECT `field1`, `field2` FROM `table1`
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .fields("field1")
     .count("field2").query;
 // SELECT `field1`, COUNT(`field2`) FROM `table1`
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .fields("field1")
-    .fields(builder.func.count("field2")).query;
+    .fields(sqlQuery.func.count("field2")).query;
 // SELECT `field1`, COUNT(`field2`) FROM `table1`
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .fields("field1")
     .fields({ func: "count", field: "field2" }).query;
 // SELECT `field1`, COUNT(`field2`) FROM `table1`
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .fields("field1")
     .funcFeilds({ func: "count", field: "field2" }).query;
 // SELECT `field1`, COUNT(`field2`) FROM `table1`
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .fields("field1")
-    .funcFeilds(builder.func.count("field2")).query;
+    .funcFeilds(sqlQuery.func.count("field2")).query;
 // SELECT `field1`, COUNT(`field2`) FROM `table1`
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .fields("field1")
@@ -361,7 +380,7 @@ builder
     .sum("field3").query;
 // SELECT `field1`, COUNT(`field2`), SUM(`field3`) FROM `table1`
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .fields("field1")
@@ -371,14 +390,15 @@ builder
     ).query;
 // SELECT `field1`, COUNT(`field2`), SUM(`field3`) FROM `table1`
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .fields("field1")
-    .funcFeilds(builder.func.count("field2"), builder.func.sum("field3")).query;
+    .funcFeilds(sqlQuery.func.count("field2"), sqlQuery.func.sum("field3"))
+    .query;
 // SELECT `field1`, COUNT(`field2`), SUM(`field3`) FROM `table1`
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .fields("field1")
@@ -386,7 +406,7 @@ builder
     .groupBy("field2").query;
 // SELECT `field1`, COUNT(`field2`) FROM `table1` GROUP BY `field2`
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .fields("field1")
@@ -406,20 +426,20 @@ builder
 #### delete 例子：
 
 ```js
-builder
+sqlQuery
     .delete()
     .table("table1")
     .step(100).query;
 // DELETE FROM `table1` LIMIT 100
 
-builder
+sqlQuery
     .delete()
     .table("table1")
     .step(100)
     .descBy("field1").query;
 // DELETE FROM `table1` ORDER BY `field1` DESC LIMIT 100
 
-builder
+sqlQuery
     .delete()
     .table("table1")
     .whereEqual({
@@ -545,13 +565,13 @@ builder
 #### where 例子：
 
 ```js
-builder
+sqlQuery
     .select()
     .table("table1")
     .where("`field1` = 'value1'").query;
 // SELECT * FROM `table1` WHERE `field1` = 'value1'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .whereEqual({
@@ -559,7 +579,7 @@ builder
     }).query;
 // SELECT * FROM `table1` WHERE `field1` = 'value1'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .whereNotEqual({
@@ -567,7 +587,7 @@ builder
     }).query;
 // SELECT * FROM `table1` WHERE `field1` <> 'value1'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .whereIn({
@@ -575,7 +595,7 @@ builder
     }).query;
 // SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' )
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .whereNotIn({
@@ -583,7 +603,7 @@ builder
     }).query;
 // SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' )
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .whereMore({
@@ -591,7 +611,7 @@ builder
     }).query;
 // SELECT * FROM `table1` WHERE `field1` > 'value1'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .whereLess({
@@ -599,7 +619,7 @@ builder
     }).query;
 // SELECT * FROM `table1` WHERE `field1` < 'value1'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .whereMoreEqual({
@@ -607,7 +627,7 @@ builder
     }).query;
 // SELECT * FROM `table1` WHERE `field1` >= 'value1'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .whereLessEqual({
@@ -615,7 +635,7 @@ builder
     }).query;
 // SELECT * FROM `table1` WHERE `field1` <= 'value1'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .whereLike({
@@ -623,7 +643,7 @@ builder
     }).query;
 // SELECT * FROM `table1` WHERE `field1` LIKE '%value1%'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .whereNotLike({
@@ -631,7 +651,7 @@ builder
     }).query;
 // SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .whereBetween({
@@ -639,7 +659,7 @@ builder
     }).query;
 // SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .whereNotBetween({
@@ -647,7 +667,7 @@ builder
     }).query;
 // SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1' AND 'value2'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .whereEqual({
@@ -656,7 +676,7 @@ builder
     }).query;
 // SELECT * FROM `table1` WHERE `field1` = 'value1' AND `field2` = 'value2'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .whereEqual({
@@ -667,7 +687,7 @@ builder
     }).query;
 // SELECT * FROM `table1` WHERE `field1` = 'value1' AND `field2` <> 'value2'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .whereNotEqual({
@@ -678,7 +698,7 @@ builder
     }).query;
 // SELECT * FROM `table1` WHERE `field1` <> 'value1' AND `field1` <> 'value2'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .whereOrEqual({
@@ -687,7 +707,7 @@ builder
     }).query;
 // SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field2` = 'value2'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .whereOrEqual({
@@ -698,7 +718,7 @@ builder
     }).query;
 // SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field1` = 'value2'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .whereOrEqual({
@@ -713,7 +733,7 @@ builder
     }).query;
 // SELECT * FROM `table1` WHERE ( `field1` = 'value1' OR `field2` = 'value2' ) AND ( `field3` = 'value3' )
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .whereEqual({
@@ -957,152 +977,152 @@ builder
 #### Term 例子：
 
 ```js
-builder
+sqlQuery
     .select()
     .table("table1")
     .where(() =>
-        builder.term.equal({
+        sqlQuery.term.equal({
             field1: "value1"
         })
     ).query;
 // SELECT * FROM `table1` WHERE `field1` = 'value1'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .having(() =>
-        builder.term.equal({
+        sqlQuery.term.equal({
             field1: "value1"
         })
     ).query;
 // SELECT * FROM `table1` HAVING `field1` = 'value1'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .where(() =>
-        builder.term.notEqual({
+        sqlQuery.term.notEqual({
             field1: "value1"
         })
     ).query;
 // SELECT * FROM `table1` WHERE `field1` <> 'value1'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .where(() =>
-        builder.term.in({
+        sqlQuery.term.in({
             field1: ["value1", "value2"]
         })
     ).query;
 // SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' )
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .where(() =>
-        builder.term.notIn({
+        sqlQuery.term.notIn({
             field1: ["value1", "value2"]
         })
     ).query;
 // SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' )
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .where(() =>
-        builder.term.more({
+        sqlQuery.term.more({
             field1: "value1"
         })
     ).query;
 // SELECT * FROM `table1` WHERE `field1` > 'value1'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .where(() =>
-        builder.term.less({
+        sqlQuery.term.less({
             field1: "value1"
         })
     ).query;
 // SELECT * FROM `table1` WHERE `field1` < 'value1'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .where(() =>
-        builder.term.moreEqual({
+        sqlQuery.term.moreEqual({
             field1: "value1"
         })
     ).query;
 // SELECT * FROM `table1` WHERE `field1` >= 'value1'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .where(() =>
-        builder.term.lessEqual({
+        sqlQuery.term.lessEqual({
             field1: "value1"
         })
     ).query;
 // SELECT * FROM `table1` WHERE `field1` <= 'value1'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .where(() =>
-        builder.term.like({
+        sqlQuery.term.like({
             field1: "value1"
         })
     ).query;
 // SELECT * FROM `table1` WHERE `field1` LIKE '%value1%'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .where(() =>
-        builder.term.notLike({
+        sqlQuery.term.notLike({
             field1: "value1"
         })
     ).query;
 // SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .where(() =>
-        builder.term.between({
+        sqlQuery.term.between({
             field1: ["value1", "value2"]
         })
     ).query;
 // SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .where(() =>
-        builder.term.notBetween({
+        sqlQuery.term.notBetween({
             field1: ["value1", "value2"]
         })
     ).query;
 // SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1' AND 'value2'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .where(() =>
-        builder.term.equal({
+        sqlQuery.term.equal({
             field1: "value1",
             field2: "value2"
         })
     ).query;
 // SELECT * FROM `table1` WHERE `field1` = 'value1' AND `field2` <> 'value2'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .where(() =>
-        builder.term
+        sqlQuery.term
             .equal({
                 field1: "value1"
             })
@@ -1112,11 +1132,11 @@ builder
     ).query;
 // SELECT * FROM `table1` WHERE `field1` = 'value1' AND `field2` <> 'value2'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .where(() =>
-        builder.term
+        sqlQuery.term
             .notEqual({
                 field1: "value1"
             })
@@ -1126,22 +1146,22 @@ builder
     ).query;
 // SELECT * FROM `table1` WHERE `field1` <> 'value1' AND `field1` <> 'value2'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .where(() =>
-        builder.term.orEqual({
+        sqlQuery.term.orEqual({
             field1: "value1",
             field2: "value2"
         })
     ).query;
 // SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field2` = 'value2'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .where(() =>
-        builder.term
+        sqlQuery.term
             .orEqual({
                 field1: "value1"
             })
@@ -1151,11 +1171,11 @@ builder
     ).query;
 // SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field1` = 'value2'
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .where(() =>
-        builder.term
+        sqlQuery.term
             .orEqual({
                 field1: "value1"
             })
@@ -1169,11 +1189,11 @@ builder
     ).query;
 // SELECT * FROM `table1` WHERE ( `field1` = 'value1' OR `field2` = 'value2' ) AND ( `field3` = 'value3' )
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .where(() =>
-        builder.term
+        sqlQuery.term
             .equal({
                 field1: "value1",
                 field2: "value2"
@@ -1207,50 +1227,50 @@ builder
 #### ORDER 例子：
 
 ```js
-builder
+sqlQuery
     .select()
     .table("table1")
     .descBy("field1").query;
 // SELECT * FROM `table1` ORDER BY `field1` DESC
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .ascBy("field1").query;
 // SELECT * FROM `table1` ORDER BY `field1` ASC
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .descBy("field1", "field2").query;
 // SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` DESC
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .descBy(["field1", "field2"]).query;
 // SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` DESC
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .ascBy("field1", "field2").query;
 // SELECT * FROM `table1` ORDER BY `field1` ASC, `field2` ASC
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .ascBy(["field1", "field2"]).query;
 // SELECT * FROM `table1` ORDER BY `field1` ASC, `field2` ASC
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .descBy("field1")
     .ascBy("field2").query;
 // SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` ASC
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .orderField({
@@ -1258,11 +1278,11 @@ builder
     }).query;
 // SELECT * FROM `table1` ORDER BY FIELD(`field1`, 'value1', 'value2')
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .order(() =>
-        builder.order
+        sqlQuery.order
             .descBy("field1")
             .ascBy("field2")
             .orderField({
@@ -1297,37 +1317,37 @@ builder
 #### LIMIT/OFFSET 例子：
 
 ```js
-builder
+sqlQuery
     .select()
     .table("table1")
     .offset(1).query;
 // SELECT * FROM `table1` OFFSET 1
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .step(10).query;
 // SELECT * FROM `table1` LIMIT 10
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .limit(1, 10).query;
 // SELECT * FROM `table1` LIMIT 10 OFFSET 1
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .paging(1, 10).query;
 // SELECT * FROM `table1` LIMIT 10
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .paging(2, 10).query;
 // SELECT * FROM `table1` LIMIT 10 OFFSET 10
 
-builder
+sqlQuery
     .select()
     .table("table1")
     .findOne().query;
@@ -1405,7 +1425,7 @@ const tableInfo = {
 -   将 json 格式转换成 sql 语句
 
 ```js
-builder.create().info(tableInfo).query;
+sqlQuery.create().info(tableInfo).query;
 //CREATE TABLE IF NOT EXISTS student ( `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '学生id',`name` VARCHAR(32) NOT NULL DEFAULT '' COMMENT '学生名字',`update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',CONSTRAINT `id` PRIMARY KEY (`id`),CONSTRAINT `pk_id` UNIQUE KEY (`id`,`name`) ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='学生信息表';
 ```
 
@@ -1447,7 +1467,7 @@ builder.create().info(tableInfo).query;
 #### ALTER 例子：
 
 ```js
-builder
+sqlQuery
     .alter()
     .table("table1")
     .add({
@@ -1460,13 +1480,13 @@ builder
     }).query;
 // ALTER TABLE `table1` ADD COLUMN `field1` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '学生id'
 
-builder
+sqlQuery
     .alter()
     .table("table1")
     .drop("field1").query;
 // ALTER TABLE `table1` DROP COLUMN `field1`
 
-builder
+sqlQuery
     .alter()
     .table("table1")
     .modify("field1", {
@@ -1474,7 +1494,7 @@ builder
     }).query;
 // ALTER TABLE `table1` MODIFY COLUMN `field1` VARCHAR(32)
 
-builder
+sqlQuery
     .alter()
     .table("table1")
     .change("field1", {
