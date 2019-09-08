@@ -3343,16 +3343,26 @@ class Builder {
 }
 
 function SqlQuery(config) {
+  let dialect;
+
   if (schemaVerify.Type.object.isNot(config)) {
-    return new Builder();
+    dialect = DialectTypes.mysql;
+
+    if (schemaVerify.Type.string.isNotEmpty(config)) {
+      dialect = config;
+    }
+
+    return new Builder(dialect);
   }
 
+  dialect = config.dialect || DialectTypes.mysql;
   config = schemaVerify.Type.object.safe(config);
   const execute = new Execute(config);
-  const o = new Builder(config.dialect, execute);
-  return o;
+  const builder = new Builder(dialect, execute);
+  return builder;
 }
 
 SqlQuery.Builder = Builder;
+SqlQuery.Execute = Execute;
 
 module.exports = SqlQuery;
