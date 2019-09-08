@@ -1,84 +1,103 @@
 # js-sql-query
 
-js sql query builder
+Node.js ORM for MySQL and Microsoft SQL Server
 
 ## 项目简介
 
-项目的目标是做一个基于 js 的类 orm 插件，来用于 node 后台开发。目前完成的功能有增删查改的 sql 语句的组装逻辑及其相关测试。
-项目逻辑用 ts 编写，用 rollup 打包成 js 文件，rollup 的编译配置在 build 文件夹下。
+项目的目标是做一个基于 js 的 orm 框架，可以快捷地生成 sql 语句，并且可以连接数据库执行 sql 语句。目前支持 MySQL 和 Microsoft SQL Server 这两种数据库。
 
-## 安装
+## 环境安装
+
+-   安装本项目
 
 ```sh
 npm i js-sql-query --save
 ```
 
+-   如果使用的是 MySQL，需要安装依赖
+
+```sh
+npm i mysql --save
+```
+
+-   如果使用的是 Microsoft SQL Server，需要安装依赖
+
+```sh
+npm i tedious --save
+npm i tedious-connection-pool --save
+```
+
 ## 使用例子
 
 ```js
-var { Builder } = require("js-sql-query");
-var builder = new Builder();
-var instance = builder
+var SqlQuery = require("js-sql-query");
+
+// 连接上数据库，dialect 是配置数据类型，如果不配置，默认为 mysql。如果使用的是 Microsoft SQL Server，则配置值为 mssql
+var sqlQuery = new SqlQuery({
+    host: "localhost",
+    user: "root",
+    password: "123456",
+    database: "test_db",
+    dialect: "mysql"
+});
+
+// 执行语句 SELECT `field1`, `field2` FROM `table1`
+sqlQuery
     .select()
     .table("table1")
-    .fields("field1", "field2");
-
-instance.query;
-// SELECT `field1`, `field2` FROM `table1`
+    .fields("field1", "field2")
+    .exec();
 ```
 
-### 变量说明
-
--   builder，是新建的组装工具的实例
--   select，选择 sql 语句类型为 select
--   table，设置要操作的表
--   fields，设置要选择的字段
--   instance，是调用 api 后返回的一个语句实例
--   query，生成最后的 sql 的语句，也可以调用 instance.build()，效果是一样的
+上面例子中的操作就是连接上 test_db 库，并执行 "SELECT `field1`, `field2` FROM `table1`" 这条 sql 最后返回结果。
+注意最后执行的 exec() 是返回一个 Promise 对象。
 
 ## 目录
 
 <!-- TOC -->
 
--   [api](#api)
-    -   [Builder](#builder)
-        -   [INSERT/REPLACE](#insertreplace)
-        -   [UPDATE](#update)
-        -   [SELECT](#select)
-        -   [DELETE](#delete)
-        -   [WHERE](#where)
-        -   [HAVING](#having)
-        -   [TERM](#term)
-        -   [ORDER](#order)
-        -   [LIMIT/OFFSET](#limitoffset)
-        -   [CREATE](#create)
-        -   [ALTER](#alter)
+-   [Build SQL Api](#build-SQL-api)
+    -   [INSERT/REPLACE](#insertreplace)
+    -   [UPDATE](#update)
+    -   [SELECT](#select)
+    -   [DELETE](#delete)
+    -   [WHERE](#where)
+    -   [HAVING](#having)
+    -   [TERM](#term)
+    -   [ORDER](#order)
+    -   [LIMIT/OFFSET](#limitoffset)
+    -   [CREATE](#create)
+    -   [ALTER](#alter)
 
-# api
+## Build SQL Api
 
-## Builder
+### 语句类型
 
-```js
-var { Builder } = require("js-sql-query");
-var builder = new Builder();
-```
-
--   新建时指定数据库类型 mysql，mssql，postgresql，sqlite，默认为 mysql
-
-```js
-var builder = new Builder("mysql");
-```
-
--   设置默认要操作的表
-
-```js
-builder.table("table1");
-```
-
--   语句类型
-
-语句的基本类型有 CREATE，INSERT，REPLACE， UPDATE，SELECT，DELETE，其中 INSERT 和 REPLACE 的拼装逻辑是完全一样的，就合在一起讲
+语句的基本类型有 CREATE，INSERT，REPLACE，UPDATE，SELECT，DELETE，其中 INSERT 和 REPLACE 的拼装逻辑是完全一样的，就合在一起讲
 不同的基本类型可以调用的 api 不完全一样，有些是公用的，有些是仅限某些基本类型才能调用。
+
+```js
+var SqlQuery = require("js-sql-query");
+var sqlQuery = new SqlQuery();
+```
+
+如果我们仅仅需要 sql 语句并不需要连接数据库，就可以在新建对象时不传入参数，这时 sql 语句默认语境是 mysql，当然也可以传入字符串 mysql 或者 mssql 来指定语境。
+
+```js
+// 语境为 mysql
+var sqlQuery = new SqlQuery("mysql");
+
+// 语境为 Microsoft SQL Server
+var sqlQuery = new SqlQuery("mssql");
+
+// 此时 sqlQuery 可以生成对应语境的 sql 语句，但无法执行。
+```
+
+可以设置一个默认的表名，这样每条 sql 语句就不用都特意指定一次。
+
+```js
+sqlQuery.table("test_table");
+```
 
 ### INSERT/REPLACE
 
