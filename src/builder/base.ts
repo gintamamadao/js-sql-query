@@ -104,7 +104,7 @@ class Base {
         if (!Type.string.isNotEmpty(query)) {
             throw new Error(ErrMsg.emptySqlQuery);
         }
-        if (Type.object.isNot(execute) || Type.function.isNot(execute.run)) {
+        if (Type.object.isNot(execute) || Type.function.isNot(execute.exec)) {
             throw new Error(ErrMsg.errorExecute);
         }
         return execute.exec(query);

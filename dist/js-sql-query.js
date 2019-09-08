@@ -925,7 +925,7 @@ class Base {
       throw new Error(ErrMsg$b.emptySqlQuery);
     }
 
-    if (schemaVerify.Type.object.isNot(execute) || schemaVerify.Type.function.isNot(execute.run)) {
+    if (schemaVerify.Type.object.isNot(execute) || schemaVerify.Type.function.isNot(execute.exec)) {
       throw new Error(ErrMsg$b.errorExecute);
     }
 
