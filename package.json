@@ -1,6 +1,6 @@
 {
     "name": "js-sql-query",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "",
     "main": "./dist/js-sql-query.js",
     "scripts": {
@@ -18,7 +18,9 @@
         "js",
         "orm",
         "sql",
-        "query"
+        "query",
+        "mysql",
+        "mssql"
     ],
     "dependencies": {
         "schema-verify": "^1.1.9"

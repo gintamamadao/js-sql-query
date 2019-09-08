@@ -42,11 +42,12 @@ var sqlQuery = new SqlQuery({
 });
 
 // 执行语句 SELECT `field1`, `field2` FROM `table1`
-sqlQuery
+var result = await sqlQuery
     .select()
     .table("table1")
     .fields("field1", "field2")
     .exec();
+// exec() 返回的是一个 Promise 对象， 所以用 async/await 语法获取最后结果
 ```
 
 上面例子中的操作就是连接上 test_db 库，并执行 "SELECT `field1`, `field2` FROM `table1`" 这条 sql 最后返回结果。
@@ -1542,15 +1543,15 @@ var result = await sqlQuery
 
 ### Connect Config
 
-| 字段            |       类型       | 是否必填 |                                         说明 |
-| --------------- | :--------------: | :------: | -------------------------------------------: |
-| host            |      string      |    是    |                               数据库主机地址 |
-| port            | string or number |    否    |                               数据库主机端口 |
-| user            |      string      |    是    |                                 数据库用户名 |
-| password        |      string      |    否    |                               数据库用户密码 |
-| database        |      string      |    是    |                                   表所在的库 |
-| dialect         |      string      |    是    | 数据库的类型，mysql 或者 mssql，默认为 mysql |
-| connectionLimit |      number      |    是    |               连接池的最大连接数，默认为 1。 |
+| 字段            |       类型       | 是否必填 |                           说明 |
+| --------------- | :--------------: | :------: | -----------------------------: |
+| host            |      string      |    是    |                 数据库主机地址 |
+| port            | string or number |    否    |                 数据库主机端口 |
+| user            |      string      |    是    |                   数据库用户名 |
+| password        |      string      |    否    |                 数据库用户密码 |
+| database        |      string      |    是    |                     表所在的库 |
+| dialect         |      string      |    是    |     数据库的类型，默认为 mysql |
+| connectionLimit |      number      |    是    | 连接池的最大连接数，默认为 1。 |
 
 因为本框架是使用连接池的方式连接数据库，所以 connectionLimit 设置的值越大，那连接池里面缓存的连接数就越多，性能也会越好。
 
@@ -1558,7 +1559,7 @@ var result = await sqlQuery
 
 api 只有一个就是 exec，exec()执行后返回的是一个 Promise 对象，所以推荐用 async/await 处理。
 
-exec 也可以直接执行 sql 语句。
+exec 也可以直接执行 sql 语句。只需要传入 sql 语句作为参数即可。
 
 ```js
 var result = await sqlQuery.exec("SELECT `field1`, `field2` FROM `table1`");
