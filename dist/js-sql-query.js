@@ -917,9 +917,9 @@ class Base {
     this._execute = execute;
   }
 
-  exec() {
+  exec(sqlStr) {
     const execute = this._execute;
-    const query = this.build();
+    const query = schemaVerify.Type.string.isNotEmpty(sqlStr) ? sqlStr : this.build();
 
     if (!schemaVerify.Type.string.isNotEmpty(query)) {
       throw new Error(ErrMsg$b.emptySqlQuery);

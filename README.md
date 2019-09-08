@@ -56,7 +56,7 @@ sqlQuery
 
 <!-- TOC -->
 
--   [Build SQL Api](#build-SQL-api)
+-   [Build SQL Api](#build-sql-api)
     -   [INSERT/REPLACE](#insertreplace)
     -   [UPDATE](#update)
     -   [SELECT](#select)
@@ -68,6 +68,9 @@ sqlQuery
     -   [LIMIT/OFFSET](#limitoffset)
     -   [CREATE](#create)
     -   [ALTER](#alter)
+-   [Connect To Db](#connect-to-db)
+    -   [Connect Config](#connect-config)
+    -   [Connect Api](#connect-api)
 
 ## Build SQL Api
 
@@ -1516,3 +1519,47 @@ sqlQuery
 -   notNull，不允许为空
 -   default，设置默认值
 -   onUpdate，数据更新时字段的更新值
+
+## Connect To Db
+
+如果要连接数据库需要在新建对象时传入连接的配置，要执行语句需要调用 exec 属性方法。
+
+```js
+var SqlQuery = require("js-sql-query");
+var sqlQuery = new SqlQuery({
+    host: "localhost",
+    user: "root",
+    password: "123456",
+    database: "test_db",
+    dialect: "mysql"
+});
+var result = await sqlQuery
+    .select()
+    .table("table1")
+    .fields("field1", "field2")
+    .exec();
+```
+
+### Connect Config
+
+| 字段            |       类型       | 是否必填 |                                         说明 |
+| --------------- | :--------------: | :------: | -------------------------------------------: |
+| host            |      string      |    是    |                               数据库主机地址 |
+| port            | string or number |    否    |                               数据库主机端口 |
+| user            |      string      |    是    |                                 数据库用户名 |
+| password        |      string      |    否    |                               数据库用户密码 |
+| database        |      string      |    是    |                                   表所在的库 |
+| dialect         |      string      |    是    | 数据库的类型，mysql 或者 mssql，默认为 mysql |
+| connectionLimit |      number      |    是    |               连接池的最大连接数，默认为 1。 |
+
+因为本框架是使用连接池的方式连接数据库，所以 connectionLimit 设置的值越大，那连接池里面缓存的连接数就越多，性能也会越好。
+
+### Connect Api
+
+api 只有一个就是 exec，exec()执行后返回的是一个 Promise 对象，所以推荐用 async/await 处理。
+
+exec 也可以直接执行 sql 语句。
+
+```js
+var result = await sqlQuery.exec("SELECT `field1`, `field2` FROM `table1`");
+```

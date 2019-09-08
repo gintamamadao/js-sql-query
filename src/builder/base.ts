@@ -98,9 +98,11 @@ class Base {
         this._execute = execute;
     }
 
-    exec() {
+    exec(sqlStr?: string) {
         const execute: Execute = this._execute;
-        const query = this.build();
+        const query: string = Type.string.isNotEmpty(sqlStr)
+            ? sqlStr
+            : this.build();
         if (!Type.string.isNotEmpty(query)) {
             throw new Error(ErrMsg.emptySqlQuery);
         }
