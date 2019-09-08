@@ -917,7 +917,7 @@ class Base {
     this._execute = execute;
   }
 
-  run() {
+  exec() {
     const execute = this._execute;
     const query = this.build();
 
@@ -929,7 +929,7 @@ class Base {
       throw new Error(ErrMsg$b.errorExecute);
     }
 
-    return execute.run(query);
+    return execute.exec(query);
   }
 
 }
@@ -3160,7 +3160,7 @@ class Execute {
     return connect;
   }
 
-  async run(query) {
+  async exec(query) {
     const connect = this.connect || {};
 
     if (schemaVerify.Type.function.isNot(connect.getDbConnect)) {

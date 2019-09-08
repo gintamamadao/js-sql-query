@@ -98,7 +98,7 @@ class Base {
         this._execute = execute;
     }
 
-    run() {
+    exec() {
         const execute: Execute = this._execute;
         const query = this.build();
         if (!Type.string.isNotEmpty(query)) {
@@ -107,7 +107,7 @@ class Base {
         if (Type.object.isNot(execute) || Type.function.isNot(execute.run)) {
             throw new Error(ErrMsg.errorExecute);
         }
-        return execute.run(query);
+        return execute.exec(query);
     }
 }
 

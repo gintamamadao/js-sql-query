@@ -28,7 +28,7 @@ class Execute {
         }
         return connect;
     }
-    async run(query: string) {
+    async exec(query: string) {
         const connect = this.connect || {};
         if (Type.function.isNot(connect.getDbConnect)) {
             throw new Error(ErrMsg.emptyConnectPool);
