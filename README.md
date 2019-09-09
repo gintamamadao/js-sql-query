@@ -1553,7 +1553,8 @@ var result = await sqlQuery
 | dialect         |      string      |    是    |     数据库的类型，默认为 mysql |
 | connectionLimit |      number      |    是    | 连接池的最大连接数，默认为 1。 |
 
-因为本框架是使用连接池的方式连接数据库，所以 connectionLimit 设置的值越大，那连接池里面缓存的连接数就越多，性能也会越好。
+-   因为本框架是使用连接池的方式连接数据库，所以 connectionLimit 设置的值越大，那连接池里面缓存的连接数就越多。
+-   同时如果连接池的连接都正在忙，那新的连接请求就会进入队列等待，所以不用担心连接数会超过数据库的最大限制。
 
 ### Connect Api
 
