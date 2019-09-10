@@ -116,10 +116,8 @@ var insertSql = sqlQuery
     });
 
 console.log(insertSql.query);
-// 后台输出 REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
-
 console.log(insertSql.build());
-// 和上面的输出是一样的
+// 后台都是输出 REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
 ```
 
 ### INSERT/REPLACE
