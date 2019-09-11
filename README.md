@@ -124,6 +124,18 @@ console.log(insertSql.build());
 
 -   插入数据类型语句
 
+-   REPLACE 类型语句
+
+```js
+sqlQuery.replace();
+```
+
+-   INSERT 类型语句
+
+```js
+sqlQuery.insert();
+```
+
 #### insert/replace
 
 -   指定 sql 语句为 INSERT/REPLACE 类型
@@ -213,6 +225,12 @@ sqlQuery
 
 -   更新数据类型语句
 
+-   UPDATE 类型语句
+
+```js
+sqlQuery.update();
+```
+
 #### update
 
 -   指定 sql 语句为 UPDATE 类型
@@ -297,6 +315,12 @@ sqlQuery
 ### SELECT
 
 -   查询数据类型语句
+
+-   SELECT 类型语句
+
+```js
+sqlQuery.select();
+```
 
 #### select
 
@@ -420,6 +444,12 @@ sqlQuery
 ### DELETE
 
 -   删除数据类型语句
+
+-   DELETE 类型语句
+
+```js
+sqlQuery.delete();
+```
 
 #### delete
 
@@ -1360,6 +1390,12 @@ sqlQuery
 
 -   新建表语句，把表的信息用一定的 json 结构保存，然后可以通过 api 转换成 sql 语句
 
+-   CREATE 类型语句
+
+```js
+sqlQuery.create();
+```
+
 #### create
 
 -   指定 sql 语句为 CREATE 类型
@@ -1449,6 +1485,12 @@ sqlQuery.create().info(tableInfo).query;
 -   onUpdate，数据更新时字段的更新值
 
 ### ALTER
+
+-   ALTER 类型语句
+
+```js
+sqlQuery.alter();
+```
 
 #### add
 
