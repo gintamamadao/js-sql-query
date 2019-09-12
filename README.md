@@ -94,7 +94,7 @@ var sqlQuery = new SqlQuery("mysql");
 // 语境为 Microsoft SQL Server
 var sqlQuery = new SqlQuery("mssql");
 
-// 此时 sqlQuery 可以生成对应语境的 sql 语句，但无法执行。
+// 不同语境生成的语句不完全一样，会根据相应的数据库类型进行适配
 ```
 
 可以设置一个默认的表名，这样每条 sql 语句就不用都特意指定一次。
