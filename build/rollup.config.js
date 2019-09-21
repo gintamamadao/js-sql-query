@@ -19,8 +19,7 @@ const babelOptions = {
                 }
             }
         ]
-    ],
-    plugins: ["@babel/external-helpers", "@babel/transform-runtime"]
+    ]
 };
 
 const typescriptOptions = {
