@@ -1,6 +1,6 @@
 {
     "name": "js-sql-query",
-    "version": "1.2.2",
+    "version": "1.2.3",
     "description": "Node.js ORM for MySQL and Microsoft SQL Server",
     "main": "./dist/js-sql-query.js",
     "scripts": {
@@ -38,7 +38,6 @@
         "rollup": "^1.14.3",
         "rollup-plugin-babel": "^4.3.2",
         "rollup-plugin-commonjs": "^10.0.0",
-        "rollup-plugin-node-resolve": "^5.0.1",
         "rollup-plugin-typescript": "^1.0.1",
         "tslib": "^1.9.3",
         "typescript": "^3.5.1"
