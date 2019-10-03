@@ -4,7 +4,7 @@ Node.js ORM for MySQL and Microsoft SQL Server
 
 ## 项目简介
 
-项目的目标是做一个基于 js 的 orm 框架，可以快捷地生成 sql 语句，并且可以连接数据库执行 sql 语句。目前支持 MySQL 和 Microsoft SQL Server 这两种数据库。
+一个 orm 框架，可以通过链式调用 api 快捷地生成 sql 语句，并且连接数据库执行。目前支持 MySQL 和 Microsoft SQL Server 这两种数据库。
 
 ## 环境安装
 
