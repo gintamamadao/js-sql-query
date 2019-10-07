@@ -114,49 +114,37 @@ var insertSql = sqlQuery
         field1: "value1",
         field2: "value2"
     });
+```
 
-console.log(insertSql.query);
-console.log(insertSql.build());
-// 后台都是输出 REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
+-   insertSql.query 和 insertSql.build() 的值是一样的，即：
+
+```sql
+REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
 ```
 
 ### INSERT/REPLACE
 
 -   插入数据类型语句
 
--   REPLACE 类型语句
+#### insert/replace
+
+-   指定 sql 语句为 INSERT/REPLACE 类型
+
+-   指定为 REPLACE 类型语句
 
 ```js
 sqlQuery.replace();
 ```
 
--   INSERT 类型语句
+-   指定为 INSERT 类型语句
 
 ```js
 sqlQuery.insert();
 ```
 
-#### insert/replace
-
--   指定 sql 语句为 INSERT/REPLACE 类型
-
 #### data
 
 -   设置 sql 语句的插入值信息
-
-#### multiData
-
--   设置 sql 语句多行插入值信息，一次插入一行或多行数据
-
-#### values
-
--   设置 sql 语句的插入值信息为子查询的结果
-
-#### fields
-
--   设置 sql 语句的插入值的字段
-
-#### insert 例子：
 
 ```js
 sqlQuery
@@ -165,31 +153,19 @@ sqlQuery
     .data({
         field1: "value1",
         field2: "value2"
-    }).query;
-// REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
+    })
+    .build();
+```
 
-sqlQuery
-    .insert()
-    .table("table1")
-    .fields("field1", "field2")
-    .data({
-        field1: "value1",
-        field2: "value2",
-        field3: "value3"
-    }).query;
-// INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
+```sql
+REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
+```
 
-sqlQuery
-    .insert()
-    .table("table1")
-    .fields(["field1", "field2"])
-    .data({
-        field1: "value1",
-        field2: "value2",
-        field3: "value3"
-    }).query;
-// INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
+#### multiData
 
+-   设置 sql 语句多行插入值信息，一次插入一行或多行数据
+
+```js
 sqlQuery
     .insert()
     .table("table1")
@@ -205,9 +181,19 @@ sqlQuery
             field2: "value5",
             field3: "value6"
         }
-    ]).query;
-// INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' ), ( 'value4', 'value5' )
+    ])
+    .build();
+```
 
+```sql
+INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' ), ( 'value4', 'value5' )
+```
+
+#### values
+
+-   设置 sql 语句的插入值信息为子查询的结果
+
+```js
 sqlQuery
     .insert()
     .table("table1")
@@ -217,66 +203,52 @@ sqlQuery
             .select()
             .table("table1")
             .fields(["field1", "field2"])
-    ).query;
-// INSERT INTO `table1` ( `field1`, `field2` )  VALUES SELECT `field1`, `field2` FROM `table1`
+    )
+    .build();
+```
+
+```sql
+INSERT INTO `table1` ( `field1`, `field2` )  VALUES SELECT `field1`, `field2` FROM `table1`
+```
+
+#### fields
+
+-   设置 sql 语句的插入值的字段
+
+```js
+sqlQuery
+    .insert()
+    .table("table1")
+    .fields("field1", "field2")
+    .data({
+        field1: "value1",
+        field2: "value2",
+        field3: "value3"
+    })
+    .build();
+```
+
+```sql
+INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
 ```
 
 ### UPDATE
 
 -   更新数据类型语句
 
--   UPDATE 类型语句
+#### update
+
+-   指定 sql 语句为 UPDATE 类型
 
 ```js
 sqlQuery.update();
 ```
 
-#### update
-
--   指定 sql 语句为 UPDATE 类型
-
 #### set
 
 -   设置 sql 语句的更新信息，更新方式为覆盖
 
-#### add
-
--   设置 sql 语句的更新信息，更新方式为增加
-
-#### minus
-
--   设置 sql 语句的更新信息，更新方式为减少
-
-#### update 例子：
-
 ```js
-sqlQuery
-    .update()
-    .table("table1")
-    .set({
-        field1: "value1"
-    }).query;
-// UPDATE `table1` SET `field1` = 'value1'
-
-sqlQuery
-    .update()
-    .table("table1")
-    .set({
-        field1: "value1"
-    })
-    .step(100).query;
-// UPDATE `table1` SET `field1` = 'value1' LIMIT 100
-
-sqlQuery
-    .update()
-    .table("table1")
-    .set({
-        field1: "value1"
-    })
-    .step(100)
-    .descBy("field1").query;
-// UPDATE `table1` SET `field1` = 'value1' ORDER BY `field1` DESC LIMIT 100
-
 sqlQuery
     .update()
     .table("table1")
@@ -286,9 +258,19 @@ sqlQuery
     })
     .whereEqual({
         field3: "value3"
-    }).query;
-// UPDATE `table1` SET `field1` = 'value1', `field2` = 'value2' WHERE `field3` = 'value3'
+    })
+    .build();
+```
 
+```sql
+UPDATE `table1` SET `field1` = 'value1', `field2` = 'value2' WHERE `field3` = 'value3'
+```
+
+#### add
+
+-   设置 sql 语句的更新信息，更新方式为增加
+
+```js
 sqlQuery
     .update()
     .table("table1")
@@ -297,9 +279,19 @@ sqlQuery
     })
     .whereEqual({
         field2: "value2"
-    }).query;
-// UPDATE `table1` SET `field1` = `field1` + '1' WHERE `field2` = 'value2'
+    })
+    .build();
+```
 
+```sql
+UPDATE `table1` SET `field1` = `field1` + '1' WHERE `field2` = 'value2'
+```
+
+#### minus
+
+-   设置 sql 语句的更新信息，更新方式为减少
+
+```js
 sqlQuery
     .update()
     .table("table1")
@@ -308,448 +300,443 @@ sqlQuery
     })
     .whereEqual({
         field2: "value2"
-    }).query;
-// UPDATE `table1` SET `field1` = `field1` - '1' WHERE `field2` = 'value2'
+    })
+    .build();
+```
+
+```sql
+UPDATE `table1` SET `field1` = `field1` - '1' WHERE `field2` = 'value2'
 ```
 
 ### SELECT
 
 -   查询数据类型语句
 
--   SELECT 类型语句
+#### select
+
+-   指定 sql 语句为 SELECT 类型
 
 ```js
 sqlQuery.select();
 ```
 
-#### select
-
--   指定 sql 语句为 SELECT 类型
-
 #### fields
 
 -   设置 sql 语句的要获取的字段
-
-#### count 等函数
-
--   设置 sql 语句的函数，有 count,sum,max,min,avg,abs,ceil,floor,round,log,log2,exp,power,acos,asin,atan,cos,sin,tan,conv,random,rand,radians,degrees,distinct
-
-#### funcFeilds
-
--   设置 sql 语句的函数
-
-#### groupBy
-
--   设置 sql 语句根据某个字段聚合
-
-#### select 例子：
 
 ```js
 sqlQuery
     .select()
     .table("table1")
-    .fields("*").query;
-// SELECT * FROM `table1`
+    .fields("field1", "field2") //值也可以是数组，即["field1", "field2"]
+    .build();
+```
 
-sqlQuery
-    .select()
-    .table("table1")
-    .fields("field1", "field2").query;
-// SELECT `field1`, `field2` FROM `table1`
+```sql
+SELECT `field1`, `field2` FROM `table1`
+```
 
-sqlQuery
-    .select()
-    .table("table1")
-    .fields(["field1", "field2"]).query;
-// SELECT `field1`, `field2` FROM `table1`
+-   也可以指定函数
 
+```js
 sqlQuery
     .select()
     .table("table1")
     .fields("field1")
-    .count("field2").query;
-// SELECT `field1`, COUNT(`field2`) FROM `table1`
+    .fields({ func: "count", field: "field2" })
+    .build();
+```
 
-sqlQuery
-    .select()
-    .table("table1")
-    .fields("field1")
-    .fields(sqlQuery.func.count("field2")).query;
-// SELECT `field1`, COUNT(`field2`) FROM `table1`
+```sql
+SELECT `field1`, COUNT(`field2`) FROM `table1`
+```
 
-sqlQuery
-    .select()
-    .table("table1")
-    .fields("field1")
-    .fields({ func: "count", field: "field2" }).query;
-// SELECT `field1`, COUNT(`field2`) FROM `table1`
+#### count 等函数
 
-sqlQuery
-    .select()
-    .table("table1")
-    .fields("field1")
-    .funcFeilds({ func: "count", field: "field2" }).query;
-// SELECT `field1`, COUNT(`field2`) FROM `table1`
+-   设置 sql 语句的函数，有 count,sum,max,min,avg,abs,ceil,floor,round,log,log2,exp,power,acos,asin,atan,cos,sin,tan,conv,random,rand,radians,degrees,distinct
 
-sqlQuery
-    .select()
-    .table("table1")
-    .fields("field1")
-    .funcFeilds(sqlQuery.func.count("field2")).query;
-// SELECT `field1`, COUNT(`field2`) FROM `table1`
-
+```js
 sqlQuery
     .select()
     .table("table1")
     .fields("field1")
     .count("field2")
-    .sum("field3").query;
-// SELECT `field1`, COUNT(`field2`), SUM(`field3`) FROM `table1`
+    .build();
+```
 
+```sql
+SELECT `field1`, COUNT(`field2`) FROM `table1`
+```
+
+#### funcFeilds
+
+-   设置 sql 语句的函数
+
+```js
 sqlQuery
     .select()
     .table("table1")
     .fields("field1")
-    .funcFeilds(
-        { func: "count", field: "field2" },
-        { func: "sum", field: "field3" }
-    ).query;
-// SELECT `field1`, COUNT(`field2`), SUM(`field3`) FROM `table1`
+    .funcFeilds(sqlQuery.func.count("field2"))
+    .build();
+```
 
-sqlQuery
-    .select()
-    .table("table1")
-    .fields("field1")
-    .funcFeilds(sqlQuery.func.count("field2"), sqlQuery.func.sum("field3"))
-    .query;
-// SELECT `field1`, COUNT(`field2`), SUM(`field3`) FROM `table1`
+```sql
+SELECT `field1`, COUNT(`field2`) FROM `table1`
+```
 
+#### groupBy
+
+-   设置 sql 语句根据某个字段聚合
+
+```js
 sqlQuery
     .select()
     .table("table1")
     .fields("field1")
     .count("field2")
-    .groupBy("field2").query;
-// SELECT `field1`, COUNT(`field2`) FROM `table1` GROUP BY `field2`
+    .groupBy("field2")
+    .build();
+```
 
-sqlQuery
-    .select()
-    .table("table1")
-    .fields("field1")
-    .count("field2")
-    .groupBy("field2", "field3").query;
-// SELECT `field1`, COUNT(`field2`) FROM `table1` GROUP BY `field2`, `field3`
+```sql
+SELECT `field1`, COUNT(`field2`) FROM `table1` GROUP BY `field2`
 ```
 
 ### DELETE
 
 -   删除数据类型语句
 
--   DELETE 类型语句
+#### delete
+
+-   指定 sql 语句为 DELETE 类型
 
 ```js
 sqlQuery.delete();
 ```
 
-#### delete
-
--   指定 sql 语句为 DELETE 类型
-
-#### delete 例子：
+-   DELETE 类型并没有特有的 api
 
 ```js
 sqlQuery
     .delete()
     .table("table1")
-    .step(100).query;
-// DELETE FROM `table1` LIMIT 100
-
-sqlQuery
-    .delete()
-    .table("table1")
-    .step(100)
-    .descBy("field1").query;
-// DELETE FROM `table1` ORDER BY `field1` DESC LIMIT 100
-
-sqlQuery
-    .delete()
-    .table("table1")
     .whereEqual({
         field1: "value1"
-    }).query;
-// DELETE FROM `table1` WHERE `field1` = 'value1'
+    })
+    .build();
+```
+
+```sql
+DELETE FROM `table1` WHERE `field1` = 'value1'
 ```
 
 ### WHERE
 
--   UPDATE、SELECT、DELETE 的条件逻辑拼装 api 是一样的。
+-   UPDATE、SELECT、DELETE 的 WHERE 条件逻辑拼装 api 是一样的。
 -   条件之间的逻辑根据后面的 api 决定，api 名中有 Or 这个词就代表，该条件与前一个条件为或关系，否则为与
 -   whereBracket 和 whereOrBracket 是特殊的 api，表示将 api 前后的条件分别用括号括起来，Or 代表括号之间的逻辑是或关系
 
 #### where
 
--   添加手打的条件或者 Term 类型的 api
-
-#### whereEqual
-
--   条件 =
-
-#### whereNotEqual
-
--   条件 <>
-
-#### whereIn
-
--   条件 IN
-
-#### whereNotIn
-
--   条件 NOT IN
-
-#### whereMore
-
--   条件 >
-
-#### whereLess
-
--   条件 <
-
-#### whereMoreEqual
-
--   条件 >=
-
-#### whereLessEqual
-
--   条件 <=
-
-#### whereLike
-
--   条件 LIKE
-
-#### whereNotLike
-
--   条件 NOT LIKE
-
-#### whereBetween
-
--   条件 BETWEEN
-
-#### whereNotBetween
-
--   条件 NOT BETWEEN
-
-#### whereOrEqual
-
--   条件 =，和前一条件逻辑为或
-
-#### whereOrNotEqual
-
--   条件 <>，和前一条件逻辑为或
-
-#### whereOrIn
-
--   条件 IN，和前一条件逻辑为或
-
-#### whereOrNotIn
-
--   条件 NOT IN，和前一条件逻辑为或
-
-#### whereOrMore
-
--   条件 >，和前一条件逻辑为或
-
-#### whereOrLess
-
--   条件 <，和前一条件逻辑为或
-
-#### whereOrMoreEqual
-
--   条件 >=，和前一条件逻辑为或
-
-#### whereOrLessEqual
-
--   条件 <=，和前一条件逻辑为或
-
-#### whereOrLike
-
--   条件 LIKE，和前一条件逻辑为或
-
-#### whereOrNotLike
-
--   条件 NOT LIKE，和前一条件逻辑为或
-
-#### whereOrBetween
-
--   条件 BETWEEN，和前一条件逻辑为或
-
-#### whereOrNotBetween
-
--   条件 NOT BETWEEN，和前一条件逻辑为或
-
-#### whereBracket
-
--   前后的条件分别用括号括起来
-
-#### whereOrBracket
-
--   前后的条件分别用括号括起来，和前一括号逻辑为或
-
-#### where 例子：
+-   添加条件字符串或者 Term 类型的 api
 
 ```js
 sqlQuery
     .select()
     .table("table1")
-    .where("`field1` = 'value1'").query;
-// SELECT * FROM `table1` WHERE `field1` = 'value1'
+    .where("`field1` = 'value1'")
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` = 'value1'
+```
+
+#### whereEqual
+
+-   条件 =
+
+```js
 sqlQuery
     .select()
     .table("table1")
     .whereEqual({
         field1: "value1"
-    }).query;
-// SELECT * FROM `table1` WHERE `field1` = 'value1'
+    })
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` = 'value1'
+```
+
+#### whereNotEqual
+
+-   条件 <>
+
+```js
 sqlQuery
     .select()
     .table("table1")
     .whereNotEqual({
         field1: "value1"
-    }).query;
-// SELECT * FROM `table1` WHERE `field1` <> 'value1'
+    })
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` <> 'value1'
+```
+
+#### whereIn
+
+-   条件 IN
+
+```js
 sqlQuery
     .select()
     .table("table1")
     .whereIn({
         field1: ["value1", "value2"]
-    }).query;
-// SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' )
+    })
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' )
+```
+
+#### whereNotIn
+
+-   条件 NOT IN
+
+```js
 sqlQuery
     .select()
     .table("table1")
     .whereNotIn({
         field1: ["value1", "value2"]
-    }).query;
-// SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' )
+    })
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' )
+```
+
+#### whereMore
+
+-   条件 >
+
+```js
 sqlQuery
     .select()
     .table("table1")
     .whereMore({
         field1: "value1"
-    }).query;
-// SELECT * FROM `table1` WHERE `field1` > 'value1'
+    })
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` > 'value1'
+```
+
+#### whereLess
+
+-   条件 <
+
+```js
 sqlQuery
     .select()
     .table("table1")
     .whereLess({
         field1: "value1"
-    }).query;
-// SELECT * FROM `table1` WHERE `field1` < 'value1'
+    })
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` < 'value1'
+```
+
+#### whereMoreEqual
+
+-   条件 >=
+
+```js
 sqlQuery
     .select()
     .table("table1")
     .whereMoreEqual({
         field1: "value1"
-    }).query;
-// SELECT * FROM `table1` WHERE `field1` >= 'value1'
+    })
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` >= 'value1'
+```
+
+#### whereLessEqual
+
+-   条件 <=
+
+```js
 sqlQuery
     .select()
     .table("table1")
     .whereLessEqual({
         field1: "value1"
-    }).query;
-// SELECT * FROM `table1` WHERE `field1` <= 'value1'
+    })
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` <= 'value1'
+```
+
+#### whereLike
+
+-   条件 LIKE
+
+```js
 sqlQuery
     .select()
     .table("table1")
     .whereLike({
         field1: "value1"
-    }).query;
-// SELECT * FROM `table1` WHERE `field1` LIKE '%value1%'
+    })
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` LIKE '%value1%'
+```
+
+#### whereNotLike
+
+-   条件 NOT LIKE
+
+```js
 sqlQuery
     .select()
     .table("table1")
     .whereNotLike({
         field1: "value1"
-    }).query;
-// SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%'
+    })
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%'
+```
+
+#### whereBetween
+
+-   条件 BETWEEN
+
+```js
 sqlQuery
     .select()
     .table("table1")
     .whereBetween({
         field1: ["value1", "value2"]
-    }).query;
-// SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2'
+    })
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2'
+```
+
+#### whereNotBetween
+
+-   条件 NOT BETWEEN
+
+```js
 sqlQuery
     .select()
     .table("table1")
     .whereNotBetween({
         field1: ["value1", "value2"]
-    }).query;
-// SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1' AND 'value2'
-
-sqlQuery
-    .select()
-    .table("table1")
-    .whereEqual({
-        field1: "value1",
-        field2: "value2"
-    }).query;
-// SELECT * FROM `table1` WHERE `field1` = 'value1' AND `field2` = 'value2'
-
-sqlQuery
-    .select()
-    .table("table1")
-    .whereEqual({
-        field1: "value1"
     })
-    .whereNotEqual({
-        field2: "value2"
-    }).query;
-// SELECT * FROM `table1` WHERE `field1` = 'value1' AND `field2` <> 'value2'
+    .build();
+```
 
-sqlQuery
-    .select()
-    .table("table1")
-    .whereNotEqual({
-        field1: "value1"
-    })
-    .whereNotEqual({
-        field1: "value2"
-    }).query;
-// SELECT * FROM `table1` WHERE `field1` <> 'value1' AND `field1` <> 'value2'
+```sql
+SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1' AND 'value2'
+```
 
+#### whereOrEqual
+
+-   条件 =，逻辑为或
+
+```js
 sqlQuery
     .select()
     .table("table1")
     .whereOrEqual({
         field1: "value1",
         field2: "value2"
-    }).query;
-// SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field2` = 'value2'
-
-sqlQuery
-    .select()
-    .table("table1")
-    .whereOrEqual({
-        field1: "value1"
     })
-    .whereOrEqual({
-        field1: "value2"
-    }).query;
-// SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field1` = 'value2'
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field2` = 'value2'
+```
+
+#### whereOrNotEqual
+
+-   条件 <>，逻辑为或
+
+#### whereOrIn
+
+-   条件 IN，逻辑为或
+
+#### whereOrNotIn
+
+-   条件 NOT IN，逻辑为或
+
+#### whereOrMore
+
+-   条件 >，逻辑为或
+
+#### whereOrLess
+
+-   条件 <，逻辑为或
+
+#### whereOrMoreEqual
+
+-   条件 >=，逻辑为或
+
+#### whereOrLessEqual
+
+-   条件 <=，逻辑为或
+
+#### whereOrLike
+
+-   条件 LIKE，逻辑为或
+
+#### whereOrNotLike
+
+-   条件 NOT LIKE，逻辑为或
+
+#### whereOrBetween
+
+-   条件 BETWEEN，逻辑为或
+
+#### whereOrNotBetween
+
+-   条件 NOT BETWEEN，逻辑为或
+
+#### whereBracket
+
+-   前后的条件分别用括号括起来
+
+```js
 sqlQuery
     .select()
     .table("table1")
@@ -762,9 +749,19 @@ sqlQuery
     .whereBracket()
     .whereOrEqual({
         field3: "value3"
-    }).query;
-// SELECT * FROM `table1` WHERE ( `field1` = 'value1' OR `field2` = 'value2' ) AND ( `field3` = 'value3' )
+    })
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE ( `field1` = 'value1' OR `field2` = 'value2' ) AND ( `field3` = 'value3' )
+```
+
+#### whereOrBracket
+
+-   前后的条件分别用括号括起来，和前一括号逻辑为或
+
+```js
 sqlQuery
     .select()
     .table("table1")
@@ -775,8 +772,12 @@ sqlQuery
     .whereOrBracket()
     .whereEqual({
         field3: "value3"
-    }).query;
-// SELECT * FROM `table1` WHERE ( `field1` = 'value1' AND `field2` = 'value2' ) OR ( `field3` = 'value3' )
+    })
+    .build();
+```
+
+```sql
+ SELECT * FROM `table1` WHERE ( `field1` = 'value1' AND `field2` = 'value2' ) OR ( `field3` = 'value3' )
 ```
 
 ### HAVING
