@@ -793,6 +793,21 @@ sqlQuery
 
 -   条件 =
 
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .havingEqual({
+        field1: "value1",
+        field2: "value2"
+    })
+    .build();
+```
+
+```sql
+ SELECT * FROM `table1` HAVING `field1` = 'value1' AND `field2` = 'value2'
+```
+
 #### havingNotEqual
 
 -   条件 <>
@@ -839,51 +854,51 @@ sqlQuery
 
 #### havingOrEqual
 
--   条件 =，和前一条件逻辑为或
+-   条件 =，逻辑为或
 
 #### havingOrNotEqual
 
--   条件 <>，和前一条件逻辑为或
+-   条件 <>，逻辑为或
 
 #### havingOrIn
 
--   条件 IN，和前一条件逻辑为或
+-   条件 IN，逻辑为或
 
 #### havingOrNotIn
 
--   条件 NOT IN，和前一条件逻辑为或
+-   条件 NOT IN，逻辑为或
 
 #### havingOrMore
 
--   条件 >，和前一条件逻辑为或
+-   条件 >，逻辑为或
 
 #### havingOrLess
 
--   条件 <，和前一条件逻辑为或
+-   条件 <，逻辑为或
 
 #### havingOrMoreEqual
 
--   条件 >=，和前一条件逻辑为或
+-   条件 >=，逻辑为或
 
 #### havingOrLessEqual
 
--   条件 <=，和前一条件逻辑为或
+-   条件 <=，逻辑为或
 
 #### havingOrLike
 
--   条件 LIKE，和前一条件逻辑为或
+-   条件 LIKE，逻辑为或
 
 #### havingOrNotLike
 
--   条件 NOT LIKE，和前一条件逻辑为或
+-   条件 NOT LIKE，逻辑为或
 
 #### havingOrBetween
 
--   条件 BETWEEN，和前一条件逻辑为或
+-   条件 BETWEEN，逻辑为或
 
 #### havingOrNotBetween
 
--   条件 NOT BETWEEN，和前一条件逻辑为或
+-   条件 NOT BETWEEN，逻辑为或
 
 #### havingBracket
 
@@ -891,123 +906,17 @@ sqlQuery
 
 #### havingOrBracket
 
--   前后的条件分别用括号括起来，和前一括号逻辑为或
-
-#### having 例子：
-
--   基本和 where 一样，可以看项目中的 example 文件夹下的例子
+-   前后的条件分别用括号括起来，逻辑为或
 
 ### TERM
 
--   Term 也是用于拼装语句的条件部分，拼装逻辑和 WHERE 和 HAVING 是一样的。
+-   Term 也是用于拼装语句的条件筛选的逻辑部分，拼装逻辑和 WHERE 和 HAVING 是一样的。
 -   Term 的 api 与 WHERE 和 HAVING 也是基本一样的，只是没有前缀。
--   如果语句条件过于复杂，可以用 term 使代码更简洁。
+-   如果条件语句过于复杂，可以用 term 使代码更简洁。
 
 #### equal
 
 -   条件 =
-
-#### notEqual
-
--   条件 <>
-
-#### in
-
--   条件 IN
-
-#### notIn
-
--   条件 NOT IN
-
-#### more
-
--   条件 >
-
-#### less
-
--   条件 <
-
-#### moreEqual
-
--   条件 >=
-
-#### lessEqual
-
--   条件 <=
-
-#### like
-
--   条件 LIKE
-
-#### notLike
-
--   条件 NOT LIKE
-
-#### between
-
--   条件 BETWEEN
-
-#### notBetween
-
--   条件 NOT BETWEEN
-
-#### orEqual
-
--   条件 =，和前一条件逻辑为或
-
-#### orNotEqual
-
--   条件 <>，和前一条件逻辑为或
-
-#### orIn
-
--   条件 IN，和前一条件逻辑为或
-
-#### orNotIn
-
--   条件 NOT IN，和前一条件逻辑为或
-
-#### orMore
-
--   条件 >，和前一条件逻辑为或
-
-#### orLess
-
--   条件 <，和前一条件逻辑为或
-
-#### orMoreEqual
-
--   条件 >=，和前一条件逻辑为或
-
-#### orLessEqual
-
--   条件 <=，和前一条件逻辑为或
-
-#### orLike
-
--   条件 LIKE，和前一条件逻辑为或
-
-#### orNotLike
-
--   条件 NOT LIKE，和前一条件逻辑为或
-
-#### orBetween
-
--   条件 BETWEEN，和前一条件逻辑为或
-
-#### orNotBetween
-
--   条件 NOT BETWEEN，和前一条件逻辑为或
-
-#### bracket
-
--   前后的条件分别用括号括起来
-
-#### orBracket
-
--   前后的条件分别用括号括起来，和前一括号逻辑为或
-
-#### Term 例子：
 
 ```js
 sqlQuery
@@ -1017,19 +926,19 @@ sqlQuery
         sqlQuery.term.equal({
             field1: "value1"
         })
-    ).query;
-// SELECT * FROM `table1` WHERE `field1` = 'value1'
+    )
+    .build();
+```
 
-sqlQuery
-    .select()
-    .table("table1")
-    .having(() =>
-        sqlQuery.term.equal({
-            field1: "value1"
-        })
-    ).query;
-// SELECT * FROM `table1` HAVING `field1` = 'value1'
+```sql
+SELECT * FROM `table1` WHERE `field1` = 'value1'
+```
 
+#### notEqual
+
+-   条件 <>
+
+```js
 sqlQuery
     .select()
     .table("table1")
@@ -1037,9 +946,19 @@ sqlQuery
         sqlQuery.term.notEqual({
             field1: "value1"
         })
-    ).query;
-// SELECT * FROM `table1` WHERE `field1` <> 'value1'
+    )
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` <> 'value1'
+```
+
+#### in
+
+-   条件 IN
+
+```js
 sqlQuery
     .select()
     .table("table1")
@@ -1047,9 +966,19 @@ sqlQuery
         sqlQuery.term.in({
             field1: ["value1", "value2"]
         })
-    ).query;
-// SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' )
+    )
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' )
+```
+
+#### notIn
+
+-   条件 NOT IN
+
+```js
 sqlQuery
     .select()
     .table("table1")
@@ -1057,9 +986,19 @@ sqlQuery
         sqlQuery.term.notIn({
             field1: ["value1", "value2"]
         })
-    ).query;
-// SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' )
+    )
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' )
+```
+
+#### more
+
+-   条件 >
+
+```js
 sqlQuery
     .select()
     .table("table1")
@@ -1067,9 +1006,19 @@ sqlQuery
         sqlQuery.term.more({
             field1: "value1"
         })
-    ).query;
-// SELECT * FROM `table1` WHERE `field1` > 'value1'
+    )
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` > 'value1'
+```
+
+#### less
+
+-   条件 <
+
+```js
 sqlQuery
     .select()
     .table("table1")
@@ -1077,9 +1026,19 @@ sqlQuery
         sqlQuery.term.less({
             field1: "value1"
         })
-    ).query;
-// SELECT * FROM `table1` WHERE `field1` < 'value1'
+    )
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` < 'value1'
+```
+
+#### moreEqual
+
+-   条件 >=
+
+```js
 sqlQuery
     .select()
     .table("table1")
@@ -1087,9 +1046,19 @@ sqlQuery
         sqlQuery.term.moreEqual({
             field1: "value1"
         })
-    ).query;
-// SELECT * FROM `table1` WHERE `field1` >= 'value1'
+    )
+    .build();
+```
 
+```sql
+ SELECT * FROM `table1` WHERE `field1` >= 'value1'
+```
+
+#### lessEqual
+
+-   条件 <=
+
+```js
 sqlQuery
     .select()
     .table("table1")
@@ -1097,9 +1066,19 @@ sqlQuery
         sqlQuery.term.lessEqual({
             field1: "value1"
         })
-    ).query;
-// SELECT * FROM `table1` WHERE `field1` <= 'value1'
+    )
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` <= 'value1'
+```
+
+#### like
+
+-   条件 LIKE
+
+```js
 sqlQuery
     .select()
     .table("table1")
@@ -1107,9 +1086,19 @@ sqlQuery
         sqlQuery.term.like({
             field1: "value1"
         })
-    ).query;
-// SELECT * FROM `table1` WHERE `field1` LIKE '%value1%'
+    )
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` LIKE '%value1%'
+```
+
+#### notLike
+
+-   条件 NOT LIKE
+
+```js
 sqlQuery
     .select()
     .table("table1")
@@ -1117,9 +1106,19 @@ sqlQuery
         sqlQuery.term.notLike({
             field1: "value1"
         })
-    ).query;
-// SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%'
+    )
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%'
+```
+
+#### between
+
+-   条件 BETWEEN
+
+```js
 sqlQuery
     .select()
     .table("table1")
@@ -1127,9 +1126,19 @@ sqlQuery
         sqlQuery.term.between({
             field1: ["value1", "value2"]
         })
-    ).query;
-// SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2'
+    )
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2'
+```
+
+#### notBetween
+
+-   条件 NOT BETWEEN
+
+```js
 sqlQuery
     .select()
     .table("table1")
@@ -1137,48 +1146,19 @@ sqlQuery
         sqlQuery.term.notBetween({
             field1: ["value1", "value2"]
         })
-    ).query;
-// SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1' AND 'value2'
+    )
+    .build();
+```
 
-sqlQuery
-    .select()
-    .table("table1")
-    .where(() =>
-        sqlQuery.term.equal({
-            field1: "value1",
-            field2: "value2"
-        })
-    ).query;
-// SELECT * FROM `table1` WHERE `field1` = 'value1' AND `field2` <> 'value2'
+```sql
+SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1' AND 'value2'
+```
 
-sqlQuery
-    .select()
-    .table("table1")
-    .where(() =>
-        sqlQuery.term
-            .equal({
-                field1: "value1"
-            })
-            .notEqual({
-                field2: "value2"
-            })
-    ).query;
-// SELECT * FROM `table1` WHERE `field1` = 'value1' AND `field2` <> 'value2'
+#### orEqual
 
-sqlQuery
-    .select()
-    .table("table1")
-    .where(() =>
-        sqlQuery.term
-            .notEqual({
-                field1: "value1"
-            })
-            .notEqual({
-                field1: "value2"
-            })
-    ).query;
-// SELECT * FROM `table1` WHERE `field1` <> 'value1' AND `field1` <> 'value2'
+-   条件 =，逻辑为或
 
+```js
 sqlQuery
     .select()
     .table("table1")
@@ -1187,23 +1167,63 @@ sqlQuery
             field1: "value1",
             field2: "value2"
         })
-    ).query;
-// SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field2` = 'value2'
+    )
+    .build();
+```
 
-sqlQuery
-    .select()
-    .table("table1")
-    .where(() =>
-        sqlQuery.term
-            .orEqual({
-                field1: "value1"
-            })
-            .orEqual({
-                field1: "value2"
-            })
-    ).query;
-// SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field1` = 'value2'
+```sql
+SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field2` = 'value2'
+```
 
+#### orNotEqual
+
+-   条件 <>，逻辑为或
+
+#### orIn
+
+-   条件 IN，逻辑为或
+
+#### orNotIn
+
+-   条件 NOT IN，逻辑为或
+
+#### orMore
+
+-   条件 >，逻辑为或
+
+#### orLess
+
+-   条件 <，逻辑为或
+
+#### orMoreEqual
+
+-   条件 >=，逻辑为或
+
+#### orLessEqual
+
+-   条件 <=，逻辑为或
+
+#### orLike
+
+-   条件 LIKE，逻辑为或
+
+#### orNotLike
+
+-   条件 NOT LIKE，逻辑为或
+
+#### orBetween
+
+-   条件 BETWEEN，逻辑为或
+
+#### orNotBetween
+
+-   条件 NOT BETWEEN，逻辑为或
+
+#### bracket
+
+-   前后的条件分别用括号括起来
+
+```js
 sqlQuery
     .select()
     .table("table1")
@@ -1219,9 +1239,19 @@ sqlQuery
             .orEqual({
                 field3: "value3"
             })
-    ).query;
-// SELECT * FROM `table1` WHERE ( `field1` = 'value1' OR `field2` = 'value2' ) AND ( `field3` = 'value3' )
+    )
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` WHERE ( `field1` = 'value1' OR `field2` = 'value2' ) AND ( `field3` = 'value3' )
+```
+
+#### orBracket
+
+-   前后的条件分别用括号括起来，逻辑为或
+
+```js
 sqlQuery
     .select()
     .table("table1")
@@ -1235,8 +1265,12 @@ sqlQuery
             .equal({
                 field3: "value3"
             })
-    ).query;
-// SELECT * FROM `table1` WHERE ( `field1` = 'value1' AND `field2` = 'value2' ) OR ( `field3` = 'value3' )
+    )
+    .build();
+```
+
+```sql
+SELECT * FROM `table1` WHERE ( `field1` = 'value1' AND `field2` = 'value2' ) OR ( `field3` = 'value3' )
 ```
 
 ### ORDER
