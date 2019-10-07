@@ -353,7 +353,7 @@ SELECT `field1`, COUNT(`field2`) FROM `table1`
 
 #### count 等函数
 
--   设置 sql 语句的函数，有 count,sum,max,min,avg,abs,ceil,floor,round,log,log2,exp,power,acos,asin,atan,cos,sin,tan,conv,random,rand,radians,degrees,distinct
+-   设置 sql 语句的函数，有 count,sum,max,min,avg,abs,ceil,floor,round,log,log2,exp,power,acos,asin,atan,cos,sin,tan,conv,random,rand,radians,degrees,distinct 等函数
 
 ```js
 sqlQuery
