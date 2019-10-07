@@ -328,7 +328,7 @@ sqlQuery.select();
 sqlQuery
     .select()
     .table("table1")
-    .fields("field1", "field2") //值也可以是数组，即["field1", "field2"]
+    .fields("field1", "field2") //参数也可以是字符串数组，即 ["field1", "field2"]
     .build();
 ```
 
