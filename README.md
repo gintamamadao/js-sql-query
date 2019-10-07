@@ -1279,72 +1279,82 @@ SELECT * FROM `table1` WHERE ( `field1` = 'value1' AND `field2` = 'value2' ) OR 
 
 -   根据某个字段降序排序
 
-#### ascBy
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .descBy("field1")
+    .build();
+```
 
--   根据某个字段升序排序
-
-#### orderField
-
--   根据某个字段自定义序列排序
-
-#### order
-
--   输入手打的排序方式或者 order api
-
-#### ORDER 例子：
+```sql
+SELECT * FROM `table1` ORDER BY `field1` DESC
+```
 
 ```js
 sqlQuery
     .select()
     .table("table1")
-    .descBy("field1").query;
-// SELECT * FROM `table1` ORDER BY `field1` DESC
+    .descBy("field1", "field2")
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` DESC
+```
+
+#### ascBy
+
+-   根据某个字段升序排序
+
+```js
 sqlQuery
     .select()
     .table("table1")
-    .ascBy("field1").query;
-// SELECT * FROM `table1` ORDER BY `field1` ASC
+    .ascBy("field1", "field2")
+    .build();
+```
 
-sqlQuery
-    .select()
-    .table("table1")
-    .descBy("field1", "field2").query;
-// SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` DESC
+```sql
+SELECT * FROM `table1` ORDER BY `field1` ASC, `field2` ASC
+```
 
-sqlQuery
-    .select()
-    .table("table1")
-    .descBy(["field1", "field2"]).query;
-// SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` DESC
-
-sqlQuery
-    .select()
-    .table("table1")
-    .ascBy("field1", "field2").query;
-// SELECT * FROM `table1` ORDER BY `field1` ASC, `field2` ASC
-
-sqlQuery
-    .select()
-    .table("table1")
-    .ascBy(["field1", "field2"]).query;
-// SELECT * FROM `table1` ORDER BY `field1` ASC, `field2` ASC
-
+```js
 sqlQuery
     .select()
     .table("table1")
     .descBy("field1")
-    .ascBy("field2").query;
-// SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` ASC
+    .ascBy("field2")
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` ASC
+```
+
+#### orderField
+
+-   根据某个字段自定义序列排序
+
+```js
 sqlQuery
     .select()
     .table("table1")
     .orderField({
         field1: ["value1", "value2"]
-    }).query;
-// SELECT * FROM `table1` ORDER BY FIELD(`field1`, 'value1', 'value2')
+    })
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` ORDER BY FIELD(`field1`, 'value1', 'value2')
+```
+
+#### order
+
+-   输入的字符串或者 order api
+
+```js
 sqlQuery
     .select()
     .table("table1")
@@ -1355,8 +1365,12 @@ sqlQuery
             .orderField({
                 field3: ["value1", "value2"]
             })
-    ).query;
-// SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` ASC, FIELD(`field3`, 'value1', 'value2')
+    )
+    .build();
+```
+
+```sql
+SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` ASC, FIELD(`field3`, 'value1', 'value2')
 ```
 
 ### LIMIT/OFFSET
@@ -1365,60 +1379,80 @@ sqlQuery
 
 -   设置 sql 语句的 offset
 
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .offset(1)
+    .build();
+```
+
+```sql
+SELECT * FROM `table1` OFFSET 1
+```
+
 #### step
 
 -   设置 sql 语句的 limit
-
-#### limit
-
--   设置 sql 语句的 limit，仅限 SELECT 类型使用
-
-#### paging
-
--   设置 sql 语句的 limit，仅限 SELECT 类型使用
-
-#### findOne
-
--   限制只返回一个，仅限 SELECT 类型使用
-
-#### LIMIT/OFFSET 例子：
 
 ```js
 sqlQuery
     .select()
     .table("table1")
-    .offset(1).query;
-// SELECT * FROM `table1` OFFSET 1
+    .step(10)
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` LIMIT 10
+```
+
+#### limit
+
+-   设置 sql 语句的 limit，仅限 SELECT 类型使用
+
+```js
 sqlQuery
     .select()
     .table("table1")
-    .step(10).query;
-// SELECT * FROM `table1` LIMIT 10
+    .limit(1, 10)
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` LIMIT 10 OFFSET 1
+```
+
+#### paging
+
+-   设置 sql 语句的 limit，仅限 SELECT 类型使用
+
+```js
 sqlQuery
     .select()
     .table("table1")
-    .limit(1, 10).query;
-// SELECT * FROM `table1` LIMIT 10 OFFSET 1
+    .paging(2, 10)
+    .build();
+```
 
+```sql
+SELECT * FROM `table1` LIMIT 10 OFFSET 10
+```
+
+#### findOne
+
+-   限制只返回一个，仅限 SELECT 类型使用
+
+```js
 sqlQuery
     .select()
     .table("table1")
-    .paging(1, 10).query;
-// SELECT * FROM `table1` LIMIT 10
+    .findOne()
+    .build();
+```
 
-sqlQuery
-    .select()
-    .table("table1")
-    .paging(2, 10).query;
-// SELECT * FROM `table1` LIMIT 10 OFFSET 10
-
-sqlQuery
-    .select()
-    .table("table1")
-    .findOne().query;
-// SELECT * FROM `table1` LIMIT 1
+```sql
+SELECT * FROM `table1` LIMIT 1
 ```
 
 ### CREATE
@@ -1498,8 +1532,14 @@ const tableInfo = {
 -   将 json 格式转换成 sql 语句
 
 ```js
-sqlQuery.create().info(tableInfo).query;
-//CREATE TABLE IF NOT EXISTS student ( `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '学生id',`name` VARCHAR(32) NOT NULL DEFAULT '' COMMENT '学生名字',`update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',CONSTRAINT `id` PRIMARY KEY (`id`),CONSTRAINT `pk_id` UNIQUE KEY (`id`,`name`) ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='学生信息表';
+sqlQuery
+    .create()
+    .info(tableInfo)
+    .build();
+```
+
+```sql
+CREATE TABLE IF NOT EXISTS student ( `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '学生id',`name` VARCHAR(32) NOT NULL DEFAULT '' COMMENT '学生名字',`update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后更新时间',CONSTRAINT `id` PRIMARY KEY (`id`),CONSTRAINT `pk_id` UNIQUE KEY (`id`,`name`) ) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8 COMMENT='学生信息表';
 ```
 
 #### 字段结构说明
@@ -1523,6 +1563,10 @@ sqlQuery.create().info(tableInfo).query;
 
 -   ALTER 类型语句
 
+#### alter
+
+-   指定 sql 语句为 ALTER 类型
+
 ```js
 sqlQuery.alter();
 ```
@@ -1530,20 +1574,6 @@ sqlQuery.alter();
 #### add
 
 -   添加字段
-
-#### drop
-
--   删除字段
-
-#### modify
-
--   修改字段
-
-#### change
-
--   修改字段
-
-#### ALTER 例子：
 
 ```js
 sqlQuery
@@ -1556,31 +1586,65 @@ sqlQuery
         notNull: true,
         autoIncrement: true,
         comment: "学生id"
-    }).query;
-// ALTER TABLE `table1` ADD COLUMN `field1` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '学生id'
+    })
+    .build();
+```
 
+```sql
+ALTER TABLE `table1` ADD COLUMN `field1` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '学生id'
+```
+
+#### drop
+
+-   删除字段
+
+```js
 sqlQuery
     .alter()
     .table("table1")
-    .drop("field1").query;
-// ALTER TABLE `table1` DROP COLUMN `field1`
+    .drop("field1")
+    .build();
+```
 
+```sql
+ALTER TABLE `table1` DROP COLUMN `field1`
+```
+
+#### modify
+
+-   修改字段
+
+```js
 sqlQuery
     .alter()
     .table("table1")
     .modify("field1", {
         type: "varchar(32)"
-    }).query;
-// ALTER TABLE `table1` MODIFY COLUMN `field1` VARCHAR(32)
+    })
+    .build();
+```
 
+```sql
+ALTER TABLE `table1` MODIFY COLUMN `field1` VARCHAR(32)
+```
+
+#### change
+
+-   修改字段
+
+```js
 sqlQuery
     .alter()
     .table("table1")
     .change("field1", {
         field: "id",
         type: "bigint"
-    }).query;
-// ALTER TABLE `table1` CHANGE COLUMN `field1` `id` BIGINT
+    })
+    .build();
+```
+
+```sql
+ALTER TABLE `table1` CHANGE COLUMN `field1` `id` BIGINT
 ```
 
 #### 字段结构说明
