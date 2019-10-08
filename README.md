@@ -128,8 +128,6 @@ REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
 
 #### insert/replace
 
--   指定 sql 语句为 INSERT/REPLACE 类型
-
 -   指定为 REPLACE 类型语句
 
 ```js
