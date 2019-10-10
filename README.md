@@ -32,7 +32,7 @@ npm i tedious-connection-pool --save
 ```js
 var SqlQuery = require("js-sql-query");
 
-// 连接上数据库，dialect 是配置数据类型，如果不配置，默认为 mysql。如果使用的是 Microsoft SQL Server，则配置值为 mssql
+// 配置数据库相关信息，其中dialect 是配置数据类型，如果不配置，默认为 mysql。如果使用的是 Microsoft SQL Server，则配置值为 mssql
 var sqlQuery = new SqlQuery({
     host: "localhost",
     user: "root",
@@ -41,7 +41,7 @@ var sqlQuery = new SqlQuery({
     dialect: "mysql"
 });
 
-// 执行语句 SELECT `field1`, `field2` FROM `table1`
+// 调用 api 生成 sql 语句 SELECT `field1`, `field2` FROM `table1`，并连接数据库执行语句
 var result = await sqlQuery
     .select()
     .table("table1")
@@ -49,9 +49,6 @@ var result = await sqlQuery
     .exec();
 // exec() 返回的是一个 Promise 对象， 所以用 async/await 语法获取最后结果
 ```
-
-> 上面例子中的操作就是连接上 test_db 库，并执行 "SELECT `field1`, `field2` FROM `table1`" 这条 sql 最后返回结果。
-> 注意最后执行的 exec() 是返回一个 Promise 对象。
 
 # 目录
 
