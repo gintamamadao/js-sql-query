@@ -77,7 +77,7 @@ var result = await sqlQuery
 
 **语句类型**
 
-> 语句的基本类型有 CREATE，INSERT，REPLACE，UPDATE，SELECT，DELETE，其中 INSERT 和 REPLACE 的拼装逻辑是完全一样的，就合在一起讲
+> 语句的基本类型有 CREATE，INSERT，REPLACE，UPDATE，SELECT，DELETE，其中 INSERT 和 REPLACE 的拼装逻辑是完全一样的，就合在一起讲。
 > 不同的基本类型可以调用的 api 不完全一样，有些是公用的，有些是仅限某些基本类型才能调用。
 
 **sql 语境**
@@ -429,8 +429,8 @@ DELETE FROM `table1` WHERE `field1` = 'value1'
 ## WHERE
 
 > UPDATE、SELECT、DELETE 的 WHERE 条件逻辑拼装 api 是一样的。
-> 条件之间的逻辑根据后面的 api 决定，api 名中有 Or 这个词就代表，该条件与前一个条件为或关系，否则为与
-> whereBracket 和 whereOrBracket 是特殊的 api，表示将 api 前后的条件分别用括号括起来，Or 代表括号之间的逻辑是或关系
+> 条件之间的逻辑根据后面的 api 决定，api 名中有 Or 这个词就代表，该条件与前一个条件为逻辑或，否则为逻辑与。
+> whereBracket 和 whereOrBracket 是特殊的 api，表示将 api 前后的条件分别用括号括起来，Or 代表括号之间的逻辑是或关系。
 
 ### where
 
@@ -777,8 +777,8 @@ sqlQuery
 
 ## HAVING
 
-> HAVING 的逻辑和 WHERE 是一样的，但仅限 SELECT 能调用
-> 为和 WHERE 做区分，HAVING 的 api 的前缀都是 having
+> HAVING 的逻辑和 WHERE 是一样的，但仅限 SELECT 能调用。
+> 为和 WHERE 做区分，HAVING 的 api 的前缀都是 having。
 
 ### having
 
@@ -1686,9 +1686,8 @@ var result = await sqlQuery
 
 ## Connect Api
 
-api 只有一个就是 exec，exec()执行后返回的是一个 Promise 对象，所以推荐用 async/await 处理。
-
-exec 也可以直接执行 sql 语句。只需要传入 sql 语句作为参数即可。
+> api 只有一个就是 exec，exec()执行后返回的是一个 Promise 对象，所以推荐用 async/await 处理。
+> exec 也可以直接执行 sql 语句。只需要传入 sql 语句作为参数即可。
 
 ```js
 var result = await sqlQuery.exec("SELECT `field1`, `field2` FROM `table1`");
