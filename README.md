@@ -8,19 +8,19 @@
 
 ## 环境安装
 
--   安装本项目
+> 安装本项目
 
 ```sh
 npm i js-sql-query --save
 ```
 
--   如果使用的是 MySQL，需要安装依赖
+> 如果使用的是 MySQL，需要安装依赖
 
 ```sh
 npm i mysql --save
 ```
 
--   如果使用的是 Microsoft SQL Server，需要安装依赖
+> 如果使用的是 Microsoft SQL Server，需要安装依赖
 
 ```sh
 npm i tedious --save
