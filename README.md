@@ -430,10 +430,6 @@ sqlQuery
 SELECT `field1`, COUNT(`field2`) FROM `table1`
 ```
 
-```sql
-SELECT `field1`, COUNT(`field2`) FROM `table1`
-```
-
 ### groupBy
 
 > 设置 sql 语句根据某个字段聚合
