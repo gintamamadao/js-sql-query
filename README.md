@@ -203,7 +203,7 @@ INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' ), ( 'v
 
 _参数_
 
-> valuesInfo (string | Function): VALUES 后面的值信息，如果是字符串则是 `VALUES ${valuesInfo}`, 函数则是 `VALUES ${valuesInfo()}`
+> valuesInfo (String | Function): VALUES 后面的值信息，如果是字符串则是 `VALUES ${valuesInfo}`, 函数则是 `VALUES ${valuesInfo()}`
 
 _例子_
 
@@ -231,7 +231,7 @@ INSERT INTO `table1` ( `field1`, `field2` )  VALUES SELECT `field1`, `field2` FR
 
 _参数_
 
-> fields (...string | Array): 可以是多个字符串，或者字符串数组
+> fields (...String | Array): 可以是多个字符串，或者字符串数组
 
 _例子_
 
@@ -376,7 +376,7 @@ sqlQuery.select();
 
 _参数_
 
-> fields (...(string | object)): 需要的字段名或者带函数的字段
+> fields (...(String | Object)): 需要的字段名或者带函数的字段
 
 _例子_
 
@@ -440,7 +440,7 @@ SELECT `field1`, COUNT(`field2`) FROM `table1`
 
 _参数_
 
-> field (string): 字段名
+> field (String): 字段名
 
 _例子_
 
@@ -504,7 +504,7 @@ DELETE FROM `table1` WHERE `field1` = 'value1'
 
 _参数_
 
-> whereInfo (string | Function): WHERE 后面的值信息，如果是字符串则是 `WHERE ${whereInfo}`, 函数则是 `WHERE ${whereInfo()}`
+> whereInfo (String | Function): WHERE 后面的值信息，如果是字符串则是 `WHERE ${whereInfo}`, 函数则是 `WHERE ${whereInfo()}`
 
 _例子_
 
@@ -1191,7 +1191,7 @@ sqlQuery
 
 _参数_
 
-> havingInfo (string | Function): HAVING 后面的值信息，如果是字符串则是 `HAVING ${havingInfo}`, 函数则是 `HAVING ${havingInfo()}`
+> havingInfo (String | Function): HAVING 后面的值信息，如果是字符串则是 `HAVING ${havingInfo}`, 函数则是 `HAVING ${havingInfo()}`
 
 _例子_
 
@@ -1812,9 +1812,17 @@ SELECT * FROM `table1` WHERE ( `field1` = 'value1' AND `field2` = 'value2' ) OR 
 
 ## ORDER
 
+> 设置 sql 的查找数据的排序逻辑
+
 ### descBy
 
-> 根据某个字段降序排序
+> 根据某些字段降序排序
+
+_参数_
+
+> fields (...String): 字段名
+
+_例子_
 
 ```js
 sqlQuery
@@ -1842,7 +1850,13 @@ SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` DESC
 
 ### ascBy
 
-> 根据某个字段升序排序
+> 根据某些字段升序排序
+
+_参数_
+
+> fields (...String): 字段名
+
+_例子_
 
 ```js
 sqlQuery
@@ -1873,6 +1887,12 @@ SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` ASC
 
 > 根据某个字段自定义序列排序
 
+_参数_
+
+> object (Object): 要更新的数据，key 为字段，value 为数组，数组值的顺序就是查询数据的排序根据。
+
+_例子_
+
 ```js
 sqlQuery
     .select()
@@ -1889,7 +1909,13 @@ SELECT * FROM `table1` ORDER BY FIELD(`field1`, 'value1', 'value2')
 
 ### order
 
-> 输入的字符串或者 order api
+> 设置 ORDER BY 后面的信息
+
+_参数_
+
+> orderInfo (String | Function): VALUES 后面的值信息，如果是字符串则是 `ORDER BY ${orderInfo}`, 函数则是 `ORDER BY ${orderInfo()}`
+
+_例子_
 
 ```js
 sqlQuery
@@ -1912,9 +1938,17 @@ SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` ASC, FIELD(`field3`, 'va
 
 ## LIMIT/OFFSET
 
+> 设置查找数据的步长和偏移
+
 ### offset
 
-> 设置 sql 语句的 offset
+> 设置 sql 语句的偏移
+
+_参数_
+
+> offset (Number): 偏移量
+
+_例子_
 
 ```js
 sqlQuery
@@ -1930,7 +1964,13 @@ SELECT * FROM `table1` OFFSET 1
 
 ### step
 
-> 设置 sql 语句的 limit
+> 设置 sql 语句的步长
+
+_参数_
+
+> step (Number): 步长量
+
+_例子_
 
 ```js
 sqlQuery
@@ -1944,25 +1984,17 @@ sqlQuery
 SELECT * FROM `table1` LIMIT 10
 ```
 
-### limit
-
-> 设置 sql 语句的 limit，仅限 SELECT 类型使用
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .limit(1, 10)
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` LIMIT 10 OFFSET 1
-```
-
 ### paging
 
-> 设置 sql 语句的 limit，仅限 SELECT 类型使用
+> 设置 sql 语句的步长和偏移。
+
+_参数_
+
+> page (Number): 页码，从 1 开始算；
+
+> pageSize (Number): 一页包含的数量；
+
+_例子_
 
 ```js
 sqlQuery
@@ -1979,6 +2011,12 @@ SELECT * FROM `table1` LIMIT 10 OFFSET 10
 ### findOne
 
 > 限制只返回一个，仅限 SELECT 类型使用
+
+_参数_
+
+> 无
+
+_例子_
 
 ```js
 sqlQuery
@@ -2000,6 +2038,12 @@ SELECT * FROM `table1` LIMIT 1
 
 > 指定 sql 语句为 CREATE 类型
 
+_参数_
+
+> 无
+
+_例子_
+
 ```js
 sqlQuery.create();
 ```
@@ -2007,6 +2051,12 @@ sqlQuery.create();
 ### info
 
 > 新建表的信息
+
+_参数_
+
+> object (Object): 表信息
+
+_例子_
 
 **将下面的 sql 语句用 json 数据格式保存:**
 
@@ -2098,6 +2148,12 @@ CREATE TABLE IF NOT EXISTS student ( `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMEN
 
 > 指定 sql 语句为 ALTER 类型
 
+_参数_
+
+> 无
+
+_例子_
+
 ```js
 sqlQuery.alter();
 ```
@@ -2105,6 +2161,12 @@ sqlQuery.alter();
 ### add
 
 > 添加字段
+
+_参数_
+
+> object (Object): 字段信息
+
+_例子_
 
 ```js
 sqlQuery
@@ -2129,6 +2191,12 @@ ALTER TABLE `table1` ADD COLUMN `field1` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT
 
 > 删除字段
 
+_参数_
+
+> field (String): 字段名
+
+_例子_
+
 ```js
 sqlQuery
     .alter()
@@ -2144,6 +2212,14 @@ ALTER TABLE `table1` DROP COLUMN `field1`
 ### modify
 
 > 修改字段
+
+_参数_
+
+> field (String): 字段名；
+
+> object (Object): 字段信息；
+
+_例子_
 
 ```js
 sqlQuery
@@ -2162,6 +2238,14 @@ ALTER TABLE `table1` MODIFY COLUMN `field1` VARCHAR(32)
 ### change
 
 > 修改字段
+
+_参数_
+
+> field (String): 字段名；
+
+> object (Object): 字段信息；
+
+_例子_
 
 ```js
 sqlQuery
@@ -2230,6 +2314,12 @@ var result = await sqlQuery
 
 > api 只有一个就是 exec，exec()执行后返回的是一个 Promise 对象，所以推荐用 async/await 处理。
 > exec 也可以直接执行 sql 语句。只需要传入 sql 语句作为参数即可。
+
+_参数_
+
+> string? (String): 如果有，即执行输入 sql 语句，如果无，则执行 sqlQuery 对象 build 生成的 sql 语句。
+
+_例子_
 
 ```js
 var result = await sqlQuery.exec("SELECT `field1`, `field2` FROM `table1`");
