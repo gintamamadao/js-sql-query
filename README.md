@@ -122,21 +122,31 @@ REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
 
 ### insert/replace
 
-> 指定为 REPLACE 类型语句
+> 指定为 INSERT/REPLACE 类型语句
 
-```js
-sqlQuery.replace();
-```
+_参数_
 
-> 指定为 INSERT 类型语句
+> 无
+
+_例子_
 
 ```js
 sqlQuery.insert();
 ```
 
+```js
+sqlQuery.replace();
+```
+
 ### data
 
 > 设置 sql 语句的插入值信息
+
+_参数_
+
+> object (Object): 要插入的数据，key 为字段，value 为值
+
+_例子_
 
 ```js
 sqlQuery
@@ -156,6 +166,12 @@ REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
 ### multiData
 
 > 设置 sql 语句多行插入值信息，一次插入一行或多行数据
+
+_参数_
+
+> array (Array): 数组每个 item 是要插入的数据，key 为字段，value 为值
+
+_例子_
 
 ```js
 sqlQuery
@@ -183,7 +199,13 @@ INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' ), ( 'v
 
 ### values
 
-> 设置 sql 语句的插入值信息为子查询的结果
+> 设置 sql 语句的插入的值信息
+
+_参数_
+
+> values (string | Function): VALUES 后面的值信息，如果是字符串则是 `VALUES ${valuesSql}`, 函数则是 `VALUES ${valuesSql()}`
+
+_例子_
 
 ```js
 sqlQuery
@@ -206,6 +228,12 @@ INSERT INTO `table1` ( `field1`, `field2` )  VALUES SELECT `field1`, `field2` FR
 ### fields
 
 > 设置 sql 语句的插入值的字段
+
+_参数_
+
+> fields (...string | Array): 可以是多个字符串，或者字符串数组
+
+_例子_
 
 ```js
 sqlQuery
