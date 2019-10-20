@@ -11,7 +11,8 @@ describe("SELECT:WHERE", () => {
                     .table("table1")
                     .whereEqual({
                         field1: "value1"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -22,7 +23,8 @@ describe("SELECT:WHERE", () => {
                         builder.term.equal({
                             field1: "value1"
                         })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -33,21 +35,24 @@ describe("SELECT:WHERE", () => {
                         builder.term.equal({
                             field1: "value1"
                         })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
                 builder
                     .select()
                     .table("table1")
-                    .where(() => "`field1` = 'value1'").query)()
+                    .where(() => "`field1` = 'value1'")
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
                 builder
                     .select()
                     .table("table1")
-                    .where("`field1` = 'value1'").query)()
+                    .where("`field1` = 'value1'")
+                    .build())()
         ).toBe(QUERY);
     });
     test("<>", () => {
@@ -59,7 +64,8 @@ describe("SELECT:WHERE", () => {
                     .table("table1")
                     .whereNotEqual({
                         field1: "value1"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("IN", () => {
@@ -72,7 +78,8 @@ describe("SELECT:WHERE", () => {
                     .table("table1")
                     .whereIn({
                         field1: ["value1", "value2"]
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("NOT IN", () => {
@@ -85,7 +92,8 @@ describe("SELECT:WHERE", () => {
                     .table("table1")
                     .whereNotIn({
                         field1: ["value1", "value2"]
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test(">", () => {
@@ -97,7 +105,8 @@ describe("SELECT:WHERE", () => {
                     .table("table1")
                     .whereMore({
                         field1: "value1"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("<", () => {
@@ -109,7 +118,8 @@ describe("SELECT:WHERE", () => {
                     .table("table1")
                     .whereLess({
                         field1: "value1"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test(">=", () => {
@@ -121,7 +131,8 @@ describe("SELECT:WHERE", () => {
                     .table("table1")
                     .whereMoreEqual({
                         field1: "value1"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("<=", () => {
@@ -133,7 +144,8 @@ describe("SELECT:WHERE", () => {
                     .table("table1")
                     .whereLessEqual({
                         field1: "value1"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("LIKE", () => {
@@ -145,7 +157,8 @@ describe("SELECT:WHERE", () => {
                     .table("table1")
                     .whereLike({
                         field1: "value1"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("NOT LIKE", () => {
@@ -158,7 +171,8 @@ describe("SELECT:WHERE", () => {
                     .table("table1")
                     .whereNotLike({
                         field1: "value1"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("BETWEEN", () => {
@@ -171,7 +185,8 @@ describe("SELECT:WHERE", () => {
                     .table("table1")
                     .whereBetween({
                         field1: ["value1", "value2"]
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("NOT BETWEEN", () => {
@@ -184,7 +199,8 @@ describe("SELECT:WHERE", () => {
                     .table("table1")
                     .whereNotBetween({
                         field1: ["value1", "value2"]
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("AND", () => {
@@ -198,7 +214,8 @@ describe("SELECT:WHERE", () => {
                     .whereEqual({
                         field1: "value1",
                         field2: "value2"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -210,7 +227,8 @@ describe("SELECT:WHERE", () => {
                     })
                     .whereEqual({
                         field2: "value2"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("AND", () => {
@@ -226,7 +244,8 @@ describe("SELECT:WHERE", () => {
                     })
                     .whereNotEqual({
                         field2: "value2"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("AND", () => {
@@ -242,7 +261,8 @@ describe("SELECT:WHERE", () => {
                     })
                     .whereNotEqual({
                         field1: "value2"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("OR", () => {
@@ -256,7 +276,8 @@ describe("SELECT:WHERE", () => {
                     .whereOrEqual({
                         field1: "value1",
                         field2: "value2"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -268,7 +289,8 @@ describe("SELECT:WHERE", () => {
                     })
                     .whereOrEqual({
                         field2: "value2"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("Bracket", () => {
@@ -286,7 +308,8 @@ describe("SELECT:WHERE", () => {
                     .whereBracket()
                     .whereOrEqual({
                         field3: "value3"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("OrBracket", () => {
@@ -304,7 +327,8 @@ describe("SELECT:WHERE", () => {
                     .whereOrBracket()
                     .whereEqual({
                         field3: "value3"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("OrBracket", () => {
@@ -322,7 +346,8 @@ describe("SELECT:WHERE", () => {
                     .whereOrBracket()
                     .whereIn({
                         field3: ["value3", "value4"]
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
 });

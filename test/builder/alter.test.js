@@ -16,7 +16,8 @@ describe("ALTER", () => {
                         notNull: true,
                         autoIncrement: true,
                         comment: "学生id"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -30,7 +31,8 @@ describe("ALTER", () => {
                         notNull: true,
                         autoIncrement: true,
                         comment: "学生id"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("ALTER:drop", () => {
@@ -40,7 +42,8 @@ describe("ALTER", () => {
                 builder
                     .alter()
                     .table("table1")
-                    .drop("field1").query)()
+                    .drop("field1")
+                    .build())()
         ).toBe(QUERY);
     });
     test("ALTER:modify", () => {
@@ -52,7 +55,8 @@ describe("ALTER", () => {
                     .table("table1")
                     .modify("field1", {
                         type: "varchar(32)"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("ALTER:change", () => {
@@ -65,25 +69,26 @@ describe("ALTER", () => {
                     .change("field1", {
                         field: "id",
                         type: "bigint"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("ALTER:change", () => {
-        expect(
-            () =>
-                builder
-                    .alter()
-                    .table("table1")
-                    .change("field1").query
+        expect(() =>
+            builder
+                .alter()
+                .table("table1")
+                .change("field1")
+                .build()
         ).toThrowError("错误的修改配置");
     });
     test("ALTER:change error", () => {
-        expect(
-            () =>
-                builder
-                    .alter()
-                    .table("table1")
-                    .change("field1", {}).query
+        expect(() =>
+            builder
+                .alter()
+                .table("table1")
+                .change("field1", {})
+                .build()
         ).toThrowError("错误的修改配置");
     });
 });

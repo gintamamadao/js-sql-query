@@ -13,7 +13,8 @@ describe("INSERT", () => {
                     .data({
                         field1: "value1",
                         field2: "value2"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -23,7 +24,8 @@ describe("INSERT", () => {
                     .data({
                         field1: "value1",
                         field2: "value2"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -35,7 +37,8 @@ describe("INSERT", () => {
                         field1: "value1",
                         field2: "value2",
                         field3: "value3"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -47,7 +50,8 @@ describe("INSERT", () => {
                         field1: "value1",
                         field2: "value2",
                         field3: "value3"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("VALUES", () => {
@@ -70,7 +74,8 @@ describe("INSERT", () => {
                             field2: "value5",
                             field3: "value6"
                         }
-                    ]).query)()
+                    ])
+                    .build())()
         ).toBe(QUERY);
     });
     test("VALUES", () => {
@@ -87,7 +92,8 @@ describe("INSERT", () => {
                             .select()
                             .table("table1")
                             .fields(["field1", "field2"])
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
     });
 });

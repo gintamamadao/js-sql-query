@@ -4,20 +4,28 @@ describe("SELECT", () => {
     const builder = new Builder();
     test("*", () => {
         const QUERY = "SELECT * FROM `table1`";
-        expect((() => builder.select().table("table1").query)()).toBe(QUERY);
         expect(
             (() =>
                 builder
                     .select()
                     .table("table1")
-                    .fields("*").query)()
+                    .build())()
+        ).toBe(QUERY);
+        expect(
+            (() =>
+                builder
+                    .select()
+                    .table("table1")
+                    .fields("*")
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
                 builder
                     .table("table1")
                     .select()
-                    .fields("*").query)()
+                    .fields("*")
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -25,7 +33,8 @@ describe("SELECT", () => {
                     .select()
                     .table("table1")
                     .fields("field1")
-                    .fields("*").query)()
+                    .fields("*")
+                    .build())()
         ).toBe(QUERY);
     });
     test("fields", () => {
@@ -35,7 +44,8 @@ describe("SELECT", () => {
                 builder
                     .select()
                     .table("table1")
-                    .fields("field1", "field2").query)()
+                    .fields("field1", "field2")
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -43,14 +53,16 @@ describe("SELECT", () => {
                     .select()
                     .table("table1")
                     .fields("field1")
-                    .fields("field2").query)()
+                    .fields("field2")
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
                 builder
                     .select()
                     .table("table1")
-                    .fields(["field1", "field2"]).query)()
+                    .fields(["field1", "field2"])
+                    .build())()
         ).toBe(QUERY);
     });
     test("GROUP BY", () => {
@@ -63,7 +75,8 @@ describe("SELECT", () => {
                     .table("table1")
                     .fields("field1")
                     .count("field2")
-                    .groupBy("field2").query)()
+                    .groupBy("field2")
+                    .build())()
         ).toBe(QUERY);
     });
     test("GROUP BY", () => {
@@ -76,7 +89,8 @@ describe("SELECT", () => {
                     .table("table1")
                     .fields("field1")
                     .count("field2")
-                    .groupBy("field2", "field3").query)()
+                    .groupBy("field2", "field3")
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -86,7 +100,8 @@ describe("SELECT", () => {
                     .fields("field1")
                     .count("field2")
                     .groupBy("field2")
-                    .groupBy("field3").query)()
+                    .groupBy("field3")
+                    .build())()
         ).toBe(QUERY);
     });
 });
@@ -101,7 +116,8 @@ describe("SELECT:COMBINE FUNC", () => {
                     .select()
                     .table("table1")
                     .fields("field1")
-                    .count("field2").query)()
+                    .count("field2")
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -109,7 +125,8 @@ describe("SELECT:COMBINE FUNC", () => {
                     .select()
                     .table("table1")
                     .fields("field1")
-                    .fields(builder.func.count("field2")).query)()
+                    .fields(builder.func.count("field2"))
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -117,7 +134,8 @@ describe("SELECT:COMBINE FUNC", () => {
                     .select()
                     .table("table1")
                     .fields("field1")
-                    .fields({ func: "count", field: "field2" }).query)()
+                    .fields({ func: "count", field: "field2" })
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -125,7 +143,8 @@ describe("SELECT:COMBINE FUNC", () => {
                     .select()
                     .table("table1")
                     .fields("field1")
-                    .funcFeilds(builder.func.count("field2")).query)()
+                    .funcFeilds(builder.func.count("field2"))
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -133,7 +152,8 @@ describe("SELECT:COMBINE FUNC", () => {
                     .select()
                     .table("table1")
                     .fields("field1")
-                    .funcFeilds({ func: "count", field: "field2" }).query)()
+                    .funcFeilds({ func: "count", field: "field2" })
+                    .build())()
         ).toBe(QUERY);
     });
     test("SUM", () => {
@@ -146,7 +166,8 @@ describe("SELECT:COMBINE FUNC", () => {
                     .table("table1")
                     .fields("field1")
                     .count("field2")
-                    .sum("field3").query)()
+                    .sum("field3")
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -156,7 +177,8 @@ describe("SELECT:COMBINE FUNC", () => {
                     .fields("field1", builder.func.count("field2"), {
                         func: "sum",
                         field: "field3"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -167,7 +189,8 @@ describe("SELECT:COMBINE FUNC", () => {
                     .funcFeilds(
                         { func: "count", field: "field2" },
                         { func: "sum", field: "field3" }
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -178,7 +201,8 @@ describe("SELECT:COMBINE FUNC", () => {
                     .funcFeilds(builder.func.count("field2"), {
                         func: "sum",
                         field: "field3"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -190,7 +214,8 @@ describe("SELECT:COMBINE FUNC", () => {
                     .funcFeilds({
                         func: "sum",
                         field: "field3"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -202,7 +227,8 @@ describe("SELECT:COMBINE FUNC", () => {
                     .funcFeilds({
                         func: "sum",
                         field: "field3"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -214,7 +240,8 @@ describe("SELECT:COMBINE FUNC", () => {
                     .funcFeilds({
                         func: "sum",
                         field: "field3"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
 });

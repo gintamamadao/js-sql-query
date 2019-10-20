@@ -9,7 +9,8 @@ describe("LIMIT", () => {
                 builder
                     .select()
                     .table("table1")
-                    .offset(1).query)()
+                    .offset(1)
+                    .build())()
         ).toBe(QUERY);
     });
     test("LIMIT", () => {
@@ -19,28 +20,32 @@ describe("LIMIT", () => {
                 builder
                     .select()
                     .table("table1")
-                    .step(10).query)()
+                    .step(10)
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
                 builder
                     .select()
                     .table("table1")
-                    .paging(1, 10).query)()
+                    .paging(1, 10)
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
                 builder
                     .select()
                     .table("table1")
-                    .limit(0, 10).query)()
+                    .limit(0, 10)
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
                 builder
                     .select()
                     .table("table1")
-                    .limit(10).query)()
+                    .limit(10)
+                    .build())()
         ).toBe(QUERY);
     });
     test("LIMIT", () => {
@@ -50,7 +55,8 @@ describe("LIMIT", () => {
                 builder
                     .select()
                     .table("table1")
-                    .limit(1, 10).query)()
+                    .limit(1, 10)
+                    .build())()
         ).toBe(QUERY);
     });
     test("LIMIT", () => {
@@ -60,14 +66,16 @@ describe("LIMIT", () => {
                 builder
                     .select()
                     .table("table1")
-                    .paging(2, 10).query)()
+                    .paging(2, 10)
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
                 builder
                     .select()
                     .table("table1")
-                    .limit(10, 10).query)()
+                    .limit(10, 10)
+                    .build())()
         ).toBe(QUERY);
     });
     test("LIMIT", () => {
@@ -77,14 +85,16 @@ describe("LIMIT", () => {
                 builder
                     .select()
                     .table("table1")
-                    .findOne().query)()
+                    .findOne()
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
                 builder
                     .select()
                     .table("table1")
-                    .limit(0, 1).query)()
+                    .limit(0, 1)
+                    .build())()
         ).toBe(QUERY);
     });
 });

@@ -11,7 +11,8 @@ describe("UPDATE", () => {
                     .table("table1")
                     .set({
                         field1: "value1"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("SET", () => {
@@ -25,7 +26,8 @@ describe("UPDATE", () => {
                     .set({
                         field1: "value1",
                         field2: "value2"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -37,7 +39,8 @@ describe("UPDATE", () => {
                     })
                     .set({
                         field2: "value2"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("LIMIT", () => {
@@ -50,7 +53,8 @@ describe("UPDATE", () => {
                     .set({
                         field1: "value1"
                     })
-                    .step(100).query)()
+                    .step(100)
+                    .build())()
         ).toBe(QUERY);
     });
     test("SET", () => {
@@ -67,7 +71,8 @@ describe("UPDATE", () => {
                     })
                     .whereEqual({
                         field3: "value3"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("SET", () => {
@@ -83,7 +88,8 @@ describe("UPDATE", () => {
                     })
                     .whereEqual({
                         field2: "value2"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("SET", () => {
@@ -99,7 +105,8 @@ describe("UPDATE", () => {
                     })
                     .whereEqual({
                         field2: "value2"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("SET", () => {
@@ -114,7 +121,8 @@ describe("UPDATE", () => {
                         field1: "value1"
                     })
                     .step(100)
-                    .descBy("field1").query)()
+                    .descBy("field1")
+                    .build())()
         ).toBe(QUERY);
     });
 });

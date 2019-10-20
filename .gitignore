@@ -10,4 +10,3 @@ logs/
 npm-debug.log
 .vscode/
 log/
-access.log

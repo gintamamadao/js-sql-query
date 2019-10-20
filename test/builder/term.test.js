@@ -13,7 +13,8 @@ describe("SELECT:TERM", () => {
                         builder.term.equal({
                             field1: "value1"
                         })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
     });
     test("<>", () => {
@@ -27,7 +28,8 @@ describe("SELECT:TERM", () => {
                         builder.term.notEqual({
                             field1: "value1"
                         })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
     });
     test("IN", () => {
@@ -42,7 +44,8 @@ describe("SELECT:TERM", () => {
                         builder.term.in({
                             field1: ["value1", "value2"]
                         })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
     });
     test("NOT IN", () => {
@@ -57,7 +60,8 @@ describe("SELECT:TERM", () => {
                         builder.term.notIn({
                             field1: ["value1", "value2"]
                         })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
     });
     test(">", () => {
@@ -71,7 +75,8 @@ describe("SELECT:TERM", () => {
                         builder.term.more({
                             field1: "value1"
                         })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
     });
     test("<", () => {
@@ -85,7 +90,8 @@ describe("SELECT:TERM", () => {
                         builder.term.less({
                             field1: "value1"
                         })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
     });
     test(">=", () => {
@@ -99,7 +105,8 @@ describe("SELECT:TERM", () => {
                         builder.term.moreEqual({
                             field1: "value1"
                         })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
     });
     test("<=", () => {
@@ -113,7 +120,8 @@ describe("SELECT:TERM", () => {
                         builder.term.lessEqual({
                             field1: "value1"
                         })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
     });
     test("LIKE", () => {
@@ -127,7 +135,8 @@ describe("SELECT:TERM", () => {
                         builder.term.like({
                             field1: "value1"
                         })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
     });
     test("NOT LIKE", () => {
@@ -142,7 +151,8 @@ describe("SELECT:TERM", () => {
                         builder.term.notLike({
                             field1: "value1"
                         })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
     });
     test("BETWEEN", () => {
@@ -157,7 +167,8 @@ describe("SELECT:TERM", () => {
                         builder.term.between({
                             field1: ["value1", "value2"]
                         })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
     });
     test("NOT BETWEEN", () => {
@@ -172,7 +183,8 @@ describe("SELECT:TERM", () => {
                         builder.term.notBetween({
                             field1: ["value1", "value2"]
                         })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
     });
     test("AND", () => {
@@ -188,7 +200,8 @@ describe("SELECT:TERM", () => {
                             field1: "value1",
                             field2: "value2"
                         })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -203,7 +216,8 @@ describe("SELECT:TERM", () => {
                             .equal({
                                 field2: "value2"
                             })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
     });
     test("AND", () => {
@@ -222,7 +236,8 @@ describe("SELECT:TERM", () => {
                             .notEqual({
                                 field2: "value2"
                             })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
     });
     test("AND", () => {
@@ -241,7 +256,8 @@ describe("SELECT:TERM", () => {
                             .notEqual({
                                 field1: "value2"
                             })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
     });
     test("OR", () => {
@@ -257,7 +273,8 @@ describe("SELECT:TERM", () => {
                             field1: "value1",
                             field2: "value2"
                         })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -272,7 +289,8 @@ describe("SELECT:TERM", () => {
                             .orEqual({
                                 field2: "value2"
                             })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
     });
     test("Bracket", () => {
@@ -293,7 +311,8 @@ describe("SELECT:TERM", () => {
                             .orEqual({
                                 field3: "value3"
                             })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
     });
     test("OrBracket", () => {
@@ -314,7 +333,8 @@ describe("SELECT:TERM", () => {
                             .equal({
                                 field3: "value3"
                             })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
     });
     test("OrBracket", () => {
@@ -335,7 +355,8 @@ describe("SELECT:TERM", () => {
                             .in({
                                 field3: ["value3", "value4"]
                             })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
     });
 });

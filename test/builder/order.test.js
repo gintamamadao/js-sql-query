@@ -9,7 +9,8 @@ describe("SELECT:ORDER BY", () => {
                 builder
                     .select()
                     .table("table1")
-                    .descBy("field1").query)()
+                    .descBy("field1")
+                    .build())()
         ).toBe(QUERY);
     });
     test("ORDER", () => {
@@ -19,7 +20,8 @@ describe("SELECT:ORDER BY", () => {
                 builder
                     .select()
                     .table("table1")
-                    .ascBy("field1").query)()
+                    .ascBy("field1")
+                    .build())()
         ).toBe(QUERY);
     });
     test("ORDER", () => {
@@ -30,14 +32,16 @@ describe("SELECT:ORDER BY", () => {
                 builder
                     .select()
                     .table("table1")
-                    .descBy("field1", "field2").query)()
+                    .descBy("field1", "field2")
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
                 builder
                     .select()
                     .table("table1")
-                    .descBy(["field1", "field2"]).query)()
+                    .descBy(["field1", "field2"])
+                    .build())()
         ).toBe(QUERY);
     });
     test("ORDER", () => {
@@ -48,14 +52,16 @@ describe("SELECT:ORDER BY", () => {
                 builder
                     .select()
                     .table("table1")
-                    .ascBy("field1", "field2").query)()
+                    .ascBy("field1", "field2")
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
                 builder
                     .select()
                     .table("table1")
-                    .ascBy(["field1", "field2"]).query)()
+                    .ascBy(["field1", "field2"])
+                    .build())()
         ).toBe(QUERY);
     });
     test("ORDER", () => {
@@ -67,7 +73,8 @@ describe("SELECT:ORDER BY", () => {
                     .select()
                     .table("table1")
                     .descBy("field1")
-                    .ascBy("field2").query)()
+                    .ascBy("field2")
+                    .build())()
         ).toBe(QUERY);
     });
     test("ORDER", () => {
@@ -80,7 +87,8 @@ describe("SELECT:ORDER BY", () => {
                     .table("table1")
                     .orderField({
                         field1: ["value1", "value2"]
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("ORDER", () => {
@@ -95,7 +103,8 @@ describe("SELECT:ORDER BY", () => {
                     .ascBy("field2")
                     .orderField({
                         field3: ["value1", "value2"]
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -109,7 +118,8 @@ describe("SELECT:ORDER BY", () => {
                             .orderField({
                                 field3: ["value1", "value2"]
                             })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -123,7 +133,8 @@ describe("SELECT:ORDER BY", () => {
                             .orderField({
                                 field3: ["value1", "value2"]
                             })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
     });
 });

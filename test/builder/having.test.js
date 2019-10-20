@@ -11,7 +11,8 @@ describe("SELECT:HAVING", () => {
                     .table("table1")
                     .havingEqual({
                         field1: "value1"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -22,7 +23,8 @@ describe("SELECT:HAVING", () => {
                         builder.term.equal({
                             field1: "value1"
                         })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -33,21 +35,24 @@ describe("SELECT:HAVING", () => {
                         builder.term.equal({
                             field1: "value1"
                         })
-                    ).query)()
+                    )
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
                 builder
                     .select()
                     .table("table1")
-                    .having(() => "`field1` = 'value1'").query)()
+                    .having(() => "`field1` = 'value1'")
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
                 builder
                     .select()
                     .table("table1")
-                    .having("`field1` = 'value1'").query)()
+                    .having("`field1` = 'value1'")
+                    .build())()
         ).toBe(QUERY);
     });
     test("<>", () => {
@@ -59,7 +64,8 @@ describe("SELECT:HAVING", () => {
                     .table("table1")
                     .havingNotEqual({
                         field1: "value1"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("IN", () => {
@@ -72,7 +78,8 @@ describe("SELECT:HAVING", () => {
                     .table("table1")
                     .havingIn({
                         field1: ["value1", "value2"]
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("NOT IN", () => {
@@ -85,7 +92,8 @@ describe("SELECT:HAVING", () => {
                     .table("table1")
                     .havingNotIn({
                         field1: ["value1", "value2"]
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test(">", () => {
@@ -97,7 +105,8 @@ describe("SELECT:HAVING", () => {
                     .table("table1")
                     .havingMore({
                         field1: "value1"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("<", () => {
@@ -109,7 +118,8 @@ describe("SELECT:HAVING", () => {
                     .table("table1")
                     .havingLess({
                         field1: "value1"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test(">=", () => {
@@ -121,7 +131,8 @@ describe("SELECT:HAVING", () => {
                     .table("table1")
                     .havingMoreEqual({
                         field1: "value1"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("<=", () => {
@@ -133,7 +144,8 @@ describe("SELECT:HAVING", () => {
                     .table("table1")
                     .havingLessEqual({
                         field1: "value1"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("LIKE", () => {
@@ -145,7 +157,8 @@ describe("SELECT:HAVING", () => {
                     .table("table1")
                     .havingLike({
                         field1: "value1"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("NOT LIKE", () => {
@@ -158,7 +171,8 @@ describe("SELECT:HAVING", () => {
                     .table("table1")
                     .havingNotLike({
                         field1: "value1"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("BETWEEN", () => {
@@ -171,7 +185,8 @@ describe("SELECT:HAVING", () => {
                     .table("table1")
                     .havingBetween({
                         field1: ["value1", "value2"]
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("NOT BETWEEN", () => {
@@ -184,7 +199,8 @@ describe("SELECT:HAVING", () => {
                     .table("table1")
                     .havingNotBetween({
                         field1: ["value1", "value2"]
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("AND", () => {
@@ -198,7 +214,8 @@ describe("SELECT:HAVING", () => {
                     .havingEqual({
                         field1: "value1",
                         field2: "value2"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -210,7 +227,8 @@ describe("SELECT:HAVING", () => {
                     })
                     .havingEqual({
                         field2: "value2"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("AND", () => {
@@ -226,7 +244,8 @@ describe("SELECT:HAVING", () => {
                     })
                     .havingNotEqual({
                         field2: "value2"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("AND", () => {
@@ -242,7 +261,8 @@ describe("SELECT:HAVING", () => {
                     })
                     .havingNotEqual({
                         field1: "value2"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("OR", () => {
@@ -256,7 +276,8 @@ describe("SELECT:HAVING", () => {
                     .havingOrEqual({
                         field1: "value1",
                         field2: "value2"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
         expect(
             (() =>
@@ -268,7 +289,8 @@ describe("SELECT:HAVING", () => {
                     })
                     .havingOrEqual({
                         field2: "value2"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("Bracket", () => {
@@ -286,7 +308,8 @@ describe("SELECT:HAVING", () => {
                     .havingBracket()
                     .havingOrEqual({
                         field3: "value3"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("OrBracket", () => {
@@ -304,7 +327,8 @@ describe("SELECT:HAVING", () => {
                     .havingOrBracket()
                     .havingEqual({
                         field3: "value3"
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
     test("OrBracket", () => {
@@ -322,7 +346,8 @@ describe("SELECT:HAVING", () => {
                     .havingOrBracket()
                     .havingIn({
                         field3: ["value3", "value4"]
-                    }).query)()
+                    })
+                    .build())()
         ).toBe(QUERY);
     });
 });
