@@ -50,6 +50,8 @@ var result = await sqlQuery
 // exec() 返回的是一个 Promise 对象， 所以用 async/await 语法获取最后结果
 ```
 
+---
+
 # 目录
 
 <!-- TOC -->
@@ -69,6 +71,8 @@ var result = await sqlQuery
 -   [Connect To Db](#connect-to-db)
     -   [Connect Config](#connect-config)
     -   [Connect Api](#connect-api)
+
+---
 
 # Build SQL Api
 
@@ -116,9 +120,13 @@ sqlQuery
 REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
 ```
 
+---
+
 ## INSERT/REPLACE
 
 > 插入数据类型语句
+
+---
 
 ### insert/replace
 
@@ -137,6 +145,8 @@ sqlQuery.insert();
 ```js
 sqlQuery.replace();
 ```
+
+---
 
 ### data
 
@@ -162,6 +172,8 @@ sqlQuery
 ```sql
 REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
 ```
+
+---
 
 ### multiData
 
@@ -197,6 +209,8 @@ sqlQuery
 INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' ), ( 'value4', 'value5' )
 ```
 
+---
+
 ### values
 
 > 设置 sql 语句的插入的值信息
@@ -225,6 +239,8 @@ sqlQuery
 INSERT INTO `table1` ( `field1`, `field2` )  VALUES SELECT `field1`, `field2` FROM `table1`
 ```
 
+---
+
 ### fields
 
 > 设置 sql 语句的插入值的字段
@@ -252,6 +268,8 @@ sqlQuery
 INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
 ```
 
+---
+
 ## UPDATE
 
 > 更新数据类型语句
@@ -269,6 +287,8 @@ _例子_
 ```js
 sqlQuery.update();
 ```
+
+---
 
 ### set
 
@@ -298,6 +318,8 @@ sqlQuery
 UPDATE `table1` SET `field1` = 'value1', `field2` = 'value2' WHERE `field3` = 'value3'
 ```
 
+---
+
 ### add
 
 > 设置 sql 语句的更新信息，更新方式为增加
@@ -324,6 +346,8 @@ sqlQuery
 ```sql
 UPDATE `table1` SET `field1` = `field1` + '1' WHERE `field2` = 'value2'
 ```
+
+---
 
 ### minus
 
@@ -356,6 +380,8 @@ UPDATE `table1` SET `field1` = `field1` - '1' WHERE `field2` = 'value2'
 
 > 查询数据类型语句
 
+---
+
 ### select
 
 > 指定 sql 语句为 SELECT 类型
@@ -369,6 +395,8 @@ _例子_
 ```js
 sqlQuery.select();
 ```
+
+---
 
 ### fields
 
@@ -407,6 +435,8 @@ sqlQuery
 SELECT `field1`, COUNT(`field2`) FROM `table1`
 ```
 
+---
+
 ### count 等函数
 
 > 设置 sql 语句的函数，有 count，sum，max，min，avg，abs，ceil，floor，round，log，log2，exp，power，acos，asin，atan，cos，sin，tan，conv，random，rand，radians，degrees，distinct 等函数
@@ -429,6 +459,8 @@ sqlQuery
 ```sql
 SELECT `field1`, COUNT(`field2`) FROM `table1`
 ```
+
+---
 
 ### groupBy
 
@@ -457,6 +489,8 @@ SELECT `field1`, COUNT(`field2`) FROM `table1` GROUP BY `field2`
 ## DELETE
 
 > 删除数据类型语句
+
+---
 
 ### delete
 
@@ -488,11 +522,15 @@ sqlQuery
 DELETE FROM `table1` WHERE `field1` = 'value1'
 ```
 
+---
+
 ## WHERE
 
 > UPDATE、SELECT、DELETE 的 WHERE 条件逻辑拼装 api 是一样的。
 > 条件之间的逻辑根据后面的 api 决定，api 名中有 Or 这个词就代表，该条件与前一个条件为逻辑或，否则为逻辑与。
 > whereBracket 和 whereOrBracket 是特殊的 api，表示将 api 前后的条件分别用括号括起来，Or 代表括号之间的逻辑是或关系。
+
+---
 
 ### where
 
@@ -528,6 +566,8 @@ sqlQuery
 SELECT * FROM `table1` WHERE `field1` = 'value1'
 ```
 
+---
+
 ### whereEqual
 
 > 条件 =
@@ -551,6 +591,8 @@ sqlQuery
 ```sql
 SELECT * FROM `table1` WHERE `field1` = 'value1'
 ```
+
+---
 
 ### whereNotEqual
 
@@ -576,6 +618,8 @@ sqlQuery
 SELECT * FROM `table1` WHERE `field1` <> 'value1'
 ```
 
+---
+
 ### whereIn
 
 > 条件 IN
@@ -599,6 +643,8 @@ sqlQuery
 ```sql
 SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' )
 ```
+
+---
 
 ### whereNotIn
 
@@ -624,6 +670,8 @@ sqlQuery
 SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' )
 ```
 
+---
+
 ### whereMore
 
 > 条件 >
@@ -647,6 +695,8 @@ sqlQuery
 ```sql
 SELECT * FROM `table1` WHERE `field1` > 'value1'
 ```
+
+---
 
 ### whereLess
 
@@ -672,6 +722,8 @@ sqlQuery
 SELECT * FROM `table1` WHERE `field1` < 'value1'
 ```
 
+---
+
 ### whereMoreEqual
 
 > 条件 >=
@@ -695,6 +747,8 @@ sqlQuery
 ```sql
 SELECT * FROM `table1` WHERE `field1` >= 'value1'
 ```
+
+---
 
 ### whereLessEqual
 
@@ -720,6 +774,8 @@ sqlQuery
 SELECT * FROM `table1` WHERE `field1` <= 'value1'
 ```
 
+---
+
 ### whereLike
 
 > 条件 LIKE
@@ -743,6 +799,8 @@ sqlQuery
 ```sql
 SELECT * FROM `table1` WHERE `field1` LIKE '%value1%'
 ```
+
+---
 
 ### whereNotLike
 
@@ -768,6 +826,8 @@ sqlQuery
 SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%'
 ```
 
+---
+
 ### whereBetween
 
 > 条件 BETWEEN
@@ -792,6 +852,8 @@ sqlQuery
 SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2'
 ```
 
+---
+
 ### whereNotBetween
 
 > 条件 NOT BETWEEN
@@ -815,6 +877,8 @@ sqlQuery
 ```sql
 SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1' AND 'value2'
 ```
+
+---
 
 ### whereOrEqual
 
@@ -841,6 +905,8 @@ sqlQuery
 SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field2` = 'value2'
 ```
 
+---
+
 ### whereOrNotEqual
 
 > 条件 <>，逻辑为或
@@ -865,6 +931,8 @@ sqlQuery
 ```sql
 SELECT * FROM `table1` WHERE `field1` <> 'value1' OR `field2` <> 'value2'
 ```
+
+---
 
 ### whereOrIn
 
@@ -891,6 +959,8 @@ sqlQuery
 SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' ) OR `field2` IN ( 'value1', 'value2' )
 ```
 
+---
+
 ### whereOrNotIn
 
 > 条件 NOT IN，逻辑为或
@@ -915,6 +985,8 @@ sqlQuery
 ```sql
 SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' ) OR `field2` NOT IN ( 'value1', 'value2' )
 ```
+
+---
 
 ### whereOrMore
 
@@ -941,6 +1013,8 @@ sqlQuery
 SELECT * FROM `table1` WHERE `field1` > 'value1' OR `field2` > 'value2'
 ```
 
+---
+
 ### whereOrLess
 
 > 条件 <，逻辑为或
@@ -965,6 +1039,8 @@ sqlQuery
 ```sql
 SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field2` = 'value2'
 ```
+
+---
 
 ### whereOrMoreEqual
 
@@ -991,6 +1067,8 @@ sqlQuery
 SELECT * FROM `table1` WHERE `field1` >= 'value1' OR `field2` >= 'value2'
 ```
 
+---
+
 ### whereOrLessEqual
 
 > 条件 <=，逻辑为或
@@ -1015,6 +1093,8 @@ sqlQuery
 ```sql
 SELECT * FROM `table1` WHERE `field1` <= 'value1' OR `field2` <= 'value2'
 ```
+
+---
 
 ### whereOrLike
 
@@ -1041,6 +1121,8 @@ sqlQuery
 SELECT * FROM `table1` WHERE `field1` LIKE '%value1%' OR `field2` LIKE '%value2%'
 ```
 
+---
+
 ### whereOrNotLike
 
 > 条件 NOT LIKE，逻辑为或
@@ -1065,6 +1147,8 @@ sqlQuery
 ```sql
 SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%' OR `field2` NOT LIKE '%value2%'
 ```
+
+---
 
 ### whereOrBetween
 
@@ -1091,6 +1175,8 @@ sqlQuery
 SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2' OR `field2` BETWEEN 'value1' AND 'value2'
 ```
 
+---
+
 ### whereOrNotBetween
 
 > 条件 NOT BETWEEN，逻辑为或
@@ -1115,6 +1201,8 @@ sqlQuery
 ```sql
 SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1' AND 'value2' OR `field2` NOT BETWEEN 'value1' AND 'value2'
 ```
+
+---
 
 ### whereBracket
 
@@ -1147,6 +1235,8 @@ sqlQuery
 SELECT * FROM `table1` WHERE ( `field1` = 'value1' OR `field2` = 'value2' ) AND ( `field3` = 'value3' )
 ```
 
+---
+
 ### whereOrBracket
 
 > 前后的条件分别用括号括起来，和前一括号逻辑为或
@@ -1176,10 +1266,14 @@ sqlQuery
  SELECT * FROM `table1` WHERE ( `field1` = 'value1' AND `field2` = 'value2' ) OR ( `field3` = 'value3' )
 ```
 
+---
+
 ## HAVING
 
 > HAVING 的 api 的参数和逻辑跟 WHERE 的 api 是一样的，但仅限 SELECT 能调用。
 > 但为和 WHERE 做区分，HAVING 的 api 的前缀都是 having，而 WHERE 的 api 的前缀都是 where。
+
+---
 
 ### having
 
@@ -1215,6 +1309,8 @@ sqlQuery
 SELECT * FROM `table1` HAVING `field1` = 'value1'
 ```
 
+---
+
 ### havingEqual
 
 > 条件 =
@@ -1240,11 +1336,15 @@ sqlQuery
  SELECT * FROM `table1` HAVING `field1` = 'value1' AND `field2` = 'value2'
 ```
 
+---
+
 ### havingNotEqual
 
 > 条件 <>
 
 _参数和逻辑与 where 开头的 api 一致_
+
+---
 
 ### havingIn
 
@@ -1252,11 +1352,15 @@ _参数和逻辑与 where 开头的 api 一致_
 
 _参数和逻辑与 where 开头的 api 一致_
 
+---
+
 ### havingNotIn
 
 > 条件 NOT IN
 
 _参数和逻辑与 where 开头的 api 一致_
+
+---
 
 ### havingMore
 
@@ -1264,11 +1368,15 @@ _参数和逻辑与 where 开头的 api 一致_
 
 _参数和逻辑与 where 开头的 api 一致_
 
+---
+
 ### havingLess
 
 > 条件 <
 
 _参数和逻辑与 where 开头的 api 一致_
+
+---
 
 ### havingMoreEqual
 
@@ -1276,11 +1384,15 @@ _参数和逻辑与 where 开头的 api 一致_
 
 _参数和逻辑与 where 开头的 api 一致_
 
+---
+
 ### havingLessEqual
 
 > 条件 <=
 
 _参数和逻辑与 where 开头的 api 一致_
+
+---
 
 ### havingLike
 
@@ -1288,11 +1400,15 @@ _参数和逻辑与 where 开头的 api 一致_
 
 _参数和逻辑与 where 开头的 api 一致_
 
+---
+
 ### havingNotLike
 
 > 条件 NOT LIKE
 
 _参数和逻辑与 where 开头的 api 一致_
+
+---
 
 ### havingBetween
 
@@ -1300,11 +1416,15 @@ _参数和逻辑与 where 开头的 api 一致_
 
 _参数和逻辑与 where 开头的 api 一致_
 
+---
+
 ### havingNotBetween
 
 > 条件 NOT BETWEEN
 
 _参数和逻辑与 where 开头的 api 一致_
+
+---
 
 ### havingOrEqual
 
@@ -1312,11 +1432,15 @@ _参数和逻辑与 where 开头的 api 一致_
 
 _参数和逻辑与 where 开头的 api 一致_
 
+---
+
 ### havingOrNotEqual
 
 > 条件 <>，逻辑为或
 
 _参数和逻辑与 where 开头的 api 一致_
+
+---
 
 ### havingOrIn
 
@@ -1324,11 +1448,15 @@ _参数和逻辑与 where 开头的 api 一致_
 
 _参数和逻辑与 where 开头的 api 一致_
 
+---
+
 ### havingOrNotIn
 
 > 条件 NOT IN，逻辑为或
 
 _参数和逻辑与 where 开头的 api 一致_
+
+---
 
 ### havingOrMore
 
@@ -1336,11 +1464,15 @@ _参数和逻辑与 where 开头的 api 一致_
 
 _参数和逻辑与 where 开头的 api 一致_
 
+---
+
 ### havingOrLess
 
 > 条件 <，逻辑为或
 
 _参数和逻辑与 where 开头的 api 一致_
+
+---
 
 ### havingOrMoreEqual
 
@@ -1348,11 +1480,15 @@ _参数和逻辑与 where 开头的 api 一致_
 
 _参数和逻辑与 where 开头的 api 一致_
 
+---
+
 ### havingOrLessEqual
 
 > 条件 <=，逻辑为或
 
 _参数和逻辑与 where 开头的 api 一致_
+
+---
 
 ### havingOrLike
 
@@ -1360,11 +1496,15 @@ _参数和逻辑与 where 开头的 api 一致_
 
 _参数和逻辑与 where 开头的 api 一致_
 
+---
+
 ### havingOrNotLike
 
 > 条件 NOT LIKE，逻辑为或
 
 _参数和逻辑与 where 开头的 api 一致_
+
+---
 
 ### havingOrBetween
 
@@ -1372,11 +1512,15 @@ _参数和逻辑与 where 开头的 api 一致_
 
 _参数和逻辑与 where 开头的 api 一致_
 
+---
+
 ### havingOrNotBetween
 
 > 条件 NOT BETWEEN，逻辑为或
 
 _参数和逻辑与 where 开头的 api 一致_
+
+---
 
 ### havingBracket
 
@@ -1384,16 +1528,22 @@ _参数和逻辑与 where 开头的 api 一致_
 
 _参数和逻辑与 where 开头的 api 一致_
 
+---
+
 ### havingOrBracket
 
 > 前后的条件分别用括号括起来，逻辑为或
 
 _参数和逻辑与 where 开头的 api 一致_
 
+---
+
 ## TERM
 
 > Term 的 api 的参数和逻辑跟 WHERE 和 HAVING 的 api 是一样的。
 > Term 没有前缀，如果条件语句过于复杂，可以用 term 使代码更简洁。
+
+---
 
 ### equal
 
@@ -1417,6 +1567,8 @@ sqlQuery
 SELECT * FROM `table1` WHERE `field1` = 'value1'
 ```
 
+---
+
 ### notEqual
 
 > 条件 <>
@@ -1438,6 +1590,8 @@ sqlQuery
 ```sql
 SELECT * FROM `table1` WHERE `field1` <> 'value1'
 ```
+
+---
 
 ### in
 
@@ -1461,6 +1615,8 @@ sqlQuery
 SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' )
 ```
 
+---
+
 ### notIn
 
 > 条件 NOT IN
@@ -1482,6 +1638,8 @@ sqlQuery
 ```sql
 SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' )
 ```
+
+---
 
 ### more
 
@@ -1505,6 +1663,8 @@ sqlQuery
 SELECT * FROM `table1` WHERE `field1` > 'value1'
 ```
 
+---
+
 ### less
 
 > 条件 <
@@ -1526,6 +1686,8 @@ sqlQuery
 ```sql
 SELECT * FROM `table1` WHERE `field1` < 'value1'
 ```
+
+---
 
 ### moreEqual
 
@@ -1549,6 +1711,8 @@ sqlQuery
  SELECT * FROM `table1` WHERE `field1` >= 'value1'
 ```
 
+---
+
 ### lessEqual
 
 > 条件 <=
@@ -1570,6 +1734,8 @@ sqlQuery
 ```sql
 SELECT * FROM `table1` WHERE `field1` <= 'value1'
 ```
+
+---
 
 ### like
 
@@ -1593,6 +1759,8 @@ sqlQuery
 SELECT * FROM `table1` WHERE `field1` LIKE '%value1%'
 ```
 
+---
+
 ### notLike
 
 > 条件 NOT LIKE
@@ -1614,6 +1782,8 @@ sqlQuery
 ```sql
 SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%'
 ```
+
+---
 
 ### between
 
@@ -1637,6 +1807,8 @@ sqlQuery
 SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2'
 ```
 
+---
+
 ### notBetween
 
 > 条件 NOT BETWEEN
@@ -1658,6 +1830,8 @@ sqlQuery
 ```sql
 SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1' AND 'value2'
 ```
+
+---
 
 ### orEqual
 
@@ -1682,11 +1856,15 @@ sqlQuery
 SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field2` = 'value2'
 ```
 
+---
+
 ### orNotEqual
 
 > 条件 <>，逻辑为或
 
 _参数和逻辑与 where 开头的 api 一致_
+
+---
 
 ### orIn
 
@@ -1694,11 +1872,15 @@ _参数和逻辑与 where 开头的 api 一致_
 
 _参数和逻辑与 where 开头的 api 一致_
 
+---
+
 ### orNotIn
 
 > 条件 NOT IN，逻辑为或
 
 _参数和逻辑与 where 开头的 api 一致_
+
+---
 
 ### orMore
 
@@ -1706,11 +1888,15 @@ _参数和逻辑与 where 开头的 api 一致_
 
 _参数和逻辑与 where 开头的 api 一致_
 
+---
+
 ### orLess
 
 > 条件 <，逻辑为或
 
 _参数和逻辑与 where 开头的 api 一致_
+
+---
 
 ### orMoreEqual
 
@@ -1718,11 +1904,15 @@ _参数和逻辑与 where 开头的 api 一致_
 
 _参数和逻辑与 where 开头的 api 一致_
 
+---
+
 ### orLessEqual
 
 > 条件 <=，逻辑为或
 
 _参数和逻辑与 where 开头的 api 一致_
+
+---
 
 ### orLike
 
@@ -1730,11 +1920,15 @@ _参数和逻辑与 where 开头的 api 一致_
 
 _参数和逻辑与 where 开头的 api 一致_
 
+---
+
 ### orNotLike
 
 > 条件 NOT LIKE，逻辑为或
 
 _参数和逻辑与 where 开头的 api 一致_
+
+---
 
 ### orBetween
 
@@ -1742,11 +1936,15 @@ _参数和逻辑与 where 开头的 api 一致_
 
 _参数和逻辑与 where 开头的 api 一致_
 
+---
+
 ### orNotBetween
 
 > 条件 NOT BETWEEN，逻辑为或
 
 _参数和逻辑与 where 开头的 api 一致_
+
+---
 
 ### bracket
 
@@ -1778,6 +1976,8 @@ sqlQuery
 SELECT * FROM `table1` WHERE ( `field1` = 'value1' OR `field2` = 'value2' ) AND ( `field3` = 'value3' )
 ```
 
+---
+
 ### orBracket
 
 > 前后的条件分别用括号括起来，逻辑为或
@@ -1806,9 +2006,13 @@ sqlQuery
 SELECT * FROM `table1` WHERE ( `field1` = 'value1' AND `field2` = 'value2' ) OR ( `field3` = 'value3' )
 ```
 
+---
+
 ## ORDER
 
 > 设置 sql 的查找数据的排序逻辑
+
+---
 
 ### descBy
 
@@ -1843,6 +2047,8 @@ sqlQuery
 ```sql
 SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` DESC
 ```
+
+---
 
 ### ascBy
 
@@ -1879,6 +2085,8 @@ sqlQuery
 SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` ASC
 ```
 
+---
+
 ### orderField
 
 > 根据某个字段自定义序列排序
@@ -1902,6 +2110,8 @@ sqlQuery
 ```sql
 SELECT * FROM `table1` ORDER BY FIELD(`field1`, 'value1', 'value2')
 ```
+
+---
 
 ### order
 
@@ -1932,9 +2142,13 @@ sqlQuery
 SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` ASC, FIELD(`field3`, 'value1', 'value2')
 ```
 
+---
+
 ## LIMIT/OFFSET
 
 > 设置查找数据的步长和偏移
+
+---
 
 ### offset
 
@@ -1958,6 +2172,8 @@ sqlQuery
 SELECT * FROM `table1` OFFSET 1
 ```
 
+---
+
 ### step
 
 > 设置 sql 语句的步长
@@ -1979,6 +2195,8 @@ sqlQuery
 ```sql
 SELECT * FROM `table1` LIMIT 10
 ```
+
+---
 
 ### paging
 
@@ -2004,6 +2222,8 @@ sqlQuery
 SELECT * FROM `table1` LIMIT 10 OFFSET 10
 ```
 
+---
+
 ### findOne
 
 > 限制只返回一个，仅限 SELECT 类型使用
@@ -2026,9 +2246,13 @@ sqlQuery
 SELECT * FROM `table1` LIMIT 1
 ```
 
+---
+
 ## CREATE
 
 > 新建表语句，把表的信息用一定的 json 数据格式保存，然后可以通过 api 转换成 sql 语句
+
+---
 
 ### create
 
@@ -2043,6 +2267,8 @@ _例子_
 ```js
 sqlQuery.create();
 ```
+
+---
 
 ### info
 
@@ -2136,9 +2362,13 @@ CREATE TABLE IF NOT EXISTS student ( `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMEN
 -   default，设置默认值
 -   onUpdate，数据更新时字段的更新值
 
+---
+
 ## ALTER
 
 > ALTER 类型语句
+
+---
 
 ### alter
 
@@ -2153,6 +2383,8 @@ _例子_
 ```js
 sqlQuery.alter();
 ```
+
+---
 
 ### add
 
@@ -2183,6 +2415,8 @@ sqlQuery
 ALTER TABLE `table1` ADD COLUMN `field1` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '学生id'
 ```
 
+---
+
 ### drop
 
 > 删除字段
@@ -2204,6 +2438,8 @@ sqlQuery
 ```sql
 ALTER TABLE `table1` DROP COLUMN `field1`
 ```
+
+---
 
 ### modify
 
@@ -2230,6 +2466,8 @@ sqlQuery
 ```sql
 ALTER TABLE `table1` MODIFY COLUMN `field1` VARCHAR(32)
 ```
+
+---
 
 ### change
 
@@ -2271,6 +2509,8 @@ ALTER TABLE `table1` CHANGE COLUMN `field1` `id` BIGINT
 -   default，设置默认值
 -   onUpdate，数据更新时字段的更新值
 
+---
+
 # Connect To Db
 
 > 如果要连接数据库需要在新建对象时传入连接的配置，要执行语句需要调用 exec 属性方法。
@@ -2291,6 +2531,8 @@ var result = await sqlQuery
     .exec();
 ```
 
+---
+
 ## Connect Config
 
 | 字段            |       类型       | 是否必填 |                           说明 |
@@ -2305,6 +2547,8 @@ var result = await sqlQuery
 
 > 因为本框架是使用连接池的方式连接数据库，所以 connectionLimit 设置的值越大，那连接池里面缓存的连接数就越多。
 > 同时如果连接池的连接都正在忙，那新的连接请求就会进入队列等待，所以不用担心连接数会超过数据库的最大限制。
+
+---
 
 ## Connect Api
 
@@ -2321,6 +2565,8 @@ _例子_
 var result = await sqlQuery.exec("SELECT `field1`, `field2` FROM `table1`");
 ```
 
+---
+
 # Tests
 
 > Tests are using jest, to run the tests use:
@@ -2328,6 +2574,8 @@ var result = await sqlQuery.exec("SELECT `field1`, `field2` FROM `table1`");
 ```sh
 $ npm run test
 ```
+
+---
 
 # License (MIT)
 
