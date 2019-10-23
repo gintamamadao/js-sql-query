@@ -1161,7 +1161,7 @@ SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%' OR `field2` NOT LIKE '
 
 _参数_
 
-> -   object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为数组，第一个和第二个值代表范围的上限和下限
 
 _例子_
 
@@ -1188,7 +1188,7 @@ SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2' OR `field2` 
 
 _参数_
 
-> -   object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为数组，第一个和第二个值代表范围的上限和下限
 
 _例子_
 
