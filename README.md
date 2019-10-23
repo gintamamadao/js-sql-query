@@ -128,7 +128,7 @@ REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
 
 ---
 
-### insert/replace
+### `insert/replace`
 
 > 指定为 INSERT/REPLACE 类型语句
 
@@ -148,7 +148,7 @@ sqlQuery.replace();
 
 ---
 
-### data
+### `data`
 
 > 设置 sql 语句的插入值信息
 
@@ -175,7 +175,7 @@ REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
 
 ---
 
-### multiData
+### `multiData`
 
 > 设置 sql 语句多行插入值信息，一次插入一行或多行数据
 
@@ -211,7 +211,7 @@ INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' ), ( 'v
 
 ---
 
-### values
+### `values`
 
 > 设置 sql 语句的插入的值信息
 
@@ -241,7 +241,7 @@ INSERT INTO `table1` ( `field1`, `field2` )  VALUES SELECT `field1`, `field2` FR
 
 ---
 
-### fields
+### `fields`
 
 > 设置 sql 语句的插入值的字段
 
@@ -274,7 +274,9 @@ INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
 
 > 更新数据类型语句
 
-### update
+---
+
+### `update`
 
 > 指定 sql 语句为 UPDATE 类型
 
@@ -290,7 +292,7 @@ sqlQuery.update();
 
 ---
 
-### set
+### `set`
 
 > 设置 sql 语句的更新信息，更新方式为覆盖
 
@@ -320,7 +322,7 @@ UPDATE `table1` SET `field1` = 'value1', `field2` = 'value2' WHERE `field3` = 'v
 
 ---
 
-### add
+### `add`
 
 > 设置 sql 语句的更新信息，更新方式为增加
 
@@ -349,7 +351,7 @@ UPDATE `table1` SET `field1` = `field1` + '1' WHERE `field2` = 'value2'
 
 ---
 
-### minus
+### `minus`
 
 > 设置 sql 语句的更新信息，更新方式为减少
 
@@ -382,7 +384,7 @@ UPDATE `table1` SET `field1` = `field1` - '1' WHERE `field2` = 'value2'
 
 ---
 
-### select
+### `select`
 
 > 指定 sql 语句为 SELECT 类型
 
@@ -398,7 +400,7 @@ sqlQuery.select();
 
 ---
 
-### fields
+### `fields`
 
 > 设置 sql 语句的要获取的字段
 
@@ -437,7 +439,7 @@ SELECT `field1`, COUNT(`field2`) FROM `table1`
 
 ---
 
-### count 等函数
+### `count` 等函数
 
 > 设置 sql 语句的函数，有 count，sum，max，min，avg，abs，ceil，floor，round，log，log2，exp，power，acos，asin，atan，cos，sin，tan，conv，random，rand，radians，degrees，distinct 等函数
 
@@ -462,7 +464,7 @@ SELECT `field1`, COUNT(`field2`) FROM `table1`
 
 ---
 
-### groupBy
+### `groupBy`
 
 > 设置 sql 语句根据某个字段聚合
 
@@ -492,7 +494,7 @@ SELECT `field1`, COUNT(`field2`) FROM `table1` GROUP BY `field2`
 
 ---
 
-### delete
+### `delete`
 
 > 指定 sql 语句为 DELETE 类型
 
@@ -532,7 +534,7 @@ DELETE FROM `table1` WHERE `field1` = 'value1'
 
 ---
 
-### where
+### `where`
 
 > WHERE 后面的信息
 
@@ -568,7 +570,7 @@ SELECT * FROM `table1` WHERE `field1` = 'value1'
 
 ---
 
-### whereEqual
+### `whereEqual`
 
 > 条件 =
 
@@ -594,7 +596,7 @@ SELECT * FROM `table1` WHERE `field1` = 'value1'
 
 ---
 
-### whereNotEqual
+### `whereNotEqual`
 
 > 条件 <>
 
@@ -620,7 +622,7 @@ SELECT * FROM `table1` WHERE `field1` <> 'value1'
 
 ---
 
-### whereIn
+### `whereIn`
 
 > 条件 IN
 
@@ -646,7 +648,7 @@ SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' )
 
 ---
 
-### whereNotIn
+### `whereNotIn`
 
 > 条件 NOT IN
 
@@ -672,7 +674,7 @@ SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' )
 
 ---
 
-### whereMore
+### `whereMore`
 
 > 条件 >
 
@@ -698,7 +700,7 @@ SELECT * FROM `table1` WHERE `field1` > 'value1'
 
 ---
 
-### whereLess
+### `whereLess`
 
 > 条件 <
 
@@ -724,7 +726,7 @@ SELECT * FROM `table1` WHERE `field1` < 'value1'
 
 ---
 
-### whereMoreEqual
+### `whereMoreEqual`
 
 > 条件 >=
 
@@ -750,7 +752,7 @@ SELECT * FROM `table1` WHERE `field1` >= 'value1'
 
 ---
 
-### whereLessEqual
+### `whereLessEqual`
 
 > 条件 <=
 
@@ -776,7 +778,7 @@ SELECT * FROM `table1` WHERE `field1` <= 'value1'
 
 ---
 
-### whereLike
+### `whereLike`
 
 > 条件 LIKE
 
@@ -802,7 +804,7 @@ SELECT * FROM `table1` WHERE `field1` LIKE '%value1%'
 
 ---
 
-### whereNotLike
+### `whereNotLike`
 
 > 条件 NOT LIKE
 
@@ -828,7 +830,7 @@ SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%'
 
 ---
 
-### whereBetween
+### `whereBetween`
 
 > 条件 BETWEEN
 
@@ -854,7 +856,7 @@ SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2'
 
 ---
 
-### whereNotBetween
+### `whereNotBetween`
 
 > 条件 NOT BETWEEN
 
@@ -880,7 +882,7 @@ SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1' AND 'value2'
 
 ---
 
-### whereOrEqual
+### `whereOrEqual`
 
 > 条件 =，逻辑为或
 
@@ -907,7 +909,7 @@ SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field2` = 'value2'
 
 ---
 
-### whereOrNotEqual
+### `whereOrNotEqual`
 
 > 条件 <>，逻辑为或
 
@@ -934,7 +936,7 @@ SELECT * FROM `table1` WHERE `field1` <> 'value1' OR `field2` <> 'value2'
 
 ---
 
-### whereOrIn
+### `whereOrIn`
 
 > 条件 IN，逻辑为或
 
@@ -961,7 +963,7 @@ SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' ) OR `field2` IN (
 
 ---
 
-### whereOrNotIn
+### `whereOrNotIn`
 
 > 条件 NOT IN，逻辑为或
 
@@ -988,7 +990,7 @@ SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' ) OR `field2` 
 
 ---
 
-### whereOrMore
+### `whereOrMore`
 
 > 条件 >，逻辑为或
 
@@ -1015,7 +1017,7 @@ SELECT * FROM `table1` WHERE `field1` > 'value1' OR `field2` > 'value2'
 
 ---
 
-### whereOrLess
+### `whereOrLess`
 
 > 条件 <，逻辑为或
 
@@ -1042,7 +1044,7 @@ SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field2` = 'value2'
 
 ---
 
-### whereOrMoreEqual
+### `whereOrMoreEqual`
 
 > 条件 >=，逻辑为或
 
@@ -1069,7 +1071,7 @@ SELECT * FROM `table1` WHERE `field1` >= 'value1' OR `field2` >= 'value2'
 
 ---
 
-### whereOrLessEqual
+### `whereOrLessEqual`
 
 > 条件 <=，逻辑为或
 
@@ -1096,7 +1098,7 @@ SELECT * FROM `table1` WHERE `field1` <= 'value1' OR `field2` <= 'value2'
 
 ---
 
-### whereOrLike
+### `whereOrLike`
 
 > 条件 LIKE，逻辑为或
 
@@ -1123,7 +1125,7 @@ SELECT * FROM `table1` WHERE `field1` LIKE '%value1%' OR `field2` LIKE '%value2%
 
 ---
 
-### whereOrNotLike
+### `whereOrNotLike`
 
 > 条件 NOT LIKE，逻辑为或
 
@@ -1150,7 +1152,7 @@ SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%' OR `field2` NOT LIKE '
 
 ---
 
-### whereOrBetween
+### `whereOrBetween`
 
 > 条件 BETWEEN，逻辑为或
 
@@ -1177,7 +1179,7 @@ SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2' OR `field2` 
 
 ---
 
-### whereOrNotBetween
+### `whereOrNotBetween`
 
 > 条件 NOT BETWEEN，逻辑为或
 
@@ -1204,7 +1206,7 @@ SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1' AND 'value2' OR `fiel
 
 ---
 
-### whereBracket
+### `whereBracket`
 
 > 前后的条件分别用括号括起来
 
@@ -1237,7 +1239,7 @@ SELECT * FROM `table1` WHERE ( `field1` = 'value1' OR `field2` = 'value2' ) AND 
 
 ---
 
-### whereOrBracket
+### `whereOrBracket`
 
 > 前后的条件分别用括号括起来，和前一括号逻辑为或
 
@@ -1275,7 +1277,7 @@ sqlQuery
 
 ---
 
-### having
+### `having`
 
 > HAVING 后面的信息
 
@@ -1311,7 +1313,7 @@ SELECT * FROM `table1` HAVING `field1` = 'value1'
 
 ---
 
-### havingEqual
+### `havingEqual`
 
 > 条件 =
 
@@ -1338,7 +1340,7 @@ sqlQuery
 
 ---
 
-### havingNotEqual
+### `havingNotEqual`
 
 > 条件 <>
 
@@ -1346,7 +1348,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingIn
+### `havingIn`
 
 > 条件 IN
 
@@ -1354,7 +1356,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingNotIn
+### `havingNotIn`
 
 > 条件 NOT IN
 
@@ -1362,7 +1364,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingMore
+### `havingMore`
 
 > 条件 >
 
@@ -1370,7 +1372,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingLess
+### `havingLess`
 
 > 条件 <
 
@@ -1378,7 +1380,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingMoreEqual
+### `havingMoreEqual`
 
 > 条件 >=
 
@@ -1386,7 +1388,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingLessEqual
+### `havingLessEqual`
 
 > 条件 <=
 
@@ -1394,7 +1396,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingLike
+### `havingLike`
 
 > 条件 LIKE
 
@@ -1402,7 +1404,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingNotLike
+### `havingNotLike`
 
 > 条件 NOT LIKE
 
@@ -1410,7 +1412,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingBetween
+### `havingBetween`
 
 > 条件 BETWEEN
 
@@ -1418,7 +1420,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingNotBetween
+### `havingNotBetween`
 
 > 条件 NOT BETWEEN
 
@@ -1426,7 +1428,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingOrEqual
+### `havingOrEqual`
 
 > 条件 =，逻辑为或
 
@@ -1434,7 +1436,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingOrNotEqual
+### `havingOrNotEqual`
 
 > 条件 <>，逻辑为或
 
@@ -1442,7 +1444,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingOrIn
+### `havingOrIn`
 
 > 条件 IN，逻辑为或
 
@@ -1450,7 +1452,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingOrNotIn
+### `havingOrNotIn`
 
 > 条件 NOT IN，逻辑为或
 
@@ -1458,7 +1460,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingOrMore
+### `havingOrMore`
 
 > 条件 >，逻辑为或
 
@@ -1466,7 +1468,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingOrLess
+### `havingOrLess`
 
 > 条件 <，逻辑为或
 
@@ -1474,7 +1476,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingOrMoreEqual
+### `havingOrMoreEqual`
 
 > 条件 >=，逻辑为或
 
@@ -1482,7 +1484,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingOrLessEqual
+### `havingOrLessEqual`
 
 > 条件 <=，逻辑为或
 
@@ -1490,7 +1492,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingOrLike
+### `havingOrLike`
 
 > 条件 LIKE，逻辑为或
 
@@ -1498,7 +1500,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingOrNotLike
+### `havingOrNotLike`
 
 > 条件 NOT LIKE，逻辑为或
 
@@ -1506,7 +1508,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingOrBetween
+### `havingOrBetween`
 
 > 条件 BETWEEN，逻辑为或
 
@@ -1514,7 +1516,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingOrNotBetween
+### `havingOrNotBetween`
 
 > 条件 NOT BETWEEN，逻辑为或
 
@@ -1522,7 +1524,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingBracket
+### `havingBracket`
 
 > 前后的条件分别用括号括起来
 
@@ -1530,7 +1532,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### havingOrBracket
+### `havingOrBracket`
 
 > 前后的条件分别用括号括起来，逻辑为或
 
@@ -1545,7 +1547,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### equal
+### `equal`
 
 > 条件 =
 
@@ -1569,7 +1571,7 @@ SELECT * FROM `table1` WHERE `field1` = 'value1'
 
 ---
 
-### notEqual
+### `notEqual`
 
 > 条件 <>
 
@@ -1593,7 +1595,7 @@ SELECT * FROM `table1` WHERE `field1` <> 'value1'
 
 ---
 
-### in
+### `in`
 
 > 条件 IN
 
@@ -1617,7 +1619,7 @@ SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' )
 
 ---
 
-### notIn
+### `notIn`
 
 > 条件 NOT IN
 
@@ -1641,7 +1643,7 @@ SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' )
 
 ---
 
-### more
+### `more`
 
 > 条件 >
 
@@ -1665,7 +1667,7 @@ SELECT * FROM `table1` WHERE `field1` > 'value1'
 
 ---
 
-### less
+### `less`
 
 > 条件 <
 
@@ -1689,7 +1691,7 @@ SELECT * FROM `table1` WHERE `field1` < 'value1'
 
 ---
 
-### moreEqual
+### `moreEqual`
 
 > 条件 >=
 
@@ -1713,7 +1715,7 @@ sqlQuery
 
 ---
 
-### lessEqual
+### `lessEqual`
 
 > 条件 <=
 
@@ -1737,7 +1739,7 @@ SELECT * FROM `table1` WHERE `field1` <= 'value1'
 
 ---
 
-### like
+### `like`
 
 > 条件 LIKE
 
@@ -1761,7 +1763,7 @@ SELECT * FROM `table1` WHERE `field1` LIKE '%value1%'
 
 ---
 
-### notLike
+### `notLike`
 
 > 条件 NOT LIKE
 
@@ -1785,7 +1787,7 @@ SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%'
 
 ---
 
-### between
+### `between`
 
 > 条件 BETWEEN
 
@@ -1809,7 +1811,7 @@ SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2'
 
 ---
 
-### notBetween
+### `notBetween`
 
 > 条件 NOT BETWEEN
 
@@ -1833,7 +1835,7 @@ SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1' AND 'value2'
 
 ---
 
-### orEqual
+### `orEqual`
 
 > 条件 =，逻辑为或
 
@@ -1858,7 +1860,7 @@ SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field2` = 'value2'
 
 ---
 
-### orNotEqual
+### `orNotEqual`
 
 > 条件 <>，逻辑为或
 
@@ -1866,7 +1868,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### orIn
+### `orIn`
 
 > 条件 IN，逻辑为或
 
@@ -1874,7 +1876,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### orNotIn
+### `orNotIn`
 
 > 条件 NOT IN，逻辑为或
 
@@ -1882,7 +1884,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### orMore
+### `orMore`
 
 > 条件 >，逻辑为或
 
@@ -1890,7 +1892,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### orLess
+### `orLess`
 
 > 条件 <，逻辑为或
 
@@ -1898,7 +1900,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### orMoreEqual
+### `orMoreEqual`
 
 > 条件 >=，逻辑为或
 
@@ -1906,7 +1908,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### orLessEqual
+### `orLessEqual`
 
 > 条件 <=，逻辑为或
 
@@ -1914,7 +1916,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### orLike
+### `orLike`
 
 > 条件 LIKE，逻辑为或
 
@@ -1922,7 +1924,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### orNotLike
+### `orNotLike`
 
 > 条件 NOT LIKE，逻辑为或
 
@@ -1930,7 +1932,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### orBetween
+### `orBetween`
 
 > 条件 BETWEEN，逻辑为或
 
@@ -1938,7 +1940,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### orNotBetween
+### `orNotBetween`
 
 > 条件 NOT BETWEEN，逻辑为或
 
@@ -1946,7 +1948,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ---
 
-### bracket
+### `bracket`
 
 > 前后的条件分别用括号括起来
 
@@ -1978,7 +1980,7 @@ SELECT * FROM `table1` WHERE ( `field1` = 'value1' OR `field2` = 'value2' ) AND 
 
 ---
 
-### orBracket
+### `orBracket`
 
 > 前后的条件分别用括号括起来，逻辑为或
 
@@ -2014,7 +2016,7 @@ SELECT * FROM `table1` WHERE ( `field1` = 'value1' AND `field2` = 'value2' ) OR 
 
 ---
 
-### descBy
+### `descBy`
 
 > 根据某些字段降序排序
 
@@ -2050,7 +2052,7 @@ SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` DESC
 
 ---
 
-### ascBy
+### `ascBy`
 
 > 根据某些字段升序排序
 
@@ -2087,7 +2089,7 @@ SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` ASC
 
 ---
 
-### orderField
+### `orderField`
 
 > 根据某个字段自定义序列排序
 
@@ -2113,7 +2115,7 @@ SELECT * FROM `table1` ORDER BY FIELD(`field1`, 'value1', 'value2')
 
 ---
 
-### order
+### `order`
 
 > 设置 ORDER BY 后面的信息
 
@@ -2150,7 +2152,7 @@ SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` ASC, FIELD(`field3`, 'va
 
 ---
 
-### offset
+### `offset`
 
 > 设置 sql 语句的偏移
 
@@ -2174,7 +2176,7 @@ SELECT * FROM `table1` OFFSET 1
 
 ---
 
-### step
+### `step`
 
 > 设置 sql 语句的步长
 
@@ -2198,7 +2200,7 @@ SELECT * FROM `table1` LIMIT 10
 
 ---
 
-### paging
+### `paging`
 
 > 设置 sql 语句的步长和偏移。
 
@@ -2224,7 +2226,7 @@ SELECT * FROM `table1` LIMIT 10 OFFSET 10
 
 ---
 
-### findOne
+### `findOne`
 
 > 限制只返回一个，仅限 SELECT 类型使用
 
@@ -2254,7 +2256,7 @@ SELECT * FROM `table1` LIMIT 1
 
 ---
 
-### create
+### `create`
 
 > 指定 sql 语句为 CREATE 类型
 
@@ -2270,7 +2272,7 @@ sqlQuery.create();
 
 ---
 
-### info
+### `info`
 
 > 新建表的信息
 
@@ -2370,7 +2372,7 @@ CREATE TABLE IF NOT EXISTS student ( `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMEN
 
 ---
 
-### alter
+### `alter`
 
 > 指定 sql 语句为 ALTER 类型
 
@@ -2386,7 +2388,7 @@ sqlQuery.alter();
 
 ---
 
-### add
+### `add`
 
 > 添加字段
 
@@ -2417,7 +2419,7 @@ ALTER TABLE `table1` ADD COLUMN `field1` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT
 
 ---
 
-### drop
+### `drop`
 
 > 删除字段
 
@@ -2441,7 +2443,7 @@ ALTER TABLE `table1` DROP COLUMN `field1`
 
 ---
 
-### modify
+### `modify`
 
 > 修改字段
 
@@ -2469,7 +2471,7 @@ ALTER TABLE `table1` MODIFY COLUMN `field1` VARCHAR(32)
 
 ---
 
-### change
+### `change`
 
 > 修改字段
 
