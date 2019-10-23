@@ -2554,7 +2554,9 @@ var result = await sqlQuery
 
 ## Connect Api
 
-> api 只有一个就是 exec，exec()执行后返回的是一个 Promise 对象，所以推荐用 async/await 处理。
+### `exec`
+
+> api 只有一个就是 exec，exec()执行完后返回的是一个 Promise 对象。
 > exec 也可以直接执行 sql 语句。只需要传入 sql 语句作为参数即可。
 
 _参数_
