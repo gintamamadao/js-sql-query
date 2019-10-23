@@ -79,6 +79,7 @@ var result = await sqlQuery
 **语句类型**
 
 > 语句的基本类型有 CREATE，INSERT，REPLACE，UPDATE，SELECT，DELETE，其中 INSERT 和 REPLACE 的拼装逻辑是完全一样的，就合在一起讲。
+
 > 不同的基本类型可以调用的 api 不完全一样，有些是公用的，有些是仅限某些基本类型才能调用。
 
 **sql 语境**
@@ -154,7 +155,7 @@ sqlQuery.replace();
 
 _参数_
 
-> object (Object): 要插入的数据，key 为字段，value 为值
+> -   object (Object): 要插入的数据，key 为字段，value 为值
 
 _例子_
 
@@ -181,7 +182,7 @@ REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
 
 _参数_
 
-> array (Array): 数组每个 item 是要插入的数据，key 为字段，value 为值
+> -   array (Array): 数组每个 item 是要插入的数据，key 为字段，value 为值
 
 _例子_
 
@@ -247,7 +248,7 @@ INSERT INTO `table1` ( `field1`, `field2` )  VALUES SELECT `field1`, `field2` FR
 
 _参数_
 
-> fields (...String | Array): 可以是多个字符串，或者字符串数组
+> -   fields (...String | Array): 可以是多个字符串，或者字符串数组
 
 _例子_
 
@@ -298,7 +299,7 @@ sqlQuery.update();
 
 _参数_
 
-> object (Object): 要更新的数据，key 为字段，value 为值
+> -   object (Object): 要更新的数据，key 为字段，value 为值
 
 _例子_
 
@@ -328,7 +329,7 @@ UPDATE `table1` SET `field1` = 'value1', `field2` = 'value2' WHERE `field3` = 'v
 
 _参数_
 
-> object (Object): 要更新的数据，key 为字段，value 为增量
+> -   object (Object): 要更新的数据，key 为字段，value 为增量
 
 _例子_
 
@@ -357,7 +358,7 @@ UPDATE `table1` SET `field1` = `field1` + '1' WHERE `field2` = 'value2'
 
 _参数_
 
-> object (Object): 要更新的数据，key 为字段，value 为减量
+> -   object (Object): 要更新的数据，key 为字段，value 为减量
 
 _例子_
 
@@ -445,7 +446,7 @@ SELECT `field1`, COUNT(`field2`) FROM `table1`
 
 _参数_
 
-> field (string): 字段名
+> -   field (string): 字段名
 
 _例子_
 
@@ -470,7 +471,7 @@ SELECT `field1`, COUNT(`field2`) FROM `table1`
 
 _参数_
 
-> field (String): 字段名
+> -   field (String): 字段名
 
 _例子_
 
@@ -529,7 +530,9 @@ DELETE FROM `table1` WHERE `field1` = 'value1'
 ## WHERE
 
 > UPDATE、SELECT、DELETE 的 WHERE 条件逻辑拼装 api 是一样的。
+
 > 条件之间的逻辑根据后面的 api 决定，api 名中有 Or 这个词就代表，该条件与前一个条件为逻辑或，否则为逻辑与。
+
 > whereBracket 和 whereOrBracket 是特殊的 api，表示将 api 前后的条件分别用括号括起来，Or 代表括号之间的逻辑是或关系。
 
 ---
@@ -540,7 +543,7 @@ DELETE FROM `table1` WHERE `field1` = 'value1'
 
 _参数_
 
-> whereInfo (String | Function): WHERE 后面的值信息，如果是字符串则是 `WHERE ${whereInfo}`, 函数则是 `WHERE ${whereInfo()}`
+> -   whereInfo (String | Function): WHERE 后面的值信息，如果是字符串则是 `WHERE ${whereInfo}`, 函数则是 `WHERE ${whereInfo()}`
 
 _例子_
 
@@ -576,7 +579,7 @@ SELECT * FROM `table1` WHERE `field1` = 'value1'
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -602,7 +605,7 @@ SELECT * FROM `table1` WHERE `field1` = 'value1'
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -628,7 +631,7 @@ SELECT * FROM `table1` WHERE `field1` <> 'value1'
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为数组，为所有有效值的集合
+> -   object (Object): 条件信息，key 为字段，value 为数组，为所有有效值的集合
 
 _例子_
 
@@ -654,7 +657,7 @@ SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' )
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为数组，为所有有效值的集合
+> -   object (Object): 条件信息，key 为字段，value 为数组，为所有有效值的集合
 
 _例子_
 
@@ -680,7 +683,7 @@ SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' )
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -706,7 +709,7 @@ SELECT * FROM `table1` WHERE `field1` > 'value1'
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -732,7 +735,7 @@ SELECT * FROM `table1` WHERE `field1` < 'value1'
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -758,7 +761,7 @@ SELECT * FROM `table1` WHERE `field1` >= 'value1'
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -784,7 +787,7 @@ SELECT * FROM `table1` WHERE `field1` <= 'value1'
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -810,7 +813,7 @@ SELECT * FROM `table1` WHERE `field1` LIKE '%value1%'
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -836,7 +839,7 @@ SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%'
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为数组，第一个和第二个值代表范围的上限和下限
+> -   object (Object): 条件信息，key 为字段，value 为数组，第一个和第二个值代表范围的上限和下限
 
 _例子_
 
@@ -862,7 +865,7 @@ SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2'
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为数组，第一个和第二个值代表范围的上限和下限
+> -   object (Object): 条件信息，key 为字段，value 为数组，第一个和第二个值代表范围的上限和下限
 
 _例子_
 
@@ -888,7 +891,7 @@ SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1' AND 'value2'
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -915,7 +918,7 @@ SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field2` = 'value2'
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -942,7 +945,7 @@ SELECT * FROM `table1` WHERE `field1` <> 'value1' OR `field2` <> 'value2'
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为数组，为所有有效值的集合
+> -   object (Object): 条件信息，key 为字段，value 为数组，为所有有效值的集合
 
 _例子_
 
@@ -969,7 +972,7 @@ SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' ) OR `field2` IN (
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -996,7 +999,7 @@ SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' ) OR `field2` 
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -1023,7 +1026,7 @@ SELECT * FROM `table1` WHERE `field1` > 'value1' OR `field2` > 'value2'
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -1050,7 +1053,7 @@ SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field2` = 'value2'
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -1077,7 +1080,7 @@ SELECT * FROM `table1` WHERE `field1` >= 'value1' OR `field2` >= 'value2'
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -1104,7 +1107,7 @@ SELECT * FROM `table1` WHERE `field1` <= 'value1' OR `field2` <= 'value2'
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -1131,7 +1134,7 @@ SELECT * FROM `table1` WHERE `field1` LIKE '%value1%' OR `field2` LIKE '%value2%
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -1158,7 +1161,7 @@ SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%' OR `field2` NOT LIKE '
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -1185,7 +1188,7 @@ SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2' OR `field2` 
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -1283,7 +1286,7 @@ sqlQuery
 
 _参数_
 
-> havingInfo (String | Function): HAVING 后面的值信息，如果是字符串则是 `HAVING ${havingInfo}`, 函数则是 `HAVING ${havingInfo()}`
+> -   havingInfo (String | Function): HAVING 后面的值信息，如果是字符串则是 `HAVING ${havingInfo}`, 函数则是 `HAVING ${havingInfo()}`
 
 _例子_
 
@@ -1319,7 +1322,7 @@ SELECT * FROM `table1` HAVING `field1` = 'value1'
 
 _参数_
 
-> object (Object): 条件信息，key 为字段，value 为逻辑值
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -1543,6 +1546,7 @@ _参数和逻辑与 where 开头的 api 一致_
 ## TERM
 
 > Term 的 api 的参数和逻辑跟 WHERE 和 HAVING 的 api 是一样的。
+
 > Term 没有前缀，如果条件语句过于复杂，可以用 term 使代码更简洁。
 
 ---
@@ -2022,7 +2026,7 @@ SELECT * FROM `table1` WHERE ( `field1` = 'value1' AND `field2` = 'value2' ) OR 
 
 _参数_
 
-> fields (...String): 字段名
+> -   fields (...String): 字段名
 
 _例子_
 
@@ -2058,7 +2062,7 @@ SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` DESC
 
 _参数_
 
-> fields (...String): 字段名
+> -   fields (...String): 字段名
 
 _例子_
 
@@ -2095,7 +2099,7 @@ SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` ASC
 
 _参数_
 
-> object (Object): 要更新的数据，key 为字段，value 为数组，数组值的顺序就是查询数据的排序根据。
+> -   object (Object): 要更新的数据，key 为字段，value 为数组，数组值的顺序就是查询数据的排序根据。
 
 _例子_
 
@@ -2121,7 +2125,7 @@ SELECT * FROM `table1` ORDER BY FIELD(`field1`, 'value1', 'value2')
 
 _参数_
 
-> orderInfo (String | Function): VALUES 后面的值信息，如果是字符串则是 `ORDER BY ${orderInfo}`, 函数则是 `ORDER BY ${orderInfo()}`
+> -   orderInfo (String | Function): VALUES 后面的值信息，如果是字符串则是 `ORDER BY ${orderInfo}`, 函数则是 `ORDER BY ${orderInfo()}`
 
 _例子_
 
@@ -2158,7 +2162,7 @@ SELECT * FROM `table1` ORDER BY `field1` DESC, `field2` ASC, FIELD(`field3`, 'va
 
 _参数_
 
-> offset (Number): 偏移量
+> -   offset (Number): 偏移量
 
 _例子_
 
@@ -2182,7 +2186,7 @@ SELECT * FROM `table1` OFFSET 1
 
 _参数_
 
-> step (Number): 步长量
+> -   step (Number): 步长量
 
 _例子_
 
@@ -2206,9 +2210,8 @@ SELECT * FROM `table1` LIMIT 10
 
 _参数_
 
-> page (Number): 页码，从 1 开始算；
-
-> pageSize (Number): 一页包含的数量；
+> -   page (Number): 页码，从 1 开始算；
+> -   pageSize (Number): 一页包含的数量；
 
 _例子_
 
@@ -2278,7 +2281,7 @@ sqlQuery.create();
 
 _参数_
 
-> object (Object): 表信息
+> -   object (Object): 表信息
 
 _例子_
 
@@ -2394,7 +2397,7 @@ sqlQuery.alter();
 
 _参数_
 
-> object (Object): 字段信息
+> -   object (Object): 字段信息
 
 _例子_
 
@@ -2425,7 +2428,7 @@ ALTER TABLE `table1` ADD COLUMN `field1` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT
 
 _参数_
 
-> field (String): 字段名
+> -   field (String): 字段名
 
 _例子_
 
@@ -2449,9 +2452,8 @@ ALTER TABLE `table1` DROP COLUMN `field1`
 
 _参数_
 
-> field (String): 字段名；
-
-> object (Object): 字段信息；
+> -   field (String): 字段名；
+> -   object (Object): 字段信息；
 
 _例子_
 
@@ -2477,9 +2479,8 @@ ALTER TABLE `table1` MODIFY COLUMN `field1` VARCHAR(32)
 
 _参数_
 
-> field (String): 字段名；
-
-> object (Object): 字段信息；
+> -   field (String): 字段名；
+> -   object (Object): 字段信息；
 
 _例子_
 
@@ -2557,6 +2558,7 @@ var result = await sqlQuery
 ### `exec`
 
 > api 只有一个就是 exec，exec()执行完后返回的是一个 Promise 对象。
+
 > exec 也可以直接执行 sql 语句。只需要传入 sql 语句作为参数即可。
 
 _参数_
