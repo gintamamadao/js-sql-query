@@ -218,7 +218,7 @@ INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' ), ( 'v
 
 _参数_
 
-> valuesInfo (String | Function): VALUES 后面的值信息，如果是字符串则是 `VALUES ${valuesInfo}`, 函数则是 `VALUES ${valuesInfo()}`
+> -   valuesInfo (String | Function): VALUES 后面的值信息，如果是字符串则是 `VALUES ${valuesInfo}`, 函数则是 `VALUES ${valuesInfo()}`
 
 _例子_
 
@@ -407,7 +407,7 @@ sqlQuery.select();
 
 _参数_
 
-> fields (...(String | Object)): 需要的字段名或者带函数的字段
+> -   fields (...(String | Object)): 需要的字段名或者带函数的字段
 
 _例子_
 
