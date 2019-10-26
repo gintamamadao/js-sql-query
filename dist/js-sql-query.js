@@ -3111,22 +3111,26 @@ class MyssqlConnect extends BaseConnect {
           reject(new Error(ErrMsg$d.errorConnect));
         }
 
-        connection.query = function (query, fn) {
-          const request = new mssqlRequest(query, function (err, rowCount) {
-            if (err) {
-              fn(err);
-              return;
-            }
+        const conn = {
+          query: function (query, fn) {
+            const request = new mssqlRequest(query, function (err, rowCount) {
+              if (err) {
+                fn(err);
+                return;
+              }
 
-            fn(null, rowCount);
-          });
-          request.on("row", function (columns) {
-            fn(null, columns);
-          });
-          connection.execSql(request);
+              fn(null, rowCount);
+            });
+            request.on("row", function (columns) {
+              fn(null, columns);
+            });
+            connection.execSql(request);
+          },
+          release: function () {
+            connection.release();
+          }
         };
-
-        relsove(connection);
+        relsove(conn);
       });
     });
   }

@@ -4,7 +4,7 @@
 
 ## 项目简介
 
-> 一个 orm 框架，可以通过链式调用 api 快捷地生成 sql 语句，并且连接数据库执行。目前支持 MySQL 和 Microsoft SQL Server 这两种数据库。
+> 一个 `orm` 框架，可以通过链式调用 `api` 快捷地生成 `sql` 语句，并且连接数据库执行。目前支持 `MySQL` 和 `Microsoft SQL Server` 这两种数据库。
 
 ## 环境安装
 
@@ -23,8 +23,8 @@ npm i mysql --save
 > 如果使用的是 Microsoft SQL Server，需要安装依赖
 
 ```sh
-npm i tedious --save
-npm i tedious-connection-pool --save
+npm i tedious@1.14.0 --save
+npm i tedious-connection-pool@1.0.5 --save
 ```
 
 ## 使用例子
@@ -78,13 +78,13 @@ var result = await sqlQuery
 
 **语句类型**
 
-> 语句的基本类型有 CREATE，INSERT，REPLACE，UPDATE，SELECT，DELETE，其中 INSERT 和 REPLACE 的拼装逻辑是完全一样的，就合在一起讲。
+> 语句的基本类型有 `CREATE`，`INSERT`，`REPLACE`，`UPDATE`，`SELECT`，`DELETE`，其中 `INSERT` 和 `REPLACE` 的拼装逻辑是完全一样的，就合在一起讲。
 
-> 不同的基本类型可以调用的 api 不完全一样，有些是公用的，有些是仅限某些基本类型才能调用。
+> 不同的基本类型可以调用的 `api` 不完全一样，有些是公用的，有些是仅限某些基本类型才能调用。
 
 **sql 语境**
 
-> 如果我们仅仅需要 sql 语句并不需要连接数据库，就可以在新建对象时不传入参数，这时 sql 语句默认语境是 mysql，当然也可以传入字符串 mysql 或者 mssql 来指定语境。
+> 如果我们仅仅需要 `sql` 语句并不需要连接数据库，就可以在新建对象时不传入参数，这时 `sql` 语句默认语境是 `mysql`，当然也可以传入字符串 `mysql` 或者 `mssql` 来指定语境。
 
 ```js
 // 语境为 mysql
@@ -131,7 +131,7 @@ REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
 
 ### `insert/replace`
 
-> 指定为 INSERT/REPLACE 类型语句
+> 指定为 `INSERT/REPLACE` 类型语句
 
 _参数_
 
@@ -151,7 +151,7 @@ sqlQuery.replace();
 
 ### `data`
 
-> 设置 sql 语句的插入值信息
+> 设置 `sql` 语句的插入值信息
 
 _参数_
 
@@ -2261,7 +2261,7 @@ SELECT * FROM `table1` LIMIT 1
 
 ### `create`
 
-> 指定 sql 语句为 CREATE 类型
+> 指定 sql 语句为 CREATE 类型，仅支持`MySQL`类型数据库
 
 _参数_
 
@@ -2371,7 +2371,7 @@ CREATE TABLE IF NOT EXISTS student ( `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMEN
 
 ## ALTER
 
-> ALTER 类型语句
+> ALTER 类型语句，仅支持`MySQL`类型数据库
 
 ---
 
