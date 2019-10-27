@@ -76,7 +76,7 @@ const ErrMsg$8 = {
 };
 
 const ErrMsg$9 = {
-  errorTableInfo: "错误的表信息"
+  errorCreateDbName: "错误的数据库名"
 };
 
 const ErrMsg$a = {
@@ -2586,6 +2586,7 @@ const FEILD_TEMPLATE = `{{field}}{{type}}{{unsigned}}{{notNull}}{{default}}{{aut
 
 const TABLE_TEMPLATE = `CREATE TABLE IF NOT EXISTS {{tableName}}( {{feildsStr}}) {{tableOptionsStr}}`;
 const TABLE_OPTIONS_TEMPLATE = `{{engine}}{{autoIncrement}}{{defaultCharset}}{{comment}}`;
+const DATABASE_TEMPLATE = `CREATE DATABASE {{dbName}}`;
 
 class Create extends Base {
   info(tableInfo) {
@@ -2598,7 +2599,26 @@ class Create extends Base {
     return this;
   }
 
+  dataBase(dbName) {
+    if (!schemaVerify.Type.string.isNotEmpty(dbName)) {
+      throw new Error(ErrMsg$b.errorCreateDbName);
+    }
+
+    this.createDbName = dbName;
+    return this;
+  }
+
   build() {
+    const createDbName = this.createDbName;
+
+    if (schemaVerify.Type.string.isNotEmpty(createDbName)) {
+      const tmplOpts = {
+        dbName: createDbName
+      };
+      const query = analyTmpl(DATABASE_TEMPLATE, tmplOpts);
+      return query;
+    }
+
     const tableSqlStr = this.createTableSqlStr;
 
     if (schemaVerify.Type.string.isNotEmpty(tableSqlStr)) {

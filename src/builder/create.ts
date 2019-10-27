@@ -4,6 +4,7 @@ import { TABLE_OPT_VALUES, FEILD_TEMPLATE } from "../constant/builder/constant";
 import { Type } from "schema-verify";
 import { tableInfoVerify } from "../verify/builder/index";
 import { analyTmpl } from "../util/util";
+import ErrMsg from "../error/builder/index";
 
 export interface TableField {
     field: string;
@@ -32,9 +33,11 @@ export interface TableInfo {
 
 const TABLE_TEMPLATE = `CREATE TABLE IF NOT EXISTS {{tableName}}( {{feildsStr}}) {{tableOptionsStr}}`;
 const TABLE_OPTIONS_TEMPLATE = `{{engine}}{{autoIncrement}}{{defaultCharset}}{{comment}}`;
+const DATABASE_TEMPLATE = `CREATE DATABASE {{dbName}}`;
 
 class Create extends Base {
     protected createTableSqlStr: string;
+    protected createDbName: string;
     protected createTableInfo: TableInfo;
 
     info(tableInfo: TableInfo | string) {
@@ -46,7 +49,23 @@ class Create extends Base {
         return this;
     }
 
+    dataBase(dbName: string) {
+        if (!Type.string.isNotEmpty(dbName)) {
+            throw new Error(ErrMsg.errorCreateDbName);
+        }
+        this.createDbName = dbName;
+        return this;
+    }
+
     build(): string {
+        const createDbName: string = this.createDbName;
+        if (Type.string.isNotEmpty(createDbName)) {
+            const tmplOpts = {
+                dbName: createDbName
+            };
+            const query: string = analyTmpl(DATABASE_TEMPLATE, tmplOpts);
+            return query;
+        }
         const tableSqlStr: string = this.createTableSqlStr;
         if (Type.string.isNotEmpty(tableSqlStr)) {
             return tableSqlStr;

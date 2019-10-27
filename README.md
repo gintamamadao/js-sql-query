@@ -2370,6 +2370,27 @@ CREATE TABLE IF NOT EXISTS student ( `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMEN
 
 ---
 
+### `dataBase`
+
+> 新建数据库
+
+_参数_
+
+> -   dataBaseName (String): 数据库名
+
+_例子_
+
+```js
+sqlQuery
+    .create()
+    .dataBase("database1")
+    .build();
+```
+
+```sql
+CREATE DATABASE database1
+```
+
 ## ALTER
 
 > `ALTER` 类型语句，仅支持`MySQL`类型数据库

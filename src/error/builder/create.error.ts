@@ -1,5 +1,5 @@
 const ErrMsg = {
-    errorTableInfo: "错误的表信息"
+    errorCreateDbName: "错误的数据库名"
 };
 
 export default ErrMsg;

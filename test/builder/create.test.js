@@ -80,6 +80,16 @@ describe("CREATE", () => {
                     .build())()
         ).toBe(QUERY);
     });
+    test("CREATE:DATABASE", () => {
+        const QUERY = "CREATE DATABASE database1";
+        expect(
+            (() =>
+                builder
+                    .create()
+                    .dataBase("database1")
+                    .build())()
+        ).toBe(QUERY);
+    });
     test("CREATE:error", () => {
         const info = JSON.parse(JSON.stringify(tableInfo));
         info.tableName = 0;
