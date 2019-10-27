@@ -131,7 +131,7 @@ REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
 
 ### `insert/replace`
 
-> 指定为 `INSERT/REPLACE` 类型语句
+> 指定为 INSERT/REPLACE 类型语句
 
 _参数_
 
@@ -529,11 +529,11 @@ DELETE FROM `table1` WHERE `field1` = 'value1'
 
 ## WHERE
 
-> UPDATE、SELECT、DELETE 的 WHERE 条件逻辑拼装 api 是一样的。
+> `UPDATE`、`SELECT`、`DELETE` 的 `WHERE` 条件逻辑拼装 `api` 是一样的。
 
-> 条件之间的逻辑根据后面的 api 决定，api 名中有 Or 这个词就代表，该条件与前一个条件为逻辑或，否则为逻辑与。
+> 条件之间的逻辑根据后面的 `api` 决定，`api` 名中有 `Or` 这个词就代表，该条件与前一个条件为逻辑或，否则为逻辑与。
 
-> whereBracket 和 whereOrBracket 是特殊的 api，表示将 api 前后的条件分别用括号括起来，Or 代表括号之间的逻辑是或关系。
+> `whereBracket` 和 `whereOrBracket` 是特殊的 `api`，表示将 `api` 前后的条件分别用括号括起来，`Or` 代表括号之间的逻辑是或关系。
 
 ---
 
@@ -1275,8 +1275,9 @@ sqlQuery
 
 ## HAVING
 
-> HAVING 的 api 的参数和逻辑跟 WHERE 的 api 是一样的，但仅限 SELECT 能调用。
-> 但为和 WHERE 做区分，HAVING 的 api 的前缀都是 having，而 WHERE 的 api 的前缀都是 where。
+> `HAVING` 的 `api` 的参数和逻辑跟 `WHERE` 的 `api` 是一样的，但仅限 `SELECT` 能调用。
+
+> 但为和 `WHERE` 做区分，`HAVING` 的 `api` 的前缀都是 `having`，而 `WHERE` 的 `api` 的前缀都是 `where`。
 
 ---
 
@@ -1545,9 +1546,9 @@ _参数和逻辑与 where 开头的 api 一致_
 
 ## TERM
 
-> Term 的 api 的参数和逻辑跟 WHERE 和 HAVING 的 api 是一样的。
+> `Term` 的 `api` 的参数和逻辑跟 `WHERE` 和 `HAVING` 的 `api` 是一样的。
 
-> Term 没有前缀，如果条件语句过于复杂，可以用 term 使代码更简洁。
+> `Term` 没有前缀，如果条件语句过于复杂，可以用 `term` 使代码更简洁。
 
 ---
 
@@ -2016,7 +2017,7 @@ SELECT * FROM `table1` WHERE ( `field1` = 'value1' AND `field2` = 'value2' ) OR 
 
 ## ORDER
 
-> 设置 sql 的查找数据的排序逻辑
+> 设置 `sql` 的查找数据的排序逻辑
 
 ---
 
@@ -2255,7 +2256,7 @@ SELECT * FROM `table1` LIMIT 1
 
 ## CREATE
 
-> 新建表语句，把表的信息用一定的 json 数据格式保存，然后可以通过 api 转换成 sql 语句
+> 新建表语句，把表的信息用一定的 json 数据格式保存，然后可以通过 `api` 转换成 `sql` 语句
 
 ---
 
@@ -2371,7 +2372,7 @@ CREATE TABLE IF NOT EXISTS student ( `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMEN
 
 ## ALTER
 
-> ALTER 类型语句，仅支持`MySQL`类型数据库
+> `ALTER` 类型语句，仅支持`MySQL`类型数据库
 
 ---
 
@@ -2516,7 +2517,7 @@ ALTER TABLE `table1` CHANGE COLUMN `field1` `id` BIGINT
 
 # Connect To Db
 
-> 如果要连接数据库需要在新建对象时传入连接的配置，要执行语句需要调用 exec 属性方法。
+> 如果要连接数据库需要在新建对象时传入连接的配置，要执行语句需要调用 `exec` 属性方法。
 
 ```js
 var SqlQuery = require("js-sql-query");
