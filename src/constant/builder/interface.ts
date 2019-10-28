@@ -42,3 +42,11 @@ export interface OrderInfo {
 export interface FieldOrder {
     [propName: string]: string[];
 }
+
+export interface TableFieldsInfo {
+    [propName: string]: string[];
+}
+
+export interface TableFieldsAsMap {
+    [propName: string]: KeyValueStr;
+}

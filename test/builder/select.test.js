@@ -244,4 +244,44 @@ describe("SELECT:COMBINE FUNC", () => {
                     .build())()
         ).toBe(QUERY);
     });
+    test("fieldAsMap", () => {
+        const QUERY = "SELECT `field1` AS `field1_as` FROM `table1`";
+        expect(
+            (() =>
+                builder
+                    .select()
+                    .table("table1")
+                    .fields("field1")
+                    .asMap({
+                        field1: "field1_as"
+                    })
+                    .build())()
+        ).toBe(QUERY);
+    });
+    test("fieldAsMap", () => {
+        const QUERY =
+            "SELECT `field1` AS `field1_as`, `field2` AS `field2_as` FROM `table1`";
+        expect(
+            (() =>
+                builder
+                    .select()
+                    .table("table1")
+                    .fields("field1", "field2")
+                    .asMap({
+                        field1: "field1_as",
+                        field2: "field2_as"
+                    })
+                    .build())()
+        ).toBe(QUERY);
+    });
+    test("multiTables", () => {
+        const QUERY = "SELECT * FROM `table1`, `table2`";
+        expect(
+            (() =>
+                builder
+                    .select()
+                    .multiTables("table1", "table2")
+                    .build())()
+        ).toBe(QUERY);
+    });
 });

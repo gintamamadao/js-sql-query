@@ -489,6 +489,52 @@ sqlQuery
 SELECT `field1`, COUNT(`field2`) FROM `table1` GROUP BY `field2`
 ```
 
+### `asMap`
+
+> 字段的映射名
+
+_参数_
+
+> -   map (Object): key 为字段名，value 为映射名
+
+_例子_
+
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .fields("field1")
+    .asMap({
+        field1: "field1_as"
+    })
+    .build();
+```
+
+```sql
+SELECT `field1` AS `field1_as` FROM `table1`
+```
+
+### `multiTables`
+
+> 设置多个表名
+
+_参数_
+
+> -   tables (...String): 表名
+
+_例子_
+
+```js
+sqlQuery
+    .select()
+    .multiTables("table1", "table2")
+    .build();
+```
+
+```sql
+SELECT * FROM `table1`, `table2`
+```
+
 ## DELETE
 
 > 删除数据类型语句

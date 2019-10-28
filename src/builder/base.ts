@@ -86,7 +86,7 @@ class Base {
         return this;
     }
 
-    protected getQueryTable() {
+    protected getQueryTable(): string {
         const queryTable = this._queryTable;
         if (!Type.string.isNotEmpty(queryTable)) {
             throw new Error(ErrMsg.errorTableName);

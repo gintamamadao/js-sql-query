@@ -2346,7 +2346,40 @@ class Combine extends Having {
 
 }
 
-class Select extends Combine {
+class Join extends Combine {
+  constructor() {
+    super();
+  }
+
+  getQueryTables() {
+    const queryTables = schemaVerify.Type.array.safe(this.queryTables).map(table => {
+      return this.safeKey(table);
+    }).join(", ");
+    return queryTables;
+  }
+
+  multiTables(arg, ...otherArgs) {
+    const queryTables = schemaVerify.Type.array.safe(this.queryTables);
+    const args = argStrArrTrans(arg, otherArgs);
+    const tables = [];
+
+    for (const item of args) {
+      if (schemaVerify.Type.string.isNotEmpty(item)) {
+        tables.push(item);
+      }
+    }
+
+    this.queryTables = Array.from(new Set(queryTables.concat(tables)));
+    return this;
+  }
+
+  tableFields(fieldsInfo) {}
+
+  tableAsMap(asMap) {}
+
+}
+
+class Select extends Join {
   constructor() {
     super();
     this.selectFields = [];
@@ -2392,8 +2425,19 @@ class Select extends Combine {
     return result;
   }
 
-  build() {
+  formatTableStr() {
+    const tablesStr = this.getQueryTables();
+
+    if (schemaVerify.Type.string.isNotEmpty(tablesStr)) {
+      return tablesStr;
+    }
+
     const table = this.getQueryTable();
+    return table;
+  }
+
+  build() {
+    const table = this.formatTableStr();
     const fieldsStr = this.formatFieldStr();
     let query = `${QueryTypes.select} ${fieldsStr} FROM ${table}`;
     query = this.whereBuild(query);
@@ -2429,7 +2473,7 @@ class Select extends Combine {
     return this;
   }
 
-  asFieldMap(map) {
+  asMap(map) {
     const asMap = schemaVerify.Type.object.safe(this.fieldsAsMap);
 
     if (!strObjVerify(map)) {

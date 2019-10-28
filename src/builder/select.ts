@@ -1,12 +1,12 @@
 import { argStrArrTrans } from "../util/util";
-import Combine from "./combine";
+import Join from "./join";
 import { KeyValueStr } from "../constant/builder/interface";
 import { QueryTypes } from "../constant/builder/enum";
 import { Type } from "schema-verify";
 import { strArrVerify, strObjVerify } from "../verify/builder/index";
 import ErrMsg from "../error/builder/index";
 
-class Select extends Combine {
+class Select extends Join {
     protected selectFields: string[];
     protected fieldsAsMap: KeyValueStr;
     constructor() {
@@ -48,8 +48,17 @@ class Select extends Combine {
         return result;
     }
 
-    build(): string {
+    protected formatTableStr(): string {
+        const tablesStr: string = this.getQueryTables();
+        if (Type.string.isNotEmpty(tablesStr)) {
+            return tablesStr;
+        }
         const table: string = this.getQueryTable();
+        return table;
+    }
+
+    build(): string {
+        const table: string = this.formatTableStr();
         const fieldsStr: string = this.formatFieldStr();
         let query: string = `${QueryTypes.select} ${fieldsStr} FROM ${table}`;
         query = this.whereBuild(query);
@@ -80,7 +89,7 @@ class Select extends Combine {
         return this;
     }
 
-    asFieldMap(map: KeyValueStr) {
+    asMap(map: KeyValueStr) {
         const asMap: KeyValueStr = Type.object.safe(this.fieldsAsMap);
         if (!strObjVerify(map)) {
             throw new Error(ErrMsg.errorFieldMap);
