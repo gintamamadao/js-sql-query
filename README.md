@@ -71,7 +71,7 @@ var result = await sqlQuery
     -   [SELECT](#select)
         -   [select](#select)
         -   [fields](#fields)
-        -   [count 等函数](#count)
+        -   [count 等函数](#count-等函数)
         -   [groupBy](#groupby)
         -   [asMap](#asmap)
         -   [multiTables](#multitables)
