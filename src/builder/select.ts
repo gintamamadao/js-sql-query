@@ -36,12 +36,18 @@ class Select extends Join {
 
     protected formatFieldStr(): string {
         let fields: string[] = this.formatFields();
+        let joinFields: string[] = this.formatJoinFields();
         let funcs: string[] = this.formatFuncs();
         let result: string;
-        if (strArrVerify(fields) || strArrVerify(funcs)) {
+        if (
+            strArrVerify(fields) ||
+            strArrVerify(funcs) ||
+            strArrVerify(joinFields)
+        ) {
             fields = Type.array.safe(fields);
+            joinFields = Type.array.safe(joinFields);
             funcs = Type.array.safe(funcs);
-            result = [].concat(fields, funcs).join(", ");
+            result = [].concat(fields, joinFields, funcs).join(", ");
         } else {
             result = "*";
         }

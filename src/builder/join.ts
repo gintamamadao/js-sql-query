@@ -3,9 +3,10 @@ import Combine from "./combine";
 import { Type } from "schema-verify";
 import {
     TableFieldsMap,
-    TableFieldsAsMap
+    TableFieldsAsMap,
+    KeyValueStr
 } from "../constant/builder/interface";
-import { fieldsMapVerify } from "../verify/builder/index";
+import { fieldsMapVerify, fieldsAsMapVerify } from "../verify/builder/index";
 import ErrMsg from "../error/builder/index";
 
 class Join extends Combine {
@@ -24,6 +25,37 @@ class Join extends Combine {
             })
             .join(", ");
         return queryTables;
+    }
+
+    protected formatJoinFields(): string[] {
+        const tableFieldsMap: TableFieldsMap = Type.object.safe(
+            this.tableFieldsMap
+        );
+        const tableFieldsAsMap: TableFieldsAsMap = Type.object.safe(
+            this.tableFieldsAsMap
+        );
+        const result: string[] = [];
+        for (const table in tableFieldsMap) {
+            const fields: string[] = Type.array.safe(tableFieldsMap[table]);
+            const asMap: KeyValueStr = Type.object.safe(
+                tableFieldsAsMap[table]
+            );
+            const safeTable: string = this.safeKey(table);
+            for (const field of fields) {
+                if (!Type.string.isNotEmpty(field)) {
+                    continue;
+                }
+                const safeField: string = this.safeKey(field);
+                const tableField: string = `${safeTable}.${safeField}`;
+                if (Type.string.isNotEmpty(asMap[field])) {
+                    const safeAsField = this.safeKey(asMap[field]);
+                    result.push(`${tableField} AS ${safeAsField}`);
+                } else {
+                    result.push(tableField);
+                }
+            }
+        }
+        return result;
     }
 
     multiTables(arg: any, ...otherArgs: any[]) {
@@ -54,7 +86,7 @@ class Join extends Combine {
         const tableFieldsAsMap: TableFieldsAsMap = Type.object.safe(
             this.tableFieldsAsMap
         );
-        if (!fieldsMapVerify(asMap)) {
+        if (!fieldsAsMapVerify(asMap)) {
             throw new Error(ErrMsg.tableFieldsAsMapError);
         }
         this.tableFieldsAsMap = Object.assign({}, tableFieldsAsMap, asMap);

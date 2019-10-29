@@ -244,6 +244,10 @@ describe("SELECT:COMBINE FUNC", () => {
                     .build())()
         ).toBe(QUERY);
     });
+});
+
+describe("SELECT: asMap", () => {
+    const builder = new Builder();
     test("fieldAsMap", () => {
         const QUERY = "SELECT `field1` AS `field1_as` FROM `table1`";
         expect(
@@ -274,6 +278,20 @@ describe("SELECT:COMBINE FUNC", () => {
                     .build())()
         ).toBe(QUERY);
     });
+});
+
+describe("SELECT: multiTables", () => {
+    const builder = new Builder();
+    test("multiTables", () => {
+        const QUERY = "SELECT * FROM `table1`";
+        expect(
+            (() =>
+                builder
+                    .select()
+                    .multiTables("table1")
+                    .build())()
+        ).toBe(QUERY);
+    });
     test("multiTables", () => {
         const QUERY = "SELECT * FROM `table1`, `table2`";
         expect(
@@ -281,6 +299,87 @@ describe("SELECT:COMBINE FUNC", () => {
                 builder
                     .select()
                     .multiTables("table1", "table2")
+                    .build())()
+        ).toBe(QUERY);
+    });
+});
+
+describe("SELECT: tableFields", () => {
+    const builder = new Builder();
+    test("tableFields", () => {
+        const QUERY =
+            "SELECT `table1`.`field1`, `table1`.`field2` FROM `table1`";
+        expect(
+            (() =>
+                builder
+                    .select()
+                    .table("table1")
+                    .tableFields({
+                        table1: ["field1", "field2"]
+                    })
+                    .build())()
+        ).toBe(QUERY);
+    });
+    test("tableFields", () => {
+        const QUERY =
+            "SELECT `table1`.`field1`, `table1`.`field2`, `table2`.`field3` FROM `table1`";
+        expect(
+            (() =>
+                builder
+                    .select()
+                    .table("table1")
+                    .tableFields({
+                        table1: ["field1", "field2"],
+                        table2: ["field3"]
+                    })
+                    .build())()
+        ).toBe(QUERY);
+    });
+});
+
+describe("SELECT: tableAsMap", () => {
+    const builder = new Builder();
+    test("tableAsMap", () => {
+        const QUERY =
+            "SELECT `table1`.`field1` AS `field1_as`, `table1`.`field2` AS `field2_as` FROM `table1`";
+        expect(
+            (() =>
+                builder
+                    .select()
+                    .table("table1")
+                    .tableFields({
+                        table1: ["field1", "field2"]
+                    })
+                    .tableAsMap({
+                        table1: {
+                            field1: "field1_as",
+                            field2: "field2_as"
+                        }
+                    })
+                    .build())()
+        ).toBe(QUERY);
+    });
+    test("tableAsMap", () => {
+        const QUERY =
+            "SELECT `table1`.`field1` AS `field1_as`, `table1`.`field2` AS `field2_as`, `table2`.`field3` AS `field3_as` FROM `table1`";
+        expect(
+            (() =>
+                builder
+                    .select()
+                    .table("table1")
+                    .tableFields({
+                        table1: ["field1", "field2"],
+                        table2: ["field3"]
+                    })
+                    .tableAsMap({
+                        table1: {
+                            field1: "field1_as",
+                            field2: "field2_as"
+                        },
+                        table2: {
+                            field3: "field3_as"
+                        }
+                    })
                     .build())()
         ).toBe(QUERY);
     });

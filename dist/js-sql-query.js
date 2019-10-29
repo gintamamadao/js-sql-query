@@ -810,6 +810,7 @@ const fieldsAsMapSchema = new schemaVerify.Schema({
   }
 });
 const fieldsMapVerify = fieldsMapSchema.verify;
+const fieldsAsMapVerify = fieldsAsMapSchema.verify;
 
 const strArrVerify = new schemaVerify.Schema({
   type: Array,
@@ -2388,6 +2389,36 @@ class Join extends Combine {
     return queryTables;
   }
 
+  formatJoinFields() {
+    const tableFieldsMap = schemaVerify.Type.object.safe(this.tableFieldsMap);
+    const tableFieldsAsMap = schemaVerify.Type.object.safe(this.tableFieldsAsMap);
+    const result = [];
+
+    for (const table in tableFieldsMap) {
+      const fields = schemaVerify.Type.array.safe(tableFieldsMap[table]);
+      const asMap = schemaVerify.Type.object.safe(tableFieldsAsMap[table]);
+      const safeTable = this.safeKey(table);
+
+      for (const field of fields) {
+        if (!schemaVerify.Type.string.isNotEmpty(field)) {
+          continue;
+        }
+
+        const safeField = this.safeKey(field);
+        const tableField = `${safeTable}.${safeField}`;
+
+        if (schemaVerify.Type.string.isNotEmpty(asMap[field])) {
+          const safeAsField = this.safeKey(asMap[field]);
+          result.push(`${tableField} AS ${safeAsField}`);
+        } else {
+          result.push(tableField);
+        }
+      }
+    }
+
+    return result;
+  }
+
   multiTables(arg, ...otherArgs) {
     const queryTables = schemaVerify.Type.array.safe(this.queryTables);
     const args = argStrArrTrans(arg, otherArgs);
@@ -2417,7 +2448,7 @@ class Join extends Combine {
   tableAsMap(asMap) {
     const tableFieldsAsMap = schemaVerify.Type.object.safe(this.tableFieldsAsMap);
 
-    if (!fieldsMapVerify(asMap)) {
+    if (!fieldsAsMapVerify(asMap)) {
       throw new Error(ErrMsg$c.tableFieldsAsMapError);
     }
 
@@ -2459,13 +2490,15 @@ class Select extends Join {
 
   formatFieldStr() {
     let fields = this.formatFields();
+    let joinFields = this.formatJoinFields();
     let funcs = this.formatFuncs();
     let result;
 
-    if (strArrVerify(fields) || strArrVerify(funcs)) {
+    if (strArrVerify(fields) || strArrVerify(funcs) || strArrVerify(joinFields)) {
       fields = schemaVerify.Type.array.safe(fields);
+      joinFields = schemaVerify.Type.array.safe(joinFields);
       funcs = schemaVerify.Type.array.safe(funcs);
-      result = [].concat(fields, funcs).join(", ");
+      result = [].concat(fields, joinFields, funcs).join(", ");
     } else {
       result = "*";
     }
