@@ -58,19 +58,131 @@ var result = await sqlQuery
 
 -   [Build SQL Api](#build-sql-api)
     -   [INSERT/REPLACE](#insertreplace)
+        -   [insert/replace](#insertreplace)
+        -   [data](#data)
+        -   [multiData](#multidata)
+        -   [values](#values)
+        -   [fields](#fields)
     -   [UPDATE](#update)
+        -   [update](#update)
+        -   [set](#set)
+        -   [add](#add)
+        -   [minus](#minus)
     -   [SELECT](#select)
+        -   [select](#select)
+        -   [fields](#fields)
+        -   [count 等函数](#count)
+        -   [groupBy](#groupby)
+        -   [asMap](#asmap)
+        -   [multiTables](#multitables)
     -   [DELETE](#delete)
+        -   [delete](#delete)
     -   [WHERE](#where)
+        -   [where](#where)
+        -   [whereEqual](#whereequal)
+        -   [whereNotEqual](#whereNotEqual)
+        -   [whereIn](#whereIn)
+        -   [whereNotIn](#whereNotIn)
+        -   [whereMore](#whereMore)
+        -   [whereLess](#whereLess)
+        -   [whereMoreEqual](#whereMoreEqual)
+        -   [whereLessEqual](#whereLessEqual)
+        -   [whereLike](#whereLike)
+        -   [whereNotLike](#whereNotLike)
+        -   [whereBetween](#whereBetween)
+        -   [whereNotBetween](#whereNotBetween)
+        -   [whereOrEqual](#whereOrEqual)
+        -   [whereOrNotEqual](#whereOrNotEqual)
+        -   [whereOrIn](#whereOrIn)
+        -   [whereOrNotIn](#whereOrNotIn)
+        -   [whereOrMore](#whereOrMore)
+        -   [whereOrLess](#whereOrLess)
+        -   [whereOrMoreEqual](#whereOrMoreEqual)
+        -   [whereOrLessEqual](#whereOrLessEqual)
+        -   [whereOrLike](#whereOrLike)
+        -   [whereOrNotLike](#whereOrNotLike)
+        -   [whereOrBetween](#whereOrBetween)
+        -   [whereOrNotBetween](#whereOrNotBetween)
+        -   [whereBracket](#whereBracket)
+        -   [whereOrBracket](#whereOrBracket)
     -   [HAVING](#having)
+        -   [having](#having)
+        -   [havingEqual](#havingEqual)
+        -   [havingNotEqual](#havingNotEqual)
+        -   [havingIn](#havingIn)
+        -   [havingNotIn](#havingNotIn)
+        -   [havingMore](#havingMore)
+        -   [havingLess](#havingLess)
+        -   [havingMoreEqual](#havingMoreEqual)
+        -   [havingLessEqual](#havingLessEqual)
+        -   [havingLike](#havingLike)
+        -   [havingNotLike](#havingNotLike)
+        -   [havingBetween](#havingBetween)
+        -   [havingNotBetween](#havingNotBetween)
+        -   [havingOrEqual](#havingOrEqual)
+        -   [havingOrNotEqual](#havingOrNotEqual)
+        -   [havingOrIn](#havingOrIn)
+        -   [havingOrNotIn](#havingOrNotIn)
+        -   [havingOrMore](#havingOrMore)
+        -   [havingOrMoreEqual](#havingOrMoreEqual)
+        -   [havingOrLessEqual](#havingOrLessEqual)
+        -   [havingOrLike](#havingOrLike)
+        -   [havingOrNotLike](#havingOrNotLike)
+        -   [havingOrBetween](#havingOrBetween)
+        -   [havingOrNotBetween](#havingOrNotBetween)
+        -   [havingBracket](#havingBracket)
+        -   [havingOrBracket](#havingOrBracket)
     -   [TERM](#term)
+        -   [equal](#equal)
+        -   [notEqual](#notEqual)
+        -   [in](#in)
+        -   [notIn](#notIn)
+        -   [more](#more)
+        -   [less](#less)
+        -   [moreEqual](#moreEqual)
+        -   [lessEqual](#lessEqual)
+        -   [like](#like)
+        -   [notLike](#notLike)
+        -   [between](#between)
+        -   [notBetween](#notBetween)
+        -   [orEqual](#orEqual)
+        -   [orNotEqual](#orNotEqual)
+        -   [orIn](#orIn)
+        -   [orNotIn](#orNotIn)
+        -   [orMore](#orMore)
+        -   [orLess](#orLess)
+        -   [orMoreEqual](#orMoreEqual)
+        -   [orLessEqual](#orLessEqual)
+        -   [orLike](#orLike)
+        -   [orNotLike](#orNotLike)
+        -   [orBetween](#orBetween)
+        -   [orNotBetween](#orNotBetween)
+        -   [bracket](#bracket)
+        -   [orBracket](#orBracket)
     -   [ORDER](#order)
+        -   [descBy](#descBy)
+        -   [ascBy](#ascBy)
+        -   [orderField](#orderField)
+        -   [order](#order)
     -   [LIMIT/OFFSET](#limitoffset)
+        -   [offset](#offset)
+        -   [step](#step)
+        -   [paging](#paging)
+        -   [findOne](#findOne)
     -   [CREATE](#create)
+        -   [create](#create)
+        -   [info](#info)
+        -   [dataBase](#dataBase)
     -   [ALTER](#alter)
+        -   [alter](#alter)
+        -   [add](#add)
+        -   [drop](#drop)
+        -   [modify](#modify)
+        -   [change](#change)
 -   [Connect To Db](#connect-to-db)
     -   [Connect Config](#connect-config)
     -   [Connect Api](#connect-api)
+        -   [exec](#exec)
 
 ---
 
@@ -1091,7 +1203,7 @@ sqlQuery
 ```
 
 ```sql
-SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field2` = 'value2'
+SELECT * FROM `table1` WHERE `field1` < 'value1' OR `field2` < 'value2'
 ```
 
 ---
@@ -1397,7 +1509,7 @@ sqlQuery
 
 > 条件 <>
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereNotEqual api 一致_
 
 ---
 
@@ -1405,7 +1517,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 IN
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereIn api 一致_
 
 ---
 
@@ -1413,7 +1525,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 NOT IN
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereNotIn api 一致_
 
 ---
 
@@ -1421,7 +1533,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 >
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereMore api 一致_
 
 ---
 
@@ -1429,7 +1541,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 <
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereLess api 一致_
 
 ---
 
@@ -1437,7 +1549,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 >=
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereMoreEqual api 一致_
 
 ---
 
@@ -1445,7 +1557,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 <=
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereLessEqual api 一致_
 
 ---
 
@@ -1453,7 +1565,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 LIKE
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereLike api 一致_
 
 ---
 
@@ -1461,7 +1573,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 NOT LIKE
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereNotLike api 一致_
 
 ---
 
@@ -1469,7 +1581,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 BETWEEN
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereBetween api 一致_
 
 ---
 
@@ -1477,7 +1589,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 NOT BETWEEN
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereNotBetween api 一致_
 
 ---
 
@@ -1485,7 +1597,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 =，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrEqual api 一致_
 
 ---
 
@@ -1493,7 +1605,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 <>，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrNotEqual api 一致_
 
 ---
 
@@ -1501,7 +1613,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 IN，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrIn api 一致_
 
 ---
 
@@ -1509,7 +1621,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 NOT IN，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrNotIn api 一致_
 
 ---
 
@@ -1517,7 +1629,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 >，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrMore api 一致_
 
 ---
 
@@ -1525,7 +1637,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 <，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrLess api 一致_
 
 ---
 
@@ -1533,7 +1645,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 >=，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrMoreEqual api 一致_
 
 ---
 
@@ -1541,7 +1653,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 <=，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrLessEqual api 一致_
 
 ---
 
@@ -1549,7 +1661,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 LIKE，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrLike api 一致_
 
 ---
 
@@ -1557,7 +1669,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 NOT LIKE，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrNotLike api 一致_
 
 ---
 
@@ -1565,7 +1677,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 BETWEEN，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrBetween api 一致_
 
 ---
 
@@ -1573,7 +1685,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 NOT BETWEEN，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrNotBetween api 一致_
 
 ---
 
@@ -1581,7 +1693,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 前后的条件分别用括号括起来
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereBracket api 一致_
 
 ---
 
@@ -1589,7 +1701,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 前后的条件分别用括号括起来，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrBracket api 一致_
 
 ---
 
@@ -1918,7 +2030,7 @@ SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field2` = 'value2'
 
 > 条件 <>，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrNotEqual api 一致_
 
 ---
 
@@ -1926,7 +2038,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 IN，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrIn api 一致_
 
 ---
 
@@ -1934,7 +2046,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 NOT IN，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrNotIn api 一致_
 
 ---
 
@@ -1942,7 +2054,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 >，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrMore api 一致_
 
 ---
 
@@ -1950,7 +2062,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 <，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrLess api 一致_
 
 ---
 
@@ -1958,7 +2070,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 >=，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrMoreEqual api 一致_
 
 ---
 
@@ -1966,7 +2078,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 <=，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrLessEqual api 一致_
 
 ---
 
@@ -1974,7 +2086,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 LIKE，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrLike api 一致_
 
 ---
 
@@ -1982,7 +2094,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 NOT LIKE，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrNotLike api 一致_
 
 ---
 
@@ -1990,7 +2102,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 BETWEEN，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrBetween api 一致_
 
 ---
 
@@ -1998,7 +2110,7 @@ _参数和逻辑与 where 开头的 api 一致_
 
 > 条件 NOT BETWEEN，逻辑为或
 
-_参数和逻辑与 where 开头的 api 一致_
+_参数和逻辑与 whereOrNotBetween api 一致_
 
 ---
 
