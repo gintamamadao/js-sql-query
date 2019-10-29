@@ -423,19 +423,22 @@ sqlQuery
 SELECT `field1`, `field2` FROM `table1`
 ```
 
-> 也可以添加函数
+> 也可以是对象，函数信息
 
 ```js
 sqlQuery
     .select()
     .table("table1")
     .fields("field1")
-    .fields({ func: "count", field: "field2" })
+    .fields(
+        { func: "count", field: "field2" },
+        { func: "count", field: "field3" }
+    )
     .build();
 ```
 
 ```sql
-SELECT `field1`, COUNT(`field2`) FROM `table1`
+SELECT `field1`, COUNT(`field2`), COUNT(`field3`) FROM `table1`
 ```
 
 ---
