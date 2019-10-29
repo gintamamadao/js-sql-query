@@ -43,7 +43,7 @@ export interface FieldOrder {
     [propName: string]: string[];
 }
 
-export interface TableFieldsInfo {
+export interface TableFieldsMap {
     [propName: string]: string[];
 }
 

@@ -2,12 +2,15 @@ import { argStrArrTrans } from "../util/util";
 import Combine from "./combine";
 import { Type } from "schema-verify";
 import {
-    TableFieldsInfo,
+    TableFieldsMap,
     TableFieldsAsMap
 } from "../constant/builder/interface";
+import { fieldsMapVerify } from "../verify/builder/index";
+import ErrMsg from "../error/builder/index";
 
 class Join extends Combine {
     protected queryTables: string[];
+    protected tableFieldsMap: TableFieldsMap;
     protected tableFieldsAsMap: TableFieldsAsMap;
     constructor() {
         super();
@@ -36,9 +39,27 @@ class Join extends Combine {
         return this;
     }
 
-    tableFields(fieldsInfo: TableFieldsInfo) {}
+    tableFields(fieldsMap: TableFieldsMap) {
+        const tableFieldsMap: TableFieldsMap = Type.object.safe(
+            this.tableFieldsMap
+        );
+        if (!fieldsMapVerify(fieldsMap)) {
+            throw new Error(ErrMsg.tableFieldsError);
+        }
+        this.tableFieldsMap = Object.assign({}, tableFieldsMap, fieldsMap);
+        return this;
+    }
 
-    tableAsMap(asMap: TableFieldsAsMap) {}
+    tableAsMap(asMap: TableFieldsAsMap) {
+        const tableFieldsAsMap: TableFieldsAsMap = Type.object.safe(
+            this.tableFieldsAsMap
+        );
+        if (!fieldsMapVerify(asMap)) {
+            throw new Error(ErrMsg.tableFieldsAsMapError);
+        }
+        this.tableFieldsAsMap = Object.assign({}, tableFieldsAsMap, asMap);
+        return this;
+    }
 }
 
 export default Join;

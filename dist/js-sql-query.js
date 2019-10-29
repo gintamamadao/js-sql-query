@@ -84,7 +84,12 @@ const ErrMsg$a = {
   emptyAlterInfos: "空的修改配置"
 };
 
-const ErrMsg$b = { ...ErrMsg,
+const ErrMsg$b = {
+  tableFieldsError: "错误的表字段名",
+  tableFieldsAsMapError: "错误的表字段映射名"
+};
+
+const ErrMsg$c = { ...ErrMsg,
   ...ErrMsg$1,
   ...ErrMsg$2,
   ...ErrMsg$3,
@@ -95,6 +100,7 @@ const ErrMsg$b = { ...ErrMsg,
   ...ErrMsg$8,
   ...ErrMsg$9,
   ...ErrMsg$a,
+  ...ErrMsg$b,
   errorTableName: "错误的表名，需要非空字符串",
   errorField: "错误的表名，需要非空字符串",
   errorFields: "错误的字段，需要非空字符串或非空字符串数组",
@@ -118,7 +124,7 @@ const DialectsObj = {
       }
 
       if (!result) {
-        throw new Error(ErrMsg$b.needNumStr);
+        throw new Error(ErrMsg$c.needNumStr);
       }
 
       return result;
@@ -128,7 +134,7 @@ const DialectsObj = {
       let result;
 
       if (!schemaVerify.Type.string.isNotEmpty(key)) {
-        throw new Error(ErrMsg$b.needStr);
+        throw new Error(ErrMsg$c.needStr);
       }
 
       result = key.replace(/`/g, "``");
@@ -150,7 +156,7 @@ const DialectsObj = {
       }
 
       if (!result) {
-        throw new Error(ErrMsg$b.needNumStr);
+        throw new Error(ErrMsg$c.needNumStr);
       }
 
       return result;
@@ -158,7 +164,7 @@ const DialectsObj = {
 
     safeKey(key) {
       if (!schemaVerify.Type.string.isNotEmpty(key)) {
-        throw new Error(ErrMsg$b.needStr);
+        throw new Error(ErrMsg$c.needStr);
       }
 
       return `[${key}]`;
@@ -179,7 +185,7 @@ const DialectsObj = {
       }
 
       if (!result) {
-        throw new Error(ErrMsg$b.needNumStr);
+        throw new Error(ErrMsg$c.needNumStr);
       }
 
       return result;
@@ -189,7 +195,7 @@ const DialectsObj = {
       let result;
 
       if (!schemaVerify.Type.string.isNotEmpty(key)) {
-        throw new Error(ErrMsg$b.needStr);
+        throw new Error(ErrMsg$c.needStr);
       }
 
       result = key.replace(/\"/g, '""');
@@ -211,7 +217,7 @@ const DialectsObj = {
       }
 
       if (!result) {
-        throw new Error(ErrMsg$b.needNumStr);
+        throw new Error(ErrMsg$c.needNumStr);
       }
 
       return result;
@@ -221,7 +227,7 @@ const DialectsObj = {
       let result;
 
       if (!schemaVerify.Type.string.isNotEmpty(key)) {
-        throw new Error(ErrMsg$b.needStr);
+        throw new Error(ErrMsg$c.needStr);
       }
 
       result = key.replace(/`/g, "``");
@@ -781,6 +787,30 @@ const alterInfosSchema = new schemaVerify.Schema({
 });
 const alterInfosVerify = alterInfosSchema.verify;
 
+const fieldsMapSchema = new schemaVerify.Schema({
+  type: Object,
+  props: {
+    type: Array,
+    elements: {
+      type: String,
+      required: true,
+      minLength: 1
+    }
+  }
+});
+const fieldsAsMapSchema = new schemaVerify.Schema({
+  type: Object,
+  props: {
+    type: Object,
+    props: {
+      type: String,
+      required: true,
+      minLength: 1
+    }
+  }
+});
+const fieldsMapVerify = fieldsMapSchema.verify;
+
 const strArrVerify = new schemaVerify.Schema({
   type: Array,
   elements: {
@@ -830,7 +860,7 @@ class Base {
     const dialectType = this._dialectType;
 
     if (!dialectVerify(DialectsObj[dialectType])) {
-      throw new Error(ErrMsg$b.errorDialect);
+      throw new Error(ErrMsg$c.errorDialect);
     }
 
     return dialectType;
@@ -842,7 +872,7 @@ class Base {
 
   setDialect(dialectType) {
     if (!dialectVerify(DialectsObj[dialectType])) {
-      throw new Error(ErrMsg$b.errorDialect);
+      throw new Error(ErrMsg$c.errorDialect);
     }
 
     const dialect = DialectsObj[dialectType];
@@ -854,7 +884,7 @@ class Base {
 
   manualSql(sql, key) {
     if (!manualSqlVerify(sql) && !(sql instanceof Base)) {
-      throw new Error(ErrMsg$b.errorManualSql);
+      throw new Error(ErrMsg$c.errorManualSql);
     }
 
     this[key] = sql;
@@ -896,7 +926,7 @@ class Base {
 
   table(queryTable) {
     if (!schemaVerify.Type.string.isNotEmpty(queryTable)) {
-      throw new Error(ErrMsg$b.errorTableName);
+      throw new Error(ErrMsg$c.errorTableName);
     }
 
     this._queryTable = queryTable;
@@ -907,7 +937,7 @@ class Base {
     const queryTable = this._queryTable;
 
     if (!schemaVerify.Type.string.isNotEmpty(queryTable)) {
-      throw new Error(ErrMsg$b.errorTableName);
+      throw new Error(ErrMsg$c.errorTableName);
     }
 
     return this.safeKey(queryTable);
@@ -922,11 +952,11 @@ class Base {
     const query = schemaVerify.Type.string.isNotEmpty(sqlStr) ? sqlStr : this.build();
 
     if (!schemaVerify.Type.string.isNotEmpty(query)) {
-      throw new Error(ErrMsg$b.emptySqlQuery);
+      throw new Error(ErrMsg$c.emptySqlQuery);
     }
 
     if (schemaVerify.Type.object.isNot(execute) || schemaVerify.Type.function.isNot(execute.exec)) {
-      throw new Error(ErrMsg$b.errorExecute);
+      throw new Error(ErrMsg$c.errorExecute);
     }
 
     return execute.exec(query);
@@ -958,11 +988,11 @@ class Limit {
 
   limit(offset, step) {
     if (!integerVerify(offset)) {
-      throw new Error(ErrMsg$b.errorOffset);
+      throw new Error(ErrMsg$c.errorOffset);
     }
 
     if (schemaVerify.Type.undefined.isNot(step) && !integerVerify(step)) {
-      throw new Error(ErrMsg$b.errorStep);
+      throw new Error(ErrMsg$c.errorStep);
     }
 
     let limitInfo;
@@ -986,7 +1016,7 @@ class Limit {
 
   offset(offset) {
     if (!integerVerify(offset)) {
-      throw new Error(ErrMsg$b.errorOffset);
+      throw new Error(ErrMsg$c.errorOffset);
     }
 
     this.limitInfo = {
@@ -997,7 +1027,7 @@ class Limit {
 
   step(step) {
     if (!integerVerify(step)) {
-      throw new Error(ErrMsg$b.errorStep);
+      throw new Error(ErrMsg$c.errorStep);
     }
 
     this.limitInfo = {
@@ -1008,11 +1038,11 @@ class Limit {
 
   paging(page, size) {
     if (!pageVerify(page)) {
-      throw new Error(ErrMsg$b.errorPage);
+      throw new Error(ErrMsg$c.errorPage);
     }
 
     if (!naturalVerify(size)) {
-      throw new Error(ErrMsg$b.errorSize);
+      throw new Error(ErrMsg$c.errorSize);
     }
 
     const offset = (page - 1) * size;
@@ -1111,7 +1141,7 @@ class Order extends Base {
 
   orderCache(fields, type, fieldOrder) {
     if (!strArrVerify(fields)) {
-      throw new Error(ErrMsg$b.errorFields);
+      throw new Error(ErrMsg$c.errorFields);
     }
 
     fieldOrder = schemaVerify.Type.object.safe(fieldOrder);
@@ -1127,14 +1157,14 @@ class Order extends Base {
         const list = fieldOrder[field];
 
         if (!valueListVerify(list)) {
-          throw new Error(ErrMsg$b.errorValueList);
+          throw new Error(ErrMsg$c.errorValueList);
         }
 
         info["list"] = list;
       }
 
       if (!orderInfoVerify(info)) {
-        throw new Error(ErrMsg$b.errorOrderInfo);
+        throw new Error(ErrMsg$c.errorOrderInfo);
       }
 
       orderInfos.push(info);
@@ -1223,7 +1253,7 @@ class Insert extends Query {
 
   data(data) {
     if (!fieldDataVerify(data)) {
-      throw new Error(ErrMsg$b.errorFieldData);
+      throw new Error(ErrMsg$c.errorFieldData);
     }
 
     const insertData = schemaVerify.Type.object.safe(this.insertData);
@@ -1241,7 +1271,7 @@ class Insert extends Query {
 
   multiData(dataArr) {
     if (!fieldDataArrVerify(dataArr)) {
-      throw new Error(ErrMsg$b.errorFieldDataArr);
+      throw new Error(ErrMsg$c.errorFieldDataArr);
     }
 
     const insertDataArr = schemaVerify.Type.array.safe(this.insertDataArr);
@@ -1273,7 +1303,7 @@ class Insert extends Query {
     }
 
     if (!strArrVerify(fields)) {
-      throw new Error(ErrMsg$b.errorFields);
+      throw new Error(ErrMsg$c.errorFields);
     }
 
     return fields;
@@ -1311,7 +1341,7 @@ class Insert extends Query {
     }
 
     if (!schemaVerify.Type.string.isNotEmpty(result)) {
-      throw new Error(ErrMsg$b.errorInsertValues);
+      throw new Error(ErrMsg$c.errorInsertValues);
     }
 
     return `VALUES ${result}`;
@@ -1377,7 +1407,7 @@ class Term extends Base {
       const nextBracket = brackets[i + 1];
 
       if (!termBracketVerify(curBracket)) {
-        throw new Error(ErrMsg$b.errorTermBracket);
+        throw new Error(ErrMsg$c.errorTermBracket);
       }
 
       const curPos = curBracket.position;
@@ -1431,7 +1461,7 @@ class Term extends Base {
 
     for (const term of terms) {
       if (!termInfoVerify(term)) {
-        throw new Error(ErrMsg$b.errorTermInfo);
+        throw new Error(ErrMsg$c.errorTermInfo);
       }
 
       const field = this.safeKey(term.field);
@@ -1457,7 +1487,7 @@ class Term extends Base {
 
     if (sign === TermSign.in || sign === TermSign.notIn) {
       if (!termInVerify(value)) {
-        throw new Error(ErrMsg$b.errorTermValue);
+        throw new Error(ErrMsg$c.errorTermValue);
       }
 
       termValue = value.map(item => this.safeValue(item)).join(", ");
@@ -1466,7 +1496,7 @@ class Term extends Base {
 
     if (sign === TermSign.between || sign === TermSign.notBetween) {
       if (!termBetweenVerify(value)) {
-        throw new Error(ErrMsg$b.errorTermValue);
+        throw new Error(ErrMsg$c.errorTermValue);
       }
 
       const lower = this.safeValue(value[0]);
@@ -1475,7 +1505,7 @@ class Term extends Base {
     }
 
     if (!termValueVerify(value)) {
-      throw new Error(ErrMsg$b.errorTermValue);
+      throw new Error(ErrMsg$c.errorTermValue);
     }
 
     if (sign === TermSign.like || sign === TermSign.notlike) {
@@ -1488,15 +1518,15 @@ class Term extends Base {
 
   termCache(data, sign, logic) {
     if (!termDataVerify(data)) {
-      throw new Error(ErrMsg$b.errorTermdata);
+      throw new Error(ErrMsg$c.errorTermdata);
     }
 
     if (!termSignVerify(sign)) {
-      throw new Error(ErrMsg$b.errorTermSign);
+      throw new Error(ErrMsg$c.errorTermSign);
     }
 
     if (!termLogicVerify(logic)) {
-      throw new Error(ErrMsg$b.errorTermLogic);
+      throw new Error(ErrMsg$c.errorTermLogic);
     }
 
     const termInfos = schemaVerify.Type.array.safe(this.termInfos);
@@ -1509,7 +1539,7 @@ class Term extends Base {
         case TermSign.in:
         case TermSign.notIn:
           if (!termInVerify(value)) {
-            throw new Error(ErrMsg$b.errorTermValue);
+            throw new Error(ErrMsg$c.errorTermValue);
           }
 
           break;
@@ -1517,14 +1547,14 @@ class Term extends Base {
         case TermSign.between:
         case TermSign.notBetween:
           if (!termBetweenVerify(value)) {
-            throw new Error(ErrMsg$b.errorTermValue);
+            throw new Error(ErrMsg$c.errorTermValue);
           }
 
           break;
 
         default:
           if (!termValueVerify(value)) {
-            throw new Error(ErrMsg$b.errorTermValue);
+            throw new Error(ErrMsg$c.errorTermValue);
           }
 
           break;
@@ -2144,7 +2174,7 @@ class Combine extends Having {
     let groupByFields = schemaVerify.Type.array.safe(this.groupByFields);
 
     if (!strArrVerify(fields)) {
-      throw new Error(ErrMsg$b.errorFields);
+      throw new Error(ErrMsg$c.errorFields);
     }
 
     groupByFields = groupByFields.concat(fields);
@@ -2170,7 +2200,7 @@ class Combine extends Having {
 
     for (const info of combineFuncs) {
       if (!funcInfoVerify(info)) {
-        throw new Error(ErrMsg$b.errorFuncInfo);
+        throw new Error(ErrMsg$c.errorFuncInfo);
       }
 
       const funcFeild = info.funcFeild;
@@ -2373,9 +2403,27 @@ class Join extends Combine {
     return this;
   }
 
-  tableFields(fieldsInfo) {}
+  tableFields(fieldsMap) {
+    const tableFieldsMap = schemaVerify.Type.object.safe(this.tableFieldsMap);
 
-  tableAsMap(asMap) {}
+    if (!fieldsMapVerify(fieldsMap)) {
+      throw new Error(ErrMsg$c.tableFieldsError);
+    }
+
+    this.tableFieldsMap = Object.assign({}, tableFieldsMap, fieldsMap);
+    return this;
+  }
+
+  tableAsMap(asMap) {
+    const tableFieldsAsMap = schemaVerify.Type.object.safe(this.tableFieldsAsMap);
+
+    if (!fieldsMapVerify(asMap)) {
+      throw new Error(ErrMsg$c.tableFieldsAsMapError);
+    }
+
+    this.tableFieldsAsMap = Object.assign({}, tableFieldsAsMap, asMap);
+    return this;
+  }
 
 }
 
@@ -2477,7 +2525,7 @@ class Select extends Join {
     const asMap = schemaVerify.Type.object.safe(this.fieldsAsMap);
 
     if (!strObjVerify(map)) {
-      throw new Error(ErrMsg$b.errorFieldMap);
+      throw new Error(ErrMsg$c.errorFieldMap);
     }
 
     this.fieldsAsMap = Object.assign({}, asMap, map);
@@ -2522,7 +2570,7 @@ class Update extends Where {
     const updateInfos = this.updateInfos;
 
     if (!schemaVerify.Type.object.isNotEmpty(updateInfos)) {
-      throw new Error(ErrMsg$b.emptyUpdateInfo);
+      throw new Error(ErrMsg$c.emptyUpdateInfo);
     }
 
     const result = [];
@@ -2560,7 +2608,7 @@ class Update extends Where {
     }
 
     if (!strArrVerify(result)) {
-      throw new Error(ErrMsg$b.emptyUpdateInfo);
+      throw new Error(ErrMsg$c.emptyUpdateInfo);
     }
 
     return result;
@@ -2568,7 +2616,7 @@ class Update extends Where {
 
   updateCache(data, type) {
     if (!fieldDataVerify(data)) {
-      throw new Error(ErrMsg$b.errorFieldData);
+      throw new Error(ErrMsg$c.errorFieldData);
     }
 
     const updateInfos = schemaVerify.Type.object.safe(this.updateInfos);
@@ -2581,7 +2629,7 @@ class Update extends Where {
       };
 
       if (!updateInfoVerify(updateInfo)) {
-        throw new Error(ErrMsg$b.errorUpdateInfo);
+        throw new Error(ErrMsg$c.errorUpdateInfo);
       }
 
       updateInfos[field] = updateInfo;
@@ -2645,7 +2693,7 @@ class Create extends Base {
 
   dataBase(dbName) {
     if (!schemaVerify.Type.string.isNotEmpty(dbName)) {
-      throw new Error(ErrMsg$b.errorCreateDbName);
+      throw new Error(ErrMsg$c.errorCreateDbName);
     }
 
     this.createDbName = dbName;
@@ -2869,7 +2917,7 @@ class Alter extends Base {
 
   alterCache(method, field, alterField) {
     if (AlterMethods.drop !== method && !schemaVerify.Type.object.isNotEmpty(alterField)) {
-      throw new Error(ErrMsg$b.errorAlterField);
+      throw new Error(ErrMsg$c.errorAlterField);
     }
 
     const alterInfo = {
@@ -2879,7 +2927,7 @@ class Alter extends Base {
     };
 
     if (!alterInfosVerify(alterInfo)) {
-      throw new Error(ErrMsg$b.errorAlterField);
+      throw new Error(ErrMsg$c.errorAlterField);
     }
 
     const alterInfos = schemaVerify.Type.array.safe(this.alterInfos);
@@ -2911,7 +2959,7 @@ class Alter extends Base {
     }
 
     if (!schemaVerify.Type.array.isNotEmpty(infosStrArr)) {
-      throw new Error(ErrMsg$b.emptyAlterInfos);
+      throw new Error(ErrMsg$c.emptyAlterInfos);
     }
 
     const alterInfosStr = infosStrArr.join(",");
@@ -2991,14 +3039,14 @@ var DialectModules;
   DialectModules["mssqlPool"] = "tedious-connection-pool";
 })(DialectModules || (DialectModules = {}));
 
-const ErrMsg$c = {
+const ErrMsg$d = {
   errorConnectConfig: "错误的连接配置",
   emptyConnectPool: "未连接数据库",
   errorDialectType: "错误的数据库类型",
   errorConnect: "错误的连接"
 };
 
-const ErrMsg$d = { ...ErrMsg$c
+const ErrMsg$e = { ...ErrMsg$d
 };
 
 const conConfigSchema = new schemaVerify.Schema({
@@ -3046,7 +3094,7 @@ class BaseConnect {
 
   setConfig(config) {
     if (!conConfigVerify(config)) {
-      throw new Error(ErrMsg$d.errorConnectConfig);
+      throw new Error(ErrMsg$e.errorConnectConfig);
     }
 
     const host = config.host;
@@ -3104,7 +3152,7 @@ class MysqlConnect extends BaseConnect {
     const pool = this.getPool() || {};
 
     if (schemaVerify.Type.function.isNot(pool.getConnection)) {
-      throw new Error(ErrMsg$d.emptyConnectPool);
+      throw new Error(ErrMsg$e.emptyConnectPool);
     }
 
     return new Promise((relsove, reject) => {
@@ -3114,7 +3162,7 @@ class MysqlConnect extends BaseConnect {
         }
 
         if (!connection || schemaVerify.Type.function.isNot(connection.query) || schemaVerify.Type.function.isNot(connection.release)) {
-          reject(new Error(ErrMsg$d.errorConnect));
+          reject(new Error(ErrMsg$e.errorConnect));
         }
 
         relsove(connection);
@@ -3162,7 +3210,7 @@ class MyssqlConnect extends BaseConnect {
     const mssqlRequest = this.mssqlRequest;
 
     if (schemaVerify.Type.function.isNot(pool.acquire)) {
-      throw new Error(ErrMsg$d.emptyConnectPool);
+      throw new Error(ErrMsg$e.emptyConnectPool);
     }
 
     return new Promise((relsove, reject) => {
@@ -3172,7 +3220,7 @@ class MyssqlConnect extends BaseConnect {
         }
 
         if (!connection || schemaVerify.Type.function.isNot(connection.execSql) || schemaVerify.Type.function.isNot(connection.release)) {
-          reject(new Error(ErrMsg$d.errorConnect));
+          reject(new Error(ErrMsg$e.errorConnect));
         }
 
         const conn = {
@@ -3222,7 +3270,7 @@ class Execute {
     }
 
     if (schemaVerify.Type.undefinedNull.is(connect)) {
-      throw new Error(ErrMsg$d.errorDialectType);
+      throw new Error(ErrMsg$e.errorDialectType);
     }
 
     return connect;
@@ -3232,7 +3280,7 @@ class Execute {
     const connect = this.connect || {};
 
     if (schemaVerify.Type.function.isNot(connect.getDbConnect)) {
-      throw new Error(ErrMsg$d.emptyConnectPool);
+      throw new Error(ErrMsg$e.emptyConnectPool);
     }
 
     const dbConnection = await connect.getDbConnect();
@@ -3381,7 +3429,7 @@ class Builder {
 
   table(tableName) {
     if (!schemaVerify.Type.string.isNotEmpty(tableName)) {
-      throw new Error(ErrMsg$b.errorTableName);
+      throw new Error(ErrMsg$c.errorTableName);
     }
 
     this.queryTable = tableName;
@@ -3389,7 +3437,7 @@ class Builder {
   }
 
   build() {
-    throw new Error(ErrMsg$b.emptyQueryType);
+    throw new Error(ErrMsg$c.emptyQueryType);
   }
 
   setConnect(config) {

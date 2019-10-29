@@ -9,6 +9,7 @@ import UpdateError from "./update.error";
 import BuilderError from "./builder.error";
 import CreateError from "./create.error";
 import AlterError from "./alter.error";
+import JoinError from "./join.error";
 
 const ErrMsg = {
     ...CombineError,
@@ -22,6 +23,7 @@ const ErrMsg = {
     ...BuilderError,
     ...CreateError,
     ...AlterError,
+    ...JoinError,
     errorTableName: "错误的表名，需要非空字符串",
     errorField: "错误的表名，需要非空字符串",
     errorFields: "错误的字段，需要非空字符串或非空字符串数组",

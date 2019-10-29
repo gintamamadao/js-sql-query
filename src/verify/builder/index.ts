@@ -21,49 +21,14 @@ import {
     tableInfoVerify
 } from "./create.verify";
 import { alterFieldVerify, alterInfosVerify } from "./alter.verify";
-
-const strArrVerify = new Schema({
-    type: Array,
-    elements: {
-        type: String,
-        required: true,
-        minLength: 1
-    }
-}).verify;
-
-const strObjVerify = new Schema({
-    type: Object,
-    props: {
-        type: String,
-        required: true,
-        minLength: 1
-    }
-}).verify;
-
-const naturalVerify = new Schema({
-    type: Number,
-    natural: true
-}).verify;
-
-const integerVerify = new Schema({
-    type: Number,
-    integer: true
-}).verify;
-
-const fieldDataVerify = new Schema({
-    type: Object,
-    props: [
-        [
-            {
-                required: true,
-                type: String
-            },
-            {
-                type: Number
-            }
-        ]
-    ]
-}).verify;
+import { fieldsMapVerify } from "./join.verify";
+import {
+    strArrVerify,
+    strObjVerify,
+    naturalVerify,
+    integerVerify,
+    fieldDataVerify
+} from "./builder.verify";
 
 export {
     fieldDataVerify,
@@ -93,5 +58,6 @@ export {
     uniqueKeyVerify,
     tableInfoVerify,
     alterFieldVerify,
-    alterInfosVerify
+    alterInfosVerify,
+    fieldsMapVerify
 };
