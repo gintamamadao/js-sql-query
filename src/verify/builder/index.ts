@@ -21,7 +21,11 @@ import {
     tableInfoVerify
 } from "./create.verify";
 import { alterFieldVerify, alterInfosVerify } from "./alter.verify";
-import { fieldsMapVerify, fieldsAsMapVerify } from "./join.verify";
+import {
+    fieldsMapVerify,
+    fieldsAsMapVerify,
+    joinInfoVerify
+} from "./join.verify";
 import {
     strArrVerify,
     strObjVerify,
@@ -60,5 +64,6 @@ export {
     alterFieldVerify,
     alterInfosVerify,
     fieldsMapVerify,
-    fieldsAsMapVerify
+    fieldsAsMapVerify,
+    joinInfoVerify
 };

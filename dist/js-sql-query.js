@@ -86,7 +86,8 @@ const ErrMsg$a = {
 
 const ErrMsg$b = {
   tableFieldsError: "错误的表字段名",
-  tableFieldsAsMapError: "错误的表字段映射名"
+  tableFieldsAsMapError: "错误的表字段映射名",
+  joinTableInfoError: "错误的联查信息"
 };
 
 const ErrMsg$c = { ...ErrMsg,
@@ -403,6 +404,14 @@ var AlterMethods;
   AlterMethods["modify"] = "MODIFY";
   AlterMethods["change"] = "CHANGE";
 })(AlterMethods || (AlterMethods = {}));
+
+var JoinTypes;
+
+(function (JoinTypes) {
+  JoinTypes["inner"] = "INNER";
+  JoinTypes["left"] = "LEFT";
+  JoinTypes["right"] = "RIGHT";
+})(JoinTypes || (JoinTypes = {}));
 
 const funcInfoSchema = new schemaVerify.Schema({
   type: Object,
@@ -809,8 +818,38 @@ const fieldsAsMapSchema = new schemaVerify.Schema({
     }
   }
 });
+const joinInfoSchema = new schemaVerify.Schema({
+  type: Object,
+  props: {
+    tableName: {
+      type: String,
+      required: true,
+      minLength: 1
+    },
+    termInfos: {
+      type: Array,
+      required: true,
+      elements: {
+        symbol: {
+          type: String,
+          required: true,
+          minLength: 1
+        },
+        tableFields: {
+          type: Object,
+          props: {
+            type: String,
+            required: true,
+            minLength: 1
+          }
+        }
+      }
+    }
+  }
+});
 const fieldsMapVerify = fieldsMapSchema.verify;
 const fieldsAsMapVerify = fieldsAsMapSchema.verify;
+const joinInfoVerify = joinInfoSchema.verify;
 
 const strArrVerify = new schemaVerify.Schema({
   type: Array,
@@ -2419,6 +2458,66 @@ class Join extends Combine {
     return result;
   }
 
+  joinBuild(query) {
+    const joinTypeInfos = schemaVerify.Type.array.safe(this.joinTypeInfos);
+
+    if (!schemaVerify.Type.array.isNotEmpty(joinTypeInfos)) {
+      return query;
+    }
+
+    const joinStrs = [];
+
+    for (const typeInfo of joinTypeInfos) {
+      const type = typeInfo.type;
+      const info = schemaVerify.Type.object.safe(typeInfo.info);
+      const tableName = info.tableName;
+      const termInfos = schemaVerify.Type.array.safe(info.termInfos);
+      const termStrs = this.joinTermBuild(termInfos);
+      let joinInfoStr = `${type} JOIN ${tableName}`;
+
+      if (schemaVerify.Type.array.isNotEmpty(termStrs)) {
+        const allTermStr = termStrs.join(" AND ");
+        joinInfoStr += `ON ${allTermStr}`;
+      }
+
+      joinStrs.push(joinInfoStr);
+    }
+
+    if (!schemaVerify.Type.array.isNotEmpty(joinStrs)) {
+      return query;
+    }
+
+    const allJoinStr = joinStrs.join(" ");
+    query = `${query} ${allJoinStr}`;
+    return query;
+  }
+
+  joinTermBuild(termInfos) {
+    const result = [];
+
+    for (const termInfo of termInfos) {
+      const symbol = termInfo.symbol;
+      const tableFields = termInfo.tableFields;
+      let termStr = "";
+
+      for (const table in tableFields) {
+        const field = tableFields[table];
+        const safeTable = this.safeKey(table);
+        const safeField = this.safeKey(field);
+
+        if (schemaVerify.Type.string.isNotEmpty(termStr)) {
+          termStr += ` ${symbol} `;
+        }
+
+        termStr += `${safeTable}.${safeField}`;
+      }
+
+      result.push(`(${termStr})`);
+    }
+
+    return result;
+  }
+
   multiTables(arg, ...otherArgs) {
     const queryTables = schemaVerify.Type.array.safe(this.queryTables);
     const args = argStrArrTrans(arg, otherArgs);
@@ -2453,6 +2552,37 @@ class Join extends Combine {
     }
 
     this.tableFieldsAsMap = Object.assign({}, tableFieldsAsMap, asMap);
+    return this;
+  }
+
+  join(joinInfo, type) {
+    const joinTypeInfos = schemaVerify.Type.array.safe(this.joinTypeInfos);
+
+    if (!joinInfoVerify(joinInfo)) {
+      throw new Error(ErrMsg$c.joinTableInfoError);
+    }
+
+    const typeInfo = {
+      type: type,
+      info: joinInfo
+    };
+    joinTypeInfos.push(typeInfo);
+    this.joinTypeInfos = joinTypeInfos;
+    return this;
+  }
+
+  innerJoin(joinInfo) {
+    this.join(joinInfo, JoinTypes.inner);
+    return this;
+  }
+
+  leftJoin(joinInfo) {
+    this.join(joinInfo, JoinTypes.left);
+    return this;
+  }
+
+  rightJoin(joinInfo) {
+    this.join(joinInfo, JoinTypes.right);
     return this;
   }
 
@@ -2526,6 +2656,7 @@ class Select extends Join {
     query = this.havingBuild(query);
     query = this.orderBuild(query);
     query = this.limitBuild(query);
+    query = this.joinBuild(query);
     return query;
   }
 

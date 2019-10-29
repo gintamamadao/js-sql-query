@@ -128,3 +128,9 @@ export enum AlterMethods {
     modify = "MODIFY",
     change = "CHANGE"
 }
+
+export enum JoinTypes {
+    inner = "INNER",
+    left = "LEFT",
+    right = "RIGHT"
+}

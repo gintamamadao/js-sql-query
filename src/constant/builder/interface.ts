@@ -1,4 +1,4 @@
-import { TermSign, TermLogic, OrderTypes } from "./enum";
+import { TermSign, TermLogic, OrderTypes, JoinTypes } from "./enum";
 export interface KeyValueStr {
     [propName: string]: string;
 }
@@ -49,4 +49,21 @@ export interface TableFieldsMap {
 
 export interface TableFieldsAsMap {
     [propName: string]: KeyValueStr;
+}
+
+export interface JoinTermInfo {
+    symbol: string;
+    tableFields: {
+        tableName: string;
+    };
+}
+
+export interface JoinTableInfo {
+    tableName: string;
+    termInfos: JoinTermInfo[];
+}
+
+export interface JoinTypeInfo {
+    type: JoinTypes;
+    info: JoinTableInfo;
 }

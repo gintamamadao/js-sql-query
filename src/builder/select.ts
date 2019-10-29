@@ -72,6 +72,7 @@ class Select extends Join {
         query = this.havingBuild(query);
         query = this.orderBuild(query);
         query = this.limitBuild(query);
+        query = this.joinBuild(query);
         return query;
     }
 

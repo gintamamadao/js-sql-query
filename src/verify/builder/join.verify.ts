@@ -24,5 +24,36 @@ const fieldsAsMapSchema = new Schema({
     }
 });
 
+const joinInfoSchema = new Schema({
+    type: Object,
+    props: {
+        tableName: {
+            type: String,
+            required: true,
+            minLength: 1
+        },
+        termInfos: {
+            type: Array,
+            required: true,
+            elements: {
+                symbol: {
+                    type: String,
+                    required: true,
+                    minLength: 1
+                },
+                tableFields: {
+                    type: Object,
+                    props: {
+                        type: String,
+                        required: true,
+                        minLength: 1
+                    }
+                }
+            }
+        }
+    }
+});
+
 export const fieldsMapVerify = fieldsMapSchema.verify;
 export const fieldsAsMapVerify = fieldsAsMapSchema.verify;
+export const joinInfoVerify = joinInfoSchema.verify;
