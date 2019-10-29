@@ -1,6 +1,6 @@
 const { Builder } = require("../../dist/js-sql-query");
 
-describe("SELECT", () => {
+describe("SELECT: base", () => {
     const builder = new Builder();
     test("*", () => {
         const QUERY = "SELECT * FROM `table1`";
@@ -379,6 +379,176 @@ describe("SELECT: tableAsMap", () => {
                         table2: {
                             field3: "field3_as"
                         }
+                    })
+                    .build())()
+        ).toBe(QUERY);
+    });
+});
+
+describe("SELECT: join", () => {
+    const builder = new Builder();
+    test("innerJoin", () => {
+        const QUERY =
+            "SELECT * FROM `table1` INNER JOIN table2 ON (`table1`.`field1` = `table2`.`field2`)";
+        expect(
+            (() =>
+                builder
+                    .select()
+                    .table("table1")
+                    .innerJoin({
+                        tableName: "table2",
+                        termInfos: [
+                            {
+                                symbol: "=",
+                                tableFields: {
+                                    table1: "field1",
+                                    table2: "field2"
+                                }
+                            }
+                        ]
+                    })
+                    .build())()
+        ).toBe(QUERY);
+    });
+    test("leftJoin", () => {
+        const QUERY =
+            "SELECT * FROM `table1` LEFT JOIN table2 ON (`table1`.`field1` = `table2`.`field2`)";
+        expect(
+            (() =>
+                builder
+                    .select()
+                    .table("table1")
+                    .leftJoin({
+                        tableName: "table2",
+                        termInfos: [
+                            {
+                                symbol: "=",
+                                tableFields: {
+                                    table1: "field1",
+                                    table2: "field2"
+                                }
+                            }
+                        ]
+                    })
+                    .build())()
+        ).toBe(QUERY);
+    });
+    test("rightJoin", () => {
+        const QUERY =
+            "SELECT * FROM `table1` RIGHT JOIN table2 ON (`table1`.`field1` = `table2`.`field2`)";
+        expect(
+            (() =>
+                builder
+                    .select()
+                    .table("table1")
+                    .rightJoin({
+                        tableName: "table2",
+                        termInfos: [
+                            {
+                                symbol: "=",
+                                tableFields: {
+                                    table1: "field1",
+                                    table2: "field2"
+                                }
+                            }
+                        ]
+                    })
+                    .build())()
+        ).toBe(QUERY);
+    });
+    test("innerJoin mutil join", () => {
+        const QUERY =
+            "SELECT * FROM `table1` INNER JOIN table2 ON (`table1`.`field1` = `table2`.`field2`) INNER JOIN table3 ON (`table1`.`field1` = `table3`.`field3`)";
+        expect(
+            (() =>
+                builder
+                    .select()
+                    .table("table1")
+                    .innerJoin({
+                        tableName: "table2",
+                        termInfos: [
+                            {
+                                symbol: "=",
+                                tableFields: {
+                                    table1: "field1",
+                                    table2: "field2"
+                                }
+                            }
+                        ]
+                    })
+                    .innerJoin({
+                        tableName: "table3",
+                        termInfos: [
+                            {
+                                symbol: "=",
+                                tableFields: {
+                                    table1: "field1",
+                                    table3: "field3"
+                                }
+                            }
+                        ]
+                    })
+                    .build())()
+        ).toBe(QUERY);
+    });
+    test("innerJoin mutil term", () => {
+        const QUERY =
+            "SELECT * FROM `table1` INNER JOIN table2 ON (`table1`.`field1` = `table2`.`field2`) AND (`table1`.`field3` = `table2`.`field4`)";
+        expect(
+            (() =>
+                builder
+                    .select()
+                    .table("table1")
+                    .innerJoin({
+                        tableName: "table2",
+                        termInfos: [
+                            {
+                                symbol: "=",
+                                tableFields: {
+                                    table1: "field1",
+                                    table2: "field2"
+                                }
+                            },
+                            {
+                                symbol: "=",
+                                tableFields: {
+                                    table1: "field3",
+                                    table2: "field4"
+                                }
+                            }
+                        ]
+                    })
+                    .build())()
+        ).toBe(QUERY);
+    });
+    test("innerJoin", () => {
+        const QUERY =
+            "SELECT `table1`.`field1` AS `field1_as`, `table1`.`field2` AS `field2_as` FROM `table1` INNER JOIN table2 ON (`table1`.`field1` = `table2`.`field2`)";
+        expect(
+            (() =>
+                builder
+                    .select()
+                    .table("table1")
+                    .tableFields({
+                        table1: ["field1", "field2"]
+                    })
+                    .tableAsMap({
+                        table1: {
+                            field1: "field1_as",
+                            field2: "field2_as"
+                        }
+                    })
+                    .innerJoin({
+                        tableName: "table2",
+                        termInfos: [
+                            {
+                                symbol: "=",
+                                tableFields: {
+                                    table1: "field1",
+                                    table2: "field2"
+                                }
+                            }
+                        ]
                     })
                     .build())()
         ).toBe(QUERY);

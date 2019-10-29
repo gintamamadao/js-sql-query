@@ -830,17 +830,20 @@ const joinInfoSchema = new schemaVerify.Schema({
       type: Array,
       required: true,
       elements: {
-        symbol: {
-          type: String,
-          required: true,
-          minLength: 1
-        },
-        tableFields: {
-          type: Object,
-          props: {
+        type: Object,
+        props: {
+          symbol: {
             type: String,
             required: true,
             minLength: 1
+          },
+          tableFields: {
+            type: Object,
+            props: {
+              type: String,
+              required: true,
+              minLength: 1
+            }
           }
         }
       }
@@ -2477,7 +2480,7 @@ class Join extends Combine {
 
       if (schemaVerify.Type.array.isNotEmpty(termStrs)) {
         const allTermStr = termStrs.join(" AND ");
-        joinInfoStr += `ON ${allTermStr}`;
+        joinInfoStr += ` ON ${allTermStr}`;
       }
 
       joinStrs.push(joinInfoStr);

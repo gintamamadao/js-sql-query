@@ -84,7 +84,7 @@ class Join extends Combine {
             let joinInfoStr: string = `${type} JOIN ${tableName}`;
             if (Type.array.isNotEmpty(termStrs)) {
                 const allTermStr = termStrs.join(" AND ");
-                joinInfoStr += `ON ${allTermStr}`;
+                joinInfoStr += ` ON ${allTermStr}`;
             }
             joinStrs.push(joinInfoStr);
         }

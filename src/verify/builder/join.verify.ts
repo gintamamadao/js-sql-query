@@ -36,17 +36,20 @@ const joinInfoSchema = new Schema({
             type: Array,
             required: true,
             elements: {
-                symbol: {
-                    type: String,
-                    required: true,
-                    minLength: 1
-                },
-                tableFields: {
-                    type: Object,
-                    props: {
+                type: Object,
+                props: {
+                    symbol: {
                         type: String,
                         required: true,
                         minLength: 1
+                    },
+                    tableFields: {
+                        type: Object,
+                        props: {
+                            type: String,
+                            required: true,
+                            minLength: 1
+                        }
                     }
                 }
             }
