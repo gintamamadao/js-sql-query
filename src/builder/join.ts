@@ -81,7 +81,8 @@ class Join extends Combine {
             const tableName: string = info.tableName;
             const termInfos: JoinTermInfo[] = Type.array.safe(info.termInfos);
             const termStrs: string[] = this.joinTermBuild(termInfos);
-            let joinInfoStr: string = `${type} JOIN ${tableName}`;
+            const safeTableName: string = this.safeKey(tableName);
+            let joinInfoStr: string = `${type} JOIN ${safeTableName}`;
             if (Type.array.isNotEmpty(termStrs)) {
                 const allTermStr = termStrs.join(" AND ");
                 joinInfoStr += ` ON ${allTermStr}`;

@@ -2476,7 +2476,8 @@ class Join extends Combine {
       const tableName = info.tableName;
       const termInfos = schemaVerify.Type.array.safe(info.termInfos);
       const termStrs = this.joinTermBuild(termInfos);
-      let joinInfoStr = `${type} JOIN ${tableName}`;
+      const safeTableName = this.safeKey(tableName);
+      let joinInfoStr = `${type} JOIN ${safeTableName}`;
 
       if (schemaVerify.Type.array.isNotEmpty(termStrs)) {
         const allTermStr = termStrs.join(" AND ");

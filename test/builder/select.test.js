@@ -389,7 +389,7 @@ describe("SELECT: join", () => {
     const builder = new Builder();
     test("innerJoin", () => {
         const QUERY =
-            "SELECT * FROM `table1` INNER JOIN table2 ON (`table1`.`field1` = `table2`.`field2`)";
+            "SELECT * FROM `table1` INNER JOIN `table2` ON (`table1`.`field1` = `table2`.`field2`)";
         expect(
             (() =>
                 builder
@@ -412,7 +412,7 @@ describe("SELECT: join", () => {
     });
     test("leftJoin", () => {
         const QUERY =
-            "SELECT * FROM `table1` LEFT JOIN table2 ON (`table1`.`field1` = `table2`.`field2`)";
+            "SELECT * FROM `table1` LEFT JOIN `table2` ON (`table1`.`field1` = `table2`.`field2`)";
         expect(
             (() =>
                 builder
@@ -435,7 +435,7 @@ describe("SELECT: join", () => {
     });
     test("rightJoin", () => {
         const QUERY =
-            "SELECT * FROM `table1` RIGHT JOIN table2 ON (`table1`.`field1` = `table2`.`field2`)";
+            "SELECT * FROM `table1` RIGHT JOIN `table2` ON (`table1`.`field1` = `table2`.`field2`)";
         expect(
             (() =>
                 builder
@@ -458,7 +458,7 @@ describe("SELECT: join", () => {
     });
     test("innerJoin mutil join", () => {
         const QUERY =
-            "SELECT * FROM `table1` INNER JOIN table2 ON (`table1`.`field1` = `table2`.`field2`) INNER JOIN table3 ON (`table1`.`field1` = `table3`.`field3`)";
+            "SELECT * FROM `table1` INNER JOIN `table2` ON (`table1`.`field1` = `table2`.`field2`) INNER JOIN `table3` ON (`table1`.`field1` = `table3`.`field3`)";
         expect(
             (() =>
                 builder
@@ -493,7 +493,7 @@ describe("SELECT: join", () => {
     });
     test("innerJoin mutil term", () => {
         const QUERY =
-            "SELECT * FROM `table1` INNER JOIN table2 ON (`table1`.`field1` = `table2`.`field2`) AND (`table1`.`field3` = `table2`.`field4`)";
+            "SELECT * FROM `table1` INNER JOIN `table2` ON (`table1`.`field1` = `table2`.`field2`) AND (`table1`.`field3` = `table2`.`field4`)";
         expect(
             (() =>
                 builder
@@ -523,7 +523,7 @@ describe("SELECT: join", () => {
     });
     test("innerJoin", () => {
         const QUERY =
-            "SELECT `table1`.`field1` AS `field1_as`, `table1`.`field2` AS `field2_as` FROM `table1` INNER JOIN table2 ON (`table1`.`field1` = `table2`.`field2`)";
+            "SELECT `table1`.`field1` AS `field1_as`, `table1`.`field2` AS `field2_as` FROM `table1` INNER JOIN `table2` ON (`table1`.`field1` = `table2`.`field2`)";
         expect(
             (() =>
                 builder

@@ -75,6 +75,11 @@ var result = await sqlQuery
         -   [groupBy](#groupby)
         -   [asMap](#asmap)
         -   [multiTables](#multitables)
+        -   [tableFields](#tableFields)
+        -   [tableAsMap](#tableAsMap)
+        -   [innerJoin](#innerJoin)
+        -   [leftJoin](#leftJoin)
+        -   [rightJoin](#rightJoin)
     -   [DELETE](#delete)
         -   [delete](#delete)
     -   [WHERE](#where)
@@ -649,6 +654,109 @@ sqlQuery
 ```sql
 SELECT * FROM `table1`, `table2`
 ```
+
+### `tableFields`
+
+> 设置表名与字段名的对应关系
+
+_参数_
+
+> -   feildsMap (Object): 表名与字段名的对应关系
+
+_例子_
+
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .tableFields({
+        table1: ["field1", "field2"]
+    })
+    .build();
+```
+
+```sql
+SELECT `table1`.`field1`, `table1`.`field2` FROM `table1`
+```
+
+### `tableAsMap`
+
+> 设置表的字段名相关的映射名
+
+_参数_
+
+> -   asMap (Object): 表的字段名相关的映射名
+
+_例子_
+
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .tableFields({
+        table1: ["field1", "field2"]
+    })
+    .tableAsMap({
+        table1: {
+            field1: "field1_as",
+            field2: "field2_as"
+        }
+    })
+    .build();
+```
+
+```sql
+SELECT `table1`.`field1` AS `field1_as`, `table1`.`field2` AS `field2_as` FROM `table1`
+```
+
+### `innerJoin`
+
+> 设置联表查询信息
+
+_参数_
+
+> -   joinInfo (Object): 联表查询信息
+
+_例子_
+
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .innerJoin({
+        tableName: "table2",
+        termInfos: [
+            {
+                symbol: "=",
+                tableFields: {
+                    table1: "field1",
+                    table2: "field2"
+                }
+            }
+        ]
+    })
+    .build();
+```
+
+```sql
+SELECT * FROM `table1` INNER JOIN `table2` ON (`table1`.`field1` = `table2`.`field2`)
+```
+
+### `leftJoin`
+
+> 设置联表查询信息，联查类型为 left join
+
+_参数和逻辑与 innerJoin api 一致_
+
+---
+
+### `rightJoin`
+
+> 设置联表查询信息，联查类型为 right join
+
+_参数和逻辑与 rightJoin api 一致_
+
+---
 
 ## DELETE
 
