@@ -136,6 +136,9 @@ class Builder {
         if (Type.function.is(instance.setDialect)) {
             instance.setDialect(dialectType);
         }
+        if (Type.function.is(instance.checkDialect)) {
+            instance.checkDialect();
+        }
         if (Type.function.is(instance.setExecute)) {
             instance.setExecute(execute);
         }

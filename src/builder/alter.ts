@@ -1,5 +1,9 @@
 import Base from "./base";
-import { TableOptions, AlterMethods } from "../constant/builder/enum";
+import {
+    TableOptions,
+    AlterMethods,
+    DialectTypes
+} from "../constant/builder/enum";
 import { TABLE_OPT_VALUES, FEILD_TEMPLATE } from "../constant/builder/constant";
 import { Type } from "schema-verify";
 import { analyTmpl } from "../util/util";
@@ -27,6 +31,16 @@ interface AlterInfo {
 
 class Alter extends Base {
     protected alterInfos: AlterInfo[];
+    constructor() {
+        super();
+    }
+
+    checkDialect() {
+        const dialectType: DialectTypes = this._dialectType;
+        if (dialectType !== DialectTypes.mysql) {
+            throw new Error(ErrMsg.notSupportDialect);
+        }
+    }
 
     add(field: string | AlterField, alterField: AlterField) {
         if (Type.object.is(field)) {

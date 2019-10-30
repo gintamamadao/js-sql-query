@@ -29,7 +29,8 @@ const ErrMsg = {
     errorFields: "错误的字段，需要非空字符串或非空字符串数组",
     errorFieldData: "错误的字段数据",
     needStr: "需要字符串",
-    needNumStr: "需要数字或者字符串"
+    needNumStr: "需要数字或者字符串",
+    notSupportDialect: "无法支持当前类型数据库"
 };
 
 export default ErrMsg;

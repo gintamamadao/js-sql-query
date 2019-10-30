@@ -2525,13 +2525,15 @@ SELECT * FROM `table1` LIMIT 1
 
 ## CREATE
 
-> 新建表语句，把表的信息用一定的 json 数据格式保存，然后可以通过 `api` 转换成 `sql` 语句
+> 新建表语句，把表的信息用一定的 json 数据格式保存，然后可以通过 `api` 转换成 `sql` 语句。
+
+> 仅支持`MySQL`类型数据库
 
 ---
 
 ### `create`
 
-> 指定 sql 语句为 CREATE 类型，仅支持`MySQL`类型数据库
+> 指定 sql 语句为 CREATE 类型
 
 _参数_
 
@@ -2662,7 +2664,9 @@ CREATE DATABASE database1
 
 ## ALTER
 
-> `ALTER` 类型语句，仅支持`MySQL`类型数据库
+> `ALTER` 类型语句，用于改变表信息。
+
+> 仅支持`MySQL`类型数据库。
 
 ---
 

@@ -1,6 +1,7 @@
 import Base from "./base";
 import { TableOptions } from "../constant/builder/enum";
 import { TABLE_OPT_VALUES, FEILD_TEMPLATE } from "../constant/builder/constant";
+import { DialectTypes } from "../constant/builder/enum";
 import { Type } from "schema-verify";
 import { tableInfoVerify } from "../verify/builder/index";
 import { analyTmpl } from "../util/util";
@@ -39,6 +40,16 @@ class Create extends Base {
     protected createTableSqlStr: string;
     protected createDbName: string;
     protected createTableInfo: TableInfo;
+    constructor() {
+        super();
+    }
+
+    checkDialect() {
+        const dialectType: DialectTypes = this._dialectType;
+        if (dialectType !== DialectTypes.mysql) {
+            throw new Error(ErrMsg.notSupportDialect);
+        }
+    }
 
     info(tableInfo: TableInfo | string) {
         if (Type.string.isNotEmpty(tableInfo)) {

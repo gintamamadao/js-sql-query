@@ -107,7 +107,8 @@ const ErrMsg$c = { ...ErrMsg,
   errorFields: "错误的字段，需要非空字符串或非空字符串数组",
   errorFieldData: "错误的字段数据",
   needStr: "需要字符串",
-  needNumStr: "需要数字或者字符串"
+  needNumStr: "需要数字或者字符串",
+  notSupportDialect: "无法支持当前类型数据库"
 };
 
 const DialectsObj = {
@@ -2849,6 +2850,18 @@ const TABLE_OPTIONS_TEMPLATE = `{{engine}}{{autoIncrement}}{{defaultCharset}}{{c
 const DATABASE_TEMPLATE = `CREATE DATABASE {{dbName}}`;
 
 class Create extends Base {
+  constructor() {
+    super();
+  }
+
+  checkDialect() {
+    const dialectType = this._dialectType;
+
+    if (dialectType !== DialectTypes.mysql) {
+      throw new Error(ErrMsg$c.notSupportDialect);
+    }
+  }
+
   info(tableInfo) {
     if (schemaVerify.Type.string.isNotEmpty(tableInfo)) {
       this.createTableSqlStr = tableInfo;
@@ -3060,6 +3073,18 @@ const ALTER_TEMPLATE = `ALTER TABLE {{queryTable}}{{alterInfosStr}}`;
 const ALTER_INFOS_TEMPLATE = `{{method}}COLUMN {{field}}{{alterFieldStr}}`;
 
 class Alter extends Base {
+  constructor() {
+    super();
+  }
+
+  checkDialect() {
+    const dialectType = this._dialectType;
+
+    if (dialectType !== DialectTypes.mysql) {
+      throw new Error(ErrMsg$c.notSupportDialect);
+    }
+  }
+
   add(field, alterField) {
     if (schemaVerify.Type.object.is(field)) {
       alterField = field;
@@ -3586,6 +3611,10 @@ class Builder {
 
     if (schemaVerify.Type.function.is(instance.setDialect)) {
       instance.setDialect(dialectType);
+    }
+
+    if (schemaVerify.Type.function.is(instance.checkDialect)) {
+      instance.checkDialect();
     }
 
     if (schemaVerify.Type.function.is(instance.setExecute)) {
