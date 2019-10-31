@@ -3309,6 +3309,10 @@ const conConfigSchema = new schemaVerify.Schema({
     index: "connectionLimit",
     type: Number,
     natural: true
+  }, {
+    index: "connectTimeout",
+    type: Number,
+    natural: true
   }]
 });
 const conConfigVerify = conConfigSchema.verify;

@@ -45,6 +45,11 @@ const conConfigSchema = new Schema({
             index: "connectionLimit",
             type: Number,
             natural: true
+        },
+        {
+            index: "connectTimeout",
+            type: Number,
+            natural: true
         }
     ]
 });

@@ -2832,15 +2832,16 @@ var result = await sqlQuery
 
 ## Connect Config
 
-| 字段            |       类型       | 是否必填 |                           说明 |
-| --------------- | :--------------: | :------: | -----------------------------: |
-| host            |      string      |    是    |                 数据库主机地址 |
-| port            | string or number |    否    |                 数据库主机端口 |
-| user            |      string      |    是    |                   数据库用户名 |
-| password        |      string      |    否    |                 数据库用户密码 |
-| database        |      string      |    是    |                     表所在的库 |
-| dialect         |      string      |    是    |     数据库的类型，默认为 mysql |
-| connectionLimit |      number      |    是    | 连接池的最大连接数，默认为 1。 |
+| 字段            |       类型       | 是否必填 |                              说明 |
+| --------------- | :--------------: | :------: | --------------------------------: |
+| host            |      string      |    是    |                    数据库主机地址 |
+| port            | string or number |    否    |                    数据库主机端口 |
+| user            |      string      |    是    |                      数据库用户名 |
+| password        |      string      |    否    |                    数据库用户密码 |
+| database        |      string      |    是    |                        表所在的库 |
+| dialect         |      string      |    是    |        数据库的类型，默认为 mysql |
+| connectionLimit |      number      |    否    |    连接池的最大连接数，默认为 1。 |
+| connectTimeout  |      number      |    否    | 连接的超时时间，默认为 1000(ms)。 |
 
 > 因为本框架是使用连接池的方式连接数据库，所以 connectionLimit 设置的值越大，那连接池里面缓存的连接数就越多。
 > 同时如果连接池的连接都正在忙，那新的连接请求就会进入队列等待，所以不用担心连接数会超过数据库的最大限制。
