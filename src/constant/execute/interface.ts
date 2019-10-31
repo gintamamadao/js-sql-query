@@ -5,6 +5,7 @@ export interface ConnectConfig {
     user: string;
     password?: string;
     database: string;
+    connectTimeout?: number;
     connectionLimit?: number;
     dialect?: DialectTypes;
 }

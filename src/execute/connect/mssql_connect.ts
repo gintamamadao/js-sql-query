@@ -5,11 +5,9 @@ import ErrMsg from "../../error/execute/index";
 import BaseConnect from "./base_connect";
 
 class MyssqlConnect extends BaseConnect {
-    mssqlRequest;
     constructor(config: ConnectConfig) {
         super(config);
         this.pool = this.getPool();
-        this.mssqlRequest = this.loadModule(DialectModules.mssql).Request;
     }
 
     getPool() {
@@ -18,65 +16,43 @@ class MyssqlConnect extends BaseConnect {
         if (Type.object.is(pool) && Type.function.is(pool.acquire)) {
             return pool;
         }
-        const poolConfig = {
-            min: 1,
-            max: dbConfig.connectionLimit || 0
-        };
-        const connectionConfig = {
-            userName: dbConfig.user,
-            password: dbConfig.password,
+        const config = {
             server: dbConfig.host,
-            options: {
-                port: dbConfig.port,
-                database: dbConfig.database
+            port: dbConfig.port,
+            user: dbConfig.user,
+            password: dbConfig.password,
+            database: dbConfig.database,
+            connectionTimeout: dbConfig.connectTimeout,
+            pool: {
+                min: 1,
+                max: dbConfig.connectionLimit || 1
             }
         };
-        const MssqlPoolModule = this.loadModule(DialectModules.mssqlPool);
-        pool = new MssqlPoolModule(poolConfig, connectionConfig);
+        const MssqlModule = this.loadModule(DialectModules.mssql);
+        pool = new MssqlModule.ConnectionPool(config).connect();
         return pool;
     }
 
     getDbConnect() {
         const pool = this.getPool() || {};
-        const mssqlRequest = this.mssqlRequest;
-        if (Type.function.isNot(pool.acquire)) {
+        if (Type.function.isNot(pool.request)) {
             throw new Error(ErrMsg.emptyConnectPool);
         }
-        return new Promise((relsove, reject) => {
-            pool.acquire((err, connection) => {
-                if (err) {
-                    reject(err);
-                }
-                if (
-                    !connection ||
-                    Type.function.isNot(connection.execSql) ||
-                    Type.function.isNot(connection.release)
-                ) {
-                    reject(new Error(ErrMsg.errorConnect));
-                }
-                const conn = {
-                    query: function(query, fn) {
-                        const request = new mssqlRequest(query, function(
-                            err,
-                            rowCount
-                        ) {
-                            if (err) {
-                                fn(err);
-                                return;
-                            }
-                            fn(null, rowCount);
-                        });
-                        request.on("row", function(columns) {
-                            fn(null, columns);
-                        });
-                        connection.execSql(request);
-                    },
-                    release: function() {
-                        connection.release();
-                    }
-                };
-                relsove(conn);
-            });
+        return new Promise(async (relsove, reject) => {
+            await pool;
+            const request = pool.request();
+            const conn = {
+                query: function(query, cb) {
+                    request.query(query, (err, result) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        cb(err, result);
+                    });
+                },
+                release: () => {}
+            };
+            relsove(conn);
         });
     }
 }

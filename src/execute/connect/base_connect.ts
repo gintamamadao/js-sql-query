@@ -19,6 +19,7 @@ class BaseConnect {
         const password: string = config.password;
         const port: string | number = config.port;
         const database: string = config.database;
+        const connectTimeout: number = config.connectTimeout;
         let connectionLimit: number = config.connectionLimit;
         connectionLimit = Type.number.isNatural(connectionLimit)
             ? connectionLimit
@@ -29,6 +30,7 @@ class BaseConnect {
             password,
             port,
             database,
+            connectTimeout,
             connectionLimit
         };
         this.dbConfig = Type.object.pure(dbConfig);

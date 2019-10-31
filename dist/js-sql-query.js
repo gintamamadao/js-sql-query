@@ -404,8 +404,7 @@ var DialectModules;
 
 (function (DialectModules) {
   DialectModules["mysql"] = "mysql";
-  DialectModules["mssql"] = "tedious";
-  DialectModules["mssqlPool"] = "tedious-connection-pool";
+  DialectModules["mssql"] = "mssql";
 })(DialectModules || (DialectModules = {}));
 
 const fieldDataArrSchema = new schemaVerify.Schema({
@@ -3329,6 +3328,7 @@ class BaseConnect {
     const password = config.password;
     const port = config.port;
     const database = config.database;
+    const connectTimeout = config.connectTimeout;
     let connectionLimit = config.connectionLimit;
     connectionLimit = schemaVerify.Type.number.isNatural(connectionLimit) ? connectionLimit : 1;
     let dbConfig = {
@@ -3337,6 +3337,7 @@ class BaseConnect {
       password,
       port,
       database,
+      connectTimeout,
       connectionLimit
     };
     this.dbConfig = schemaVerify.Type.object.pure(dbConfig);
@@ -3403,7 +3404,6 @@ class MyssqlConnect extends BaseConnect {
   constructor(config) {
     super(config);
     this.pool = this.getPool();
-    this.mssqlRequest = this.loadModule(DialectModules.mssql).Request;
   }
 
   getPool() {
@@ -3414,63 +3414,46 @@ class MyssqlConnect extends BaseConnect {
       return pool;
     }
 
-    const poolConfig = {
-      min: 1,
-      max: dbConfig.connectionLimit || 0
-    };
-    const connectionConfig = {
-      userName: dbConfig.user,
-      password: dbConfig.password,
+    const config = {
       server: dbConfig.host,
-      options: {
-        port: dbConfig.port,
-        database: dbConfig.database
+      port: dbConfig.port,
+      user: dbConfig.user,
+      password: dbConfig.password,
+      database: dbConfig.database,
+      connectionTimeout: dbConfig.connectTimeout,
+      pool: {
+        min: 1,
+        max: dbConfig.connectionLimit || 1
       }
     };
-    const MssqlPoolModule = this.loadModule(DialectModules.mssqlPool);
-    pool = new MssqlPoolModule(poolConfig, connectionConfig);
+    const MssqlModule = this.loadModule(DialectModules.mssql);
+    pool = new MssqlModule.ConnectionPool(config).connect();
     return pool;
   }
 
   getDbConnect() {
     const pool = this.getPool() || {};
-    const mssqlRequest = this.mssqlRequest;
 
-    if (schemaVerify.Type.function.isNot(pool.acquire)) {
+    if (schemaVerify.Type.function.isNot(pool.request)) {
       throw new Error(ErrMsg$e.emptyConnectPool);
     }
 
-    return new Promise((relsove, reject) => {
-      pool.acquire((err, connection) => {
-        if (err) {
-          reject(err);
-        }
+    return new Promise(async (relsove, reject) => {
+      await pool;
+      const request = pool.request();
+      const conn = {
+        query: function (query, cb) {
+          request.query(query, (err, result) => {
+            if (err) {
+              reject(err);
+            }
 
-        if (!connection || schemaVerify.Type.function.isNot(connection.execSql) || schemaVerify.Type.function.isNot(connection.release)) {
-          reject(new Error(ErrMsg$e.errorConnect));
-        }
-
-        const conn = {
-          query: function (query, fn) {
-            const request = new mssqlRequest(query, function (err, rowCount) {
-              if (err) {
-                fn(err);
-                return;
-              }
-
-              fn(null, rowCount);
-            });
-            request.on("row", function (columns) {
-              fn(null, columns);
-            });
-            connection.execSql(request);
-          },
-          release: function () {
-            connection.release();
-          }
-        };
-        relsove(conn);
-      });
+            cb(err, result);
+          });
+        },
+        release: () => {}
+      };
+      relsove(conn);
     });
   }
 

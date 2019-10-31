@@ -23,8 +23,7 @@ npm i mysql --save
 > 如果使用的是 Microsoft SQL Server，需要安装依赖
 
 ```sh
-npm i tedious@1.14.0 --save
-npm i tedious-connection-pool@1.0.5 --save
+npm i mssql --save
 ```
 
 ## 使用例子
@@ -58,19 +57,19 @@ var result = await sqlQuery
 
 -   [Build SQL Api](#build-sql-api)
     -   [INSERT/REPLACE](#insertreplace)
-        -   [insert/replace](#insertreplace)
+        -   [insert/replace](#insertreplace-1)
         -   [data](#data)
         -   [multiData](#multidata)
         -   [values](#values)
         -   [fields](#fields)
     -   [UPDATE](#update)
-        -   [update](#update)
+        -   [update](#update-1)
         -   [set](#set)
         -   [add](#add)
         -   [minus](#minus)
     -   [SELECT](#select)
-        -   [select](#select)
-        -   [fields](#fields)
+        -   [select](#select-1)
+        -   [fields](#fields-1)
         -   [count 等函数](#count-等函数)
         -   [groupBy](#groupby)
         -   [asMap](#asmap)
@@ -81,9 +80,9 @@ var result = await sqlQuery
         -   [leftJoin](#leftjoin)
         -   [rightJoin](#rightjoin)
     -   [DELETE](#delete)
-        -   [delete](#delete)
+        -   [delete](#delete-1)
     -   [WHERE](#where)
-        -   [where](#where)
+        -   [where](#where-1)
         -   [whereEqual](#whereequal)
         -   [whereNotEqual](#wherenotequal)
         -   [whereIn](#wherein)
@@ -111,7 +110,7 @@ var result = await sqlQuery
         -   [whereBracket](#wherebracket)
         -   [whereOrBracket](#whereorbracket)
     -   [HAVING](#having)
-        -   [having](#having)
+        -   [having](#having-1)
         -   [havingEqual](#havingequal)
         -   [havingNotEqual](#havingnotequal)
         -   [havingIn](#havingin)
@@ -175,11 +174,11 @@ var result = await sqlQuery
         -   [paging](#paging)
         -   [findOne](#findOne)
     -   [CREATE](#create)
-        -   [create](#create)
+        -   [create](#create-1)
         -   [info](#info)
         -   [dataBase](#database)
     -   [ALTER](#alter)
-        -   [alter](#alter)
+        -   [alter](#alter-1)
         -   [add](#add)
         -   [drop](#drop)
         -   [modify](#modify)
