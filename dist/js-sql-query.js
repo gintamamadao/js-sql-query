@@ -3432,14 +3432,10 @@ class MyssqlConnect extends BaseConnect {
   }
 
   getDbConnect() {
-    const pool = this.getPool() || {};
-
-    if (schemaVerify.Type.function.isNot(pool.request)) {
-      throw new Error(ErrMsg$e.emptyConnectPool);
-    }
-
+    let pool = this.getPool() || {};
     return new Promise(async (relsove, reject) => {
-      await pool;
+      pool = await pool;
+      this.pool = pool;
       const request = pool.request();
       const conn = {
         query: function (query, cb) {
