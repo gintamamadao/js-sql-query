@@ -239,20 +239,6 @@ const DialectsObj = {
   }
 };
 
-const fieldDataArrSchema = new schemaVerify.Schema({
-  type: Array,
-  elements: {
-    type: Object,
-    required: true,
-    props: [[{
-      type: String
-    }, {
-      type: Number
-    }]]
-  }
-});
-const fieldDataArrVerify = fieldDataArrSchema.verify;
-
 var DialectTypes;
 
 (function (DialectTypes) {
@@ -413,6 +399,28 @@ var JoinTypes;
   JoinTypes["left"] = "LEFT";
   JoinTypes["right"] = "RIGHT";
 })(JoinTypes || (JoinTypes = {}));
+
+var DialectModules;
+
+(function (DialectModules) {
+  DialectModules["mysql"] = "mysql";
+  DialectModules["mssql"] = "tedious";
+  DialectModules["mssqlPool"] = "tedious-connection-pool";
+})(DialectModules || (DialectModules = {}));
+
+const fieldDataArrSchema = new schemaVerify.Schema({
+  type: Array,
+  elements: {
+    type: Object,
+    required: true,
+    props: [[{
+      type: String
+    }, {
+      type: Number
+    }]]
+  }
+});
+const fieldDataArrVerify = fieldDataArrSchema.verify;
 
 const funcInfoSchema = new schemaVerify.Schema({
   type: Object,
@@ -891,12 +899,34 @@ const fieldDataVerify = new schemaVerify.Schema({
 
 class Base {
   constructor() {
-    this.safeValue = function () {
+    this._safeValue = function () {
       return "";
     };
 
-    this.safeKey = function () {
+    this._safeKey = function () {
       return "";
+    };
+
+    this.safeValue = function (value) {
+      const _dialectType = this._dialectType;
+      let dbModule;
+
+      switch (_dialectType) {
+        case DialectTypes.mysql:
+          dbModule = this.loadModule(DialectModules.mysql);
+          value = dbModule.escape(value);
+          break;
+
+        default:
+          value = this._safeValue(value);
+          break;
+      }
+
+      return value;
+    };
+
+    this.safeKey = function (key) {
+      return this._safeKey(key);
     };
   }
 
@@ -922,8 +952,20 @@ class Base {
     const dialect = DialectsObj[dialectType];
     this._dialect = dialect;
     this._dialectType = dialectType;
-    this.safeValue = dialect.safeValue;
-    this.safeKey = dialect.safeKey;
+    this._safeValue = dialect.safeValue;
+    this._safeKey = dialect.safeKey;
+  }
+
+  loadModule(moduleName) {
+    try {
+      return require(moduleName);
+    } catch (err) {
+      if (err && err.code === "MODULE_NOT_FOUND") {
+        throw new Error(`请先安装模块 ${moduleName}`);
+      }
+
+      throw err;
+    }
   }
 
   manualSql(sql, key) {
@@ -3223,14 +3265,6 @@ class Alter extends Base {
   }
 
 }
-
-var DialectModules;
-
-(function (DialectModules) {
-  DialectModules["mysql"] = "mysql";
-  DialectModules["mssql"] = "tedious";
-  DialectModules["mssqlPool"] = "tedious-connection-pool";
-})(DialectModules || (DialectModules = {}));
 
 const ErrMsg$d = {
   errorConnectConfig: "错误的连接配置",

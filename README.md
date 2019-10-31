@@ -464,7 +464,7 @@ sqlQuery
 ```
 
 ```sql
-UPDATE `table1` SET `field1` = `field1` + '1' WHERE `field2` = 'value2'
+UPDATE `table1` SET `field1` = `field1` + 1 WHERE `field2` = 'value2'
 ```
 
 ---
@@ -493,7 +493,7 @@ sqlQuery
 ```
 
 ```sql
-UPDATE `table1` SET `field1` = `field1` - '1' WHERE `field2` = 'value2'
+UPDATE `table1` SET `field1` = `field1` - 1 WHERE `field2` = 'value2'
 ```
 
 ## SELECT

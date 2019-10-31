@@ -77,7 +77,7 @@ describe("UPDATE", () => {
     });
     test("SET", () => {
         const QUERY =
-            "UPDATE `table1` SET `field1` = `field1` + '1' WHERE `field2` = 'value2'";
+            "UPDATE `table1` SET `field1` = `field1` + 1 WHERE `field2` = 'value2'";
         expect(
             (() =>
                 builder
@@ -94,7 +94,7 @@ describe("UPDATE", () => {
     });
     test("SET", () => {
         const QUERY =
-            "UPDATE `table1` SET `field1` = `field1` - '1' WHERE `field2` = 'value2'";
+            "UPDATE `table1` SET `field1` = `field1` - 1 WHERE `field2` = 'value2'";
         expect(
             (() =>
                 builder

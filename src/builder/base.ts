@@ -1,5 +1,6 @@
 import Dialects from "../util/dialects";
 import { DialectTypes } from "../constant/builder/enum";
+import { DialectModules } from "../constant/execute/enum";
 import { SafeValue, SafeKey, Dialect } from "../constant/builder/interface";
 import { Type } from "schema-verify";
 import { dialectVerify, manualSqlVerify } from "../verify/builder/index";
@@ -31,16 +32,46 @@ class Base {
         const dialect = Dialects[dialectType];
         this._dialect = dialect;
         this._dialectType = dialectType;
-        this.safeValue = dialect.safeValue;
-        this.safeKey = dialect.safeKey;
+        this._safeValue = dialect.safeValue;
+        this._safeKey = dialect.safeKey;
     }
 
-    protected safeValue: SafeValue = function() {
+    protected _safeValue: SafeValue = function() {
         return "";
     };
 
-    protected safeKey: SafeKey = function() {
+    protected _safeKey: SafeKey = function() {
         return "";
+    };
+
+    protected loadModule(moduleName) {
+        try {
+            return require(moduleName);
+        } catch (err) {
+            if (err && err.code === "MODULE_NOT_FOUND") {
+                throw new Error(`请先安装模块 ${moduleName}`);
+            }
+            throw err;
+        }
+    }
+
+    protected safeValue: SafeValue = function(value: string) {
+        const _dialectType = this._dialectType;
+        let dbModule;
+        switch (_dialectType) {
+            case DialectTypes.mysql:
+                dbModule = this.loadModule(DialectModules.mysql);
+                value = dbModule.escape(value);
+                break;
+            default:
+                value = this._safeValue(value);
+                break;
+        }
+        return value;
+    };
+
+    protected safeKey: SafeKey = function(key: string) {
+        return this._safeKey(key);
     };
 
     protected manualSql(sql: string | Function, key: string) {
