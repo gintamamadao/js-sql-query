@@ -843,7 +843,8 @@ const joinInfoSchema = new schemaVerify.Schema({
           symbol: {
             type: String,
             required: true,
-            minLength: 1
+            minLength: 1,
+            enum: TermSign
           },
           tableFields: {
             type: Object,
