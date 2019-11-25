@@ -1,10 +1,10 @@
 {
     "name": "js-sql-query",
-    "version": "1.5.9",
+    "version": "1.6.0",
     "description": "Node.js ORM for MySQL and Microsoft SQL Server",
     "main": "./dist/js-sql-query.js",
     "scripts": {
-        "test": "jest",
+        "test": "jest --coverage",
         "dev": "node_modules/.bin/rollup -c ./build/rollup.dev.config.js -w",
         "build": "node_modules/.bin/rollup -c ./build/rollup.bundle.config.js"
     },
