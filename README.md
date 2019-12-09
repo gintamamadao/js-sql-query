@@ -81,62 +81,7 @@ var result = await sqlQuery
         -   [rightJoin](#rightjoin)
     -   [DELETE](#delete)
         -   [delete](#delete-1)
-    -   [WHERE](#where)
-        -   [where](#where-1)
-        -   [whereEqual](#whereequal)
-        -   [whereNotEqual](#wherenotequal)
-        -   [whereIn](#wherein)
-        -   [whereNotIn](#wherenotin)
-        -   [whereMore](#wheremore)
-        -   [whereLess](#whereless)
-        -   [whereMoreEqual](#wheremoreequal)
-        -   [whereLessEqual](#wherelessequal)
-        -   [whereLike](#wherelike)
-        -   [whereNotLike](#wherenotlike)
-        -   [whereBetween](#wherebetween)
-        -   [whereNotBetween](#wherenotbetween)
-        -   [whereOrEqual](#whereorequal)
-        -   [whereOrNotEqual](#whereornotequal)
-        -   [whereOrIn](#whereorin)
-        -   [whereOrNotIn](#whereornotin)
-        -   [whereOrMore](#whereormore)
-        -   [whereOrLess](#whereorless)
-        -   [whereOrMoreEqual](#whereormoreequal)
-        -   [whereOrLessEqual](#whereorlessequal)
-        -   [whereOrLike](#whereorlike)
-        -   [whereOrNotLike](#whereornotlike)
-        -   [whereOrBetween](#whereorbetween)
-        -   [whereOrNotBetween](#whereornotbetween)
-        -   [whereBracket](#wherebracket)
-        -   [whereOrBracket](#whereorbracket)
-    -   [HAVING](#having)
-        -   [having](#having-1)
-        -   [havingEqual](#havingequal)
-        -   [havingNotEqual](#havingnotequal)
-        -   [havingIn](#havingin)
-        -   [havingNotIn](#havingnotin)
-        -   [havingMore](#havingmore)
-        -   [havingLess](#havingless)
-        -   [havingMoreEqual](#havingmoreequal)
-        -   [havingLessEqual](#havinglessequal)
-        -   [havingLike](#havinglike)
-        -   [havingNotLike](#havingnotlike)
-        -   [havingBetween](#havingbetween)
-        -   [havingNotBetween](#havingnotbetween)
-        -   [havingOrEqual](#havingorequal)
-        -   [havingOrNotEqual](#havingornotequal)
-        -   [havingOrIn](#havingorin)
-        -   [havingOrNotIn](#havingornotin)
-        -   [havingOrMore](#havingormore)
-        -   [havingOrMoreEqual](#havingormoreequal)
-        -   [havingOrLessEqual](#havingorlessequal)
-        -   [havingOrLike](#havingorlike)
-        -   [havingOrNotLike](#havingornotlike)
-        -   [havingOrBetween](#havingorbetween)
-        -   [havingOrNotBetween](#havingornotbetween)
-        -   [havingBracket](#havingbracket)
-        -   [havingOrBracket](#havingorbracket)
-    -   [TERM](#term)
+    -   [CONDITION](#condition)
         -   [equal](#equal)
         -   [notEqual](#notequal)
         -   [in](#in)
@@ -1812,13 +1757,53 @@ _参数和逻辑与 whereOrBracket api 一致_
 
 ---
 
-## TERM
+## CONDITION
 
-> `Term` 的 `api` 的参数和逻辑跟 `WHERE` 和 `HAVING` 的 `api` 是一样的。
-
-> `Term` 没有前缀，如果条件语句过于复杂，可以用 `term` 使代码更简洁。
+> 条件相关的 `api`
 
 ---
+
+### `where`
+
+> 指定之后调用的条件 api 的结果是属于 `WHERE` 后面的
+
+_例子_
+
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .where()
+    .equal({
+        field1: "value1"
+    })
+    .build();
+```
+
+```sql
+SELECT * FROM `table1` WHERE `field1` = 'value1'
+```
+
+### `having`
+
+> 指定之后调用的条件 api 的结果是属于 `HAVING` 后面的
+
+_例子_
+
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .having()
+    .equal({
+        field1: "value1"
+    })
+    .build();
+```
+
+```sql
+SELECT * FROM `table1` HAVING `field1` = 'value1'
+```
 
 ### `equal`
 
@@ -1830,11 +1815,10 @@ _例子_
 sqlQuery
     .select()
     .table("table1")
-    .where(() =>
-        sqlQuery.term.equal({
-            field1: "value1"
-        })
-    )
+    .where()
+    .equal({
+        field1: "value1"
+    })
     .build();
 ```
 
@@ -1854,11 +1838,10 @@ _例子_
 sqlQuery
     .select()
     .table("table1")
-    .where(() =>
-        sqlQuery.term.notEqual({
-            field1: "value1"
-        })
-    )
+    .where()
+    .notEqual({
+        field1: "value1"
+    })
     .build();
 ```
 
@@ -1878,11 +1861,10 @@ _例子_
 sqlQuery
     .select()
     .table("table1")
-    .where(() =>
-        sqlQuery.term.in({
-            field1: ["value1", "value2"]
-        })
-    )
+    .where()
+    .in({
+        field1: ["value1", "value2"]
+    })
     .build();
 ```
 
@@ -1902,11 +1884,10 @@ _例子_
 sqlQuery
     .select()
     .table("table1")
-    .where(() =>
-        sqlQuery.term.notIn({
-            field1: ["value1", "value2"]
-        })
-    )
+    .where()
+    .notIn({
+        field1: ["value1", "value2"]
+    })
     .build();
 ```
 
@@ -1926,11 +1907,10 @@ _例子_
 sqlQuery
     .select()
     .table("table1")
-    .where(() =>
-        sqlQuery.term.more({
-            field1: "value1"
-        })
-    )
+    .where()
+    .more({
+        field1: "value1"
+    })
     .build();
 ```
 
@@ -1950,11 +1930,10 @@ _例子_
 sqlQuery
     .select()
     .table("table1")
-    .where(() =>
-        sqlQuery.term.less({
-            field1: "value1"
-        })
-    )
+    .where()
+    .less({
+        field1: "value1"
+    })
     .build();
 ```
 
@@ -1974,11 +1953,10 @@ _例子_
 sqlQuery
     .select()
     .table("table1")
-    .where(() =>
-        sqlQuery.term.moreEqual({
-            field1: "value1"
-        })
-    )
+    .where()
+    .moreEqual({
+        field1: "value1"
+    })
     .build();
 ```
 
@@ -1998,11 +1976,10 @@ _例子_
 sqlQuery
     .select()
     .table("table1")
-    .where(() =>
-        sqlQuery.term.lessEqual({
-            field1: "value1"
-        })
-    )
+    .where()
+    .lessEqual({
+        field1: "value1"
+    })
     .build();
 ```
 
@@ -2022,11 +1999,10 @@ _例子_
 sqlQuery
     .select()
     .table("table1")
-    .where(() =>
-        sqlQuery.term.like({
-            field1: "value1"
-        })
-    )
+    .where()
+    .like({
+        field1: "value1"
+    })
     .build();
 ```
 
@@ -2046,11 +2022,10 @@ _例子_
 sqlQuery
     .select()
     .table("table1")
-    .where(() =>
-        sqlQuery.term.notLike({
-            field1: "value1"
-        })
-    )
+    .where()
+    .notLike({
+        field1: "value1"
+    })
     .build();
 ```
 
@@ -2070,11 +2045,10 @@ _例子_
 sqlQuery
     .select()
     .table("table1")
-    .where(() =>
-        sqlQuery.term.between({
-            field1: ["value1", "value2"]
-        })
-    )
+    .where()
+    .between({
+        field1: ["value1", "value2"]
+    })
     .build();
 ```
 
@@ -2094,11 +2068,10 @@ _例子_
 sqlQuery
     .select()
     .table("table1")
-    .where(() =>
-        sqlQuery.term.notBetween({
-            field1: ["value1", "value2"]
-        })
-    )
+    .where()
+    .notBetween({
+        field1: ["value1", "value2"]
+    })
     .build();
 ```
 
@@ -2118,12 +2091,11 @@ _例子_
 sqlQuery
     .select()
     .table("table1")
-    .where(() =>
-        sqlQuery.term.orEqual({
-            field1: "value1",
-            field2: "value2"
-        })
-    )
+    .where()
+    .orEqual({
+        field1: "value1",
+        field2: "value2"
+    })
     .build();
 ```
 
