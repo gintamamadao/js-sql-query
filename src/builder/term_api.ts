@@ -6,6 +6,7 @@ import { TermTypes } from "../constant/builder/enum";
 import { WHERE_TERM_API } from "../constant/builder/constant";
 import ErrMsg from "../error/builder/index";
 
+const TERM_TYPES = Object.values(TermTypes);
 class TermApi extends Query {
     protected termStatus: TermTypes;
     constructor() {
@@ -13,7 +14,7 @@ class TermApi extends Query {
         for (const termApi in WHERE_TERM_API) {
             this[termApi] = function(data: TermData) {
                 const termStatus: TermTypes = this.termStatus;
-                if (Type.string.isNot(TermTypes[termStatus])) {
+                if (!TERM_TYPES.includes(termStatus)) {
                     throw new Error(ErrMsg.errorTermStatus);
                 }
                 this.getTermCase(termStatus)[termApi](data);

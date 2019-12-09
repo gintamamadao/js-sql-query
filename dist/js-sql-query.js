@@ -1874,6 +1874,8 @@ const HAVING_TERM_API = {
   orNotBetween: "havingOrNotBetween"
 };
 
+const TERM_TYPES = Object.values(TermTypes);
+
 class TermApi extends Query {
   constructor() {
     super();
@@ -1882,7 +1884,7 @@ class TermApi extends Query {
       this[termApi] = function (data) {
         const termStatus = this.termStatus;
 
-        if (schemaVerify.Type.string.isNot(TermTypes[termStatus])) {
+        if (!TERM_TYPES.includes(termStatus)) {
           throw new Error(ErrMsg$c.errorTermStatus);
         }
 
