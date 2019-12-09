@@ -82,6 +82,8 @@ var result = await sqlQuery
     -   [DELETE](#delete)
         -   [delete](#delete-1)
     -   [CONDITION](#condition)
+        -   [where](#where)
+        -   [having](#having)
         -   [equal](#equal)
         -   [notEqual](#notequal)
         -   [in](#in)
