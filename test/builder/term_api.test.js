@@ -366,4 +366,42 @@ describe("SELECT:HAVING:TERM", () => {
                     .build())()
         ).toBe(QUERY);
     });
+    test("=", () => {
+        const QUERY =
+            "SELECT * FROM `table1` WHERE `field1` = 'value1' HAVING `field2` = 'value2'";
+        expect(
+            (() =>
+                builder
+                    .select()
+                    .table("table1")
+                    .where()
+                    .equal({
+                        field1: "value1"
+                    })
+                    .having()
+                    .equal({
+                        field2: "value2"
+                    })
+                    .build())()
+        ).toBe(QUERY);
+    });
+    test("=", () => {
+        const QUERY =
+            "SELECT * FROM `table1` WHERE `field1` = 'value1' HAVING `field2` = 'value2'";
+        expect(
+            (() =>
+                builder
+                    .select()
+                    .table("table1")
+                    .having()
+                    .equal({
+                        field2: "value2"
+                    })
+                    .where()
+                    .equal({
+                        field1: "value1"
+                    })
+                    .build())()
+        ).toBe(QUERY);
+    });
 });
