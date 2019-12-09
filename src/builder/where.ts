@@ -31,14 +31,18 @@ class Where extends Query {
 
     where(sql: string | Function | object | undefined) {
         if (Type.undefined.isNot(sql)) {
-            this.getWhereTermCase().sqlTerm(sql);
+            const term: Term = this.getWhereTermCase();
+            if (Type.function.is(sql)) {
+                sql = (<Function>sql).bind(this, term);
+            }
+            term.sqlTerm(sql);
         } else {
             this.termStatus = TermTypes.where;
         }
         return this;
     }
 
-    protected getWhereTermCase() {
+    protected getWhereTermCase(): Term {
         let term: Term = this[TermTypes.where];
         if (!term || !(term instanceof Term)) {
             term = new Term();

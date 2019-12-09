@@ -31,14 +31,18 @@ class Having extends Where {
 
     having(sql: string | Function | object | undefined) {
         if (Type.undefined.isNot(sql)) {
-            this.getHavingTermCase().sqlTerm(sql);
+            const term: Term = this.getHavingTermCase();
+            if (Type.function.is(sql)) {
+                sql = (<Function>sql).bind(this, term);
+            }
+            term.sqlTerm(sql);
         } else {
             this.termStatus = TermTypes.having;
         }
         return this;
     }
 
-    protected getHavingTermCase() {
+    protected getHavingTermCase(): Term {
         let term: Term = this[TermTypes.having];
         if (!term || !(term instanceof Term)) {
             term = new Term();

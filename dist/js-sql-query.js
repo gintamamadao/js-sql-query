@@ -1899,7 +1899,13 @@ class Where extends Query {
 
   where(sql) {
     if (schemaVerify.Type.undefined.isNot(sql)) {
-      this.getWhereTermCase().sqlTerm(sql);
+      const term = this.getWhereTermCase();
+
+      if (schemaVerify.Type.function.is(sql)) {
+        sql = sql.bind(this, term);
+      }
+
+      term.sqlTerm(sql);
     } else {
       this.termStatus = TermTypes.where;
     }
@@ -1958,7 +1964,13 @@ class Having extends Where {
 
   having(sql) {
     if (schemaVerify.Type.undefined.isNot(sql)) {
-      this.getHavingTermCase().sqlTerm(sql);
+      const term = this.getHavingTermCase();
+
+      if (schemaVerify.Type.function.is(sql)) {
+        sql = sql.bind(this, term);
+      }
+
+      term.sqlTerm(sql);
     } else {
       this.termStatus = TermTypes.having;
     }
