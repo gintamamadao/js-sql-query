@@ -25,12 +25,18 @@ class TermApi extends Query {
 
     bracket() {
         const termStatus: TermTypes = this.termStatus;
+        if (!TERM_TYPES.includes(termStatus)) {
+            throw new Error(ErrMsg.errorTermStatus);
+        }
         this.getTermCase(termStatus).bracket();
         return this;
     }
 
     orBracket() {
         const termStatus: TermTypes = this.termStatus;
+        if (!TERM_TYPES.includes(termStatus)) {
+            throw new Error(ErrMsg.errorTermStatus);
+        }
         this.getTermCase(termStatus).orBracket();
         return this;
     }

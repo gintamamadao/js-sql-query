@@ -1896,12 +1896,22 @@ class TermApi extends Query {
 
   bracket() {
     const termStatus = this.termStatus;
+
+    if (!TERM_TYPES.includes(termStatus)) {
+      throw new Error(ErrMsg$c.errorTermStatus);
+    }
+
     this.getTermCase(termStatus).bracket();
     return this;
   }
 
   orBracket() {
     const termStatus = this.termStatus;
+
+    if (!TERM_TYPES.includes(termStatus)) {
+      throw new Error(ErrMsg$c.errorTermStatus);
+    }
+
     this.getTermCase(termStatus).orBracket();
     return this;
   }
