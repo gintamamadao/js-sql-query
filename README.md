@@ -58,6 +58,10 @@ var result = await sqlQuery
 -   [Build SQL Api](#build-sql-api)
     -   [COMMEN](#COMMEN)
         -   [table](#table)
+        -   [build](#build)
+        -   [storeSql](#storeSql)
+        -   [getStore](#getStore)
+        -   [cleanStoreSql](#cleanStoreSql)
     -   [INSERT/REPLACE](#insertreplace)
         -   [insert/replace](#insertreplace-1)
         -   [data](#data)
@@ -136,6 +140,7 @@ var result = await sqlQuery
     -   [Connect Config](#connect-config)
     -   [Connect Api](#connect-api)
         -   [exec](#exec)
+        -   [execAll](#execAll)
 
 ---
 
@@ -206,6 +211,77 @@ sqlQuery.select().table("table1");
 
 ```js
 sqlQuery.table("test_table");
+```
+
+### `build`
+
+> 获取调用 api 的结果，返回 sql 字符串
+
+_参数_
+
+> 无
+
+_例子_
+
+```js
+sqlQuery
+    .insert()
+    .table("table1")
+    .data({
+        field1: "value1",
+        field2: "value2"
+    })
+    .build();
+// 输出 REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
+```
+
+### `storeSql`
+
+> 执行 build 并把 build 出来的 sql 字符串缓存起来
+
+_参数_
+
+> 无
+
+_例子_
+
+```js
+sqlQuery
+    .insert()
+    .table("table1")
+    .data({
+        field1: "value1",
+        field2: "value2"
+    })
+    .storeSql();
+```
+
+### `getStore`
+
+> 返回缓存起来的 sql 字符串
+
+_参数_
+
+> 无
+
+_例子_
+
+```js
+sqlQuery.getStore();
+```
+
+### `cleanStoreSql`
+
+> 清空缓存起来的 sql 字符串
+
+_参数_
+
+> 无
+
+_例子_
+
+```js
+sqlQuery.cleanStoreSql();
 ```
 
 ---
@@ -2113,18 +2189,56 @@ var result = await sqlQuery
 
 ### `exec`
 
-> api 只有一个就是 exec，exec()执行完后返回的是一个 Promise 对象。
-
+> 执行 sqlQuery 对象 build 生成的 sql 语句，执行完后返回的是一个 Promise 对象。
 > exec 也可以直接执行 sql 语句。只需要传入 sql 语句作为参数即可。
 
 _参数_
 
-> string? (String): 如果有，即执行输入 sql 语句，如果无，则执行 sqlQuery 对象 build 生成的 sql 语句。
+> sql? (String): 如果有，即执行输入 sql 语句，如果无，则执行 sqlQuery 对象 build 生成的 sql 语句。
 
 _例子_
 
 ```js
+var result = await sqlQuery
+    .select()
+    .table("table1")
+    .fields("field1", "field2")
+    .exec();
+```
+
+或者
+
+```js
 var result = await sqlQuery.exec("SELECT `field1`, `field2` FROM `table1`");
+```
+
+### `execAll`
+
+> 执行 sqlQuery 缓存的 sql 语句数组，执行完后返回的是一个 Promise 对象。
+> execAll 也可以直接执行 sql 语句。只需要传入 sql 语句数组作为参数即可。
+
+_参数_
+
+> sqls? (String[]): 如果有，即执行输入 sql 语句数组，如果无，则执行 sqlQuery 缓存的 sql 语句数组。
+
+_例子_
+
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .fields("field1", "field2")
+    .storeSql();
+
+var result = await sqlQuery.execAll();
+```
+
+或者
+
+```js
+var result = await sqlQuery.execAll([
+    "SELECT `field1`, `field2` FROM `table1`"
+]);
 ```
 
 ---

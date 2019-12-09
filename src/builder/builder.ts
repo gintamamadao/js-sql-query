@@ -17,6 +17,7 @@ import {
 import ErrMsg from "../error/builder/index";
 import Execute from "../execute/execute";
 import { ConnectConfig } from "../constant/execute/interface";
+import Store from "./store";
 
 const TABLE_QUERY_TYPE = [
     QueryTypes.insert,
@@ -170,6 +171,22 @@ class Builder {
 
     get query(): string {
         return this.build();
+    }
+
+    getStore() {
+        return Store.getStore();
+    }
+
+    storeSql(query: string) {
+        return Store.storeSql(query);
+    }
+
+    isStoreEmpty() {
+        return Store.isStoreEmpty();
+    }
+
+    cleanStoreSql() {
+        return Store.cleanStoreSql();
     }
 }
 

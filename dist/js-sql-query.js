@@ -905,6 +905,31 @@ const fieldDataVerify = new schemaVerify.Schema({
   }]]
 }).verify;
 
+let QUERY_LIST = [];
+
+class Store {
+  getStore() {
+    return QUERY_LIST.slice();
+  }
+
+  storeSql(query) {
+    if (schemaVerify.Type.string.isNotEmpty(query)) {
+      QUERY_LIST.push(query);
+    }
+  }
+
+  isStoreEmpty() {
+    return !(QUERY_LIST.length > 0);
+  }
+
+  cleanStoreSql() {
+    QUERY_LIST = [];
+  }
+
+}
+
+var Store$1 = new Store();
+
 class Base {
   constructor() {
     this._safeValue = function () {
@@ -1037,6 +1062,20 @@ class Base {
     return this.safeKey(queryTable);
   }
 
+  storeSql() {
+    let sqlStr;
+
+    try {
+      sqlStr = this.build();
+    } catch (e) {}
+
+    if (schemaVerify.Type.string.isNotEmpty(sqlStr)) {
+      Store$1.storeSql(sqlStr);
+    }
+
+    return this;
+  }
+
   setExecute(execute) {
     this._execute = execute;
   }
@@ -1054,6 +1093,27 @@ class Base {
     }
 
     return execute.exec(query);
+  }
+
+  execAll(queryList) {
+    const execute = this._execute;
+    queryList = schemaVerify.Type.array.isNotEmpty(queryList) ? queryList : Store$1.getStore();
+
+    if (schemaVerify.Type.object.isNot(execute) || schemaVerify.Type.function.isNot(execute.exec)) {
+      throw new Error(ErrMsg$c.errorExecute);
+    }
+
+    const promiseArr = [];
+
+    for (let query of queryList) {
+      if (!schemaVerify.Type.string.isNotEmpty(query)) {
+        continue;
+      }
+
+      promiseArr.push(execute.exec(query));
+    }
+
+    return Promise.all(promiseArr);
   }
 
 }
@@ -3585,6 +3645,22 @@ class Builder {
 
   get query() {
     return this.build();
+  }
+
+  getStore() {
+    return Store$1.getStore();
+  }
+
+  storeSql(query) {
+    return Store$1.storeSql(query);
+  }
+
+  isStoreEmpty() {
+    return Store$1.isStoreEmpty();
+  }
+
+  cleanStoreSql() {
+    return Store$1.cleanStoreSql();
   }
 
 }
