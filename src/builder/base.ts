@@ -6,6 +6,7 @@ import { Type } from "schema-verify";
 import { dialectVerify, manualSqlVerify } from "../verify/builder/index";
 import ErrMsg from "../error/builder/index";
 import Execute from "../execute/execute";
+import Store from "./store";
 
 class Base {
     protected _queryTable: string;
@@ -125,6 +126,17 @@ class Base {
         return this.safeKey(queryTable);
     }
 
+    storeSql() {
+        let sqlStr;
+        try {
+            sqlStr = this.build();
+        } catch (e) {}
+        if (Type.string.isNotEmpty(sqlStr)) {
+            Store.storeSql(sqlStr);
+        }
+        return this;
+    }
+
     setExecute(execute: Execute) {
         this._execute = execute;
     }
@@ -141,6 +153,24 @@ class Base {
             throw new Error(ErrMsg.errorExecute);
         }
         return execute.exec(query);
+    }
+
+    execAll(queryList?: string[]) {
+        const execute: Execute = this._execute;
+        queryList = Type.array.isNotEmpty(queryList)
+            ? queryList
+            : Store.getStore();
+        if (Type.object.isNot(execute) || Type.function.isNot(execute.exec)) {
+            throw new Error(ErrMsg.errorExecute);
+        }
+        const promiseArr = [];
+        for (let query of queryList) {
+            if (!Type.string.isNotEmpty(query)) {
+                continue;
+            }
+            promiseArr.push(execute.exec(query));
+        }
+        return Promise.all(promiseArr);
     }
 }
 

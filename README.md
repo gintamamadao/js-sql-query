@@ -56,6 +56,8 @@ var result = await sqlQuery
 <!-- TOC -->
 
 -   [Build SQL Api](#build-sql-api)
+    -   [COMMEN](#COMMEN)
+        -   [table](#table)
     -   [INSERT/REPLACE](#insertreplace)
         -   [insert/replace](#insertreplace-1)
         -   [data](#data)
@@ -159,12 +161,6 @@ var sqlQuery = new SqlQuery("mssql");
 // 不同语境生成的语句不完全一样，会根据相应的数据库类型进行适配
 ```
 
-> 可以设置一个默认的表名，这样每条 sql 语句就不用都特意指定一次。
-
-```js
-sqlQuery.table("test_table");
-```
-
 > 通过调用 build 可以获取拼装所得的语句, 只有执行了 build 才会开始拼装语句
 
 ```js
@@ -182,6 +178,34 @@ sqlQuery
 
 ```sql
 REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
+```
+
+---
+
+## COMMEN
+
+> 通用 api, 在任何类型下都能调用的 api
+
+### `table`
+
+> 设置 sql 语句的要操作的 table
+
+_参数_
+
+> -   table (String): 表名
+
+_例子_
+
+> 设置一个当前的表名
+
+```js
+sqlQuery.select().table("table1");
+```
+
+> 设置一个默认的表名
+
+```js
+sqlQuery.table("test_table");
 ```
 
 ---

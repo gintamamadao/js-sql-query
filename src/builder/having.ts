@@ -29,7 +29,7 @@ class Having extends Where {
         return this;
     }
 
-    having(sql: string | Function | object | undefined) {
+    having(sql?: string | Function | object) {
         if (Type.undefined.isNot(sql)) {
             const term: Term = this.getHavingTermCase();
             if (Type.function.is(sql)) {

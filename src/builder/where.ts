@@ -29,7 +29,7 @@ class Where extends TermApi {
         return this;
     }
 
-    where(sql: string | Function | object | undefined) {
+    where(sql?: string | Function | object) {
         if (Type.undefined.isNot(sql)) {
             const term: Term = this.getWhereTermCase();
             if (Type.function.is(sql)) {
