@@ -1818,125 +1818,73 @@ class Term extends Base {
 
 }
 
+const TABLE_OPT_VALUES = ["CURRENT_TIMESTAMP"];
+const FEILD_TEMPLATE = `{{field}}{{type}}{{unsigned}}{{notNull}}{{default}}{{autoIncrement}}{{onUpdate}}{{comment}}`;
+const WHERE_TERM_API = {
+  equal: "whereEqual",
+  notEqual: "whereNotEqual",
+  in: "whereIn",
+  notIn: "whereNotIn",
+  more: "whereMore",
+  less: "whereLess",
+  moreEqual: "whereMoreEqual",
+  lessEqual: "whereLessEqual",
+  like: "whereLike",
+  notLike: "whereNotLike",
+  between: "whereBetween",
+  notBetween: "whereNotBetween",
+  orEqual: "whereOrEqual",
+  orNotEqual: "whereOrNotEqual",
+  orIn: "whereOrIn",
+  orNotIn: "whereOrNotIn",
+  orMore: "whereOrMore",
+  orLess: "whereOrLess",
+  orMoreEqual: "whereOrMoreEqual",
+  orLessEqual: "whereOrLessEqual",
+  orLike: "whereOrLike",
+  orNotLike: "whereOrNotLike",
+  orBetween: "whereOrBetween",
+  orNotBetween: "whereOrNotBetween"
+};
+const HAVING_TERM_API = {
+  equal: "havingEqual",
+  notEqual: "havingNotEqual",
+  in: "havingIn",
+  notIn: "havingNotIn",
+  more: "havingMore",
+  less: "havingLess",
+  moreEqual: "havingMoreEqual",
+  lessEqual: "havingLessEqual",
+  like: "havingLike",
+  notLike: "havingNotLike",
+  between: "havingBetween",
+  notBetween: "havingNotBetween",
+  orEqual: "havingOrEqual",
+  orNotEqual: "havingOrNotEqual",
+  orIn: "havingOrIn",
+  orNotIn: "havingOrNotIn",
+  orMore: "havingOrMore",
+  orLess: "havingOrLess",
+  orMoreEqual: "havingOrMoreEqual",
+  orLessEqual: "havingOrLessEqual",
+  orLike: "havingOrLike",
+  orNotLike: "havingOrNotLike",
+  orBetween: "havingOrBetween",
+  orNotBetween: "havingOrNotBetween"
+};
+
 class Where extends Query {
-  whereEqual(data) {
-    this.getWhereTermCase().equal(data);
-    return this;
-  }
+  constructor() {
+    super();
 
-  whereNotEqual(data) {
-    this.getWhereTermCase().notEqual(data);
-    return this;
-  }
+    for (const termApi in WHERE_TERM_API) {
+      const whereTermApi = WHERE_TERM_API[termApi];
 
-  whereIn(data) {
-    this.getWhereTermCase().in(data);
-    return this;
-  }
-
-  whereNotIn(data) {
-    this.getWhereTermCase().notIn(data);
-    return this;
-  }
-
-  whereMore(data) {
-    this.getWhereTermCase().more(data);
-    return this;
-  }
-
-  whereLess(data) {
-    this.getWhereTermCase().less(data);
-    return this;
-  }
-
-  whereMoreEqual(data) {
-    this.getWhereTermCase().moreEqual(data);
-    return this;
-  }
-
-  whereLessEqual(data) {
-    this.getWhereTermCase().lessEqual(data);
-    return this;
-  }
-
-  whereLike(data) {
-    this.getWhereTermCase().like(data);
-    return this;
-  }
-
-  whereNotLike(data) {
-    this.getWhereTermCase().notLike(data);
-    return this;
-  }
-
-  whereBetween(data) {
-    this.getWhereTermCase().between(data);
-    return this;
-  }
-
-  whereNotBetween(data) {
-    this.getWhereTermCase().notBetween(data);
-    return this;
-  }
-
-  whereOrEqual(data) {
-    this.getWhereTermCase().orEqual(data);
-    return this;
-  }
-
-  whereOrNotEqual(data) {
-    this.getWhereTermCase().orNotEqual(data);
-    return this;
-  }
-
-  whereOrIn(data) {
-    this.getWhereTermCase().orIn(data);
-    return this;
-  }
-
-  whereOrNotIn(data) {
-    this.getWhereTermCase().orNotIn(data);
-    return this;
-  }
-
-  whereOrMore(data) {
-    this.getWhereTermCase().orMore(data);
-    return this;
-  }
-
-  whereOrLess(data) {
-    this.getWhereTermCase().orLess(data);
-    return this;
-  }
-
-  whereOrMoreEqual(data) {
-    this.getWhereTermCase().orMoreEqual(data);
-    return this;
-  }
-
-  whereOrLessEqual(data) {
-    this.getWhereTermCase().orLessEqual(data);
-    return this;
-  }
-
-  whereOrLike(data) {
-    this.getWhereTermCase().orLike(data);
-    return this;
-  }
-
-  whereOrNotLike(data) {
-    this.getWhereTermCase().orNotLike(data);
-    return this;
-  }
-
-  whereOrBetween(data) {
-    this.getWhereTermCase().orBetween(data);
-    return this;
-  }
-
-  whereOrNotBetween(data) {
-    this.getWhereTermCase().orNotBetween(data);
-    return this;
+      this[whereTermApi] = function (data) {
+        this.getWhereTermCase()[termApi](data);
+        return this;
+      };
+    }
   }
 
   whereBracket() {
@@ -1985,124 +1933,17 @@ class Where extends Query {
 }
 
 class Having extends Where {
-  havingEqual(data) {
-    this.getHavingTermCase().equal(data);
-    return this;
-  }
+  constructor() {
+    super();
 
-  havingNotEqual(data) {
-    this.getHavingTermCase().notEqual(data);
-    return this;
-  }
+    for (const termApi in HAVING_TERM_API) {
+      const whereTermApi = HAVING_TERM_API[termApi];
 
-  havingIn(data) {
-    this.getHavingTermCase().in(data);
-    return this;
-  }
-
-  havingNotIn(data) {
-    this.getHavingTermCase().notIn(data);
-    return this;
-  }
-
-  havingMore(data) {
-    this.getHavingTermCase().more(data);
-    return this;
-  }
-
-  havingLess(data) {
-    this.getHavingTermCase().less(data);
-    return this;
-  }
-
-  havingMoreEqual(data) {
-    this.getHavingTermCase().moreEqual(data);
-    return this;
-  }
-
-  havingLessEqual(data) {
-    this.getHavingTermCase().lessEqual(data);
-    return this;
-  }
-
-  havingLike(data) {
-    this.getHavingTermCase().like(data);
-    return this;
-  }
-
-  havingNotLike(data) {
-    this.getHavingTermCase().notLike(data);
-    return this;
-  }
-
-  havingBetween(data) {
-    this.getHavingTermCase().between(data);
-    return this;
-  }
-
-  havingNotBetween(data) {
-    this.getHavingTermCase().notBetween(data);
-    return this;
-  }
-
-  havingOrEqual(data) {
-    this.getHavingTermCase().orEqual(data);
-    return this;
-  }
-
-  havingOrNotEqual(data) {
-    this.getHavingTermCase().orNotEqual(data);
-    return this;
-  }
-
-  havingOrIn(data) {
-    this.getHavingTermCase().orIn(data);
-    return this;
-  }
-
-  havingOrNotIn(data) {
-    this.getHavingTermCase().orNotIn(data);
-    return this;
-  }
-
-  havingOrMore(data) {
-    this.getHavingTermCase().orMore(data);
-    return this;
-  }
-
-  havingOrLess(data) {
-    this.getHavingTermCase().orLess(data);
-    return this;
-  }
-
-  havingOrMoreEqual(data) {
-    this.getHavingTermCase().orMoreEqual(data);
-    return this;
-  }
-
-  havingOrLessEqual(data) {
-    this.getHavingTermCase().orLessEqual(data);
-    return this;
-  }
-
-  havingOrLike(data) {
-    this.getHavingTermCase().orLike(data);
-    return this;
-  }
-
-  havingOrNotLike(data) {
-    this.getHavingTermCase().orNotLike(data);
-    return this;
-  }
-
-  havingOrBetween(data) {
-    this.getHavingTermCase().orBetween(data);
-    return this;
-  }
-
-  havingOrNotBetween(data) {
-    this.getHavingTermCase().orNotBetween(data);
-    return this;
+      this[whereTermApi] = function (data) {
+        this.getHavingTermCase()[termApi](data);
+        return this;
+      };
+    }
   }
 
   havingBracket() {
@@ -2908,9 +2749,6 @@ class Replace extends Insert {
   }
 
 }
-
-const TABLE_OPT_VALUES = ["CURRENT_TIMESTAMP"];
-const FEILD_TEMPLATE = `{{field}}{{type}}{{unsigned}}{{notNull}}{{default}}{{autoIncrement}}{{onUpdate}}{{comment}}`;
 
 const TABLE_TEMPLATE = `CREATE TABLE IF NOT EXISTS {{tableName}}( {{feildsStr}}) {{tableOptionsStr}}`;
 const TABLE_OPTIONS_TEMPLATE = `{{engine}}{{autoIncrement}}{{defaultCharset}}{{comment}}`;
