@@ -108,7 +108,8 @@ const ErrMsg$c = { ...ErrMsg,
   errorFieldData: "错误的字段数据",
   needStr: "需要字符串",
   needNumStr: "需要数字或者字符串",
-  notSupportDialect: "无法支持当前类型数据库"
+  notSupportDialect: "无法支持当前类型数据库",
+  errorTermStatus: "未设置条件类型"
 };
 
 const DialectsObj = {
@@ -1880,6 +1881,11 @@ class TermApi extends Query {
     for (const termApi in WHERE_TERM_API) {
       this[termApi] = function (data) {
         const termStatus = this.termStatus;
+
+        if (schemaVerify.Type.string.isNot(TermTypes[termStatus])) {
+          throw new Error(ErrMsg$c.errorTermStatus);
+        }
+
         this.getTermCase(termStatus)[termApi](data);
         return this;
       };

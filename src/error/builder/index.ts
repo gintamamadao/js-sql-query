@@ -30,7 +30,8 @@ const ErrMsg = {
     errorFieldData: "错误的字段数据",
     needStr: "需要字符串",
     needNumStr: "需要数字或者字符串",
-    notSupportDialect: "无法支持当前类型数据库"
+    notSupportDialect: "无法支持当前类型数据库",
+    errorTermStatus: "未设置条件类型"
 };
 
 export default ErrMsg;

@@ -1,8 +1,10 @@
 import { TermData } from "../constant/builder/interface";
 import Query from "./query";
 import Term from "./term";
+import { Type } from "schema-verify";
 import { TermTypes } from "../constant/builder/enum";
 import { WHERE_TERM_API } from "../constant/builder/constant";
+import ErrMsg from "../error/builder/index";
 
 class TermApi extends Query {
     protected termStatus: TermTypes;
@@ -11,6 +13,9 @@ class TermApi extends Query {
         for (const termApi in WHERE_TERM_API) {
             this[termApi] = function(data: TermData) {
                 const termStatus: TermTypes = this.termStatus;
+                if (Type.string.isNot(TermTypes[termStatus])) {
+                    throw new Error(ErrMsg.errorTermStatus);
+                }
                 this.getTermCase(termStatus)[termApi](data);
                 return this;
             };
