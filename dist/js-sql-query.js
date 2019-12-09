@@ -1873,7 +1873,46 @@ const HAVING_TERM_API = {
   orNotBetween: "havingOrNotBetween"
 };
 
-class Where extends Query {
+class TermApi extends Query {
+  constructor() {
+    super();
+
+    for (const termApi in WHERE_TERM_API) {
+      this[termApi] = function (data) {
+        const termStatus = this.termStatus;
+        this.getTermCase(termStatus)[termApi](data);
+        return this;
+      };
+    }
+  }
+
+  bracket() {
+    const termStatus = this.termStatus;
+    this.getTermCase(termStatus).bracket();
+    return this;
+  }
+
+  orBracket() {
+    const termStatus = this.termStatus;
+    this.getTermCase(termStatus).orBracket();
+    return this;
+  }
+
+  getTermCase(type) {
+    let term = this[type];
+
+    if (!term || !(term instanceof Term)) {
+      term = new Term();
+      term.setDialect(this.dialectType);
+      this[type] = term;
+    }
+
+    return term;
+  }
+
+}
+
+class Where extends TermApi {
   constructor() {
     super();
 
@@ -1914,15 +1953,7 @@ class Where extends Query {
   }
 
   getWhereTermCase() {
-    let term = this[TermTypes.where];
-
-    if (!term || !(term instanceof Term)) {
-      term = new Term();
-      term.setDialect(this.dialectType);
-      this[TermTypes.where] = term;
-    }
-
-    return term;
+    return this.getTermCase(TermTypes.where);
   }
 
   whereBuild(query) {
@@ -1979,15 +2010,7 @@ class Having extends Where {
   }
 
   getHavingTermCase() {
-    let term = this[TermTypes.having];
-
-    if (!term || !(term instanceof Term)) {
-      term = new Term();
-      term.setDialect(this.dialectType);
-      this[TermTypes.having] = term;
-    }
-
-    return term;
+    return this.getTermCase(TermTypes.having);
   }
 
   havingBuild(query) {

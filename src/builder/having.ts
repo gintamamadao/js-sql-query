@@ -43,13 +43,7 @@ class Having extends Where {
     }
 
     protected getHavingTermCase(): Term {
-        let term: Term = this[TermTypes.having];
-        if (!term || !(term instanceof Term)) {
-            term = new Term();
-            term.setDialect(this.dialectType);
-            this[TermTypes.having] = term;
-        }
-        return term;
+        return this.getTermCase(TermTypes.having);
     }
 
     protected havingBuild(query: string) {

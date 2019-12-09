@@ -1,11 +1,11 @@
 import { TermData } from "../constant/builder/interface";
-import Query from "./query";
 import Term from "./term";
+import TermApi from "./term_api";
 import { Type } from "schema-verify";
 import { TermTypes } from "../constant/builder/enum";
 import { WHERE_TERM_API } from "../constant/builder/constant";
 
-class Where extends Query {
+class Where extends TermApi {
     protected whereTerm: Term;
 
     constructor() {
@@ -43,13 +43,7 @@ class Where extends Query {
     }
 
     protected getWhereTermCase(): Term {
-        let term: Term = this[TermTypes.where];
-        if (!term || !(term instanceof Term)) {
-            term = new Term();
-            term.setDialect(this.dialectType);
-            this[TermTypes.where] = term;
-        }
-        return term;
+        return this.getTermCase(TermTypes.where);
     }
 
     protected whereBuild(query: string) {
