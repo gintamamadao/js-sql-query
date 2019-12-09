@@ -254,7 +254,7 @@ class Term extends Base {
         return this;
     }
 
-    sqlTerm(sql: string | Function) {
+    sqlTerm(sql: string | Function | object) {
         this.manualSql(sql, SQL_NAME);
     }
 

@@ -2,10 +2,12 @@ import { FieldOrder } from "../constant/builder/interface";
 import Base from "./base";
 import Limit from "./limit";
 import Order from "./order";
+import { TermTypes } from "../constant/builder/enum";
 
 class Query extends Base {
     protected queryLimit: Limit;
     protected queryOrder: Order;
+    protected termStatus: TermTypes;
 
     protected getLimitCase() {
         let queryLimit: Limit = this.queryLimit;

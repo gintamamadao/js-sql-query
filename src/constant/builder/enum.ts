@@ -134,3 +134,8 @@ export enum JoinTypes {
     left = "LEFT",
     right = "RIGHT"
 }
+
+export enum TermTypes {
+    where = "whereTerm",
+    having = "havingTerm"
+}

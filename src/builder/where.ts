@@ -2,158 +2,162 @@ import { TermData } from "../constant/builder/interface";
 import Query from "./query";
 import Term from "./term";
 import { Type } from "schema-verify";
+import { TermTypes } from "../constant/builder/enum";
 
-const TERM_NAME = "whereTerm";
 class Where extends Query {
     protected whereTerm: Term;
 
     whereEqual(data: TermData) {
-        this.getTermCase(TERM_NAME).equal(data);
+        this.getWhereTermCase().equal(data);
         return this;
     }
 
     whereNotEqual(data: TermData) {
-        this.getTermCase(TERM_NAME).notEqual(data);
+        this.getWhereTermCase().notEqual(data);
         return this;
     }
 
     whereIn(data: TermData) {
-        this.getTermCase(TERM_NAME).in(data);
+        this.getWhereTermCase().in(data);
         return this;
     }
 
     whereNotIn(data: TermData) {
-        this.getTermCase(TERM_NAME).notIn(data);
+        this.getWhereTermCase().notIn(data);
         return this;
     }
 
     whereMore(data: TermData) {
-        this.getTermCase(TERM_NAME).more(data);
+        this.getWhereTermCase().more(data);
         return this;
     }
 
     whereLess(data: TermData) {
-        this.getTermCase(TERM_NAME).less(data);
+        this.getWhereTermCase().less(data);
         return this;
     }
 
     whereMoreEqual(data: TermData) {
-        this.getTermCase(TERM_NAME).moreEqual(data);
+        this.getWhereTermCase().moreEqual(data);
         return this;
     }
 
     whereLessEqual(data: TermData) {
-        this.getTermCase(TERM_NAME).lessEqual(data);
+        this.getWhereTermCase().lessEqual(data);
         return this;
     }
 
     whereLike(data: TermData) {
-        this.getTermCase(TERM_NAME).like(data);
+        this.getWhereTermCase().like(data);
         return this;
     }
 
     whereNotLike(data: TermData) {
-        this.getTermCase(TERM_NAME).notLike(data);
+        this.getWhereTermCase().notLike(data);
         return this;
     }
 
     whereBetween(data: TermData) {
-        this.getTermCase(TERM_NAME).between(data);
+        this.getWhereTermCase().between(data);
         return this;
     }
 
     whereNotBetween(data: TermData) {
-        this.getTermCase(TERM_NAME).notBetween(data);
+        this.getWhereTermCase().notBetween(data);
         return this;
     }
 
     whereOrEqual(data: TermData) {
-        this.getTermCase(TERM_NAME).orEqual(data);
+        this.getWhereTermCase().orEqual(data);
         return this;
     }
 
     whereOrNotEqual(data: TermData) {
-        this.getTermCase(TERM_NAME).orNotEqual(data);
+        this.getWhereTermCase().orNotEqual(data);
         return this;
     }
 
     whereOrIn(data: TermData) {
-        this.getTermCase(TERM_NAME).orIn(data);
+        this.getWhereTermCase().orIn(data);
         return this;
     }
 
     whereOrNotIn(data: TermData) {
-        this.getTermCase(TERM_NAME).orNotIn(data);
+        this.getWhereTermCase().orNotIn(data);
         return this;
     }
 
     whereOrMore(data: TermData) {
-        this.getTermCase(TERM_NAME).orMore(data);
+        this.getWhereTermCase().orMore(data);
         return this;
     }
 
     whereOrLess(data: TermData) {
-        this.getTermCase(TERM_NAME).orLess(data);
+        this.getWhereTermCase().orLess(data);
         return this;
     }
 
     whereOrMoreEqual(data: TermData) {
-        this.getTermCase(TERM_NAME).orMoreEqual(data);
+        this.getWhereTermCase().orMoreEqual(data);
         return this;
     }
 
     whereOrLessEqual(data: TermData) {
-        this.getTermCase(TERM_NAME).orLessEqual(data);
+        this.getWhereTermCase().orLessEqual(data);
         return this;
     }
 
     whereOrLike(data: TermData) {
-        this.getTermCase(TERM_NAME).orLike(data);
+        this.getWhereTermCase().orLike(data);
         return this;
     }
 
     whereOrNotLike(data: TermData) {
-        this.getTermCase(TERM_NAME).orNotLike(data);
+        this.getWhereTermCase().orNotLike(data);
         return this;
     }
 
     whereOrBetween(data: TermData) {
-        this.getTermCase(TERM_NAME).orBetween(data);
+        this.getWhereTermCase().orBetween(data);
         return this;
     }
 
     whereOrNotBetween(data: TermData) {
-        this.getTermCase(TERM_NAME).orNotBetween(data);
+        this.getWhereTermCase().orNotBetween(data);
         return this;
     }
 
     whereBracket() {
-        this.getTermCase(TERM_NAME).bracket();
+        this.getWhereTermCase().bracket();
         return this;
     }
 
     whereOrBracket() {
-        this.getTermCase(TERM_NAME).orBracket();
+        this.getWhereTermCase().orBracket();
         return this;
     }
 
-    where(sql: string | Function) {
-        this.getTermCase(TERM_NAME).sqlTerm(sql);
+    where(sql: string | Function | object | undefined) {
+        if (Type.undefined.isNot(sql)) {
+            this.getWhereTermCase().sqlTerm(sql);
+        } else {
+            this.termStatus = TermTypes.where;
+        }
         return this;
     }
 
-    protected getTermCase(key: string) {
-        let term: Term = this[key];
+    protected getWhereTermCase() {
+        let term: Term = this[TermTypes.where];
         if (!term || !(term instanceof Term)) {
             term = new Term();
             term.setDialect(this.dialectType);
-            this[key] = term;
+            this[TermTypes.where] = term;
         }
         return term;
     }
 
     protected whereBuild(query: string) {
-        const whereTerm: Term = this.getTermCase(TERM_NAME);
+        const whereTerm: Term = this.getWhereTermCase();
         const whereSql: string = whereTerm.termsBuild();
         if (Type.string.isNotEmpty(whereSql)) {
             query = `${query} WHERE ${whereSql}`;
