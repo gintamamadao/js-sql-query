@@ -1937,9 +1937,9 @@ class Having extends Where {
     super();
 
     for (const termApi in HAVING_TERM_API) {
-      const whereTermApi = HAVING_TERM_API[termApi];
+      const havingTermApi = HAVING_TERM_API[termApi];
 
-      this[whereTermApi] = function (data) {
+      this[havingTermApi] = function (data) {
         this.getHavingTermCase()[termApi](data);
         return this;
       };

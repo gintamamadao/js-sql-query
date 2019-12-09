@@ -11,8 +11,8 @@ class Having extends Where {
     constructor() {
         super();
         for (const termApi in HAVING_TERM_API) {
-            const whereTermApi = HAVING_TERM_API[termApi];
-            this[whereTermApi] = function(data: TermData) {
+            const havingTermApi = HAVING_TERM_API[termApi];
+            this[havingTermApi] = function(data: TermData) {
                 this.getHavingTermCase()[termApi](data);
                 return this;
             };
