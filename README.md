@@ -372,8 +372,9 @@ sqlQuery
         field1: "value1",
         field2: "value2"
     })
-    .whereEqual({
-        field3: "value3"
+    .where()
+    .equal({
+        field1: "value1"
     })
     .build();
 ```
@@ -401,8 +402,9 @@ sqlQuery
     .add({
         field1: 1
     })
-    .whereEqual({
-        field2: "value2"
+    .where()
+    .equal({
+        field1: "value1"
     })
     .build();
 ```
@@ -430,8 +432,9 @@ sqlQuery
     .minus({
         field1: 1
     })
-    .whereEqual({
-        field2: "value2"
+    .where()
+    .equal({
+        field1: "value1"
     })
     .build();
 ```
@@ -728,7 +731,8 @@ sqlQuery.delete();
 sqlQuery
     .delete()
     .table("table1")
-    .whereEqual({
+    .where()
+    .equal({
         field1: "value1"
     })
     .build();
@@ -737,1023 +741,6 @@ sqlQuery
 ```sql
 DELETE FROM `table1` WHERE `field1` = 'value1'
 ```
-
----
-
-## WHERE
-
-> `UPDATE`、`SELECT`、`DELETE` 的 `WHERE` 条件逻辑拼装 `api` 是一样的。
-
-> 条件之间的逻辑根据后面的 `api` 决定，`api` 名中有 `Or` 这个词就代表，该条件与前一个条件为逻辑或，否则为逻辑与。
-
-> `whereBracket` 和 `whereOrBracket` 是特殊的 `api`，表示将 `api` 前后的条件分别用括号括起来，`Or` 代表括号之间的逻辑是或关系。
-
----
-
-### `where`
-
-> WHERE 后面的信息
-
-_参数_
-
-> -   whereInfo (String | Function): WHERE 后面的值信息，如果是字符串则是 `WHERE ${whereInfo}`, 函数则是 `WHERE ${whereInfo()}`
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .where("`field1` = 'value1'")
-    .build();
-```
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .where(() =>
-        builder.term.equal({
-            field1: "value1"
-        })
-    )
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` = 'value1'
-```
-
----
-
-### `whereEqual`
-
-> 条件 =
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为逻辑值
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereEqual({
-        field1: "value1"
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` = 'value1'
-```
-
----
-
-### `whereNotEqual`
-
-> 条件 <>
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为逻辑值
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereNotEqual({
-        field1: "value1"
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` <> 'value1'
-```
-
----
-
-### `whereIn`
-
-> 条件 IN
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为数组，为所有有效值的集合
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereIn({
-        field1: ["value1", "value2"]
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' )
-```
-
----
-
-### `whereNotIn`
-
-> 条件 NOT IN
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为数组，为所有有效值的集合
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereNotIn({
-        field1: ["value1", "value2"]
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' )
-```
-
----
-
-### `whereMore`
-
-> 条件 >
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为逻辑值
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereMore({
-        field1: "value1"
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` > 'value1'
-```
-
----
-
-### `whereLess`
-
-> 条件 <
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为逻辑值
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereLess({
-        field1: "value1"
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` < 'value1'
-```
-
----
-
-### `whereMoreEqual`
-
-> 条件 >=
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为逻辑值
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereMoreEqual({
-        field1: "value1"
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` >= 'value1'
-```
-
----
-
-### `whereLessEqual`
-
-> 条件 <=
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为逻辑值
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereLessEqual({
-        field1: "value1"
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` <= 'value1'
-```
-
----
-
-### `whereLike`
-
-> 条件 LIKE
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为逻辑值
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereLike({
-        field1: "value1"
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` LIKE '%value1%'
-```
-
----
-
-### `whereNotLike`
-
-> 条件 NOT LIKE
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为逻辑值
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereNotLike({
-        field1: "value1"
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%'
-```
-
----
-
-### `whereBetween`
-
-> 条件 BETWEEN
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为数组，第一个和第二个值代表范围的上限和下限
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereBetween({
-        field1: ["value1", "value2"]
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2'
-```
-
----
-
-### `whereNotBetween`
-
-> 条件 NOT BETWEEN
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为数组，第一个和第二个值代表范围的上限和下限
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereNotBetween({
-        field1: ["value1", "value2"]
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1' AND 'value2'
-```
-
----
-
-### `whereOrEqual`
-
-> 条件 =，逻辑为或
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为逻辑值
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereOrEqual({
-        field1: "value1",
-        field2: "value2"
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field2` = 'value2'
-```
-
----
-
-### `whereOrNotEqual`
-
-> 条件 <>，逻辑为或
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为逻辑值
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereOrNotEqual({
-        field1: "value1",
-        field2: "value2"
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` <> 'value1' OR `field2` <> 'value2'
-```
-
----
-
-### `whereOrIn`
-
-> 条件 IN，逻辑为或
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为数组，为所有有效值的集合
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereOrIn({
-        field1: ["value1", "value2"],
-        field2: ["value1", "value2"]
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' ) OR `field2` IN ( 'value1', 'value2' )
-```
-
----
-
-### `whereOrNotIn`
-
-> 条件 NOT IN，逻辑为或
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为逻辑值
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereOrNotIn({
-        field1: ["value1", "value2"],
-        field2: ["value1", "value2"]
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' ) OR `field2` NOT IN ( 'value1', 'value2' )
-```
-
----
-
-### `whereOrMore`
-
-> 条件 >，逻辑为或
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为逻辑值
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereOrMore({
-        field1: "value1",
-        field2: "value2"
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` > 'value1' OR `field2` > 'value2'
-```
-
----
-
-### `whereOrLess`
-
-> 条件 <，逻辑为或
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为逻辑值
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereOrLess({
-        field1: "value1",
-        field2: "value2"
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` < 'value1' OR `field2` < 'value2'
-```
-
----
-
-### `whereOrMoreEqual`
-
-> 条件 >=，逻辑为或
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为逻辑值
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereOrMoreEqual({
-        field1: "value1",
-        field2: "value2"
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` >= 'value1' OR `field2` >= 'value2'
-```
-
----
-
-### `whereOrLessEqual`
-
-> 条件 <=，逻辑为或
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为逻辑值
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereOrLessEqual({
-        field1: "value1",
-        field2: "value2"
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` <= 'value1' OR `field2` <= 'value2'
-```
-
----
-
-### `whereOrLike`
-
-> 条件 LIKE，逻辑为或
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为逻辑值
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereOrLike({
-        field1: "value1",
-        field2: "value2"
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` LIKE '%value1%' OR `field2` LIKE '%value2%'
-```
-
----
-
-### `whereOrNotLike`
-
-> 条件 NOT LIKE，逻辑为或
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为逻辑值
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereOrNotLike({
-        field1: "value1",
-        field2: "value2"
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%' OR `field2` NOT LIKE '%value2%'
-```
-
----
-
-### `whereOrBetween`
-
-> 条件 BETWEEN，逻辑为或
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为数组，第一个和第二个值代表范围的上限和下限
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereOrBetween({
-        field1: ["value1", "value2"],
-        field2: ["value1", "value2"]
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2' OR `field2` BETWEEN 'value1' AND 'value2'
-```
-
----
-
-### `whereOrNotBetween`
-
-> 条件 NOT BETWEEN，逻辑为或
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为数组，第一个和第二个值代表范围的上限和下限
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereOrNotBetween({
-        field1: ["value1", "value2"],
-        field2: ["value1", "value2"]
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1' AND 'value2' OR `field2` NOT BETWEEN 'value1' AND 'value2'
-```
-
----
-
-### `whereBracket`
-
-> 前后的条件分别用括号括起来
-
-_参数_
-
-> 无
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereOrEqual({
-        field1: "value1"
-    })
-    .whereOrEqual({
-        field2: "value2"
-    })
-    .whereBracket()
-    .whereOrEqual({
-        field3: "value3"
-    })
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` WHERE ( `field1` = 'value1' OR `field2` = 'value2' ) AND ( `field3` = 'value3' )
-```
-
----
-
-### `whereOrBracket`
-
-> 前后的条件分别用括号括起来，和前一括号逻辑为或
-
-_参数_
-
-> 无
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .whereEqual({
-        field1: "value1",
-        field2: "value2"
-    })
-    .whereOrBracket()
-    .whereEqual({
-        field3: "value3"
-    })
-    .build();
-```
-
-```sql
- SELECT * FROM `table1` WHERE ( `field1` = 'value1' AND `field2` = 'value2' ) OR ( `field3` = 'value3' )
-```
-
----
-
-## HAVING
-
-> `HAVING` 的 `api` 的参数和逻辑跟 `WHERE` 的 `api` 是一样的，但仅限 `SELECT` 能调用。
-
-> 但为和 `WHERE` 做区分，`HAVING` 的 `api` 的前缀都是 `having`，而 `WHERE` 的 `api` 的前缀都是 `where`。
-
----
-
-### `having`
-
-> HAVING 后面的信息
-
-_参数_
-
-> -   havingInfo (String | Function): HAVING 后面的值信息，如果是字符串则是 `HAVING ${havingInfo}`, 函数则是 `HAVING ${havingInfo()}`
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .having("`field1` = 'value1'")
-    .build();
-```
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .having(() =>
-        builder.term.equal({
-            field1: "value1"
-        })
-    )
-    .build();
-```
-
-```sql
-SELECT * FROM `table1` HAVING `field1` = 'value1'
-```
-
----
-
-### `havingEqual`
-
-> 条件 =
-
-_参数_
-
-> -   object (Object): 条件信息，key 为字段，value 为逻辑值
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .havingEqual({
-        field1: "value1",
-        field2: "value2"
-    })
-    .build();
-```
-
-```sql
- SELECT * FROM `table1` HAVING `field1` = 'value1' AND `field2` = 'value2'
-```
-
----
-
-### `havingNotEqual`
-
-> 条件 <>
-
-_参数和逻辑与 whereNotEqual api 一致_
-
----
-
-### `havingIn`
-
-> 条件 IN
-
-_参数和逻辑与 whereIn api 一致_
-
----
-
-### `havingNotIn`
-
-> 条件 NOT IN
-
-_参数和逻辑与 whereNotIn api 一致_
-
----
-
-### `havingMore`
-
-> 条件 >
-
-_参数和逻辑与 whereMore api 一致_
-
----
-
-### `havingLess`
-
-> 条件 <
-
-_参数和逻辑与 whereLess api 一致_
-
----
-
-### `havingMoreEqual`
-
-> 条件 >=
-
-_参数和逻辑与 whereMoreEqual api 一致_
-
----
-
-### `havingLessEqual`
-
-> 条件 <=
-
-_参数和逻辑与 whereLessEqual api 一致_
-
----
-
-### `havingLike`
-
-> 条件 LIKE
-
-_参数和逻辑与 whereLike api 一致_
-
----
-
-### `havingNotLike`
-
-> 条件 NOT LIKE
-
-_参数和逻辑与 whereNotLike api 一致_
-
----
-
-### `havingBetween`
-
-> 条件 BETWEEN
-
-_参数和逻辑与 whereBetween api 一致_
-
----
-
-### `havingNotBetween`
-
-> 条件 NOT BETWEEN
-
-_参数和逻辑与 whereNotBetween api 一致_
-
----
-
-### `havingOrEqual`
-
-> 条件 =，逻辑为或
-
-_参数和逻辑与 whereOrEqual api 一致_
-
----
-
-### `havingOrNotEqual`
-
-> 条件 <>，逻辑为或
-
-_参数和逻辑与 whereOrNotEqual api 一致_
-
----
-
-### `havingOrIn`
-
-> 条件 IN，逻辑为或
-
-_参数和逻辑与 whereOrIn api 一致_
-
----
-
-### `havingOrNotIn`
-
-> 条件 NOT IN，逻辑为或
-
-_参数和逻辑与 whereOrNotIn api 一致_
-
----
-
-### `havingOrMore`
-
-> 条件 >，逻辑为或
-
-_参数和逻辑与 whereOrMore api 一致_
-
----
-
-### `havingOrLess`
-
-> 条件 <，逻辑为或
-
-_参数和逻辑与 whereOrLess api 一致_
-
----
-
-### `havingOrMoreEqual`
-
-> 条件 >=，逻辑为或
-
-_参数和逻辑与 whereOrMoreEqual api 一致_
-
----
-
-### `havingOrLessEqual`
-
-> 条件 <=，逻辑为或
-
-_参数和逻辑与 whereOrLessEqual api 一致_
-
----
-
-### `havingOrLike`
-
-> 条件 LIKE，逻辑为或
-
-_参数和逻辑与 whereOrLike api 一致_
-
----
-
-### `havingOrNotLike`
-
-> 条件 NOT LIKE，逻辑为或
-
-_参数和逻辑与 whereOrNotLike api 一致_
-
----
-
-### `havingOrBetween`
-
-> 条件 BETWEEN，逻辑为或
-
-_参数和逻辑与 whereOrBetween api 一致_
-
----
-
-### `havingOrNotBetween`
-
-> 条件 NOT BETWEEN，逻辑为或
-
-_参数和逻辑与 whereOrNotBetween api 一致_
-
----
-
-### `havingBracket`
-
-> 前后的条件分别用括号括起来
-
-_参数和逻辑与 whereBracket api 一致_
-
----
-
-### `havingOrBracket`
-
-> 前后的条件分别用括号括起来，逻辑为或
-
-_参数和逻辑与 whereOrBracket api 一致_
 
 ---
 
@@ -1809,6 +796,10 @@ SELECT * FROM `table1` HAVING `field1` = 'value1'
 
 > 条件 =
 
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
+
 _例子_
 
 ```js
@@ -1831,6 +822,10 @@ SELECT * FROM `table1` WHERE `field1` = 'value1'
 ### `notEqual`
 
 > 条件 <>
+
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -1855,6 +850,10 @@ SELECT * FROM `table1` WHERE `field1` <> 'value1'
 
 > 条件 IN
 
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为数组，为所有有效值的集合
+
 _例子_
 
 ```js
@@ -1877,6 +876,10 @@ SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' )
 ### `notIn`
 
 > 条件 NOT IN
+
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为数组，为所有有效值的集合
 
 _例子_
 
@@ -1901,6 +904,10 @@ SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' )
 
 > 条件 >
 
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
+
 _例子_
 
 ```js
@@ -1923,6 +930,10 @@ SELECT * FROM `table1` WHERE `field1` > 'value1'
 ### `less`
 
 > 条件 <
+
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -1947,6 +958,10 @@ SELECT * FROM `table1` WHERE `field1` < 'value1'
 
 > 条件 >=
 
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
+
 _例子_
 
 ```js
@@ -1969,6 +984,10 @@ sqlQuery
 ### `lessEqual`
 
 > 条件 <=
+
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -1993,6 +1012,10 @@ SELECT * FROM `table1` WHERE `field1` <= 'value1'
 
 > 条件 LIKE
 
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
+
 _例子_
 
 ```js
@@ -2015,6 +1038,10 @@ SELECT * FROM `table1` WHERE `field1` LIKE '%value1%'
 ### `notLike`
 
 > 条件 NOT LIKE
+
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -2039,6 +1066,10 @@ SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%'
 
 > 条件 BETWEEN
 
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为数组，第一个和第二个值代表范围的上限和下限
+
 _例子_
 
 ```js
@@ -2062,6 +1093,10 @@ SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2'
 
 > 条件 NOT BETWEEN
 
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为数组，第一个和第二个值代表范围的上限和下限
+
 _例子_
 
 ```js
@@ -2084,6 +1119,10 @@ SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1' AND 'value2'
 ### `orEqual`
 
 > 条件 =，逻辑为或
+
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -2109,93 +1148,9 @@ SELECT * FROM `table1` WHERE `field1` = 'value1' OR `field2` = 'value2'
 
 > 条件 <>，逻辑为或
 
-_参数和逻辑与 whereOrNotEqual api 一致_
+_参数_
 
----
-
-### `orIn`
-
-> 条件 IN，逻辑为或
-
-_参数和逻辑与 whereOrIn api 一致_
-
----
-
-### `orNotIn`
-
-> 条件 NOT IN，逻辑为或
-
-_参数和逻辑与 whereOrNotIn api 一致_
-
----
-
-### `orMore`
-
-> 条件 >，逻辑为或
-
-_参数和逻辑与 whereOrMore api 一致_
-
----
-
-### `orLess`
-
-> 条件 <，逻辑为或
-
-_参数和逻辑与 whereOrLess api 一致_
-
----
-
-### `orMoreEqual`
-
-> 条件 >=，逻辑为或
-
-_参数和逻辑与 whereOrMoreEqual api 一致_
-
----
-
-### `orLessEqual`
-
-> 条件 <=，逻辑为或
-
-_参数和逻辑与 whereOrLessEqual api 一致_
-
----
-
-### `orLike`
-
-> 条件 LIKE，逻辑为或
-
-_参数和逻辑与 whereOrLike api 一致_
-
----
-
-### `orNotLike`
-
-> 条件 NOT LIKE，逻辑为或
-
-_参数和逻辑与 whereOrNotLike api 一致_
-
----
-
-### `orBetween`
-
-> 条件 BETWEEN，逻辑为或
-
-_参数和逻辑与 whereOrBetween api 一致_
-
----
-
-### `orNotBetween`
-
-> 条件 NOT BETWEEN，逻辑为或
-
-_参数和逻辑与 whereOrNotBetween api 一致_
-
----
-
-### `bracket`
-
-> 前后的条件分别用括号括起来
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
 
 _例子_
 
@@ -2203,19 +1158,325 @@ _例子_
 sqlQuery
     .select()
     .table("table1")
-    .where(() =>
-        sqlQuery.term
-            .orEqual({
-                field1: "value1"
-            })
-            .orEqual({
-                field2: "value2"
-            })
-            .bracket()
-            .orEqual({
-                field3: "value3"
-            })
-    )
+    .where()
+    .orNotEqual({
+        field1: "value1",
+        field2: "value2"
+    })
+    .build();
+```
+
+```sql
+SELECT * FROM `table1` WHERE `field1` <> 'value1' OR `field2` <> 'value2'
+```
+
+---
+
+### `orIn`
+
+> 条件 IN，逻辑为或
+
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为数组，为所有有效值的集合
+
+_例子_
+
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .where()
+    .orIn({
+        field1: ["value1", "value2"],
+        field2: ["value1", "value2"]
+    })
+    .build();
+```
+
+```sql
+SELECT * FROM `table1` WHERE `field1` IN ( 'value1', 'value2' ) OR `field2` IN ( 'value1', 'value2' )
+```
+
+---
+
+### `orNotIn`
+
+> 条件 NOT IN，逻辑为或
+
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为数组，为所有有效值的集合
+
+_例子_
+
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .where()
+    .orNotIn({
+        field1: ["value1", "value2"],
+        field2: ["value1", "value2"]
+    })
+    .build();
+```
+
+```sql
+SELECT * FROM `table1` WHERE `field1` NOT IN ( 'value1', 'value2' ) OR `field2` NOT IN ( 'value1', 'value2' )
+```
+
+---
+
+### `orMore`
+
+> 条件 >，逻辑为或
+
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
+
+_例子_
+
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .where()
+    .orMore({
+        field1: "value1",
+        field2: "value2"
+    })
+    .build();
+```
+
+```sql
+SELECT * FROM `table1` WHERE `field1` > 'value1' OR `field2` > 'value2'
+```
+
+---
+
+### `orLess`
+
+> 条件 <，逻辑为或
+
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
+
+_例子_
+
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .where()
+    .orLess({
+        field1: "value1",
+        field2: "value2"
+    })
+    .build();
+```
+
+```sql
+SELECT * FROM `table1` WHERE `field1` < 'value1' OR `field2` < 'value2'
+```
+
+---
+
+### `orMoreEqual`
+
+> 条件 >=，逻辑为或
+
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
+
+_例子_
+
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .where()
+    .orMoreEqual({
+        field1: "value1",
+        field2: "value2"
+    })
+    .build();
+```
+
+```sql
+SELECT * FROM `table1` WHERE `field1` >= 'value1' OR `field2` >= 'value2'
+```
+
+---
+
+### `orLessEqual`
+
+> 条件 <=，逻辑为或
+
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
+
+_例子_
+
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .where()
+    .orLessEqual({
+        field1: "value1",
+        field2: "value2"
+    })
+    .build();
+```
+
+```sql
+SELECT * FROM `table1` WHERE `field1` <= 'value1' OR `field2` <= 'value2'
+```
+
+---
+
+### `orLike`
+
+> 条件 LIKE，逻辑为或
+
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
+
+_例子_
+
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .where()
+    .orLike({
+        field1: "value1",
+        field2: "value2"
+    })
+    .build();
+```
+
+```sql
+SELECT * FROM `table1` WHERE `field1` LIKE '%value1%' OR `field2` LIKE '%value2%'
+```
+
+---
+
+### `orNotLike`
+
+> 条件 NOT LIKE，逻辑为或
+
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为逻辑值
+
+_例子_
+
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .where()
+    .orNotLike({
+        field1: "value1",
+        field2: "value2"
+    })
+    .build();
+```
+
+```sql
+SELECT * FROM `table1` WHERE `field1` NOT LIKE '%value1%' OR `field2` NOT LIKE '%value2%'
+```
+
+---
+
+### `orBetween`
+
+> 条件 BETWEEN，逻辑为或
+
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为数组，第一个和第二个值代表范围的上限和下限
+
+_例子_
+
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .where()
+    .orBetween({
+        field1: ["value1", "value2"],
+        field2: ["value1", "value2"]
+    })
+    .build();
+```
+
+```sql
+SELECT * FROM `table1` WHERE `field1` BETWEEN 'value1' AND 'value2' OR `field2` BETWEEN 'value1' AND 'value2'
+```
+
+---
+
+### `orNotBetween`
+
+> 条件 NOT BETWEEN，逻辑为或
+
+_参数_
+
+> -   object (Object): 条件信息，key 为字段，value 为数组，第一个和第二个值代表范围的上限和下限
+
+_例子_
+
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .where()
+    .orNotBetween({
+        field1: ["value1", "value2"],
+        field2: ["value1", "value2"]
+    })
+    .build();
+```
+
+```sql
+SELECT * FROM `table1` WHERE `field1` NOT BETWEEN 'value1' AND 'value2' OR `field2` NOT BETWEEN 'value1' AND 'value2'
+```
+
+---
+
+### `bracket`
+
+> 前后的条件分别用括号括起来
+
+_参数_
+
+> 无
+
+_例子_
+
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .where()
+    .orEqual({
+        field1: "value1"
+    })
+    .orEqual({
+        field2: "value2"
+    })
+    .bracket()
+    .orEqual({
+        field3: "value3"
+    })
     .build();
 ```
 
@@ -2229,23 +1490,25 @@ SELECT * FROM `table1` WHERE ( `field1` = 'value1' OR `field2` = 'value2' ) AND 
 
 > 前后的条件分别用括号括起来，逻辑为或
 
+_参数_
+
+> 无
+
 _例子_
 
 ```js
 sqlQuery
     .select()
     .table("table1")
-    .where(() =>
-        sqlQuery.term
-            .equal({
-                field1: "value1",
-                field2: "value2"
-            })
-            .orBracket()
-            .equal({
-                field3: "value3"
-            })
-    )
+    .where()
+    .equal({
+        field1: "value1",
+        field2: "value2"
+    })
+    .orBracket()
+    .equal({
+        field3: "value3"
+    })
     .build();
 ```
 
