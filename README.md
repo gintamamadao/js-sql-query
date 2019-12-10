@@ -856,6 +856,10 @@ DELETE FROM `table1` WHERE `field1` = 'value1'
 
 > 指定之后调用的条件 api 的结果是属于 `WHERE` 后面的
 
+_参数_
+
+> 无
+
 _例子_
 
 ```js
@@ -873,9 +877,31 @@ sqlQuery
 SELECT * FROM `table1` WHERE `field1` = 'value1'
 ```
 
+> 将条件 api 名第一个字母大写，前面加上 where 的前缀，可以直接指定该条件是属于 `WHERE` 后面的
+
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .whereEqual({
+        field1: "value1"
+    })
+    .build();
+```
+
+```sql
+SELECT * FROM `table1` WHERE `field1` = 'value1'
+```
+
+_例子_
+
 ### `having`
 
 > 指定之后调用的条件 api 的结果是属于 `HAVING` 后面的
+
+_参数_
+
+> 无
 
 _例子_
 
@@ -885,6 +911,22 @@ sqlQuery
     .table("table1")
     .having()
     .equal({
+        field1: "value1"
+    })
+    .build();
+```
+
+```sql
+SELECT * FROM `table1` HAVING `field1` = 'value1'
+```
+
+> 将条件 api 名第一个字母大写，前面加上 having 的前缀，可以直接指定该条件是属于 `HAVING` 后面的
+
+```js
+sqlQuery
+    .select()
+    .table("table1")
+    .havingEqual({
         field1: "value1"
     })
     .build();
