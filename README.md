@@ -893,8 +893,6 @@ sqlQuery
 SELECT * FROM `table1` WHERE `field1` = 'value1'
 ```
 
-_例子_
-
 ### `having`
 
 > 指定之后调用的条件 api 的结果是属于 `HAVING` 后面的
