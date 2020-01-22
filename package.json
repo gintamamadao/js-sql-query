@@ -30,7 +30,7 @@
         "pool"
     ],
     "dependencies": {
-        "schema-verify": "^1.3.2"
+        "schema-verify": "^1.3.5"
     },
     "devDependencies": {
         "@babel/core": "^7.4.5",
