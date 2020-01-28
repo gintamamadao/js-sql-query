@@ -84,3 +84,5 @@ export interface DbConnect {
     query: Function;
     release: Function;
 }
+
+export type SqlParam = string | Function | Object;

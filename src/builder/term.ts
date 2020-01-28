@@ -1,5 +1,10 @@
 import { TermSign, TermLogic } from "../constant/enum";
-import { TermData, TermInfo, TermBracket } from "../constant/interface";
+import {
+    TermData,
+    TermInfo,
+    TermBracket,
+    SqlParam
+} from "../constant/interface";
 import Base from "./base";
 import { Type } from "schema-verify";
 import {
@@ -254,7 +259,7 @@ class Term extends Base {
         return this;
     }
 
-    sqlTerm(sql: string | Function | object) {
+    sqlTerm(sql: SqlParam) {
         this.manualSql(sql, SQL_NAME);
     }
 

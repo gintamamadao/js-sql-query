@@ -1,4 +1,4 @@
-import { TermData } from "../constant/interface";
+import { TermData, SqlParam } from "../constant/interface";
 import Where from "./where";
 import Term from "./term";
 import { Type } from "schema-verify";
@@ -29,7 +29,7 @@ class Having extends Where {
         return this;
     }
 
-    having(sql?: string | Function | object) {
+    having(sql?: SqlParam) {
         if (Type.undefined.isNot(sql)) {
             const term: Term = this.getHavingTermCase();
             if (Type.function.is(sql)) {

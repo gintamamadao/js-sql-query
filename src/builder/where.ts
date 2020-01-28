@@ -1,4 +1,4 @@
-import { TermData } from "../constant/interface";
+import { TermData, SqlParam } from "../constant/interface";
 import Term from "./term";
 import TermApi from "./term_api";
 import { Type } from "schema-verify";
@@ -29,7 +29,7 @@ class Where extends TermApi {
         return this;
     }
 
-    where(sql?: string | Function | object) {
+    where(sql?: SqlParam) {
         if (Type.undefined.isNot(sql)) {
             const term: Term = this.getWhereTermCase();
             if (Type.function.is(sql)) {

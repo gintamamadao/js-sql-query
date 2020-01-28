@@ -1,6 +1,6 @@
 import Dialects from "../util/dialects";
 import { DialectTypes, DialectModules } from "../constant/enum";
-import { SafeValue, SafeKey, Dialect } from "../constant/interface";
+import { SafeValue, SafeKey, Dialect, SqlParam } from "../constant/interface";
 import { Type } from "schema-verify";
 import { dialectVerify, manualSqlVerify } from "../verify/builder/index";
 import ErrMsg from "../error/builder/index";
@@ -74,7 +74,7 @@ class Base {
         return this._safeKey(key);
     };
 
-    protected manualSql(sql: string | Function | object, key: string) {
+    protected manualSql(sql: SqlParam, key: string) {
         if (!manualSqlVerify(sql) && !(sql instanceof Base)) {
             throw new Error(ErrMsg.errorManualSql);
         }
