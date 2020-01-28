@@ -1,8 +1,8 @@
 import Builder from "./builder/builder";
 import Execute from "./execute/execute";
 import { Type } from "schema-verify";
-import { ConnectConfig } from "./constant/execute/interface";
-import { DialectTypes } from "./constant/builder/enum";
+import { ConnectConfig } from "./constant/interface";
+import { DialectTypes } from "./constant/enum";
 
 function SqlQuery(config: ConnectConfig | DialectTypes) {
     let dialect: DialectTypes;

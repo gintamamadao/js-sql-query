@@ -1,5 +1,5 @@
 import { Schema } from "schema-verify";
-import { FuncTypes } from "../../constant/builder/enum";
+import { FuncTypes } from "../../constant/enum";
 
 const funcInfoSchema = new Schema({
     type: Object,

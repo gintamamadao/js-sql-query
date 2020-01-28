@@ -1,5 +1,5 @@
-import { FuncTypes } from "../constant/builder/enum";
-import { FuncInfo } from "../constant/builder/interface";
+import { FuncTypes } from "../constant/enum";
+import { FuncInfo } from "../constant/interface";
 import { Type } from "schema-verify";
 import Base from "./base";
 

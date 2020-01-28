@@ -1,7 +1,7 @@
 import Base from "./base";
-import { TableOptions } from "../constant/builder/enum";
-import { TABLE_OPT_VALUES, FEILD_TEMPLATE } from "../constant/builder/constant";
-import { DialectTypes } from "../constant/builder/enum";
+import { TableOptions } from "../constant/enum";
+import { TABLE_OPT_VALUES, FEILD_TEMPLATE } from "../constant/constant";
+import { DialectTypes } from "../constant/enum";
 import { Type } from "schema-verify";
 import { tableInfoVerify } from "../verify/builder/index";
 import { analyTmpl } from "../util/util";

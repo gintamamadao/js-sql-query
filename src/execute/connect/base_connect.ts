@@ -1,6 +1,6 @@
 import { Type } from "schema-verify";
 import { conConfigVerify } from "../../verify/execute/index";
-import { ConnectConfig } from "../../constant/execute/interface";
+import { ConnectConfig } from "../../constant/interface";
 import ErrMsg from "../../error/execute/index";
 
 class BaseConnect {

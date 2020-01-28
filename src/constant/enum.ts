@@ -139,3 +139,8 @@ export enum TermTypes {
     where = "whereTerm",
     having = "havingTerm"
 }
+
+export enum DialectModules {
+    mysql = "mysql",
+    mssql = "mssql"
+}

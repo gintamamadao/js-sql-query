@@ -1,5 +1,5 @@
 import { Schema } from "schema-verify";
-import { DialectTypes } from "../../constant/builder/enum";
+import { DialectTypes } from "../../constant/enum";
 
 const conConfigSchema = new Schema({
     type: Object,

@@ -1,9 +1,9 @@
-import { TermData } from "../constant/builder/interface";
+import { TermData } from "../constant/interface";
 import Where from "./where";
 import Term from "./term";
 import { Type } from "schema-verify";
-import { TermTypes } from "../constant/builder/enum";
-import { HAVING_TERM_API } from "../constant/builder/constant";
+import { TermTypes } from "../constant/enum";
+import { HAVING_TERM_API } from "../constant/constant";
 
 class Having extends Where {
     protected havingTerm: Term;

@@ -1,7 +1,7 @@
 import MysqlConnect from "./connect/mysql_connect";
 import MyssqlConnect from "./connect/mssql_connect";
-import { ConnectConfig, DbConnect } from "../constant/execute/interface";
-import { DialectTypes } from "../constant/builder/enum";
+import { ConnectConfig, DbConnect } from "../constant/interface";
+import { DialectTypes } from "../constant/enum";
 import { Type } from "schema-verify";
 import ErrMsg from "../error/execute/index";
 

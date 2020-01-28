@@ -1,9 +1,9 @@
-import { TermData } from "../constant/builder/interface";
+import { TermData } from "../constant/interface";
 import Query from "./query";
 import Term from "./term";
 import { Type } from "schema-verify";
-import { TermTypes } from "../constant/builder/enum";
-import { WHERE_TERM_API } from "../constant/builder/constant";
+import { TermTypes } from "../constant/enum";
+import { WHERE_TERM_API } from "../constant/constant";
 import ErrMsg from "../error/builder/index";
 
 const TERM_TYPES = Object.values(TermTypes);

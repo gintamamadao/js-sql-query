@@ -1,6 +1,6 @@
 import { Type } from "schema-verify";
-import { ConnectConfig } from "../../constant/execute/interface";
-import { DialectModules } from "../../constant/execute/enum";
+import { ConnectConfig } from "../../constant/interface";
+import { DialectModules } from "../../constant/enum";
 import ErrMsg from "../../error/execute/index";
 import BaseConnect from "./base_connect";
 

@@ -13,10 +13,10 @@ import {
     QueryTypes,
     DialectTypes,
     WidgetTypes
-} from "../constant/builder/enum";
+} from "../constant/enum";
 import ErrMsg from "../error/builder/index";
 import Execute from "../execute/execute";
-import { ConnectConfig } from "../constant/execute/interface";
+import { ConnectConfig } from "../constant/interface";
 import Store from "./store";
 
 const TABLE_QUERY_TYPE = [

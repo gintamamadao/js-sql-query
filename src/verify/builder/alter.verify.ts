@@ -1,5 +1,5 @@
 import { Schema } from "schema-verify";
-import { AlterMethods } from "../../constant/builder/enum";
+import { AlterMethods } from "../../constant/enum";
 
 const alterFieldSchema = new Schema({
     type: Object,

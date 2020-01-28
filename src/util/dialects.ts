@@ -1,4 +1,4 @@
-import { Dialects } from "../constant/builder/interface";
+import { Dialects } from "../constant/interface";
 import { Type } from "schema-verify";
 import ErrMsg from "../error/builder/index";
 

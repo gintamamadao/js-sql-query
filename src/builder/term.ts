@@ -1,5 +1,5 @@
-import { TermSign, TermLogic } from "../constant/builder/enum";
-import { TermData, TermInfo, TermBracket } from "../constant/builder/interface";
+import { TermSign, TermLogic } from "../constant/enum";
+import { TermData, TermInfo, TermBracket } from "../constant/interface";
 import Base from "./base";
 import { Type } from "schema-verify";
 import {

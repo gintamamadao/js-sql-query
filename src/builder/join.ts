@@ -8,8 +8,8 @@ import {
     JoinTypeInfo,
     JoinTermInfo,
     KeyValueStr
-} from "../constant/builder/interface";
-import { JoinTypes } from "../constant/builder/enum";
+} from "../constant/interface";
+import { JoinTypes } from "../constant/enum";
 import {
     fieldsMapVerify,
     fieldsAsMapVerify,

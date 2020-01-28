@@ -1,4 +1,6 @@
+import { DialectTypes } from "./enum";
 import { TermSign, TermLogic, OrderTypes, JoinTypes } from "./enum";
+
 export interface KeyValueStr {
     [propName: string]: string;
 }
@@ -66,4 +68,19 @@ export interface JoinTableInfo {
 export interface JoinTypeInfo {
     type: JoinTypes;
     info: JoinTableInfo;
+}
+
+export interface ConnectConfig {
+    host: string;
+    port?: string | number;
+    user: string;
+    password?: string;
+    database: string;
+    connectTimeout?: number;
+    connectionLimit?: number;
+    dialect?: DialectTypes;
+}
+export interface DbConnect {
+    query: Function;
+    release: Function;
 }
