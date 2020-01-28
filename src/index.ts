@@ -4,7 +4,7 @@ import { Type } from "schema-verify";
 import { ConnectConfig } from "./constant/interface";
 import { DialectTypes } from "./constant/enum";
 
-function SqlQuery(config: ConnectConfig | DialectTypes) {
+function SqlQuery(config: ConnectConfig | DialectTypes): Builder {
     let dialect: DialectTypes;
     if (Type.object.isNot(config)) {
         dialect = DialectTypes.mysql;
