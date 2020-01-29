@@ -141,6 +141,7 @@ var result = await sqlQuery
     -   [Connect Api](#connect-api)
         -   [exec](#exec)
         -   [execAll](#execAll)
+-   [Test Report](#test-report)
 
 ---
 
@@ -2283,12 +2284,29 @@ var result = await sqlQuery.execAll([
 
 ---
 
-# Tests
+# Test Report
 
 > Tests are using jest, to run the tests use:
 
 ```sh
 $ npm run test
+```
+
+report detail
+
+```sh
+-----------------|----------|----------|----------|----------|-------------------|
+File             |  % Stmts | % Branch |  % Funcs |  % Lines | Uncovered Line #s |
+-----------------|----------|----------|----------|----------|-------------------|
+All files        |     76.6 |    59.93 |    65.48 |    76.74 |                   |
+ js-sql-query.js |     76.6 |    59.93 |    65.48 |    76.74 |... 3695,3696,3697 |
+-----------------|----------|----------|----------|----------|-------------------|
+
+Test Suites: 14 passed, 14 total
+Tests:       145 passed, 145 total
+Snapshots:   0 total
+Time:        3.568s, estimated 4s
+Ran all test suites.
 ```
 
 ---
