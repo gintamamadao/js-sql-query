@@ -61,19 +61,19 @@ class Builder {
         return this.queryInstance<Alter>(QueryTypes.alter);
     }
 
-    get func() {
-        return this.widgetInstance(WidgetTypes.func);
+    get func(): Func {
+        return this.widgetInstance<Func>(WidgetTypes.func);
     }
 
-    get term() {
-        return this.widgetInstance(WidgetTypes.term);
+    get term(): Term {
+        return this.widgetInstance<Term>(WidgetTypes.term);
     }
 
-    get order() {
-        return this.widgetInstance(WidgetTypes.order);
+    get order(): Order {
+        return this.widgetInstance<Order>(WidgetTypes.order);
     }
 
-    queryInstance<T>(type: QueryTypes) {
+    queryInstance<T>(type: QueryTypes): T {
         let instance;
         switch (type) {
             case QueryTypes.insert:
@@ -101,7 +101,7 @@ class Builder {
         return this.initInstance<T>(type, instance);
     }
 
-    widgetInstance(type: WidgetTypes) {
+    widgetInstance<T>(type: WidgetTypes): T {
         let instance;
         switch (type) {
             case WidgetTypes.func:
@@ -114,7 +114,7 @@ class Builder {
                 instance = new Order();
                 break;
         }
-        return this.initInstance(type, instance);
+        return this.initInstance<T>(type, instance);
     }
 
     protected initInstance<T>(type, instance): T {
@@ -142,7 +142,7 @@ class Builder {
         return instance;
     }
 
-    table(tableName: string) {
+    table(tableName: string): Builder {
         if (!Type.string.isNotEmpty(tableName)) {
             throw new Error(ErrMsg.errorTableName);
         }
@@ -150,7 +150,7 @@ class Builder {
         return this;
     }
 
-    build(): string {
+    build(): void {
         throw new Error(ErrMsg.emptyQueryType);
     }
 
@@ -165,23 +165,23 @@ class Builder {
         return this;
     }
 
-    get query(): string {
+    get query(): string | void {
         return this.build();
     }
 
-    getStore() {
+    getStore(): string[] {
         return Store.getStore();
     }
 
-    storeSql(query: string) {
+    storeSql(query: string): void {
         return Store.storeSql(query);
     }
 
-    isStoreEmpty() {
+    isStoreEmpty(): boolean {
         return Store.isStoreEmpty();
     }
 
-    cleanStoreSql() {
+    cleanStoreSql(): void {
         return Store.cleanStoreSql();
     }
 }

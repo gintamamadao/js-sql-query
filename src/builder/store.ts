@@ -1,5 +1,5 @@
 import { Type } from "schema-verify";
-let QUERY_LIST = [];
+let QUERY_LIST: string[] = [];
 
 class Store {
     getStore() {
