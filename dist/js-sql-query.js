@@ -1942,7 +1942,7 @@ class TermApi extends Query {
 
     for (const termApi in WHERE_TERM_API) {
       this[termApi] = function (data) {
-        this.termApiFn(termApi, data);
+        return this.termApiFn(termApi, data);
       };
     }
   }

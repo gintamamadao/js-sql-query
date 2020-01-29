@@ -14,7 +14,7 @@ class TermApi extends Query {
         super();
         for (const termApi in WHERE_TERM_API) {
             this[termApi] = function(data: TermData) {
-                this.termApiFn(termApi, data);
+                return this.termApiFn(termApi, data);
             };
         }
     }
