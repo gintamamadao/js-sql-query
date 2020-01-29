@@ -1,11 +1,6 @@
 import Builder from "./src/builder/builder";
 
-declare enum DialectTypes {
-    mysql = "mysql",
-    mssql = "mssql",
-    postgresql = "postgresql",
-    sqlite = "sqlite"
-}
+declare type DialectTypes = "mysql" | "mssql" | "postgresql" | "sqlite";
 
 declare enum QueryTypes {
     insert = "INSERT",
