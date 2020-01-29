@@ -32,7 +32,7 @@ npm i mssql --save
 var SqlQuery = require("js-sql-query");
 
 // 配置数据库相关信息，其中dialect 是配置数据类型，如果不配置，默认为 mysql。如果使用的是 Microsoft SQL Server，则配置值为 mssql
-var sqlQuery = new SqlQuery({
+var sqlQuery = SqlQuery({
     host: "localhost",
     user: "root",
     password: "123456",
@@ -158,10 +158,10 @@ var result = await sqlQuery
 
 ```js
 // 语境为 mysql
-var sqlQuery = new SqlQuery("mysql");
+var sqlQuery = SqlQuery("mysql");
 
 // 语境为 Microsoft SQL Server
-var sqlQuery = new SqlQuery("mssql");
+var sqlQuery = SqlQuery("mssql");
 
 // 不同语境生成的语句不完全一样，会根据相应的数据库类型进行适配
 ```
@@ -2191,7 +2191,7 @@ ALTER TABLE `table1` CHANGE COLUMN `field1` `id` BIGINT
 
 ```js
 var SqlQuery = require("js-sql-query");
-var sqlQuery = new SqlQuery({
+var sqlQuery = SqlQuery({
     host: "localhost",
     user: "root",
     password: "123456",
