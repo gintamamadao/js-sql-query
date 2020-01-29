@@ -46,7 +46,7 @@ var result = await sqlQuery
     .table("table1")
     .fields("field1", "field2")
     .exec();
-// exec() 返回的是一个 Promise 对象， 所以用 async/await 语法获取最后结果
+// exec() 返回的是一个 Promise 对象
 ```
 
 ---
