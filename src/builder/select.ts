@@ -76,7 +76,7 @@ class Select extends Join {
         return query;
     }
 
-    fields(arg: any, ...otherArgs: any[]) {
+    fields(arg: any, ...otherArgs: any[]): this {
         const selectFields: string[] = Type.array.safe(this.selectFields);
         const args: any[] = argStrArrTrans(arg, otherArgs);
         const fields: string[] = [];
@@ -96,7 +96,7 @@ class Select extends Join {
         return this;
     }
 
-    asMap(map: KeyValueStr) {
+    asMap(map: KeyValueStr): this {
         const asMap: KeyValueStr = Type.object.safe(this.fieldsAsMap);
         if (!strObjVerify(map)) {
             throw new Error(ErrMsg.errorFieldMap);
@@ -105,17 +105,17 @@ class Select extends Join {
         return this;
     }
 
-    limit(offset: number, step?: number) {
+    limit(offset: number, step?: number): this {
         this.getLimitCase().limit(offset, step);
         return this;
     }
 
-    paging(page: number, size: number) {
+    paging(page: number, size: number): this {
         this.getLimitCase().paging(page, size);
         return this;
     }
 
-    findOne() {
+    findOne(): this {
         this.getLimitCase().step(1);
         return this;
     }

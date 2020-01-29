@@ -2,7 +2,7 @@ import { Type } from "schema-verify";
 let QUERY_LIST: string[] = [];
 
 class Store {
-    getStore() {
+    getStore(): string[] {
         return QUERY_LIST.slice();
     }
 
@@ -12,11 +12,11 @@ class Store {
         }
     }
 
-    isStoreEmpty() {
+    isStoreEmpty(): boolean {
         return !(QUERY_LIST.length > 0);
     }
 
-    cleanStoreSql() {
+    cleanStoreSql(): void {
         QUERY_LIST = [];
     }
 }

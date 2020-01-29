@@ -186,7 +186,7 @@ class Term extends Base {
         return termValue;
     }
 
-    termCache(data: TermData, sign: TermSign, logic: TermLogic) {
+    termCache(data: TermData, sign: TermSign, logic: TermLogic): this {
         if (!termDataVerify(data)) {
             throw new Error(ErrMsg.errorTermdata);
         }
@@ -232,7 +232,7 @@ class Term extends Base {
         return this;
     }
 
-    bracketTerm(logic: TermLogic) {
+    bracketTerm(logic: TermLogic): this {
         const termInfos: TermInfo[] = Type.array.safe(this.termInfos);
         const termBrackets: TermBracket[] = Type.array.safe(this.termBrackets);
         const termsLen: number = termInfos.length;
@@ -259,119 +259,119 @@ class Term extends Base {
         return this;
     }
 
-    sqlTerm(sql: SqlParam) {
+    sqlTerm(sql: SqlParam): void {
         this.manualSql(sql, SQL_NAME);
     }
 
-    equal(data: TermData) {
+    equal(data: TermData): this {
         return this.and(data, TermSign.equal);
     }
 
-    notEqual(data: TermData) {
+    notEqual(data: TermData): this {
         return this.and(data, TermSign.notEqual);
     }
 
-    in(data: TermData) {
+    in(data: TermData): this {
         return this.and(data, TermSign.in);
     }
 
-    notIn(data: TermData) {
+    notIn(data: TermData): this {
         return this.and(data, TermSign.notIn);
     }
 
-    more(data: TermData) {
+    more(data: TermData): this {
         return this.and(data, TermSign.more);
     }
 
-    less(data: TermData) {
+    less(data: TermData): this {
         return this.and(data, TermSign.less);
     }
 
-    moreEqual(data: TermData) {
+    moreEqual(data: TermData): this {
         return this.and(data, TermSign.moreEqual);
     }
 
-    lessEqual(data: TermData) {
+    lessEqual(data: TermData): this {
         return this.and(data, TermSign.lessEqual);
     }
 
-    like(data: TermData) {
+    like(data: TermData): this {
         return this.and(data, TermSign.like);
     }
 
-    notLike(data: TermData) {
+    notLike(data: TermData): this {
         return this.and(data, TermSign.notlike);
     }
 
-    between(data: TermData) {
+    between(data: TermData): this {
         return this.and(data, TermSign.between);
     }
 
-    notBetween(data: TermData) {
+    notBetween(data: TermData): this {
         return this.and(data, TermSign.notBetween);
     }
 
-    orEqual(data: TermData) {
+    orEqual(data: TermData): this {
         return this.or(data, TermSign.equal);
     }
 
-    orNotEqual(data: TermData) {
+    orNotEqual(data: TermData): this {
         return this.or(data, TermSign.notEqual);
     }
 
-    orIn(data: TermData) {
+    orIn(data: TermData): this {
         return this.or(data, TermSign.in);
     }
 
-    orNotIn(data: TermData) {
+    orNotIn(data: TermData): this {
         return this.or(data, TermSign.notIn);
     }
 
-    orMore(data: TermData) {
+    orMore(data: TermData): this {
         return this.or(data, TermSign.more);
     }
 
-    orLess(data: TermData) {
+    orLess(data: TermData): this {
         return this.or(data, TermSign.less);
     }
 
-    orMoreEqual(data: TermData) {
+    orMoreEqual(data: TermData): this {
         return this.or(data, TermSign.moreEqual);
     }
 
-    orLessEqual(data: TermData) {
+    orLessEqual(data: TermData): this {
         return this.or(data, TermSign.lessEqual);
     }
 
-    orLike(data: TermData) {
+    orLike(data: TermData): this {
         return this.or(data, TermSign.like);
     }
 
-    orBetween(data: TermData) {
+    orBetween(data: TermData): this {
         return this.or(data, TermSign.between);
     }
 
-    orNotBetween(data: TermData) {
+    orNotBetween(data: TermData): this {
         return this.or(data, TermSign.notBetween);
     }
 
-    orNotLike(data: TermData) {
+    orNotLike(data: TermData): this {
         return this.or(data, TermSign.notlike);
     }
 
-    bracket() {
+    bracket(): this {
         return this.bracketTerm(TermLogic.and);
     }
 
-    orBracket() {
+    orBracket(): this {
         return this.bracketTerm(TermLogic.or);
     }
 
-    protected and(data: TermData, sign: TermSign) {
+    protected and(data: TermData, sign: TermSign): this {
         return this.termCache(data, sign, TermLogic.and);
     }
 
-    protected or(data: TermData, sign: TermSign) {
+    protected or(data: TermData, sign: TermSign): this {
         return this.termCache(data, sign, TermLogic.or);
     }
 }

@@ -63,17 +63,17 @@ class Order extends Base {
         return query;
     }
 
-    descBy(firstField: string[] | string, otherFields: string[]) {
+    descBy(firstField: string[] | string, otherFields: string[]): this {
         const argFields: string[] = argStrArrTrans(firstField, otherFields);
         return this.orderCache(argFields, OrderTypes.desc);
     }
 
-    ascBy(firstField: string[] | string, otherFields: string[]) {
+    ascBy(firstField: string[] | string, otherFields: string[]): this {
         const argFields: string[] = argStrArrTrans(firstField, otherFields);
         return this.orderCache(argFields, OrderTypes.asc);
     }
 
-    orderField(data: FieldOrder) {
+    orderField(data: FieldOrder): this {
         data = Type.object.safe(data);
         const fields: string[] = Object.keys(data);
         return this.orderCache(fields, OrderTypes.field, data);
@@ -91,7 +91,7 @@ class Order extends Base {
         fields: string[],
         type: OrderTypes,
         fieldOrder?: FieldOrder
-    ) {
+    ): this {
         if (!strArrVerify(fields)) {
             throw new Error(ErrMsg.errorFields);
         }

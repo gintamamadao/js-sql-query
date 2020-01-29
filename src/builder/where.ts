@@ -13,10 +13,14 @@ class Where extends TermApi {
         for (const termApi in WHERE_TERM_API) {
             const whereTermApi = WHERE_TERM_API[termApi];
             this[whereTermApi] = function(data: TermData) {
-                this.getWhereTermCase()[termApi](data);
-                return this;
+                return this.whereTermApiFn(termApi, data);
             };
         }
+    }
+
+    whereTermApiFn(termApi, data): this {
+        this.getWhereTermCase()[termApi](data);
+        return this;
     }
 
     whereBracket() {

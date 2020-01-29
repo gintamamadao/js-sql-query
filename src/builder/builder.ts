@@ -142,7 +142,7 @@ class Builder {
         return instance;
     }
 
-    table(tableName: string): Builder {
+    table(tableName: string): this {
         if (!Type.string.isNotEmpty(tableName)) {
             throw new Error(ErrMsg.errorTableName);
         }
@@ -154,7 +154,7 @@ class Builder {
         throw new Error(ErrMsg.emptyQueryType);
     }
 
-    setConnect(config: ConnectConfig) {
+    setConnect(config: ConnectConfig): this {
         if (Type.object.isNot(config)) {
             return this;
         }

@@ -1998,10 +1998,14 @@ class Where extends TermApi {
       const whereTermApi = WHERE_TERM_API[termApi];
 
       this[whereTermApi] = function (data) {
-        this.getWhereTermCase()[termApi](data);
-        return this;
+        return this.whereTermApiFn(termApi, data);
       };
     }
+  }
+
+  whereTermApiFn(termApi, data) {
+    this.getWhereTermCase()[termApi](data);
+    return this;
   }
 
   whereBracket() {
@@ -2055,10 +2059,14 @@ class Having extends Where {
       const havingTermApi = HAVING_TERM_API[termApi];
 
       this[havingTermApi] = function (data) {
-        this.getHavingTermCase()[termApi](data);
-        return this;
+        return this.havingTermApiFn(termApi, data);
       };
     }
+  }
+
+  havingTermApiFn(termApi, data) {
+    this.getHavingTermCase()[termApi](data);
+    return this;
   }
 
   havingBracket() {

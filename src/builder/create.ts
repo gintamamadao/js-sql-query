@@ -51,7 +51,7 @@ class Create extends Base {
         }
     }
 
-    info(tableInfo: TableInfo | string) {
+    info(tableInfo: TableInfo | string): this {
         if (Type.string.isNotEmpty(tableInfo)) {
             this.createTableSqlStr = <string>tableInfo;
         } else if (tableInfoVerify(tableInfo, true)) {
@@ -60,7 +60,7 @@ class Create extends Base {
         return this;
     }
 
-    dataBase(dbName: string) {
+    dataBase(dbName: string): this {
         if (!Type.string.isNotEmpty(dbName)) {
             throw new Error(ErrMsg.errorCreateDbName);
         }

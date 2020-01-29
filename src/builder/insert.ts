@@ -25,7 +25,7 @@ class Insert extends Query {
         this.insertDataArr = [];
     }
 
-    data(data: FieldData) {
+    data(data: FieldData): this {
         if (!fieldDataVerify(data)) {
             throw new Error(ErrMsg.errorFieldData);
         }
@@ -34,7 +34,7 @@ class Insert extends Query {
         return this;
     }
 
-    fields(arg: any, ...otherArgs: any[]) {
+    fields(arg: any, ...otherArgs: any[]): this {
         const args: string[] = argStrArrTrans(arg, otherArgs);
         const insertFields: string[] = Type.array.safe(this.insertFields);
         const result = [].concat(insertFields, args);
@@ -42,7 +42,7 @@ class Insert extends Query {
         return this;
     }
 
-    multiData(dataArr: FieldData[]) {
+    multiData(dataArr: FieldData[]): this {
         if (!fieldDataArrVerify(dataArr)) {
             throw new Error(ErrMsg.errorFieldDataArr);
         }
@@ -51,7 +51,7 @@ class Insert extends Query {
         return this;
     }
 
-    values(sql: string | Function) {
+    values(sql: string | Function): this {
         this.manualSql(sql, SQL_NAME);
         return this;
     }

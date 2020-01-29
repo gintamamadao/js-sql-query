@@ -74,7 +74,7 @@ class Base {
         return this._safeKey(key);
     };
 
-    protected manualSql(sql: SqlParam, key: string) {
+    protected manualSql(sql: SqlParam, key: string): void {
         if (!manualSqlVerify(sql) && !(sql instanceof Base)) {
             throw new Error(ErrMsg.errorManualSql);
         }

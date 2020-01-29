@@ -23,7 +23,7 @@ class TermApi extends Query {
         }
     }
 
-    bracket() {
+    bracket(): this  {
         const termStatus: TermTypes = this.termStatus;
         if (!TERM_TYPES.includes(termStatus)) {
             throw new Error(ErrMsg.errorTermStatus);
@@ -32,7 +32,7 @@ class TermApi extends Query {
         return this;
     }
 
-    orBracket() {
+    orBracket(): this  {
         const termStatus: TermTypes = this.termStatus;
         if (!TERM_TYPES.includes(termStatus)) {
             throw new Error(ErrMsg.errorTermStatus);

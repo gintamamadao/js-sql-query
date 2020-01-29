@@ -13,23 +13,27 @@ class Having extends Where {
         for (const termApi in HAVING_TERM_API) {
             const havingTermApi = HAVING_TERM_API[termApi];
             this[havingTermApi] = function(data: TermData) {
-                this.getHavingTermCase()[termApi](data);
-                return this;
+                return this.havingTermApiFn(termApi, data);
             };
         }
     }
 
-    havingBracket() {
+    havingTermApiFn(termApi, data): this {
+        this.getHavingTermCase()[termApi](data);
+        return this;
+    }
+
+    havingBracket(): this {
         this.getHavingTermCase().bracket();
         return this;
     }
 
-    havingOrBracket() {
+    havingOrBracket(): this {
         this.getHavingTermCase().orBracket();
         return this;
     }
 
-    having(sql?: SqlParam) {
+    having(sql?: SqlParam): this {
         if (Type.undefined.isNot(sql)) {
             const term: Term = this.getHavingTermCase();
             if (Type.func.is(sql)) {

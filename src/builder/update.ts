@@ -72,7 +72,7 @@ class Update extends Where {
         return result;
     }
 
-    protected updateCache(data: FieldData, type: UpdateTypes) {
+    protected updateCache(data: FieldData, type: UpdateTypes): this {
         if (!fieldDataVerify(data)) {
             throw new Error(ErrMsg.errorFieldData);
         }
@@ -92,15 +92,15 @@ class Update extends Where {
         return this;
     }
 
-    set(data: FieldData) {
+    set(data: FieldData): this {
         return this.updateCache(data, UpdateTypes.set);
     }
 
-    add(data: FieldData) {
+    add(data: FieldData): this {
         return this.updateCache(data, UpdateTypes.add);
     }
 
-    minus(data: FieldData) {
+    minus(data: FieldData): this {
         return this.updateCache(data, UpdateTypes.minus);
     }
 }

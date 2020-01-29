@@ -28,7 +28,7 @@ class Join extends Combine {
 
     protected getQueryTables(): string {
         const queryTables: string = Type.array
-            .safe(this.queryTables)
+            .safe<string[]>(this.queryTables)
             .map(table => {
                 return this.safeKey(table);
             })
@@ -117,7 +117,7 @@ class Join extends Combine {
         return result;
     }
 
-    multiTables(arg: any, ...otherArgs: any[]) {
+    multiTables(arg: any, ...otherArgs: any[]): this {
         const queryTables: string[] = Type.array.safe(this.queryTables);
         const args: any[] = argStrArrTrans(arg, otherArgs);
         const tables: string[] = [];
@@ -130,7 +130,7 @@ class Join extends Combine {
         return this;
     }
 
-    tableFields(fieldsMap: TableFieldsMap) {
+    tableFields(fieldsMap: TableFieldsMap): this {
         const tableFieldsMap: TableFieldsMap = Type.object.safe(
             this.tableFieldsMap
         );
@@ -141,7 +141,7 @@ class Join extends Combine {
         return this;
     }
 
-    tableAsMap(asMap: TableFieldsAsMap) {
+    tableAsMap(asMap: TableFieldsAsMap): this {
         const tableFieldsAsMap: TableFieldsAsMap = Type.object.safe(
             this.tableFieldsAsMap
         );
@@ -152,7 +152,7 @@ class Join extends Combine {
         return this;
     }
 
-    protected join(joinInfo: JoinTableInfo, type: JoinTypes) {
+    protected join(joinInfo: JoinTableInfo, type: JoinTypes): this {
         const joinTypeInfos: JoinTypeInfo[] = Type.array.safe(
             this.joinTypeInfos
         );
@@ -168,17 +168,17 @@ class Join extends Combine {
         return this;
     }
 
-    innerJoin(joinInfo: JoinTableInfo) {
+    innerJoin(joinInfo: JoinTableInfo): this {
         this.join(joinInfo, JoinTypes.inner);
         return this;
     }
 
-    leftJoin(joinInfo: JoinTableInfo) {
+    leftJoin(joinInfo: JoinTableInfo): this {
         this.join(joinInfo, JoinTypes.left);
         return this;
     }
 
-    rightJoin(joinInfo: JoinTableInfo) {
+    rightJoin(joinInfo: JoinTableInfo): this {
         this.join(joinInfo, JoinTypes.right);
         return this;
     }

@@ -54,7 +54,7 @@ class Limit {
         this.limitInfo = limitInfo;
     }
 
-    offset(offset: number) {
+    offset(offset: number): void {
         if (!integerVerify(offset)) {
             throw new Error(ErrMsg.errorOffset);
         }

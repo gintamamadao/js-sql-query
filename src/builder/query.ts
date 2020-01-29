@@ -7,7 +7,7 @@ class Query extends Base {
     protected queryLimit: Limit;
     protected queryOrder: Order;
 
-    protected getLimitCase() {
+    protected getLimitCase(): Limit {
         let queryLimit: Limit = this.queryLimit;
         if (!queryLimit || !(queryLimit instanceof Limit)) {
             queryLimit = new Limit();
@@ -20,17 +20,17 @@ class Query extends Base {
         return this.getLimitCase().limitBuild(query);
     }
 
-    offset(offset: number) {
+    offset(offset: number): this {
         this.getLimitCase().offset(offset);
         return this;
     }
 
-    step(step: number) {
+    step(step: number): this {
         this.getLimitCase().step(step);
         return this;
     }
 
-    protected getOrderCase() {
+    protected getOrderCase(): Order {
         let queryOrder: Order = this.queryOrder;
         if (!queryOrder || !(queryOrder instanceof Order)) {
             queryOrder = new Order();
@@ -44,22 +44,22 @@ class Query extends Base {
         return this.getOrderCase().orderBuild(query);
     }
 
-    descBy(firstField: string[] | string, ...otherFields: string[]) {
+    descBy(firstField: string[] | string, ...otherFields: string[]): this {
         this.getOrderCase().descBy(firstField, otherFields);
         return this;
     }
 
-    ascBy(firstField: string[] | string, ...otherFields: string[]) {
+    ascBy(firstField: string[] | string, ...otherFields: string[]): this {
         this.getOrderCase().ascBy(firstField, otherFields);
         return this;
     }
 
-    orderField(data: FieldOrder) {
+    orderField(data: FieldOrder): this {
         this.getOrderCase().orderField(data);
         return this;
     }
 
-    order(sql: string | Function) {
+    order(sql: string | Function): this {
         this.getOrderCase().order(sql);
         return this;
     }
