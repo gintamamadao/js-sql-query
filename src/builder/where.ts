@@ -58,6 +58,31 @@ class Where extends TermApi {
         }
         return query;
     }
+
+    whereEqual: (data: TermData) => this;
+    whereNotEqual: (data: TermData) => this;
+    whereIn: (data: TermData) => this;
+    whereNotIn: (data: TermData) => this;
+    whereMore: (data: TermData) => this;
+    whereLess: (data: TermData) => this;
+    whereMoreEqual: (data: TermData) => this;
+    whereLessEqual: (data: TermData) => this;
+    whereLike: (data: TermData) => this;
+    whereNotLike: (data: TermData) => this;
+    whereBetween: (data: TermData) => this;
+    whereNotBetween: (data: TermData) => this;
+    whereOrEqual: (data: TermData) => this;
+    whereOrNotEqual: (data: TermData) => this;
+    whereOrIn: (data: TermData) => this;
+    whereOrNotIn: (data: TermData) => this;
+    whereOrMore: (data: TermData) => this;
+    whereOrLess: (data: TermData) => this;
+    whereOrMoreEqual: (data: TermData) => this;
+    whereOrLessEqual: (data: TermData) => this;
+    whereOrLike: (data: TermData) => this;
+    whereOrNotLike: (data: TermData) => this;
+    whereOrBetween: (data: TermData) => this;
+    whereOrNotBetween: (data: TermData) => this;
 }
 
 export default Where;

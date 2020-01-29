@@ -193,4 +193,6 @@ declare interface DbConnect {
 
 declare type SqlParam = string | Function | Object;
 
+
+
 export default function SqlQuery(config: ConnectConfig | DialectTypes): Builder;

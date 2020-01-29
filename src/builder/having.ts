@@ -58,6 +58,31 @@ class Having extends Where {
         }
         return query;
     }
+
+    havingEqual: (data: TermData) => this;
+    havingNotEqual: (data: TermData) => this;
+    havingIn: (data: TermData) => this;
+    havingNotIn: (data: TermData) => this;
+    havingMore: (data: TermData) => this;
+    havingLess: (data: TermData) => this;
+    havingMoreEqual: (data: TermData) => this;
+    havingLessEqual: (data: TermData) => this;
+    havingLike: (data: TermData) => this;
+    havingNotLike: (data: TermData) => this;
+    havingBetween: (data: TermData) => this;
+    havingNotBetween: (data: TermData) => this;
+    havingOrEqual: (data: TermData) => this;
+    havingOrNotEqual: (data: TermData) => this;
+    havingOrIn: (data: TermData) => this;
+    havingOrNotIn: (data: TermData) => this;
+    havingOrMore: (data: TermData) => this;
+    havingOrLess: (data: TermData) => this;
+    havingOrMoreEqual: (data: TermData) => this;
+    havingOrLessEqual: (data: TermData) => this;
+    havingOrLike: (data: TermData) => this;
+    havingOrNotLike: (data: TermData) => this;
+    havingOrBetween: (data: TermData) => this;
+    havingOrNotBetween: (data: TermData) => this;
 }
 
 export default Having;

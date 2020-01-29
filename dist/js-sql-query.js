@@ -1942,16 +1942,20 @@ class TermApi extends Query {
 
     for (const termApi in WHERE_TERM_API) {
       this[termApi] = function (data) {
-        const termStatus = this.termStatus;
-
-        if (!TERM_TYPES.includes(termStatus)) {
-          throw new Error(ErrMsg$c.errorTermStatus);
-        }
-
-        this.getTermCase(termStatus)[termApi](data);
-        return this;
+        this.termApiFn(termApi, data);
       };
     }
+  }
+
+  termApiFn(termApi, data) {
+    const termStatus = this.termStatus;
+
+    if (!TERM_TYPES.includes(termStatus)) {
+      throw new Error(ErrMsg$c.errorTermStatus);
+    }
+
+    this.getTermCase(termStatus)[termApi](data);
+    return this;
   }
 
   bracket() {

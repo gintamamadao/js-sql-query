@@ -7,6 +7,7 @@ import { WHERE_TERM_API } from "../constant/constant";
 import ErrMsg from "../error/builder/index";
 
 const TERM_TYPES = Object.values(TermTypes);
+
 class TermApi extends Query {
     protected termStatus: TermTypes;
     constructor() {
@@ -54,6 +55,31 @@ class TermApi extends Query {
         }
         return term;
     }
+
+    equal: (data: TermData) => this;
+    notEqual: (data: TermData) => this;
+    in: (data: TermData) => this;
+    notIn: (data: TermData) => this;
+    more: (data: TermData) => this;
+    less: (data: TermData) => this;
+    moreEqual: (data: TermData) => this;
+    lessEqual: (data: TermData) => this;
+    like: (data: TermData) => this;
+    notLike: (data: TermData) => this;
+    between: (data: TermData) => this;
+    notBetween: (data: TermData) => this;
+    orEqual: (data: TermData) => this;
+    orNotEqual: (data: TermData) => this;
+    orIn: (data: TermData) => this;
+    orNotIn: (data: TermData) => this;
+    orMore: (data: TermData) => this;
+    orLess: (data: TermData) => this;
+    orMoreEqual: (data: TermData) => this;
+    orLessEqual: (data: TermData) => this;
+    orLike: (data: TermData) => this;
+    orNotLike: (data: TermData) => this;
+    orBetween: (data: TermData) => this;
+    orNotBetween: (data: TermData) => this;
 }
 
 export default TermApi;
