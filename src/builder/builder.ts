@@ -9,11 +9,7 @@ import Term from "./term";
 import Func from "./func";
 import Order from "./order";
 import { Type } from "schema-verify";
-import {
-    QueryTypes,
-    DialectTypes,
-    WidgetTypes
-} from "../constant/enum";
+import { QueryTypes, DialectTypes, WidgetTypes } from "../constant/enum";
 import ErrMsg from "../error/builder/index";
 import Execute from "../execute/execute";
 import { ConnectConfig } from "../constant/interface";
@@ -37,32 +33,32 @@ class Builder {
         this.queryStore = [];
     }
 
-    insert() {
-        return this.queryInstance(QueryTypes.insert);
+    insert(): Insert {
+        return this.queryInstance<Insert>(QueryTypes.insert);
     }
 
-    select() {
-        return this.queryInstance(QueryTypes.select);
+    select(): Select {
+        return this.queryInstance<Select>(QueryTypes.select);
     }
 
-    update() {
-        return this.queryInstance(QueryTypes.update);
+    update(): Update {
+        return this.queryInstance<Update>(QueryTypes.update);
     }
 
-    delete() {
-        return this.queryInstance(QueryTypes.delete);
+    delete(): Delete {
+        return this.queryInstance<Delete>(QueryTypes.delete);
     }
 
-    replace() {
-        return this.queryInstance(QueryTypes.replace);
+    replace(): Replace {
+        return this.queryInstance<Replace>(QueryTypes.replace);
     }
 
-    create() {
-        return this.queryInstance(QueryTypes.create);
+    create(): Create {
+        return this.queryInstance<Create>(QueryTypes.create);
     }
 
-    alter() {
-        return this.queryInstance(QueryTypes.alter);
+    alter(): Alter {
+        return this.queryInstance<Alter>(QueryTypes.alter);
     }
 
     get func() {
@@ -77,7 +73,7 @@ class Builder {
         return this.widgetInstance(WidgetTypes.order);
     }
 
-    queryInstance(type: QueryTypes) {
+    queryInstance<T>(type: QueryTypes) {
         let instance;
         switch (type) {
             case QueryTypes.insert:
@@ -102,7 +98,7 @@ class Builder {
                 instance = new Alter();
                 break;
         }
-        return this.initInstance(type, instance);
+        return this.initInstance<T>(type, instance);
     }
 
     widgetInstance(type: WidgetTypes) {
@@ -121,7 +117,7 @@ class Builder {
         return this.initInstance(type, instance);
     }
 
-    protected initInstance(type, instance) {
+    protected initInstance<T>(type, instance): T {
         instance = Type.object.safe(instance);
         const dialectType: DialectTypes = this.dialectType;
         const execute: Execute = this.execute;

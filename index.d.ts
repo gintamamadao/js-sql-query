@@ -2,145 +2,110 @@ import Builder from "./src/builder/builder";
 
 declare type DialectTypes = "mysql" | "mssql" | "postgresql" | "sqlite";
 
-declare enum QueryTypes {
-    insert = "INSERT",
-    replace = "REPLACE",
-    select = "SELECT",
-    update = "UPDATE",
-    delete = "DELETE",
-    create = "CREATE",
-    alter = "ALTER"
-}
+declare type QueryTypes =
+    | "INSERT"
+    | "REPLACE"
+    | "SELECT"
+    | "UPDATE"
+    | "DELETE"
+    | "CREATE"
+    | "ALTER";
 
-declare enum FuncTypes {
-    count = "COUNT",
-    sum = "SUM",
-    max = "MAX",
-    min = "MIN",
-    avg = "AVG",
-    abs = "ABS",
-    ceil = "CEIL",
-    floor = "FLOOR",
-    round = "ROUND",
-    log = "LOG",
-    log2 = "LOG2",
-    exp = "EXP",
-    power = "POWER",
-    acos = "ACOS",
-    asin = "ASIN",
-    atan = "ATAN",
-    cos = "COS",
-    sin = "SIN",
-    tan = "TAN",
-    conv = "CONV",
-    random = "RANDOM",
-    rand = "RAND",
-    radians = "RADIANS",
-    degrees = "DEGREES",
-    distinct = "DISTINCT"
-}
+declare type FuncTypes =
+    | "COUNT"
+    | "SUM"
+    | "MAX"
+    | "MIN"
+    | "AVG"
+    | "ABS"
+    | "CEIL"
+    | "FLOOR"
+    | "ROUND"
+    | "LOG"
+    | "LOG2"
+    | "EXP"
+    | "POWER"
+    | "ACOS"
+    | "ASIN"
+    | "ATAN"
+    | "COS"
+    | "SIN"
+    | "TAN"
+    | "CONV"
+    | "RANDOM"
+    | "RAND"
+    | "RADIANS"
+    | "DEGREES"
+    | "DISTINCT";
 
-declare enum TermLogic {
-    and = "AND",
-    or = "OR"
-}
+declare type TermLogic = "AND" | "OR";
 
-declare enum TermSign {
-    equal = "=",
-    notEqual = "<>",
-    more = ">",
-    less = "<",
-    moreEqual = ">=",
-    lessEqual = "<=",
-    like = "LIKE",
-    notlike = "NOT LIKE",
-    isNot = "IS NOT",
-    in = "IN",
-    notIn = "NOT IN",
-    between = "BETWEEN",
-    notBetween = "NOT BETWEEN"
-}
+declare type TermSign =
+    | "="
+    | "<>"
+    | ">"
+    | "<"
+    | ">="
+    | "<="
+    | "LIKE"
+    | "NOT LIKE"
+    | "IS NOT"
+    | "IN"
+    | "NOT IN"
+    | "BETWEEN"
+    | "NOT BETWEEN";
 
-declare enum OrderTypes {
-    desc = "DESC",
-    asc = "ASC",
-    field = "FIELD"
-}
+declare type OrderTypes = "DESC" | "ASC" | "FIELD";
 
-declare enum UpdateTypes {
-    set = "SET",
-    add = "ADD",
-    minus = "MINUS"
-}
+declare type UpdateTypes = "SET" | "ADD" | "MINUS";
 
-declare enum WidgetTypes {
-    func = "FUNC",
-    term = "TERM",
-    order = "ORDER"
-}
+declare type WidgetTypes = "FUNC" | "TERM" | "ORDER";
 
-declare enum SqlDataTypes {
-    tinyint = "TINYINT",
-    smallint = "SMALLINT",
-    mediumint = "MEDIUMINT",
-    int = "INT",
-    bigint = "BIGINT",
-    float = "FLOAT",
-    double = "DOUBLE",
-    decimal = "DECIMAL",
-    date = "DATE",
-    time = "TIME",
-    year = "YEAR",
-    datetime = "DATETIME",
-    timestamp = "TIMESTAMP",
-    char = "CHAR",
-    varchar = "VARCHAR",
-    tinyblob = "TINYBLOB",
-    tinytest = "TINYTEXT",
-    blob = "BLOB",
-    test = "TEXT",
-    mediumblob = "MEDIUMBLOB",
-    mediumtext = "MEDIUMTEXT",
-    longblob = "LONGBLOB",
-    longtext = "LONGTEXT"
-}
+declare type SqlDataTypes =
+    | "TINYINT"
+    | "SMALLINT"
+    | "MEDIUMINT"
+    | "INT"
+    | "BIGINT"
+    | "FLOAT"
+    | "DOUBLE"
+    | "DECIMAL"
+    | "DATE"
+    | "TIME"
+    | "YEAR"
+    | "DATETIME"
+    | "TIMESTAMP"
+    | "CHAR"
+    | "VARCHAR"
+    | "TINYBLOB"
+    | "TINYTEXT"
+    | "BLOB"
+    | "TEXT"
+    | "MEDIUMBLOB"
+    | "MEDIUMTEXT"
+    | "LONGBLOB"
+    | "LONGTEXT";
 
-declare enum TableOptions {
-    primaryKey = "PRIMARY KEY",
-    uniqueKey = "UNIQUE KEY",
-    engine = "ENGINE",
-    autoIncrement = "AUTO_INCREMENT",
-    defaultCharset = "DEFAULT CHARSET",
-    comment = "COMMENT",
-    unsigned = "UNSIGNED",
-    notNull = "NOT NULL",
-    default = "DEFAULT",
-    onUpdate = "ON UPDATE",
-    constraint = "CONSTRAINT"
-}
+declare type TableOptions =
+    | "PRIMARY KEY"
+    | "UNIQUE KEY"
+    | "ENGINE"
+    | "AUTO_INCREMENT"
+    | "DEFAULT CHARSET"
+    | "COMMENT"
+    | "UNSIGNED"
+    | "NOT NULL"
+    | "DEFAULT"
+    | "ON UPDATE"
+    | "CONSTRAINT";
 
-declare enum AlterMethods {
-    add = "ADD",
-    drop = "DROP",
-    modify = "MODIFY",
-    change = "CHANGE"
-}
+declare type AlterMethods = "ADD" | "DROP" | "MODIFY" | "CHANGE";
 
-declare enum JoinTypes {
-    inner = "INNER",
-    left = "LEFT",
-    right = "RIGHT"
-}
+declare type JoinTypes = "INNER" | "LEFT" | "RIGHT";
 
-declare enum TermTypes {
-    where = "whereTerm",
-    having = "havingTerm"
-}
+declare type TermTypes = "whereTerm" | "havingTerm";
 
-declare enum DialectModules {
-    mysql = "mysql",
-    mssql = "mssql"
-}
+declare type DialectModules = "mysql" | "mssql";
 
 declare interface KeyValueStr {
     [propName: string]: string;
