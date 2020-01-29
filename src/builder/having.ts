@@ -18,7 +18,7 @@ class Having extends Where {
         }
     }
 
-    havingTermApiFn(termApi, data): this {
+    havingTermApiFn(termApi: string, data: TermData): this {
         this.getHavingTermCase()[termApi](data);
         return this;
     }

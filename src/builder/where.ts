@@ -18,22 +18,22 @@ class Where extends TermApi {
         }
     }
 
-    whereTermApiFn(termApi, data): this {
+    whereTermApiFn(termApi: string, data: TermData): this {
         this.getWhereTermCase()[termApi](data);
         return this;
     }
 
-    whereBracket() {
+    whereBracket(): this {
         this.getWhereTermCase().bracket();
         return this;
     }
 
-    whereOrBracket() {
+    whereOrBracket(): this {
         this.getWhereTermCase().orBracket();
         return this;
     }
 
-    where(sql?: SqlParam) {
+    where(sql?: SqlParam): this {
         if (Type.undefined.isNot(sql)) {
             const term: Term = this.getWhereTermCase();
             if (Type.func.is(sql)) {
@@ -50,7 +50,7 @@ class Where extends TermApi {
         return this.getTermCase(TermTypes.where);
     }
 
-    protected whereBuild(query: string) {
+    protected whereBuild(query: string): string {
         const whereTerm: Term = this.getWhereTermCase();
         const whereSql: string = whereTerm.termsBuild();
         if (Type.string.isNotEmpty(whereSql)) {

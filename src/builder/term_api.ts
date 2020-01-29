@@ -13,17 +13,21 @@ class TermApi extends Query {
         super();
         for (const termApi in WHERE_TERM_API) {
             this[termApi] = function(data: TermData) {
-                const termStatus: TermTypes = this.termStatus;
-                if (!TERM_TYPES.includes(termStatus)) {
-                    throw new Error(ErrMsg.errorTermStatus);
-                }
-                this.getTermCase(termStatus)[termApi](data);
-                return this;
+                this.termApiFn(termApi, data);
             };
         }
     }
 
-    bracket(): this  {
+    termApiFn(termApi: string, data: TermData): this {
+        const termStatus: TermTypes = this.termStatus;
+        if (!TERM_TYPES.includes(termStatus)) {
+            throw new Error(ErrMsg.errorTermStatus);
+        }
+        this.getTermCase(termStatus)[termApi](data);
+        return this;
+    }
+
+    bracket(): this {
         const termStatus: TermTypes = this.termStatus;
         if (!TERM_TYPES.includes(termStatus)) {
             throw new Error(ErrMsg.errorTermStatus);
@@ -32,7 +36,7 @@ class TermApi extends Query {
         return this;
     }
 
-    orBracket(): this  {
+    orBracket(): this {
         const termStatus: TermTypes = this.termStatus;
         if (!TERM_TYPES.includes(termStatus)) {
             throw new Error(ErrMsg.errorTermStatus);
