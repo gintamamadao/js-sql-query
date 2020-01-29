@@ -12,13 +12,13 @@ export function analyTmpl(tmpl: string, opts: object): string {
         .trim();
 }
 
-export function argStrArrTrans(arg: any, otherArgs: any[]): any[] {
-    let args: any[] = [];
+export function argStrArrTrans<T>(arg: T | T[], otherArgs: T[]): T[] {
+    let args: T[] = [];
     if (Type.array.is(arg)) {
-        args = arg;
+        args = <T[]>arg;
     } else {
         otherArgs = Type.array.safe(otherArgs);
-        otherArgs.unshift(arg);
+        otherArgs.unshift(<T>arg);
         args = otherArgs;
     }
     return args;
