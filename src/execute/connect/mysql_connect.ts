@@ -13,7 +13,7 @@ class MysqlConnect extends BaseConnect {
     getPool() {
         let pool = this.pool;
         const dbConfig = this.dbConfig;
-        if (Type.object.is(pool) && Type.function.is(pool.getConnection)) {
+        if (Type.object.is<any>(pool) && Type.func.is(pool.getConnection)) {
             return pool;
         }
         const MysqlModule = this.loadModule(DialectModules.mysql);
@@ -23,7 +23,7 @@ class MysqlConnect extends BaseConnect {
 
     getDbConnect() {
         const pool = this.getPool() || {};
-        if (Type.function.isNot(pool.getConnection)) {
+        if (Type.func.isNot(pool.getConnection)) {
             throw new Error(ErrMsg.emptyConnectPool);
         }
         return new Promise((relsove, reject) => {
@@ -33,8 +33,8 @@ class MysqlConnect extends BaseConnect {
                 }
                 if (
                     !connection ||
-                    Type.function.isNot(connection.query) ||
-                    Type.function.isNot(connection.release)
+                    Type.func.isNot(connection.query) ||
+                    Type.func.isNot(connection.release)
                 ) {
                     reject(new Error(ErrMsg.errorConnect));
                 }

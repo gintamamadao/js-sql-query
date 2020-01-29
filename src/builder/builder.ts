@@ -124,19 +124,19 @@ class Builder {
         const queryTable: string = this.queryTable;
         if (
             Type.string.isNotEmpty(queryTable) &&
-            Type.function.is(instance.table)
+            Type.func.is(instance.table)
         ) {
             if (TABLE_QUERY_TYPE.includes(type)) {
                 instance.table(queryTable);
             }
         }
-        if (Type.function.is(instance.setDialect)) {
+        if (Type.func.is(instance.setDialect)) {
             instance.setDialect(dialectType);
         }
-        if (Type.function.is(instance.checkDialect)) {
+        if (Type.func.is(instance.checkDialect)) {
             instance.checkDialect();
         }
-        if (Type.function.is(instance.setExecute)) {
+        if (Type.func.is(instance.setExecute)) {
             instance.setExecute(execute);
         }
         return instance;

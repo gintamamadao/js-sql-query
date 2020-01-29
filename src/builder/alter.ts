@@ -39,8 +39,8 @@ class Alter extends Base {
     }
 
     add(field: string | AlterField, alterField: AlterField) {
-        if (Type.object.is(field)) {
-            alterField = <AlterField>field;
+        if (Type.object.is<AlterField>(field)) {
+            alterField = field;
             field = alterField.field;
         }
         delete alterField["field"];

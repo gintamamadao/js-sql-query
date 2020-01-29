@@ -14,8 +14,8 @@ export function analyTmpl(tmpl: string, opts: object): string {
 
 export function argStrArrTrans<T>(arg: T | T[], otherArgs: T[]): T[] {
     let args: T[] = [];
-    if (Type.array.is(arg)) {
-        args = <T[]>arg;
+    if (Type.array.is<T[]>(arg)) {
+        args = arg;
     } else {
         otherArgs = Type.array.safe(otherArgs);
         otherArgs.unshift(<T>arg);

@@ -1012,14 +1012,14 @@ class Base {
   formatManualSql(key) {
     let sql = this[key];
 
-    if (schemaVerify.Type.string.isNotEmpty(sql)) {
+    if (schemaVerify.Type.string.is(sql)) {
       return sql;
     }
 
-    if (schemaVerify.Type.function.is(sql)) {
+    if (schemaVerify.Type.func.is(sql)) {
       sql = sql();
 
-      if (schemaVerify.Type.string.isNotEmpty(sql)) {
+      if (schemaVerify.Type.string.is(sql)) {
         return sql;
       }
     }
@@ -1027,7 +1027,7 @@ class Base {
     if (schemaVerify.Type.object.isNotEmpty(sql) && sql instanceof Base) {
       sql = sql.query;
 
-      if (schemaVerify.Type.string.isNotEmpty(sql)) {
+      if (schemaVerify.Type.string.is(sql)) {
         return sql;
       }
     }
@@ -1088,7 +1088,7 @@ class Base {
       throw new Error(ErrMsg$c.emptySqlQuery);
     }
 
-    if (schemaVerify.Type.object.isNot(execute) || schemaVerify.Type.function.isNot(execute.exec)) {
+    if (schemaVerify.Type.object.isNot(execute) || schemaVerify.Type.func.isNot(execute.exec)) {
       throw new Error(ErrMsg$c.errorExecute);
     }
 
@@ -1099,7 +1099,7 @@ class Base {
     const execute = this._execute;
     queryList = schemaVerify.Type.array.isNotEmpty(queryList) ? queryList : Store$1.getStore();
 
-    if (schemaVerify.Type.object.isNot(execute) || schemaVerify.Type.function.isNot(execute.exec)) {
+    if (schemaVerify.Type.object.isNot(execute) || schemaVerify.Type.func.isNot(execute.exec)) {
       throw new Error(ErrMsg$c.errorExecute);
     }
 
@@ -2018,7 +2018,7 @@ class Where extends TermApi {
     if (schemaVerify.Type.undefined.isNot(sql)) {
       const term = this.getWhereTermCase();
 
-      if (schemaVerify.Type.function.is(sql)) {
+      if (schemaVerify.Type.func.is(sql)) {
         sql = sql.bind(this, term);
       }
 
@@ -2075,7 +2075,7 @@ class Having extends Where {
     if (schemaVerify.Type.undefined.isNot(sql)) {
       const term = this.getHavingTermCase();
 
-      if (schemaVerify.Type.function.is(sql)) {
+      if (schemaVerify.Type.func.is(sql)) {
         sql = sql.bind(this, term);
       }
 
@@ -2302,7 +2302,7 @@ class Combine extends Having {
         const func = info.func;
         const field = info.field;
 
-        if (schemaVerify.Type.object.is(funcCase) && schemaVerify.Type.function.is(funcCase[func])) {
+        if (schemaVerify.Type.object.is(funcCase) && schemaVerify.Type.func.is(funcCase[func])) {
           const funcInfo = funcCase[func].call(funcCase, field);
           this.funcsCache(funcInfo);
         }
@@ -3348,7 +3348,7 @@ class MysqlConnect extends BaseConnect {
     let pool = this.pool;
     const dbConfig = this.dbConfig;
 
-    if (schemaVerify.Type.object.is(pool) && schemaVerify.Type.function.is(pool.getConnection)) {
+    if (schemaVerify.Type.object.is(pool) && schemaVerify.Type.func.is(pool.getConnection)) {
       return pool;
     }
 
@@ -3360,7 +3360,7 @@ class MysqlConnect extends BaseConnect {
   getDbConnect() {
     const pool = this.getPool() || {};
 
-    if (schemaVerify.Type.function.isNot(pool.getConnection)) {
+    if (schemaVerify.Type.func.isNot(pool.getConnection)) {
       throw new Error(ErrMsg$e.emptyConnectPool);
     }
 
@@ -3370,7 +3370,7 @@ class MysqlConnect extends BaseConnect {
           reject(err);
         }
 
-        if (!connection || schemaVerify.Type.function.isNot(connection.query) || schemaVerify.Type.function.isNot(connection.release)) {
+        if (!connection || schemaVerify.Type.func.isNot(connection.query) || schemaVerify.Type.func.isNot(connection.release)) {
           reject(new Error(ErrMsg$e.errorConnect));
         }
 
@@ -3391,7 +3391,7 @@ class MyssqlConnect extends BaseConnect {
     let pool = this.pool;
     const dbConfig = this.dbConfig;
 
-    if (schemaVerify.Type.object.is(pool) && schemaVerify.Type.function.is(pool.acquire)) {
+    if (schemaVerify.Type.object.is(pool) && schemaVerify.Type.func.is(pool.acquire)) {
       return pool;
     }
 
@@ -3466,7 +3466,7 @@ class Execute {
   async exec(query) {
     const connect = this.connect || {};
 
-    if (schemaVerify.Type.function.isNot(connect.getDbConnect)) {
+    if (schemaVerify.Type.func.isNot(connect.getDbConnect)) {
       throw new Error(ErrMsg$e.emptyConnectPool);
     }
 
@@ -3597,21 +3597,21 @@ class Builder {
     const execute = this.execute;
     const queryTable = this.queryTable;
 
-    if (schemaVerify.Type.string.isNotEmpty(queryTable) && schemaVerify.Type.function.is(instance.table)) {
+    if (schemaVerify.Type.string.isNotEmpty(queryTable) && schemaVerify.Type.func.is(instance.table)) {
       if (TABLE_QUERY_TYPE.includes(type)) {
         instance.table(queryTable);
       }
     }
 
-    if (schemaVerify.Type.function.is(instance.setDialect)) {
+    if (schemaVerify.Type.func.is(instance.setDialect)) {
       instance.setDialect(dialectType);
     }
 
-    if (schemaVerify.Type.function.is(instance.checkDialect)) {
+    if (schemaVerify.Type.func.is(instance.checkDialect)) {
       instance.checkDialect();
     }
 
-    if (schemaVerify.Type.function.is(instance.setExecute)) {
+    if (schemaVerify.Type.func.is(instance.setExecute)) {
       instance.setExecute(execute);
     }
 

@@ -32,8 +32,8 @@ class Having extends Where {
     having(sql?: SqlParam) {
         if (Type.undefined.isNot(sql)) {
             const term: Term = this.getHavingTermCase();
-            if (Type.function.is(sql)) {
-                sql = (<Function>sql).bind(this, term);
+            if (Type.func.is(sql)) {
+                sql = sql.bind(this, term);
             }
             term.sqlTerm(sql);
         } else {

@@ -13,7 +13,7 @@ class MyssqlConnect extends BaseConnect {
     getPool() {
         let pool = this.pool;
         const dbConfig = this.dbConfig;
-        if (Type.object.is(pool) && Type.function.is(pool.acquire)) {
+        if (Type.object.is<any>(pool) && Type.func.is(pool.acquire)) {
             return pool;
         }
         const config = {

@@ -1,6 +1,6 @@
 {
     "name": "js-sql-query",
-    "version": "1.7.3",
+    "version": "1.7.4",
     "description": "Node.js ORM for MySQL and Microsoft SQL Server",
     "main": "./dist/js-sql-query.js",
     "scripts": {
@@ -30,7 +30,7 @@
         "pool"
     ],
     "dependencies": {
-        "schema-verify": "^1.3.5"
+        "schema-verify": "^1.4.2"
     },
     "devDependencies": {
         "@babel/core": "^7.4.5",

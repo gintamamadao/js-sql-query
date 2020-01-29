@@ -83,19 +83,19 @@ class Base {
 
     protected formatManualSql(key: string): string {
         let sql: any = this[key];
-        if (Type.string.isNotEmpty(sql)) {
-            return <string>sql;
+        if (Type.string.is(sql)) {
+            return sql;
         }
-        if (Type.function.is(sql)) {
-            sql = (<Function>sql)();
-            if (Type.string.isNotEmpty(sql)) {
-                return <string>sql;
+        if (Type.func.is(sql)) {
+            sql = sql();
+            if (Type.string.is(sql)) {
+                return sql;
             }
         }
         if (Type.object.isNotEmpty(sql) && sql instanceof Base) {
             sql = sql.query;
-            if (Type.string.isNotEmpty(sql)) {
-                return <string>sql;
+            if (Type.string.is(sql)) {
+                return sql;
             }
         }
         return "";
@@ -148,7 +148,7 @@ class Base {
         if (!Type.string.isNotEmpty(query)) {
             throw new Error(ErrMsg.emptySqlQuery);
         }
-        if (Type.object.isNot(execute) || Type.function.isNot(execute.exec)) {
+        if (Type.object.isNot(execute) || Type.func.isNot(execute.exec)) {
             throw new Error(ErrMsg.errorExecute);
         }
         return execute.exec(query);
@@ -159,7 +159,7 @@ class Base {
         queryList = Type.array.isNotEmpty(queryList)
             ? queryList
             : Store.getStore();
-        if (Type.object.isNot(execute) || Type.function.isNot(execute.exec)) {
+        if (Type.object.isNot(execute) || Type.func.isNot(execute.exec)) {
             throw new Error(ErrMsg.errorExecute);
         }
         const promiseArr = [];

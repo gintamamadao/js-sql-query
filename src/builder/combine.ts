@@ -45,7 +45,7 @@ class Combine extends Having {
         return this;
     }
 
-    protected getFuncCase() {
+    protected getFuncCase(): Func {
         let func: Func = this.funcInstance;
         if (!func || !(func instanceof Func)) {
             func = new Func();
@@ -90,8 +90,8 @@ class Combine extends Having {
                 const func: string = (<FuncInput>info).func;
                 const field: string | number = (<FuncInput>info).field;
                 if (
-                    Type.object.is(funcCase) &&
-                    Type.function.is(funcCase[func])
+                    Type.object.is<Func>(funcCase) &&
+                    Type.func.is(funcCase[func])
                 ) {
                     const funcInfo: FuncInfo = funcCase[func].call(
                         funcCase,

@@ -207,9 +207,9 @@ class Create extends Base {
             result = `${value} ${uniqueKey} (${value})`;
         }
 
-        if (Type.object.is(keyInfo)) {
-            const keyName: string = this.safeKey((<combineKey>keyInfo).keyName);
-            const combineFields = (<combineKey>keyInfo).combineFields;
+        if (Type.object.is<combineKey>(keyInfo)) {
+            const keyName: string = this.safeKey(keyInfo.keyName);
+            const combineFields = keyInfo.combineFields;
             const combineFieldsStr = combineFields
                 .map(field => this.safeKey(field))
                 .join(",");

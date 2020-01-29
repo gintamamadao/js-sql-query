@@ -30,7 +30,7 @@ class Execute {
     }
     async exec(query: string) {
         const connect = this.connect || {};
-        if (Type.function.isNot(connect.getDbConnect)) {
+        if (Type.func.isNot(connect.getDbConnect)) {
             throw new Error(ErrMsg.emptyConnectPool);
         }
         const dbConnection = await connect.getDbConnect();
