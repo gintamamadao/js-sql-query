@@ -1,6 +1,6 @@
 {
     "name": "js-sql-query",
-    "version": "1.9.3",
+    "version": "1.9.4",
     "description": "Node.js ORM for MySQL and Microsoft SQL Server",
     "main": "./dist/js-sql-query.js",
     "scripts": {
@@ -27,7 +27,9 @@
         "mysql",
         "mssql",
         "connect",
-        "pool"
+        "pool",
+        "ts",
+        "typeScript"
     ],
     "dependencies": {
         "schema-verify": "^1.4.3"
