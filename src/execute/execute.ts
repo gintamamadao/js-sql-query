@@ -12,7 +12,7 @@ class Execute {
         this.dialectType = config.dialect || DialectTypes.mysql;
         this.connect = this.getConnect(config);
     }
-    getConnect(config: ConnectConfig) {
+    getConnect(config: ConnectConfig): MysqlConnect | MyssqlConnect {
         const dialect = this.dialectType;
         let connect;
         switch (dialect) {

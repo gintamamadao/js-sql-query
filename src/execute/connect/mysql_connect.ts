@@ -10,7 +10,7 @@ class MysqlConnect extends BaseConnect {
         this.pool = this.getPool();
     }
 
-    getPool() {
+    getPool(): any {
         let pool = this.pool;
         const dbConfig = this.dbConfig;
         if (Type.object.is<any>(pool) && Type.func.is(pool.getConnection)) {

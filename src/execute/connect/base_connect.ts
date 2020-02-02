@@ -5,12 +5,12 @@ import ErrMsg from "../../error/execute/index";
 
 class BaseConnect {
     dbConfig: ConnectConfig;
-    pool;
+    pool: any;
     constructor(config: ConnectConfig) {
         this.setConfig(config);
     }
 
-    setConfig(config: ConnectConfig) {
+    setConfig(config: ConnectConfig): void {
         if (!conConfigVerify(config)) {
             throw new Error(ErrMsg.errorConnectConfig);
         }
@@ -36,7 +36,7 @@ class BaseConnect {
         this.dbConfig = Type.object.pure(dbConfig);
     }
 
-    loadModule(moduleName) {
+    loadModule(moduleName): any {
         try {
             return require(moduleName);
         } catch (err) {
