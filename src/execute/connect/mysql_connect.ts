@@ -1,5 +1,5 @@
 import { Type } from "schema-verify";
-import { ConnectConfig } from "../../constant/interface";
+import { ConnectConfig, DbConnect } from "../../constant/interface";
 import { DialectModules } from "../../constant/enum";
 import ErrMsg from "../../error/execute/index";
 import BaseConnect from "./base_connect";
@@ -21,12 +21,12 @@ class MysqlConnect extends BaseConnect {
         return pool;
     }
 
-    getDbConnect() {
+    getDbConnect(): Promise<DbConnect> {
         const pool = this.getPool() || {};
         if (Type.func.isNot(pool.getConnection)) {
             throw new Error(ErrMsg.emptyConnectPool);
         }
-        return new Promise((relsove, reject) => {
+        return new Promise<DbConnect>((relsove, reject) => {
             pool.getConnection((err, connection) => {
                 if (err) {
                     reject(err);

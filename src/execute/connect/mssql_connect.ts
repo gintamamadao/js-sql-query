@@ -1,7 +1,6 @@
 import { Type } from "schema-verify";
-import { ConnectConfig } from "../../constant/interface";
+import { ConnectConfig, DbConnect } from "../../constant/interface";
 import { DialectModules } from "../../constant/enum";
-import ErrMsg from "../../error/execute/index";
 import BaseConnect from "./base_connect";
 
 class MyssqlConnect extends BaseConnect {
@@ -33,9 +32,9 @@ class MyssqlConnect extends BaseConnect {
         return pool;
     }
 
-    getDbConnect() {
+    getDbConnect(): Promise<DbConnect> {
         let pool = this.getPool() || {};
-        return new Promise(async (relsove, reject) => {
+        return new Promise<DbConnect>(async (relsove, reject) => {
             pool = await pool;
             this.pool = pool;
             const request = pool.request();

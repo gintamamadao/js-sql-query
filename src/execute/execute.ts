@@ -1,6 +1,6 @@
 import MysqlConnect from "./connect/mysql_connect";
 import MyssqlConnect from "./connect/mssql_connect";
-import { ConnectConfig, DbConnect } from "../constant/interface";
+import { ConnectConfig } from "../constant/interface";
 import { DialectTypes } from "../constant/enum";
 import { Type } from "schema-verify";
 import ErrMsg from "../error/execute/index";
@@ -28,15 +28,15 @@ class Execute {
         }
         return connect;
     }
-    async exec(query: string) {
+    async exec<T = any>(query: string): Promise<T> {
         const connect = this.connect || {};
         if (Type.func.isNot(connect.getDbConnect)) {
             throw new Error(ErrMsg.emptyConnectPool);
         }
         const dbConnection = await connect.getDbConnect();
-        return new Promise((relsove, reject) => {
-            (<DbConnect>dbConnection).query(query, function(err, results) {
-                (<DbConnect>dbConnection).release();
+        return new Promise<T>((relsove, reject) => {
+            dbConnection.query(query, function(err, results) {
+                dbConnection.release();
                 if (err) {
                     reject(err);
                 }
