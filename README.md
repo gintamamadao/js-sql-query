@@ -1,5 +1,9 @@
 # js-sql-query
 
+[![NPM version](https://badgen.net/npm/v/js-sql-query)](https://www.npmjs.com/package/js-sql-query)
+[![NPM Weekly Downloads](https://badgen.net/npm/dw/js-sql-query)](https://www.npmjs.com/package/js-sql-query)
+[![License](https://badgen.net/npm/license/js-sql-query)](https://www.npmjs.com/package/js-sql-query)
+
 > Node.js ORM for MySQL and Microsoft SQL Server
 
 ## 项目简介
