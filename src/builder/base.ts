@@ -25,7 +25,7 @@ class Base {
         this.setDialect(dialectType);
     }
 
-    setDialect(dialectType: DialectTypes) {
+    setDialect(dialectType: DialectTypes): void {
         if (!dialectVerify(Dialects[dialectType])) {
             throw new Error(ErrMsg.errorDialect);
         }
@@ -36,15 +36,15 @@ class Base {
         this._safeKey = dialect.safeKey;
     }
 
-    protected _safeValue: SafeValue = function() {
+    protected _safeValue: SafeValue = function(): string {
         return "";
     };
 
-    protected _safeKey: SafeKey = function() {
+    protected _safeKey: SafeKey = function(): string {
         return "";
     };
 
-    protected loadModule(moduleName) {
+    protected loadModule(moduleName): void {
         try {
             return require(moduleName);
         } catch (err) {
@@ -55,7 +55,7 @@ class Base {
         }
     }
 
-    protected safeValue: SafeValue = function(value: string) {
+    protected safeValue: SafeValue = function(value: string): string {
         const _dialectType = this._dialectType;
         let dbModule;
         switch (_dialectType) {
@@ -70,7 +70,7 @@ class Base {
         return value;
     };
 
-    protected safeKey: SafeKey = function(key: string) {
+    protected safeKey: SafeKey = function(key: string): string {
         return this._safeKey(key);
     };
 
@@ -109,7 +109,7 @@ class Base {
         return this.build();
     }
 
-    table(queryTable: string) {
+    table(queryTable: string): this {
         if (!Type.string.isNotEmpty(queryTable)) {
             throw new Error(ErrMsg.errorTableName);
         }
@@ -125,7 +125,7 @@ class Base {
         return this.safeKey(queryTable);
     }
 
-    storeSql() {
+    storeSql(): this {
         let sqlStr;
         try {
             sqlStr = this.build();
@@ -136,11 +136,11 @@ class Base {
         return this;
     }
 
-    setExecute(execute: Execute) {
+    setExecute(execute: Execute): void {
         this._execute = execute;
     }
 
-    exec(sqlStr?: string) {
+    exec<T = any>(sqlStr?: string): Promise<T> {
         const execute: Execute = this._execute;
         const query: string = Type.string.isNotEmpty(sqlStr)
             ? sqlStr
@@ -154,7 +154,7 @@ class Base {
         return execute.exec(query);
     }
 
-    execAll(queryList?: string[]) {
+    execAll<T = any>(queryList?: string[]): Promise<T[]> {
         const execute: Execute = this._execute;
         queryList = Type.array.isNotEmpty(queryList)
             ? queryList

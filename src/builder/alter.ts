@@ -31,14 +31,14 @@ class Alter extends Base {
         super();
     }
 
-    checkDialect() {
+    checkDialect(): void {
         const dialectType: DialectTypes = this._dialectType;
         if (dialectType !== DialectTypes.mysql) {
             throw new Error(ErrMsg.notSupportDialect);
         }
     }
 
-    add(field: string | AlterField, alterField?: AlterField) {
+    add(field: string | AlterField, alterField?: AlterField): this {
         if (Type.object.is<AlterField>(field)) {
             alterField = field;
             field = alterField.field;
@@ -47,16 +47,16 @@ class Alter extends Base {
         return this.alterCache(AlterMethods.add, <string>field, alterField);
     }
 
-    drop(field: string) {
+    drop(field: string): this {
         return this.alterCache(AlterMethods.drop, field, {});
     }
 
-    modify(field: string, alterField: AlterField) {
+    modify(field: string, alterField: AlterField): this {
         delete alterField["field"];
         return this.alterCache(AlterMethods.modify, field, alterField);
     }
 
-    change(field: string, alterField: AlterField) {
+    change(field: string, alterField: AlterField): this {
         return this.alterCache(AlterMethods.change, field, alterField);
     }
 
@@ -64,7 +64,7 @@ class Alter extends Base {
         method: AlterMethods,
         field: string,
         alterField: AlterField
-    ) {
+    ): this {
         if (
             AlterMethods.drop !== method &&
             !Type.object.isNotEmpty(alterField)
