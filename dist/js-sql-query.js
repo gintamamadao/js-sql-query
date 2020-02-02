@@ -3686,7 +3686,7 @@ function SqlQuery(config) {
   if (Schema.Type.object.isNot(config)) {
     dialect = DialectTypes.mysql;
 
-    if (Schema.Type.string.isNotEmpty(config)) {
+    if (Schema.Type.string.isNotEmpty(config) && DialectTypes[config]) {
       dialect = config;
     }
 

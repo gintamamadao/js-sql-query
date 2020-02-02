@@ -8,7 +8,10 @@ function SqlQuery(config: ConnectConfig | DialectTypes): Builder {
     let dialect: DialectTypes;
     if (Type.object.isNot(config)) {
         dialect = DialectTypes.mysql;
-        if (Type.string.isNotEmpty(config)) {
+        if (
+            Type.string.isNotEmpty(config) &&
+            DialectTypes[<DialectTypes>config]
+        ) {
             dialect = <DialectTypes>config;
         }
         return new Builder(dialect);
