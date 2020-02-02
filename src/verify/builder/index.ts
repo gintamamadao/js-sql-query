@@ -1,4 +1,4 @@
-import { Schema } from "schema-verify";
+import Schema from "schema-verify";
 import { fieldDataArrVerify } from "./insert.verify";
 import { funcInfoVerify, funcInputVerify } from "./combine.verify";
 import { dialectVerify, manualSqlVerify } from "./safe.verify";

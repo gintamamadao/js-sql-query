@@ -1,4 +1,4 @@
-import { Schema } from "schema-verify";
+import Schema from "schema-verify";
 import { DialectTypes } from "../../constant/enum";
 
 const conConfigSchema = new Schema({

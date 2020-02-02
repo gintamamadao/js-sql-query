@@ -1,4 +1,4 @@
-import { Schema } from "schema-verify";
+import Schema from "schema-verify";
 import { TermSign, TermLogic } from "../../constant/enum";
 
 const termDataSchema = new Schema({

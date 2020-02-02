@@ -1,4 +1,4 @@
-import { Schema } from "schema-verify";
+import Schema from "schema-verify";
 import { FuncTypes } from "../../constant/enum";
 
 const funcInfoSchema = new Schema({

@@ -1,4 +1,4 @@
-import { Schema } from "schema-verify";
+import Schema from "schema-verify";
 
 export const strArrVerify = new Schema({
     type: Array,

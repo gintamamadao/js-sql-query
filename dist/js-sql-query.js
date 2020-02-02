@@ -1,10 +1,13 @@
 'use strict';
 
-var schemaVerify = require('schema-verify');
+function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+var Schema = require('schema-verify');
+var Schema__default = _interopDefault(Schema);
 
 function analyTmpl(tmpl, opts) {
   return tmpl.replace(/\{\{([a-zA-Z_0-9]+)\}\}/g, function (match, key) {
-    if (opts.hasOwnProperty(key) && schemaVerify.Type.string.isNotEmpty(opts[key])) {
+    if (opts.hasOwnProperty(key) && Schema.Type.string.isNotEmpty(opts[key])) {
       return opts[key] + " ";
     } else {
       return "";
@@ -14,10 +17,10 @@ function analyTmpl(tmpl, opts) {
 function argStrArrTrans(arg, otherArgs) {
   let args = [];
 
-  if (schemaVerify.Type.array.is(arg)) {
+  if (Schema.Type.array.is(arg)) {
     args = arg;
   } else {
-    otherArgs = schemaVerify.Type.array.safe(otherArgs);
+    otherArgs = Schema.Type.array.safe(otherArgs);
     otherArgs.unshift(arg);
     args = otherArgs;
   }
@@ -122,7 +125,7 @@ const DialectsObj = {
         result = `'${value}'`;
       }
 
-      if (schemaVerify.Type.number.is(value)) {
+      if (Schema.Type.number.is(value)) {
         result = `'${value}'`;
       }
 
@@ -136,7 +139,7 @@ const DialectsObj = {
     safeKey(key) {
       let result;
 
-      if (!schemaVerify.Type.string.isNotEmpty(key)) {
+      if (!Schema.Type.string.isNotEmpty(key)) {
         throw new Error(ErrMsg$c.needStr);
       }
 
@@ -154,7 +157,7 @@ const DialectsObj = {
         result = `'${value}'`;
       }
 
-      if (schemaVerify.Type.number.is(value)) {
+      if (Schema.Type.number.is(value)) {
         result = `'${value}'`;
       }
 
@@ -166,7 +169,7 @@ const DialectsObj = {
     },
 
     safeKey(key) {
-      if (!schemaVerify.Type.string.isNotEmpty(key)) {
+      if (!Schema.Type.string.isNotEmpty(key)) {
         throw new Error(ErrMsg$c.needStr);
       }
 
@@ -183,7 +186,7 @@ const DialectsObj = {
         result = `'${value}'`;
       }
 
-      if (schemaVerify.Type.number.is(value)) {
+      if (Schema.Type.number.is(value)) {
         result = `'${value}'`;
       }
 
@@ -197,7 +200,7 @@ const DialectsObj = {
     safeKey(key) {
       let result;
 
-      if (!schemaVerify.Type.string.isNotEmpty(key)) {
+      if (!Schema.Type.string.isNotEmpty(key)) {
         throw new Error(ErrMsg$c.needStr);
       }
 
@@ -215,7 +218,7 @@ const DialectsObj = {
         result = `'${value}'`;
       }
 
-      if (schemaVerify.Type.number.is(value)) {
+      if (Schema.Type.number.is(value)) {
         result = `'${value}'`;
       }
 
@@ -229,7 +232,7 @@ const DialectsObj = {
     safeKey(key) {
       let result;
 
-      if (!schemaVerify.Type.string.isNotEmpty(key)) {
+      if (!Schema.Type.string.isNotEmpty(key)) {
         throw new Error(ErrMsg$c.needStr);
       }
 
@@ -415,7 +418,7 @@ var DialectModules;
   DialectModules["mssql"] = "mssql";
 })(DialectModules || (DialectModules = {}));
 
-const fieldDataArrSchema = new schemaVerify.Schema({
+const fieldDataArrSchema = new Schema__default({
   type: Array,
   elements: {
     type: Object,
@@ -429,7 +432,7 @@ const fieldDataArrSchema = new schemaVerify.Schema({
 });
 const fieldDataArrVerify = fieldDataArrSchema.verify;
 
-const funcInfoSchema = new schemaVerify.Schema({
+const funcInfoSchema = new Schema__default({
   type: Object,
   restrict: true,
   props: [{
@@ -438,7 +441,7 @@ const funcInfoSchema = new schemaVerify.Schema({
     type: String
   }]
 });
-const funcInputSchema = new schemaVerify.Schema({
+const funcInputSchema = new Schema__default({
   type: Object,
   restrict: true,
   props: [{
@@ -459,7 +462,7 @@ const funcInputSchema = new schemaVerify.Schema({
 const funcInfoVerify = funcInfoSchema.verify;
 const funcInputVerify = funcInputSchema.verify;
 
-const dialectSchema = new schemaVerify.Schema({
+const dialectSchema = new Schema__default({
   type: Object,
   restrict: true,
   props: [{
@@ -472,7 +475,7 @@ const dialectSchema = new schemaVerify.Schema({
     type: Function
   }]
 });
-const manualSqlSchema = new schemaVerify.Schema([{
+const manualSqlSchema = new Schema__default([{
   type: String,
   minLength: 1
 }, {
@@ -483,12 +486,12 @@ const manualSqlSchema = new schemaVerify.Schema([{
 const dialectVerify = dialectSchema.verify;
 const manualSqlVerify = manualSqlSchema.verify;
 
-const pageSchema = new schemaVerify.Schema({
+const pageSchema = new Schema__default({
   type: Number,
   integer: true,
   min: 1
 });
-const limitInfoSchema = new schemaVerify.Schema({
+const limitInfoSchema = new Schema__default({
   type: Object,
   restrict: true,
   props: [{
@@ -506,7 +509,7 @@ const limitInfoSchema = new schemaVerify.Schema({
 const pageVerify = pageSchema.verify;
 const limitInfoVerify = limitInfoSchema.verify;
 
-const orderInfoSchema = new schemaVerify.Schema({
+const orderInfoSchema = new Schema__default({
   type: Object,
   restrict: true,
   props: [{
@@ -530,7 +533,7 @@ const orderInfoSchema = new schemaVerify.Schema({
     }]]
   }]
 });
-const valueListSchema = new schemaVerify.Schema({
+const valueListSchema = new Schema__default({
   type: Array,
   elements: [[{
     type: String,
@@ -543,7 +546,7 @@ const valueListSchema = new schemaVerify.Schema({
 const orderInfoVerify = orderInfoSchema.verify;
 const valueListVerify = valueListSchema.verify;
 
-const termDataSchema = new schemaVerify.Schema({
+const termDataSchema = new Schema__default({
   type: Object,
   props: [[{
     required: true,
@@ -561,21 +564,21 @@ const termDataSchema = new schemaVerify.Schema({
     }]]
   }]]
 });
-const termSignSchema = new schemaVerify.Schema({
+const termSignSchema = new Schema__default({
   type: String,
   enum: TermSign
 });
-const termLogicSchema = new schemaVerify.Schema({
+const termLogicSchema = new Schema__default({
   type: String,
   enum: TermLogic
 });
-const termValueSchema = new schemaVerify.Schema([{
+const termValueSchema = new Schema__default([{
   required: true,
   type: String
 }, {
   type: Number
 }]);
-const termInSchema = new schemaVerify.Schema({
+const termInSchema = new Schema__default({
   type: Array,
   minLength: 1,
   elements: [[{
@@ -585,7 +588,7 @@ const termInSchema = new schemaVerify.Schema({
     type: Number
   }]]
 });
-const termBetweenSchema = new schemaVerify.Schema({
+const termBetweenSchema = new Schema__default({
   type: Array,
   length: 2,
   elements: [[{
@@ -595,7 +598,7 @@ const termBetweenSchema = new schemaVerify.Schema({
     type: Number
   }]]
 });
-const termBracketSchema = new schemaVerify.Schema({
+const termBracketSchema = new Schema__default({
   type: Object,
   restrict: true,
   props: [{
@@ -610,7 +613,7 @@ const termBracketSchema = new schemaVerify.Schema({
     enum: TermLogic
   }]
 });
-const termInfoSchema = new schemaVerify.Schema({
+const termInfoSchema = new Schema__default({
   type: Object,
   restrict: true,
   props: [{
@@ -654,7 +657,7 @@ const termBetweenVerify = termBetweenSchema.verify;
 const termBracketVerify = termBracketSchema.verify;
 const termInfoVerify = termInfoSchema.verify;
 
-const updateInfoSchema = new schemaVerify.Schema({
+const updateInfoSchema = new Schema__default({
   type: Object,
   props: [[{
     index: "value",
@@ -671,7 +674,7 @@ const updateInfoSchema = new schemaVerify.Schema({
 });
 const updateInfoVerify = updateInfoSchema.verify;
 
-const tableFieldSchema = new schemaVerify.Schema({
+const tableFieldSchema = new Schema__default({
   type: Object,
   props: [{
     index: "field",
@@ -705,7 +708,7 @@ const tableFieldSchema = new schemaVerify.Schema({
     type: String
   }]
 });
-const combineKeySchema = new schemaVerify.Schema({
+const combineKeySchema = new Schema__default({
   type: Object,
   props: [{
     index: "keyName",
@@ -723,7 +726,7 @@ const combineKeySchema = new schemaVerify.Schema({
     }
   }]
 });
-const tableInfoSchema = new schemaVerify.Schema({
+const tableInfoSchema = new Schema__default({
   type: Object,
   props: [{
     index: "tableName",
@@ -760,7 +763,7 @@ const tableInfoSchema = new schemaVerify.Schema({
 });
 const tableInfoVerify = tableInfoSchema.verify;
 
-const alterFieldSchema = new schemaVerify.Schema({
+const alterFieldSchema = new Schema__default({
   type: Object,
   props: [{
     index: "field",
@@ -792,7 +795,7 @@ const alterFieldSchema = new schemaVerify.Schema({
     type: String
   }]
 });
-const alterInfosSchema = new schemaVerify.Schema({
+const alterInfosSchema = new Schema__default({
   type: Object,
   props: [{
     index: "method",
@@ -812,7 +815,7 @@ const alterInfosSchema = new schemaVerify.Schema({
 });
 const alterInfosVerify = alterInfosSchema.verify;
 
-const fieldsMapSchema = new schemaVerify.Schema({
+const fieldsMapSchema = new Schema__default({
   type: Object,
   props: {
     type: Array,
@@ -823,7 +826,7 @@ const fieldsMapSchema = new schemaVerify.Schema({
     }
   }
 });
-const fieldsAsMapSchema = new schemaVerify.Schema({
+const fieldsAsMapSchema = new Schema__default({
   type: Object,
   props: {
     type: Object,
@@ -834,7 +837,7 @@ const fieldsAsMapSchema = new schemaVerify.Schema({
     }
   }
 });
-const joinInfoSchema = new schemaVerify.Schema({
+const joinInfoSchema = new Schema__default({
   type: Object,
   props: {
     tableName: {
@@ -871,7 +874,7 @@ const fieldsMapVerify = fieldsMapSchema.verify;
 const fieldsAsMapVerify = fieldsAsMapSchema.verify;
 const joinInfoVerify = joinInfoSchema.verify;
 
-const strArrVerify = new schemaVerify.Schema({
+const strArrVerify = new Schema__default({
   type: Array,
   elements: {
     type: String,
@@ -879,7 +882,7 @@ const strArrVerify = new schemaVerify.Schema({
     minLength: 1
   }
 }).verify;
-const strObjVerify = new schemaVerify.Schema({
+const strObjVerify = new Schema__default({
   type: Object,
   props: {
     type: String,
@@ -887,15 +890,15 @@ const strObjVerify = new schemaVerify.Schema({
     minLength: 1
   }
 }).verify;
-const naturalVerify = new schemaVerify.Schema({
+const naturalVerify = new Schema__default({
   type: Number,
   natural: true
 }).verify;
-const integerVerify = new schemaVerify.Schema({
+const integerVerify = new Schema__default({
   type: Number,
   integer: true
 }).verify;
-const fieldDataVerify = new schemaVerify.Schema({
+const fieldDataVerify = new Schema__default({
   type: Object,
   props: [[{
     required: true,
@@ -913,7 +916,7 @@ class Store {
   }
 
   storeSql(query) {
-    if (schemaVerify.Type.string.isNotEmpty(query)) {
+    if (Schema.Type.string.isNotEmpty(query)) {
       QUERY_LIST.push(query);
     }
   }
@@ -1012,22 +1015,22 @@ class Base {
   formatManualSql(key) {
     let sql = this[key];
 
-    if (schemaVerify.Type.string.is(sql)) {
+    if (Schema.Type.string.is(sql)) {
       return sql;
     }
 
-    if (schemaVerify.Type.func.is(sql)) {
+    if (Schema.Type.func.is(sql)) {
       sql = sql();
 
-      if (schemaVerify.Type.string.is(sql)) {
+      if (Schema.Type.string.is(sql)) {
         return sql;
       }
     }
 
-    if (schemaVerify.Type.object.isNotEmpty(sql) && sql instanceof Base) {
+    if (Schema.Type.object.isNotEmpty(sql) && sql instanceof Base) {
       sql = sql.query;
 
-      if (schemaVerify.Type.string.is(sql)) {
+      if (Schema.Type.string.is(sql)) {
         return sql;
       }
     }
@@ -1044,7 +1047,7 @@ class Base {
   }
 
   table(queryTable) {
-    if (!schemaVerify.Type.string.isNotEmpty(queryTable)) {
+    if (!Schema.Type.string.isNotEmpty(queryTable)) {
       throw new Error(ErrMsg$c.errorTableName);
     }
 
@@ -1055,7 +1058,7 @@ class Base {
   getQueryTable() {
     const queryTable = this._queryTable;
 
-    if (!schemaVerify.Type.string.isNotEmpty(queryTable)) {
+    if (!Schema.Type.string.isNotEmpty(queryTable)) {
       throw new Error(ErrMsg$c.errorTableName);
     }
 
@@ -1069,7 +1072,7 @@ class Base {
       sqlStr = this.build();
     } catch (e) {}
 
-    if (schemaVerify.Type.string.isNotEmpty(sqlStr)) {
+    if (Schema.Type.string.isNotEmpty(sqlStr)) {
       Store$1.storeSql(sqlStr);
     }
 
@@ -1082,13 +1085,13 @@ class Base {
 
   exec(sqlStr) {
     const execute = this._execute;
-    const query = schemaVerify.Type.string.isNotEmpty(sqlStr) ? sqlStr : this.build();
+    const query = Schema.Type.string.isNotEmpty(sqlStr) ? sqlStr : this.build();
 
-    if (!schemaVerify.Type.string.isNotEmpty(query)) {
+    if (!Schema.Type.string.isNotEmpty(query)) {
       throw new Error(ErrMsg$c.emptySqlQuery);
     }
 
-    if (schemaVerify.Type.object.isNot(execute) || schemaVerify.Type.func.isNot(execute.exec)) {
+    if (Schema.Type.object.isNot(execute) || Schema.Type.func.isNot(execute.exec)) {
       throw new Error(ErrMsg$c.errorExecute);
     }
 
@@ -1097,16 +1100,16 @@ class Base {
 
   execAll(queryList) {
     const execute = this._execute;
-    queryList = schemaVerify.Type.array.isNotEmpty(queryList) ? queryList : Store$1.getStore();
+    queryList = Schema.Type.array.isNotEmpty(queryList) ? queryList : Store$1.getStore();
 
-    if (schemaVerify.Type.object.isNot(execute) || schemaVerify.Type.func.isNot(execute.exec)) {
+    if (Schema.Type.object.isNot(execute) || Schema.Type.func.isNot(execute.exec)) {
       throw new Error(ErrMsg$c.errorExecute);
     }
 
     const promiseArr = [];
 
     for (let query of queryList) {
-      if (!schemaVerify.Type.string.isNotEmpty(query)) {
+      if (!Schema.Type.string.isNotEmpty(query)) {
         continue;
       }
 
@@ -1145,20 +1148,20 @@ class Limit {
       throw new Error(ErrMsg$c.errorOffset);
     }
 
-    if (schemaVerify.Type.undefined.isNot(step) && !integerVerify(step)) {
+    if (Schema.Type.undefined.isNot(step) && !integerVerify(step)) {
       throw new Error(ErrMsg$c.errorStep);
     }
 
     let limitInfo;
 
-    if (schemaVerify.Type.number.is(offset) && schemaVerify.Type.number.is(step)) {
+    if (Schema.Type.number.is(offset) && Schema.Type.number.is(step)) {
       limitInfo = {
         offset,
         step
       };
     }
 
-    if (schemaVerify.Type.number.is(offset) && !schemaVerify.Type.number.is(step)) {
+    if (Schema.Type.number.is(offset) && !Schema.Type.number.is(step)) {
       limitInfo = {
         offset: 0,
         step: offset
@@ -1219,13 +1222,13 @@ class Order extends Base {
   build() {
     const orderSql = this.formatOrderSql();
 
-    if (schemaVerify.Type.string.isNotEmpty(orderSql)) {
+    if (Schema.Type.string.isNotEmpty(orderSql)) {
       return orderSql;
     }
 
-    const orderInfos = schemaVerify.Type.array.safe(this.orderInfos);
+    const orderInfos = Schema.Type.array.safe(this.orderInfos);
 
-    if (!schemaVerify.Type.array.isNotEmpty(orderInfos)) {
+    if (!Schema.Type.array.isNotEmpty(orderInfos)) {
       return "";
     }
 
@@ -1250,7 +1253,7 @@ class Order extends Base {
       ordersArr.push(`${safeField} ${type}`);
     }
 
-    if (!schemaVerify.Type.array.isNotEmpty(ordersArr)) {
+    if (!Schema.Type.array.isNotEmpty(ordersArr)) {
       return "";
     }
 
@@ -1262,7 +1265,7 @@ class Order extends Base {
   orderBuild(query) {
     const ordersStr = this.build();
 
-    if (schemaVerify.Type.string.isNotEmpty(ordersStr)) {
+    if (Schema.Type.string.isNotEmpty(ordersStr)) {
       query = `${query} ORDER BY ${ordersStr}`;
     }
 
@@ -1280,7 +1283,7 @@ class Order extends Base {
   }
 
   orderField(data) {
-    data = schemaVerify.Type.object.safe(data);
+    data = Schema.Type.object.safe(data);
     const fields = Object.keys(data);
     return this.orderCache(fields, OrderTypes.field, data);
   }
@@ -1298,8 +1301,8 @@ class Order extends Base {
       throw new Error(ErrMsg$c.errorFields);
     }
 
-    fieldOrder = schemaVerify.Type.object.safe(fieldOrder);
-    const orderInfos = schemaVerify.Type.array.safe(this.orderInfos);
+    fieldOrder = Schema.Type.object.safe(fieldOrder);
+    const orderInfos = Schema.Type.array.safe(this.orderInfos);
 
     for (const field of fields) {
       const info = {
@@ -1410,14 +1413,14 @@ class Insert extends Query {
       throw new Error(ErrMsg$c.errorFieldData);
     }
 
-    const insertData = schemaVerify.Type.object.safe(this.insertData);
+    const insertData = Schema.Type.object.safe(this.insertData);
     this.insertData = Object.assign({}, insertData, data);
     return this;
   }
 
   fields(arg, ...otherArgs) {
     const args = argStrArrTrans(arg, otherArgs);
-    const insertFields = schemaVerify.Type.array.safe(this.insertFields);
+    const insertFields = Schema.Type.array.safe(this.insertFields);
     const result = [].concat(insertFields, args);
     this.insertFields = Array.from(new Set(result));
     return this;
@@ -1428,7 +1431,7 @@ class Insert extends Query {
       throw new Error(ErrMsg$c.errorFieldDataArr);
     }
 
-    const insertDataArr = schemaVerify.Type.array.safe(this.insertDataArr);
+    const insertDataArr = Schema.Type.array.safe(this.insertDataArr);
     this.insertDataArr = [].concat(insertDataArr, dataArr);
     return this;
   }
@@ -1464,7 +1467,7 @@ class Insert extends Query {
   }
 
   formatValues(fields) {
-    fields = schemaVerify.Type.array.safe(fields);
+    fields = Schema.Type.array.safe(fields);
     let result = "";
     const valuesSql = this.formatValuesSql();
     const insertData = this.insertData;
@@ -1478,7 +1481,7 @@ class Insert extends Query {
 
     const valuesArrStrFormat = arr => {
       for (const data of arr) {
-        if (schemaVerify.Type.object.isNotEmpty(data)) {
+        if (Schema.Type.object.isNotEmpty(data)) {
           valuesArr.push(valuesStrFormat(data));
         }
       }
@@ -1486,7 +1489,7 @@ class Insert extends Query {
       return valuesArr.join(", ");
     };
 
-    if (schemaVerify.Type.string.isNotEmpty(valuesSql)) {
+    if (Schema.Type.string.isNotEmpty(valuesSql)) {
       result = valuesSql;
     } else if (fieldDataVerify(insertData)) {
       result = valuesStrFormat(insertData);
@@ -1494,7 +1497,7 @@ class Insert extends Query {
       result = valuesArrStrFormat(insertDataArr);
     }
 
-    if (!schemaVerify.Type.string.isNotEmpty(result)) {
+    if (!Schema.Type.string.isNotEmpty(result)) {
       throw new Error(ErrMsg$c.errorInsertValues);
     }
 
@@ -1529,18 +1532,18 @@ class Term extends Base {
   termsBuild() {
     const termSql = this.formatTermSql();
 
-    if (schemaVerify.Type.string.isNotEmpty(termSql)) {
+    if (Schema.Type.string.isNotEmpty(termSql)) {
       return termSql;
     }
 
     const termInfos = this.termInfos;
     const termBrackets = this.termBrackets;
 
-    if (!schemaVerify.Type.array.isNotEmpty(termInfos)) {
+    if (!Schema.Type.array.isNotEmpty(termInfos)) {
       return "";
     }
 
-    const allTermStr = !schemaVerify.Type.array.isNotEmpty(termBrackets) ? this.formatTerms(termInfos) : this.formatTermBrackets(termBrackets, termInfos);
+    const allTermStr = !Schema.Type.array.isNotEmpty(termBrackets) ? this.formatTerms(termInfos) : this.formatTermBrackets(termBrackets, termInfos);
     return allTermStr;
   }
 
@@ -1550,8 +1553,8 @@ class Term extends Base {
 
   formatTermBrackets(brackets, terms) {
     let allTermStr = "";
-    brackets = schemaVerify.Type.array.safe(brackets);
-    terms = schemaVerify.Type.array.safe(terms);
+    brackets = Schema.Type.array.safe(brackets);
+    terms = Schema.Type.array.safe(terms);
     const bracketsLen = brackets.length;
     const termsLen = terms.length;
 
@@ -1582,19 +1585,19 @@ class Term extends Base {
       const needFullBracket = bracketsLen === 1 || i + 1 === bracketsLen || nextPos === termsLen;
       const termStr = this.formatBracketTerm(needFullBracket, curLogic, preTerms, nextTerms);
 
-      if (!schemaVerify.Type.string.isNotEmpty(termStr)) {
+      if (!Schema.Type.string.isNotEmpty(termStr)) {
         continue;
       }
 
-      allTermStr = schemaVerify.Type.string.isNotEmpty(allTermStr) ? `${allTermStr} ${termStr}` : termStr;
+      allTermStr = Schema.Type.string.isNotEmpty(allTermStr) ? `${allTermStr} ${termStr}` : termStr;
     }
 
     return allTermStr;
   }
 
   formatBracketTerm(needFullBracket, logic, preTerms, nextTerms) {
-    preTerms = schemaVerify.Type.array.safe(preTerms);
-    nextTerms = schemaVerify.Type.array.safe(nextTerms);
+    preTerms = Schema.Type.array.safe(preTerms);
+    nextTerms = Schema.Type.array.safe(nextTerms);
     const preTermsStr = this.formatTerms(preTerms);
 
     if (preTerms.length <= 0 || nextTerms.length <= 0) {
@@ -1610,7 +1613,7 @@ class Term extends Base {
   }
 
   formatTerms(terms) {
-    terms = schemaVerify.Type.array.safe(terms);
+    terms = Schema.Type.array.safe(terms);
     let allTermStr = "";
 
     for (const term of terms) {
@@ -1625,7 +1628,7 @@ class Term extends Base {
       const termValue = this.formatTermValue(value, sign);
       const termStr = `${field} ${sign} ${termValue}`;
 
-      if (!schemaVerify.Type.string.isNotEmpty(allTermStr)) {
+      if (!Schema.Type.string.isNotEmpty(allTermStr)) {
         allTermStr = termStr;
         continue;
       }
@@ -1683,7 +1686,7 @@ class Term extends Base {
       throw new Error(ErrMsg$c.errorTermLogic);
     }
 
-    const termInfos = schemaVerify.Type.array.safe(this.termInfos);
+    const termInfos = Schema.Type.array.safe(this.termInfos);
     const termsArr = [];
 
     for (const field in data) {
@@ -1728,8 +1731,8 @@ class Term extends Base {
   }
 
   bracketTerm(logic) {
-    const termInfos = schemaVerify.Type.array.safe(this.termInfos);
-    const termBrackets = schemaVerify.Type.array.safe(this.termBrackets);
+    const termInfos = Schema.Type.array.safe(this.termInfos);
+    const termBrackets = Schema.Type.array.safe(this.termBrackets);
     const termsLen = termInfos.length;
 
     if (termsLen <= 0) {
@@ -2023,10 +2026,10 @@ class Where extends TermApi {
   }
 
   where(sql) {
-    if (schemaVerify.Type.undefined.isNot(sql)) {
+    if (Schema.Type.undefined.isNot(sql)) {
       const term = this.getWhereTermCase();
 
-      if (schemaVerify.Type.func.is(sql)) {
+      if (Schema.Type.func.is(sql)) {
         sql = sql.bind(this, term);
       }
 
@@ -2046,7 +2049,7 @@ class Where extends TermApi {
     const whereTerm = this.getWhereTermCase();
     const whereSql = whereTerm.termsBuild();
 
-    if (schemaVerify.Type.string.isNotEmpty(whereSql)) {
+    if (Schema.Type.string.isNotEmpty(whereSql)) {
       query = `${query} WHERE ${whereSql}`;
     }
 
@@ -2084,10 +2087,10 @@ class Having extends Where {
   }
 
   having(sql) {
-    if (schemaVerify.Type.undefined.isNot(sql)) {
+    if (Schema.Type.undefined.isNot(sql)) {
       const term = this.getHavingTermCase();
 
-      if (schemaVerify.Type.func.is(sql)) {
+      if (Schema.Type.func.is(sql)) {
         sql = sql.bind(this, term);
       }
 
@@ -2107,7 +2110,7 @@ class Having extends Where {
     const termInstance = this.getHavingTermCase();
     const havingSql = termInstance.termsBuild();
 
-    if (schemaVerify.Type.string.isNotEmpty(havingSql)) {
+    if (Schema.Type.string.isNotEmpty(havingSql)) {
       query = `${query} HAVING ${havingSql}`;
     }
 
@@ -2118,8 +2121,8 @@ class Having extends Where {
 
 class Func extends Base {
   funcField(func, field) {
-    const needSafeTrans = schemaVerify.Type.string.isNotEmpty(field) && field !== "*";
-    const fieldStr = needSafeTrans ? field : schemaVerify.Type.number.is(field) ? field + "" : "*";
+    const needSafeTrans = Schema.Type.string.isNotEmpty(field) && field !== "*";
+    const fieldStr = needSafeTrans ? field : Schema.Type.number.is(field) ? field + "" : "*";
     const safeField = needSafeTrans ? this.safeKey(fieldStr) : fieldStr;
     const funcInfo = {
       funcFeild: `${func}(${safeField})`
@@ -2238,7 +2241,7 @@ class Combine extends Having {
   groupBuild(query) {
     const fields = this.groupByFields;
 
-    if (!schemaVerify.Type.array.isNotEmpty(fields)) {
+    if (!Schema.Type.array.isNotEmpty(fields)) {
       return query;
     }
 
@@ -2248,7 +2251,7 @@ class Combine extends Having {
   }
 
   groupBy(...fields) {
-    let groupByFields = schemaVerify.Type.array.safe(this.groupByFields);
+    let groupByFields = Schema.Type.array.safe(this.groupByFields);
 
     if (!strArrVerify(fields)) {
       throw new Error(ErrMsg$c.errorFields);
@@ -2272,7 +2275,7 @@ class Combine extends Having {
   }
 
   formatFuncs() {
-    const combineFuncs = schemaVerify.Type.array.safe(this.combineFuncs);
+    const combineFuncs = Schema.Type.array.safe(this.combineFuncs);
     let funcs = [];
 
     for (const info of combineFuncs) {
@@ -2289,7 +2292,7 @@ class Combine extends Having {
   }
 
   funcsCache(funcInfo) {
-    const combineFuncs = schemaVerify.Type.array.safe(this.combineFuncs);
+    const combineFuncs = Schema.Type.array.safe(this.combineFuncs);
 
     if (funcInfoVerify(funcInfo)) {
       combineFuncs.push(funcInfo);
@@ -2301,7 +2304,7 @@ class Combine extends Having {
 
   funcFeilds(...funcInfos) {
     for (let info of funcInfos) {
-      info = schemaVerify.Type.object.safe(info);
+      info = Schema.Type.object.safe(info);
 
       if (funcInfoVerify(info)) {
         this.funcsCache(info);
@@ -2314,7 +2317,7 @@ class Combine extends Having {
         const func = info.func;
         const field = info.field;
 
-        if (schemaVerify.Type.object.is(funcCase) && schemaVerify.Type.func.is(funcCase[func])) {
+        if (Schema.Type.object.is(funcCase) && Schema.Type.func.is(funcCase[func])) {
           const funcInfo = funcCase[func].call(funcCase, field);
           this.funcsCache(funcInfo);
         }
@@ -2459,31 +2462,31 @@ class Join extends Combine {
   }
 
   getQueryTables() {
-    const queryTables = schemaVerify.Type.array.safe(this.queryTables).map(table => {
+    const queryTables = Schema.Type.array.safe(this.queryTables).map(table => {
       return this.safeKey(table);
     }).join(", ");
     return queryTables;
   }
 
   formatJoinFields() {
-    const tableFieldsMap = schemaVerify.Type.object.safe(this.tableFieldsMap);
-    const tableFieldsAsMap = schemaVerify.Type.object.safe(this.tableFieldsAsMap);
+    const tableFieldsMap = Schema.Type.object.safe(this.tableFieldsMap);
+    const tableFieldsAsMap = Schema.Type.object.safe(this.tableFieldsAsMap);
     const result = [];
 
     for (const table in tableFieldsMap) {
-      const fields = schemaVerify.Type.array.safe(tableFieldsMap[table]);
-      const asMap = schemaVerify.Type.object.safe(tableFieldsAsMap[table]);
+      const fields = Schema.Type.array.safe(tableFieldsMap[table]);
+      const asMap = Schema.Type.object.safe(tableFieldsAsMap[table]);
       const safeTable = this.safeKey(table);
 
       for (const field of fields) {
-        if (!schemaVerify.Type.string.isNotEmpty(field)) {
+        if (!Schema.Type.string.isNotEmpty(field)) {
           continue;
         }
 
         const safeField = this.safeKey(field);
         const tableField = `${safeTable}.${safeField}`;
 
-        if (schemaVerify.Type.string.isNotEmpty(asMap[field])) {
+        if (Schema.Type.string.isNotEmpty(asMap[field])) {
           const safeAsField = this.safeKey(asMap[field]);
           result.push(`${tableField} AS ${safeAsField}`);
         } else {
@@ -2496,9 +2499,9 @@ class Join extends Combine {
   }
 
   joinBuild(query) {
-    const joinTypeInfos = schemaVerify.Type.array.safe(this.joinTypeInfos);
+    const joinTypeInfos = Schema.Type.array.safe(this.joinTypeInfos);
 
-    if (!schemaVerify.Type.array.isNotEmpty(joinTypeInfos)) {
+    if (!Schema.Type.array.isNotEmpty(joinTypeInfos)) {
       return query;
     }
 
@@ -2506,14 +2509,14 @@ class Join extends Combine {
 
     for (const typeInfo of joinTypeInfos) {
       const type = typeInfo.type;
-      const info = schemaVerify.Type.object.safe(typeInfo.info);
+      const info = Schema.Type.object.safe(typeInfo.info);
       const tableName = info.tableName;
-      const termInfos = schemaVerify.Type.array.safe(info.termInfos);
+      const termInfos = Schema.Type.array.safe(info.termInfos);
       const termStrs = this.joinTermBuild(termInfos);
       const safeTableName = this.safeKey(tableName);
       let joinInfoStr = `${type} JOIN ${safeTableName}`;
 
-      if (schemaVerify.Type.array.isNotEmpty(termStrs)) {
+      if (Schema.Type.array.isNotEmpty(termStrs)) {
         const allTermStr = termStrs.join(" AND ");
         joinInfoStr += ` ON ${allTermStr}`;
       }
@@ -2521,7 +2524,7 @@ class Join extends Combine {
       joinStrs.push(joinInfoStr);
     }
 
-    if (!schemaVerify.Type.array.isNotEmpty(joinStrs)) {
+    if (!Schema.Type.array.isNotEmpty(joinStrs)) {
       return query;
     }
 
@@ -2543,7 +2546,7 @@ class Join extends Combine {
         const safeTable = this.safeKey(table);
         const safeField = this.safeKey(field);
 
-        if (schemaVerify.Type.string.isNotEmpty(termStr)) {
+        if (Schema.Type.string.isNotEmpty(termStr)) {
           termStr += ` ${symbol} `;
         }
 
@@ -2557,12 +2560,12 @@ class Join extends Combine {
   }
 
   multiTables(arg, ...otherArgs) {
-    const queryTables = schemaVerify.Type.array.safe(this.queryTables);
+    const queryTables = Schema.Type.array.safe(this.queryTables);
     const args = argStrArrTrans(arg, otherArgs);
     const tables = [];
 
     for (const item of args) {
-      if (schemaVerify.Type.string.isNotEmpty(item)) {
+      if (Schema.Type.string.isNotEmpty(item)) {
         tables.push(item);
       }
     }
@@ -2572,7 +2575,7 @@ class Join extends Combine {
   }
 
   tableFields(fieldsMap) {
-    const tableFieldsMap = schemaVerify.Type.object.safe(this.tableFieldsMap);
+    const tableFieldsMap = Schema.Type.object.safe(this.tableFieldsMap);
 
     if (!fieldsMapVerify(fieldsMap)) {
       throw new Error(ErrMsg$c.tableFieldsError);
@@ -2583,7 +2586,7 @@ class Join extends Combine {
   }
 
   tableAsMap(asMap) {
-    const tableFieldsAsMap = schemaVerify.Type.object.safe(this.tableFieldsAsMap);
+    const tableFieldsAsMap = Schema.Type.object.safe(this.tableFieldsAsMap);
 
     if (!fieldsAsMapVerify(asMap)) {
       throw new Error(ErrMsg$c.tableFieldsAsMapError);
@@ -2594,7 +2597,7 @@ class Join extends Combine {
   }
 
   join(joinInfo, type) {
-    const joinTypeInfos = schemaVerify.Type.array.safe(this.joinTypeInfos);
+    const joinTypeInfos = Schema.Type.array.safe(this.joinTypeInfos);
 
     if (!joinInfoVerify(joinInfo)) {
       throw new Error(ErrMsg$c.joinTableInfoError);
@@ -2634,18 +2637,18 @@ class Select extends Join {
   }
 
   formatFields() {
-    const fields = schemaVerify.Type.array.safe(this.selectFields);
-    const asMap = schemaVerify.Type.object.safe(this.fieldsAsMap);
+    const fields = Schema.Type.array.safe(this.selectFields);
+    const asMap = Schema.Type.object.safe(this.fieldsAsMap);
     const result = [];
 
     for (const field of fields) {
-      if (!schemaVerify.Type.string.isNotEmpty(field)) {
+      if (!Schema.Type.string.isNotEmpty(field)) {
         continue;
       }
 
       const safeField = field !== "*" ? this.safeKey(field) : "*";
 
-      if (schemaVerify.Type.string.isNotEmpty(asMap[field])) {
+      if (Schema.Type.string.isNotEmpty(asMap[field])) {
         const safeAsField = this.safeKey(asMap[field]);
         result.push(`${safeField} AS ${safeAsField}`);
       } else {
@@ -2663,9 +2666,9 @@ class Select extends Join {
     let result;
 
     if (strArrVerify(fields) || strArrVerify(funcs) || strArrVerify(joinFields)) {
-      fields = schemaVerify.Type.array.safe(fields);
-      joinFields = schemaVerify.Type.array.safe(joinFields);
-      funcs = schemaVerify.Type.array.safe(funcs);
+      fields = Schema.Type.array.safe(fields);
+      joinFields = Schema.Type.array.safe(joinFields);
+      funcs = Schema.Type.array.safe(funcs);
       result = [].concat(fields, joinFields, funcs).join(", ");
     } else {
       result = "*";
@@ -2677,7 +2680,7 @@ class Select extends Join {
   formatTableStr() {
     const tablesStr = this.getQueryTables();
 
-    if (schemaVerify.Type.string.isNotEmpty(tablesStr)) {
+    if (Schema.Type.string.isNotEmpty(tablesStr)) {
       return tablesStr;
     }
 
@@ -2699,17 +2702,17 @@ class Select extends Join {
   }
 
   fields(arg, ...otherArgs) {
-    const selectFields = schemaVerify.Type.array.safe(this.selectFields);
+    const selectFields = Schema.Type.array.safe(this.selectFields);
     const args = argStrArrTrans(arg, otherArgs);
     const fields = [];
 
     for (const item of args) {
-      if (schemaVerify.Type.object.isNotEmpty(item)) {
+      if (Schema.Type.object.isNotEmpty(item)) {
         this.funcFeilds(item);
         continue;
       }
 
-      if (schemaVerify.Type.string.isNotEmpty(item)) {
+      if (Schema.Type.string.isNotEmpty(item)) {
         fields.push(item);
       }
     }
@@ -2724,7 +2727,7 @@ class Select extends Join {
   }
 
   asMap(map) {
-    const asMap = schemaVerify.Type.object.safe(this.fieldsAsMap);
+    const asMap = Schema.Type.object.safe(this.fieldsAsMap);
 
     if (!strObjVerify(map)) {
       throw new Error(ErrMsg$c.errorFieldMap);
@@ -2771,7 +2774,7 @@ class Update extends Where {
   formatData() {
     const updateInfos = this.updateInfos;
 
-    if (!schemaVerify.Type.object.isNotEmpty(updateInfos)) {
+    if (!Schema.Type.object.isNotEmpty(updateInfos)) {
       throw new Error(ErrMsg$c.emptyUpdateInfo);
     }
 
@@ -2804,7 +2807,7 @@ class Update extends Where {
           break;
       }
 
-      if (schemaVerify.Type.string.isNotEmpty(infoStr)) {
+      if (Schema.Type.string.isNotEmpty(infoStr)) {
         result.push(infoStr);
       }
     }
@@ -2821,7 +2824,7 @@ class Update extends Where {
       throw new Error(ErrMsg$c.errorFieldData);
     }
 
-    const updateInfos = schemaVerify.Type.object.safe(this.updateInfos);
+    const updateInfos = Schema.Type.object.safe(this.updateInfos);
 
     for (const field in data) {
       const value = data[field];
@@ -2893,7 +2896,7 @@ class Create extends Base {
   }
 
   info(tableInfo) {
-    if (schemaVerify.Type.string.isNotEmpty(tableInfo)) {
+    if (Schema.Type.string.isNotEmpty(tableInfo)) {
       this.createTableSqlStr = tableInfo;
     } else if (tableInfoVerify(tableInfo, true)) {
       this.createTableInfo = tableInfo;
@@ -2903,7 +2906,7 @@ class Create extends Base {
   }
 
   dataBase(dbName) {
-    if (!schemaVerify.Type.string.isNotEmpty(dbName)) {
+    if (!Schema.Type.string.isNotEmpty(dbName)) {
       throw new Error(ErrMsg$c.errorCreateDbName);
     }
 
@@ -2914,7 +2917,7 @@ class Create extends Base {
   build() {
     const createDbName = this.createDbName;
 
-    if (schemaVerify.Type.string.isNotEmpty(createDbName)) {
+    if (Schema.Type.string.isNotEmpty(createDbName)) {
       const tmplOpts = {
         dbName: createDbName
       };
@@ -2924,7 +2927,7 @@ class Create extends Base {
 
     const tableSqlStr = this.createTableSqlStr;
 
-    if (schemaVerify.Type.string.isNotEmpty(tableSqlStr)) {
+    if (Schema.Type.string.isNotEmpty(tableSqlStr)) {
       return tableSqlStr;
     }
 
@@ -2961,11 +2964,11 @@ class Create extends Base {
     const primaryKeyStr = this.primaryKeyStr(primaryKey);
     const uniqueKeyStr = this.uniqueKeyStr(uniqueKey);
 
-    if (schemaVerify.Type.string.isNotEmpty(primaryKeyStr)) {
+    if (Schema.Type.string.isNotEmpty(primaryKeyStr)) {
       feildTmplArr.push(primaryKeyStr);
     }
 
-    if (schemaVerify.Type.string.isNotEmpty(uniqueKeyStr)) {
+    if (Schema.Type.string.isNotEmpty(uniqueKeyStr)) {
       feildTmplArr.push(uniqueKeyStr);
     }
 
@@ -2994,11 +2997,11 @@ class Create extends Base {
       tmplOpts["notNull"] = TableOptions.notNull;
     }
 
-    if (schemaVerify.Type.string.is(defaultValue) || schemaVerify.Type.number.is(defaultValue)) {
+    if (Schema.Type.string.is(defaultValue) || Schema.Type.number.is(defaultValue)) {
       let needSafe = true;
       let upperValue;
 
-      if (schemaVerify.Type.string.is(defaultValue)) {
+      if (Schema.Type.string.is(defaultValue)) {
         upperValue = defaultValue.toUpperCase();
         needSafe = !TABLE_OPT_VALUES.includes(upperValue);
       }
@@ -3011,11 +3014,11 @@ class Create extends Base {
       tmplOpts["autoIncrement"] = TableOptions.autoIncrement;
     }
 
-    if (schemaVerify.Type.string.isNotEmpty(onUpdate)) {
+    if (Schema.Type.string.isNotEmpty(onUpdate)) {
       tmplOpts["onUpdate"] = `${TableOptions.onUpdate} ${onUpdate}`;
     }
 
-    if (schemaVerify.Type.string.isNotEmpty(comment)) {
+    if (Schema.Type.string.isNotEmpty(comment)) {
       comment = this.safeValue(comment);
       tmplOpts["comment"] = `${TableOptions.comment} ${comment}`;
     }
@@ -3028,12 +3031,12 @@ class Create extends Base {
     let result;
     const primaryKey = TableOptions.primaryKey;
 
-    if (schemaVerify.Type.string.isNotEmpty(keyInfo)) {
+    if (Schema.Type.string.isNotEmpty(keyInfo)) {
       const value = this.safeKey(keyInfo);
       result = `${value} ${primaryKey} (${value})`;
     }
 
-    if (schemaVerify.Type.object.is(keyInfo)) {
+    if (Schema.Type.object.is(keyInfo)) {
       const keyName = this.safeKey(keyInfo.keyName);
       const combineFields = keyInfo.combineFields;
       const combineFieldsStr = combineFields.map(field => this.safeKey(field)).join(",");
@@ -3047,12 +3050,12 @@ class Create extends Base {
     let result;
     const uniqueKey = TableOptions.uniqueKey;
 
-    if (schemaVerify.Type.string.isNotEmpty(keyInfo)) {
+    if (Schema.Type.string.isNotEmpty(keyInfo)) {
       const value = this.safeKey(keyInfo);
       result = `${value} ${uniqueKey} (${value})`;
     }
 
-    if (schemaVerify.Type.object.is(keyInfo)) {
+    if (Schema.Type.object.is(keyInfo)) {
       const keyName = this.safeKey(keyInfo.keyName);
       const combineFields = keyInfo.combineFields;
       const combineFieldsStr = combineFields.map(field => this.safeKey(field)).join(",");
@@ -3069,25 +3072,25 @@ class Create extends Base {
     const comment = info.comment;
     const tmplOpts = {};
 
-    if (schemaVerify.Type.string.isNotEmpty(engine)) {
+    if (Schema.Type.string.isNotEmpty(engine)) {
       const key = TableOptions.engine;
       const value = engine;
       tmplOpts["engine"] = `${key}=${value}`;
     }
 
-    if (schemaVerify.Type.number.is(autoIncrement)) {
+    if (Schema.Type.number.is(autoIncrement)) {
       const key = TableOptions.autoIncrement;
       const value = autoIncrement;
       tmplOpts["autoIncrement"] = `${key}=${value}`;
     }
 
-    if (schemaVerify.Type.string.isNotEmpty(defaultCharset)) {
+    if (Schema.Type.string.isNotEmpty(defaultCharset)) {
       const key = TableOptions.defaultCharset;
       const value = defaultCharset;
       tmplOpts["defaultCharset"] = `${key}=${value}`;
     }
 
-    if (schemaVerify.Type.string.isNotEmpty(comment)) {
+    if (Schema.Type.string.isNotEmpty(comment)) {
       const key = TableOptions.comment;
       const value = this.safeValue(comment);
       tmplOpts["comment"] = `${key}=${value}`;
@@ -3116,7 +3119,7 @@ class Alter extends Base {
   }
 
   add(field, alterField) {
-    if (schemaVerify.Type.object.is(field)) {
+    if (Schema.Type.object.is(field)) {
       alterField = field;
       field = alterField.field;
     }
@@ -3139,7 +3142,7 @@ class Alter extends Base {
   }
 
   alterCache(method, field, alterField) {
-    if (AlterMethods.drop !== method && !schemaVerify.Type.object.isNotEmpty(alterField)) {
+    if (AlterMethods.drop !== method && !Schema.Type.object.isNotEmpty(alterField)) {
       throw new Error(ErrMsg$c.errorAlterField);
     }
 
@@ -3153,14 +3156,14 @@ class Alter extends Base {
       throw new Error(ErrMsg$c.errorAlterField);
     }
 
-    const alterInfos = schemaVerify.Type.array.safe(this.alterInfos);
+    const alterInfos = Schema.Type.array.safe(this.alterInfos);
     alterInfos.push(alterInfo);
     this.alterInfos = alterInfos;
     return this;
   }
 
   build() {
-    const alterInfos = schemaVerify.Type.array.safe(this.alterInfos);
+    const alterInfos = Schema.Type.array.safe(this.alterInfos);
     const infosStrArr = [];
 
     for (const item of alterInfos) {
@@ -3181,7 +3184,7 @@ class Alter extends Base {
       infosStrArr.push(alterInfoStr);
     }
 
-    if (!schemaVerify.Type.array.isNotEmpty(infosStrArr)) {
+    if (!Schema.Type.array.isNotEmpty(infosStrArr)) {
       throw new Error(ErrMsg$c.emptyAlterInfos);
     }
 
@@ -3206,11 +3209,11 @@ class Alter extends Base {
     let comment = fieldInfo.comment;
     const tmplOpts = {};
 
-    if (schemaVerify.Type.string.isNotEmpty(field)) {
+    if (Schema.Type.string.isNotEmpty(field)) {
       tmplOpts["field"] = this.safeKey(field);
     }
 
-    if (schemaVerify.Type.string.isNotEmpty(type)) {
+    if (Schema.Type.string.isNotEmpty(type)) {
       tmplOpts["type"] = type.toUpperCase();
     }
 
@@ -3222,11 +3225,11 @@ class Alter extends Base {
       tmplOpts["notNull"] = TableOptions.notNull;
     }
 
-    if (schemaVerify.Type.string.is(defaultValue) || schemaVerify.Type.number.is(defaultValue)) {
+    if (Schema.Type.string.is(defaultValue) || Schema.Type.number.is(defaultValue)) {
       let needSafe = true;
       let upperValue;
 
-      if (schemaVerify.Type.string.is(defaultValue)) {
+      if (Schema.Type.string.is(defaultValue)) {
         upperValue = defaultValue.toUpperCase();
         needSafe = !TABLE_OPT_VALUES.includes(upperValue);
       }
@@ -3239,11 +3242,11 @@ class Alter extends Base {
       tmplOpts["autoIncrement"] = TableOptions.autoIncrement;
     }
 
-    if (schemaVerify.Type.string.isNotEmpty(onUpdate)) {
+    if (Schema.Type.string.isNotEmpty(onUpdate)) {
       tmplOpts["onUpdate"] = `${TableOptions.onUpdate} ${onUpdate}`;
     }
 
-    if (schemaVerify.Type.string.isNotEmpty(comment)) {
+    if (Schema.Type.string.isNotEmpty(comment)) {
       comment = this.safeValue(comment);
       tmplOpts["comment"] = `${TableOptions.comment} ${comment}`;
     }
@@ -3264,7 +3267,7 @@ const ErrMsg$d = {
 const ErrMsg$e = { ...ErrMsg$d
 };
 
-const conConfigSchema = new schemaVerify.Schema({
+const conConfigSchema = new Schema__default({
   type: Object,
   props: [{
     index: "host",
@@ -3323,7 +3326,7 @@ class BaseConnect {
     const database = config.database;
     const connectTimeout = config.connectTimeout;
     let connectionLimit = config.connectionLimit;
-    connectionLimit = schemaVerify.Type.number.isNatural(connectionLimit) ? connectionLimit : 1;
+    connectionLimit = Schema.Type.number.isNatural(connectionLimit) ? connectionLimit : 1;
     let dbConfig = {
       host,
       user,
@@ -3333,7 +3336,7 @@ class BaseConnect {
       connectTimeout,
       connectionLimit
     };
-    this.dbConfig = schemaVerify.Type.object.pure(dbConfig);
+    this.dbConfig = Schema.Type.object.pure(dbConfig);
   }
 
   loadModule(moduleName) {
@@ -3360,7 +3363,7 @@ class MysqlConnect extends BaseConnect {
     let pool = this.pool;
     const dbConfig = this.dbConfig;
 
-    if (schemaVerify.Type.object.is(pool) && schemaVerify.Type.func.is(pool.getConnection)) {
+    if (Schema.Type.object.is(pool) && Schema.Type.func.is(pool.getConnection)) {
       return pool;
     }
 
@@ -3372,7 +3375,7 @@ class MysqlConnect extends BaseConnect {
   getDbConnect() {
     const pool = this.getPool() || {};
 
-    if (schemaVerify.Type.func.isNot(pool.getConnection)) {
+    if (Schema.Type.func.isNot(pool.getConnection)) {
       throw new Error(ErrMsg$e.emptyConnectPool);
     }
 
@@ -3382,7 +3385,7 @@ class MysqlConnect extends BaseConnect {
           reject(err);
         }
 
-        if (!connection || schemaVerify.Type.func.isNot(connection.query) || schemaVerify.Type.func.isNot(connection.release)) {
+        if (!connection || Schema.Type.func.isNot(connection.query) || Schema.Type.func.isNot(connection.release)) {
           reject(new Error(ErrMsg$e.errorConnect));
         }
 
@@ -3403,7 +3406,7 @@ class MyssqlConnect extends BaseConnect {
     let pool = this.pool;
     const dbConfig = this.dbConfig;
 
-    if (schemaVerify.Type.object.is(pool) && schemaVerify.Type.func.is(pool.acquire)) {
+    if (Schema.Type.object.is(pool) && Schema.Type.func.is(pool.acquire)) {
       return pool;
     }
 
@@ -3468,7 +3471,7 @@ class Execute {
         break;
     }
 
-    if (schemaVerify.Type.undefinedNull.is(connect)) {
+    if (Schema.Type.undefinedNull.is(connect)) {
       throw new Error(ErrMsg$e.errorDialectType);
     }
 
@@ -3478,7 +3481,7 @@ class Execute {
   async exec(query) {
     const connect = this.connect || {};
 
-    if (schemaVerify.Type.func.isNot(connect.getDbConnect)) {
+    if (Schema.Type.func.isNot(connect.getDbConnect)) {
       throw new Error(ErrMsg$e.emptyConnectPool);
     }
 
@@ -3604,26 +3607,26 @@ class Builder {
   }
 
   initInstance(type, instance) {
-    instance = schemaVerify.Type.object.safe(instance);
+    instance = Schema.Type.object.safe(instance);
     const dialectType = this.dialectType;
     const execute = this.execute;
     const queryTable = this.queryTable;
 
-    if (schemaVerify.Type.string.isNotEmpty(queryTable) && schemaVerify.Type.func.is(instance.table)) {
+    if (Schema.Type.string.isNotEmpty(queryTable) && Schema.Type.func.is(instance.table)) {
       if (TABLE_QUERY_TYPE.includes(type)) {
         instance.table(queryTable);
       }
     }
 
-    if (schemaVerify.Type.func.is(instance.setDialect)) {
+    if (Schema.Type.func.is(instance.setDialect)) {
       instance.setDialect(dialectType);
     }
 
-    if (schemaVerify.Type.func.is(instance.checkDialect)) {
+    if (Schema.Type.func.is(instance.checkDialect)) {
       instance.checkDialect();
     }
 
-    if (schemaVerify.Type.func.is(instance.setExecute)) {
+    if (Schema.Type.func.is(instance.setExecute)) {
       instance.setExecute(execute);
     }
 
@@ -3631,7 +3634,7 @@ class Builder {
   }
 
   table(tableName) {
-    if (!schemaVerify.Type.string.isNotEmpty(tableName)) {
+    if (!Schema.Type.string.isNotEmpty(tableName)) {
       throw new Error(ErrMsg$c.errorTableName);
     }
 
@@ -3644,11 +3647,11 @@ class Builder {
   }
 
   setConnect(config) {
-    if (schemaVerify.Type.object.isNot(config)) {
+    if (Schema.Type.object.isNot(config)) {
       return this;
     }
 
-    config = schemaVerify.Type.object.safe(config);
+    config = Schema.Type.object.safe(config);
     const execute = new Execute(config);
     this.dialectType = config.dialect || DialectTypes.mysql;
     this.execute = execute;
@@ -3680,10 +3683,10 @@ class Builder {
 function SqlQuery(config) {
   let dialect;
 
-  if (schemaVerify.Type.object.isNot(config)) {
+  if (Schema.Type.object.isNot(config)) {
     dialect = DialectTypes.mysql;
 
-    if (schemaVerify.Type.string.isNotEmpty(config)) {
+    if (Schema.Type.string.isNotEmpty(config)) {
       dialect = config;
     }
 
@@ -3691,7 +3694,7 @@ function SqlQuery(config) {
   }
 
   dialect = config.dialect || DialectTypes.mysql;
-  config = schemaVerify.Type.object.safe(config);
+  config = Schema.Type.object.safe(config);
   const execute = new Execute(config);
   const builder = new Builder(dialect, execute);
   return builder;

@@ -1,4 +1,4 @@
-import { Schema } from "schema-verify";
+import Schema from "schema-verify";
 import { UpdateTypes } from "../../constant/enum";
 
 const updateInfoSchema = new Schema({

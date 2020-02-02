@@ -1,4 +1,4 @@
-import { Schema } from "schema-verify";
+import Schema from "schema-verify";
 import { TermSign } from "../../constant/enum";
 
 const fieldsMapSchema = new Schema({

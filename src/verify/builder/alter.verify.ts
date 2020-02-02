@@ -1,4 +1,4 @@
-import { Schema } from "schema-verify";
+import Schema from "schema-verify";
 import { AlterMethods } from "../../constant/enum";
 
 const alterFieldSchema = new Schema({

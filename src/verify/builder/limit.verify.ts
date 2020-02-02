@@ -1,4 +1,4 @@
-import { Schema } from "schema-verify";
+import Schema from "schema-verify";
 
 export const pageSchema = new Schema({
     type: Number,

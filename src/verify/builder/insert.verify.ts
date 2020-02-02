@@ -1,4 +1,4 @@
-import { Schema } from "schema-verify";
+import Schema from "schema-verify";
 
 const fieldDataArrSchema = new Schema({
     type: Array,

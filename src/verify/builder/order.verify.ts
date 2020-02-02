@@ -1,4 +1,4 @@
-import { Schema } from "schema-verify";
+import Schema from "schema-verify";
 import { OrderTypes } from "../../constant/enum";
 
 export const orderInfoSchema = new Schema({
