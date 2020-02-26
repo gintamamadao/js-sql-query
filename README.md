@@ -6,7 +6,7 @@
 
 ## 项目简介
 
-> `Node.js` `orm` 框架，可以通过链式调用 `api` 快捷地生成 `sql` 语句，并且连接数据库执行。目前支持 `MySQL` 和 `Microsoft SQL Server` 这两种数据库。用 `Typescript` 编写，有完整类型声明。
+> `Node.js` `orm` 框架，用 `Typescript` 编写,可以通过链式调用 `api` 快捷地生成 `sql` 语句，并且连接数据库执行。目前支持 `MySQL` 和 `Microsoft SQL Server` 这两种数据库。
 
 ## 环境安装
 
