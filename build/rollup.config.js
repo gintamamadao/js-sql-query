@@ -14,18 +14,11 @@ const babelOptions = {
             {
                 modules: false,
                 targets: {
-                    node: "10.15.3"
-                }
-            }
-        ]
-    ]
-};
-
-const typescriptOptions = {
-    strict: true,
-    declaration: true,
-    module: "ES6",
-    target: "es2017"
+                    node: "10.15.3",
+                },
+            },
+        ],
+    ],
 };
 
 module.exports = {
@@ -33,7 +26,7 @@ module.exports = {
     plugins: [
         typescript(),
         commonjs({ extensions, ignore: ["conditional-runtime-dependency"] }),
-        babel(babelOptions)
+        babel(babelOptions),
     ],
-    external: ["schema-verify"]
+    external: ["schema-verify"],
 };
