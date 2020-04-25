@@ -3,7 +3,7 @@
         "sourceMap": true,
         "noImplicitAny": true,
         "declaration": true,
-        "module": "es2017",
+        "module": "es6",
         "target": "es2017"
     },
     "include": ["./src/**/*", "global.d.ts"]
