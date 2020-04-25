@@ -31,12 +31,12 @@ class BaseConnect {
             port,
             database,
             connectTimeout,
-            connectionLimit
+            connectionLimit,
         };
         this.dbConfig = Type.object.pure(dbConfig);
     }
 
-    loadModule(moduleName): any {
+    loadModule(moduleName: any): any {
         try {
             return require(moduleName);
         } catch (err) {

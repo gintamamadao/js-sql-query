@@ -7,7 +7,7 @@ import ErrMsg from "../error/execute/index";
 
 class Execute {
     dialectType: DialectTypes;
-    connect;
+    connect: any;
     constructor(config: ConnectConfig) {
         this.dialectType = config.dialect || DialectTypes.mysql;
         this.connect = this.getConnect(config);
@@ -35,7 +35,7 @@ class Execute {
         }
         const dbConnection = await connect.getDbConnect();
         return new Promise<T>((relsove, reject) => {
-            dbConnection.query(query, function(err, results) {
+            dbConnection.query(query, function(err: Error, results: T) {
                 dbConnection.release();
                 if (err) {
                     reject(err);

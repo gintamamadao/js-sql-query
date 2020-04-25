@@ -12,7 +12,7 @@ class MyssqlConnect extends BaseConnect {
     getPool(): any {
         let pool = this.pool;
         const dbConfig = this.dbConfig;
-        if (Type.object.is<any>(pool) && Type.func.is(pool.acquire)) {
+        if (Type.object.is(pool) && Type.func.is(pool.acquire)) {
             return pool;
         }
         const config = {
@@ -24,8 +24,8 @@ class MyssqlConnect extends BaseConnect {
             connectionTimeout: dbConfig.connectTimeout,
             pool: {
                 min: 1,
-                max: dbConfig.connectionLimit || 1
-            }
+                max: dbConfig.connectionLimit || 1,
+            },
         };
         const MssqlModule = this.loadModule(DialectModules.mssql);
         pool = new MssqlModule.ConnectionPool(config).connect();
@@ -39,15 +39,15 @@ class MyssqlConnect extends BaseConnect {
             this.pool = pool;
             const request = pool.request();
             const conn = {
-                query: function(query, cb) {
-                    request.query(query, (err, result) => {
+                query: function (query: any, cb: Function) {
+                    request.query(query, (err: Error, result: any) => {
                         if (err) {
                             reject(err);
                         }
                         cb(err, result);
                     });
                 },
-                release: () => {}
+                release: () => {},
             };
             relsove(conn);
         });

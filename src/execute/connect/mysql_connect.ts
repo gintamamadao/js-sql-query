@@ -13,7 +13,7 @@ class MysqlConnect extends BaseConnect {
     getPool(): any {
         let pool = this.pool;
         const dbConfig = this.dbConfig;
-        if (Type.object.is<any>(pool) && Type.func.is(pool.getConnection)) {
+        if (Type.object.is(pool) && Type.func.is(pool.getConnection)) {
             return pool;
         }
         const MysqlModule = this.loadModule(DialectModules.mysql);
@@ -27,7 +27,7 @@ class MysqlConnect extends BaseConnect {
             throw new Error(ErrMsg.emptyConnectPool);
         }
         return new Promise<DbConnect>((relsove, reject) => {
-            pool.getConnection((err, connection) => {
+            pool.getConnection((err: Error, connection: any) => {
                 if (err) {
                     reject(err);
                 }

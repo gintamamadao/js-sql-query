@@ -1,5 +1,5 @@
 const util = require("./util");
-const typescript = require("rollup-plugin-typescript");
+const typescript = require("rollup-plugin-typescript2");
 const babel = require("rollup-plugin-babel");
 const commonjs = require("rollup-plugin-commonjs");
 
@@ -23,14 +23,15 @@ const babelOptions = {
 
 const typescriptOptions = {
     strict: true,
+    declaration: true,
     module: "ES6",
-    target: "ESNext"
+    target: "es2017"
 };
 
 module.exports = {
     input: util.resolve("src/index.ts"),
     plugins: [
-        typescript(typescriptOptions),
+        typescript(),
         commonjs({ extensions, ignore: ["conditional-runtime-dependency"] }),
         babel(babelOptions)
     ],

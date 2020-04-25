@@ -8,9 +8,9 @@ const funcInfoSchema = new Schema({
         {
             index: "funcFeild",
             required: true,
-            type: String
-        }
-    ]
+            type: String,
+        },
+    ],
 });
 
 const funcInputSchema = new Schema({
@@ -21,21 +21,21 @@ const funcInputSchema = new Schema({
             type: String,
             index: "func",
             required: true,
-            custom: value => {
+            custom: (value: keyof typeof FuncTypes) => {
                 return !!FuncTypes[value];
-            }
+            },
         },
         [
             {
                 index: "field",
                 required: true,
-                type: String
+                type: String,
             },
             {
-                type: Number
-            }
-        ]
-    ]
+                type: Number,
+            },
+        ],
+    ],
 });
 
 export const funcInfoVerify = funcInfoSchema.verify;

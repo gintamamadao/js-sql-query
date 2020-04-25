@@ -11,8 +11,9 @@ class Where extends TermApi {
     constructor() {
         super();
         for (const termApi in WHERE_TERM_API) {
-            const whereTermApi = WHERE_TERM_API[termApi];
-            this[whereTermApi] = function(data: TermData) {
+            const whereTermApi =
+                WHERE_TERM_API[termApi as keyof typeof WHERE_TERM_API];
+            (<any>this)[whereTermApi] = function (data: TermData) {
                 return this.whereTermApiFn(termApi, data);
             };
         }
@@ -33,7 +34,7 @@ class Where extends TermApi {
         return this;
     }
 
-    where(sql?: SqlParam): this {
+    where(sql?: any): this {
         if (Type.undefined.isNot(sql)) {
             const term: Term = this.getWhereTermCase();
             if (Type.func.is(sql)) {
@@ -46,7 +47,7 @@ class Where extends TermApi {
         return this;
     }
 
-    protected getWhereTermCase(): Term {
+    protected getWhereTermCase(): any {
         return this.getTermCase(TermTypes.where);
     }
 

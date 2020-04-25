@@ -7,13 +7,13 @@ import {
     JoinTableInfo,
     JoinTypeInfo,
     JoinTermInfo,
-    KeyValueStr
+    KeyValueStr,
 } from "../constant/interface";
 import { JoinTypes } from "../constant/enum";
 import {
     fieldsMapVerify,
     fieldsAsMapVerify,
-    joinInfoVerify
+    joinInfoVerify,
 } from "../verify/builder/index";
 import ErrMsg from "../error/builder/index";
 
@@ -28,8 +28,8 @@ class Join extends Combine {
 
     protected getQueryTables(): string {
         const queryTables: string = Type.array
-            .safe<string[]>(this.queryTables)
-            .map(table => {
+            .safe(this.queryTables)
+            .map((table: string) => {
                 return this.safeKey(table);
             })
             .join(", ");
@@ -161,7 +161,7 @@ class Join extends Combine {
         }
         const typeInfo: JoinTypeInfo = {
             type: type,
-            info: joinInfo
+            info: joinInfo,
         };
         joinTypeInfos.push(typeInfo);
         this.joinTypeInfos = joinTypeInfos;

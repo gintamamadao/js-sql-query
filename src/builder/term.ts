@@ -3,7 +3,7 @@ import {
     TermData,
     TermInfo,
     TermBracket,
-    SqlParam
+    SqlParam,
 } from "../constant/interface";
 import Base from "./base";
 import { Type } from "schema-verify";
@@ -15,7 +15,7 @@ import {
     termValueVerify,
     termInVerify,
     termBetweenVerify,
-    termInfoVerify
+    termInfoVerify,
 } from "../verify/builder/index";
 import ErrMsg from "../error/builder/index";
 
@@ -154,13 +154,15 @@ class Term extends Base {
         return allTermStr;
     }
 
-    protected formatTermValue(value, sign: TermSign): string {
+    protected formatTermValue(value: any, sign: TermSign): string {
         let termValue: string;
         if (sign === TermSign.in || sign === TermSign.notIn) {
             if (!termInVerify(value)) {
                 throw new Error(ErrMsg.errorTermValue);
             }
-            termValue = value.map(item => this.safeValue(item)).join(", ");
+            termValue = value
+                .map((item: any) => this.safeValue(item))
+                .join(", ");
             return `( ${termValue} )`;
         }
 
@@ -224,7 +226,7 @@ class Term extends Base {
                 field,
                 value,
                 sign,
-                logic
+                logic,
             };
             termsArr.push(term);
         }
@@ -250,7 +252,7 @@ class Term extends Base {
         }
         const bracket: TermBracket = {
             position: termsLen,
-            logic
+            logic,
         };
         if (termBracketVerify(bracket)) {
             termBrackets.push(bracket);

@@ -36,15 +36,15 @@ class Base {
         this._safeKey = dialect.safeKey;
     }
 
-    protected _safeValue: SafeValue = function(): string {
+    protected _safeValue: SafeValue = function (): string {
         return "";
     };
 
-    protected _safeKey: SafeKey = function(): string {
+    protected _safeKey: SafeKey = function (): string {
         return "";
     };
 
-    protected loadModule(moduleName): void {
+    protected loadModule(moduleName: string): void {
         try {
             return require(moduleName);
         } catch (err) {
@@ -55,7 +55,7 @@ class Base {
         }
     }
 
-    protected safeValue: SafeValue = function(value: string): string {
+    protected safeValue: SafeValue = function (value: string): string {
         const _dialectType = this._dialectType;
         let dbModule;
         switch (_dialectType) {
@@ -70,7 +70,7 @@ class Base {
         return value;
     };
 
-    protected safeKey: SafeKey = function(key: string): string {
+    protected safeKey: SafeKey = function (key: string): string {
         return this._safeKey(key);
     };
 
@@ -78,11 +78,11 @@ class Base {
         if (!manualSqlVerify(sql) && !(sql instanceof Base)) {
             throw new Error(ErrMsg.errorManualSql);
         }
-        this[key] = sql;
+        (<any>this)[key] = sql;
     }
 
     protected formatManualSql(key: string): string {
-        let sql: any = this[key];
+        let sql: any = (<any>this)[key];
         if (Type.string.is(sql)) {
             return sql;
         }

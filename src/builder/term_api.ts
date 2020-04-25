@@ -13,7 +13,7 @@ class TermApi extends Query {
     constructor() {
         super();
         for (const termApi in WHERE_TERM_API) {
-            this[termApi] = function(data: TermData) {
+            (<any>this)[termApi] = function (data: TermData) {
                 return this.termApiFn(termApi, data);
             };
         }
@@ -24,7 +24,7 @@ class TermApi extends Query {
         if (!TERM_TYPES.includes(termStatus)) {
             throw new Error(ErrMsg.errorTermStatus);
         }
-        this.getTermCase(termStatus)[termApi](data);
+        (<any>this).getTermCase(termStatus)[termApi](data);
         return this;
     }
 
@@ -47,11 +47,11 @@ class TermApi extends Query {
     }
 
     protected getTermCase(type: TermTypes): Term {
-        let term: Term = this[type];
+        let term: Term =  (<any>this)[type];
         if (!term || !(term instanceof Term)) {
             term = new Term();
             term.setDialect(this.dialectType);
-            this[type] = term;
+            (<any>this)[type] = term;
         }
         return term;
     }

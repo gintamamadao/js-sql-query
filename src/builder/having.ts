@@ -11,8 +11,9 @@ class Having extends Where {
     constructor() {
         super();
         for (const termApi in HAVING_TERM_API) {
-            const havingTermApi = HAVING_TERM_API[termApi];
-            this[havingTermApi] = function(data: TermData) {
+            const havingTermApi =
+                HAVING_TERM_API[termApi as keyof typeof HAVING_TERM_API];
+            (<any>this)[havingTermApi] = function (data: TermData) {
                 return this.havingTermApiFn(termApi, data);
             };
         }
@@ -33,7 +34,7 @@ class Having extends Where {
         return this;
     }
 
-    having(sql?: SqlParam): this {
+    having(sql: any): this {
         if (Type.undefined.isNot(sql)) {
             const term: Term = this.getHavingTermCase();
             if (Type.func.is(sql)) {
@@ -46,7 +47,7 @@ class Having extends Where {
         return this;
     }
 
-    protected getHavingTermCase(): Term {
+    protected getHavingTermCase(): any {
         return this.getTermCase(TermTypes.having);
     }
 

@@ -20,7 +20,7 @@ const TABLE_QUERY_TYPE = [
     QueryTypes.replace,
     QueryTypes.select,
     QueryTypes.update,
-    QueryTypes.delete
+    QueryTypes.delete,
 ];
 class Builder {
     protected dialectType: DialectTypes;
@@ -117,7 +117,10 @@ class Builder {
         return this.initInstance<T>(type, instance);
     }
 
-    protected initInstance<T>(type, instance): T {
+    protected initInstance<T>(
+        type: QueryTypes | WidgetTypes,
+        instance: any
+    ): T {
         instance = Type.object.safe(instance);
         const dialectType: DialectTypes = this.dialectType;
         const execute: Execute = this.execute;
@@ -126,7 +129,7 @@ class Builder {
             Type.string.isNotEmpty(queryTable) &&
             Type.func.is(instance.table)
         ) {
-            if (TABLE_QUERY_TYPE.includes(type)) {
+            if (TABLE_QUERY_TYPE.includes(type as QueryTypes)) {
                 instance.table(queryTable);
             }
         }

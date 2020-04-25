@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "declaration": true,
+        "module": "es2017",
+        "target": "es2017"
+    },
+    "include": ["./src/**/*", "global.d.ts"]
+}

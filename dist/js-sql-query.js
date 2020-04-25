@@ -93,18 +93,7 @@ const ErrMsg$b = {
   joinTableInfoError: "错误的联查信息"
 };
 
-const ErrMsg$c = { ...ErrMsg,
-  ...ErrMsg$1,
-  ...ErrMsg$2,
-  ...ErrMsg$3,
-  ...ErrMsg$4,
-  ...ErrMsg$5,
-  ...ErrMsg$6,
-  ...ErrMsg$7,
-  ...ErrMsg$8,
-  ...ErrMsg$9,
-  ...ErrMsg$a,
-  ...ErrMsg$b,
+const ErrMsg$c = Object.assign({}, ErrMsg, ErrMsg$1, ErrMsg$2, ErrMsg$3, ErrMsg$4, ErrMsg$5, ErrMsg$6, ErrMsg$7, ErrMsg$8, ErrMsg$9, ErrMsg$a, ErrMsg$b, {
   errorTableName: "错误的表名，需要非空字符串",
   errorField: "错误的表名，需要非空字符串",
   errorFields: "错误的字段，需要非空字符串或非空字符串数组",
@@ -113,7 +102,7 @@ const ErrMsg$c = { ...ErrMsg,
   needNumStr: "需要数字或者字符串",
   notSupportDialect: "无法支持当前类型数据库",
   errorTermStatus: "未设置条件类型"
-};
+});
 
 const DialectsObj = {
   mysql: {
@@ -3264,8 +3253,7 @@ const ErrMsg$d = {
   errorConnect: "错误的连接"
 };
 
-const ErrMsg$e = { ...ErrMsg$d
-};
+const ErrMsg$e = Object.assign({}, ErrMsg$d);
 
 const conConfigSchema = new Schema__default({
   type: Object,

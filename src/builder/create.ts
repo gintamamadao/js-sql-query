@@ -72,7 +72,7 @@ class Create extends Base {
         const createDbName: string = this.createDbName;
         if (Type.string.isNotEmpty(createDbName)) {
             const tmplOpts = {
-                dbName: createDbName
+                dbName: createDbName,
             };
             const query: string = analyTmpl(DATABASE_TEMPLATE, tmplOpts);
             return query;
@@ -94,7 +94,7 @@ class Create extends Base {
         const tmplOpts = {
             tableName,
             feildsStr,
-            tableOptionsStr
+            tableOptionsStr,
         };
         const tableInfoStr: string = analyTmpl(TABLE_TEMPLATE, tmplOpts) + ";";
         return tableInfoStr;
@@ -135,9 +135,9 @@ class Create extends Base {
         const onUpdate: string = fieldInfo.onUpdate;
         let comment: string = fieldInfo.comment;
 
-        const tmplOpts = {
+        const tmplOpts: any = {
             field,
-            type
+            type,
         };
 
         if (unsigned === true) {
@@ -190,7 +190,7 @@ class Create extends Base {
             const keyName: string = this.safeKey((<combineKey>keyInfo).keyName);
             const combineFields = (<combineKey>keyInfo).combineFields;
             const combineFieldsStr = combineFields
-                .map(field => this.safeKey(field))
+                .map((field) => this.safeKey(field))
                 .join(",");
             result = `${keyName} ${primaryKey} (${combineFieldsStr})`;
         }
@@ -207,11 +207,11 @@ class Create extends Base {
             result = `${value} ${uniqueKey} (${value})`;
         }
 
-        if (Type.object.is<combineKey>(keyInfo)) {
-            const keyName: string = this.safeKey(keyInfo.keyName);
-            const combineFields = keyInfo.combineFields;
+        if (Type.object.is(keyInfo)) {
+            const keyName: string = this.safeKey((<combineKey>keyInfo).keyName);
+            const combineFields = (<combineKey>keyInfo).combineFields;
             const combineFieldsStr = combineFields
-                .map(field => this.safeKey(field))
+                .map((field) => this.safeKey(field))
                 .join(",");
             result = `${keyName} ${uniqueKey} (${combineFieldsStr})`;
         }
@@ -224,7 +224,7 @@ class Create extends Base {
         const autoIncrement: number = info.autoIncrement;
         const defaultCharset: string = info.defaultCharset;
         const comment = info.comment;
-        const tmplOpts = {};
+        const tmplOpts: any = {};
 
         if (Type.string.isNotEmpty(engine)) {
             const key = TableOptions.engine;

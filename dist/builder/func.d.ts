@@ -1,0 +1,32 @@
+import { FuncTypes } from "../constant/enum";
+import { FuncInfo } from "../constant/interface";
+import Base from "./base";
+declare class Func extends Base {
+    protected funcField(func: FuncTypes, field: number | string): FuncInfo;
+    count(field?: number | string): FuncInfo;
+    sum(field?: number | string): FuncInfo;
+    max(field?: number | string): FuncInfo;
+    min(field?: number | string): FuncInfo;
+    avg(field?: number | string): FuncInfo;
+    abs(field?: number | string): FuncInfo;
+    ceil(field?: number | string): FuncInfo;
+    floor(field?: number | string): FuncInfo;
+    round(field?: number | string): FuncInfo;
+    log(field?: number | string): FuncInfo;
+    log2(field?: number | string): FuncInfo;
+    exp(field?: number | string): FuncInfo;
+    power(field?: number | string): FuncInfo;
+    acos(field?: number | string): FuncInfo;
+    asin(field?: number | string): FuncInfo;
+    atan(field?: number | string): FuncInfo;
+    cos(field?: number | string): FuncInfo;
+    sin(field?: number | string): FuncInfo;
+    tan(field?: number | string): FuncInfo;
+    conv(field?: number | string): FuncInfo;
+    random(field?: number | string): FuncInfo;
+    rand(field?: number | string): FuncInfo;
+    radians(field?: number | string): FuncInfo;
+    degrees(field?: number | string): FuncInfo;
+    distinct(field?: number | string): FuncInfo;
+}
+export default Func;

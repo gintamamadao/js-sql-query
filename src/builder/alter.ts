@@ -39,8 +39,8 @@ class Alter extends Base {
     }
 
     add(field: string | AlterField, alterField?: AlterField): this {
-        if (Type.object.is<AlterField>(field)) {
-            alterField = field;
+        if (Type.object.is(field)) {
+            alterField = <AlterField>field;
             field = alterField.field;
         }
         delete alterField["field"];
@@ -74,7 +74,7 @@ class Alter extends Base {
         const alterInfo: AlterInfo = {
             method,
             field,
-            alterField
+            alterField,
         };
         if (!alterInfosVerify(alterInfo)) {
             throw new Error(ErrMsg.errorAlterField);
@@ -100,7 +100,7 @@ class Alter extends Base {
             const tmplOpts = {
                 method,
                 field,
-                alterFieldStr
+                alterFieldStr,
             };
             const alterInfoStr: string = analyTmpl(
                 ALTER_INFOS_TEMPLATE,
@@ -116,7 +116,7 @@ class Alter extends Base {
         const queryTable = this.getQueryTable();
         const tmplOpts = {
             queryTable,
-            alterInfosStr
+            alterInfosStr,
         };
         const query: string = analyTmpl(ALTER_TEMPLATE, tmplOpts);
         return query;
@@ -132,7 +132,7 @@ class Alter extends Base {
         const onUpdate: string = fieldInfo.onUpdate;
         let comment: string = fieldInfo.comment;
 
-        const tmplOpts = {};
+        const tmplOpts: any = {};
 
         if (Type.string.isNotEmpty(field)) {
             tmplOpts["field"] = this.safeKey(field);

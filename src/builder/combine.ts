@@ -6,7 +6,7 @@ import ErrMsg from "../error/builder/index";
 import {
     strArrVerify,
     funcInfoVerify,
-    funcInputVerify
+    funcInputVerify,
 } from "../verify/builder/index";
 
 interface FuncInput {
@@ -29,7 +29,7 @@ class Combine extends Having {
             return query;
         }
         const fieldsStr: string = fields
-            .map(field => this.safeKey(field))
+            .map((field) => this.safeKey(field))
             .join(", ");
         query = `${query} GROUP BY ${fieldsStr}`;
         return query;
@@ -90,10 +90,10 @@ class Combine extends Having {
                 const func: string = (<FuncInput>info).func;
                 const field: string | number = (<FuncInput>info).field;
                 if (
-                    Type.object.is<Func>(funcCase) &&
-                    Type.func.is(funcCase[func])
+                    Type.object.is(funcCase) &&
+                    Type.func.is((<any>funcCase)[func])
                 ) {
-                    const funcInfo: FuncInfo = funcCase[func].call(
+                    const funcInfo: FuncInfo = (<any>funcCase)[func].call(
                         funcCase,
                         field
                     );
