@@ -2,1410 +2,12 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var isobject = _interopDefault(require('isobject'));
-var _isFinite = _interopDefault(require('is-finite'));
-
-function unwrapExports (x) {
-	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
-}
-
-function createCommonjsModule(fn, module) {
-	return module = { exports: {} }, fn(module, module.exports), module.exports;
-}
-
-var toString = {}.toString;
-
-var isarray = Array.isArray || function (arr) {
-  return toString.call(arr) == '[object Array]';
-};
-
-// http://people.mozilla.org/~jorendorff/es6-draft.html#sec-number.isinteger
-
-var isInteger = Number.isInteger || function (val) {
-  return typeof val === "number" && _isFinite(val) && Math.floor(val) === val;
-};
-
-var schemaVerify_1 = createCommonjsModule(function (module, exports) {
-
-  Object.defineProperty(exports, '__esModule', {
-    value: true
-  });
-
-  function _interopDefault(ex) {
-    return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex;
-  }
-
-  var isarray$1 = _interopDefault(isarray);
-
-  var isobject$1 = _interopDefault(isobject);
-
-  var isinteger = _interopDefault(isInteger);
-
-  const isstring = function (v) {
-    return typeof v === "string";
-  };
-
-  const isnumber = function (v) {
-    return typeof v === "number" && !isNaN(v);
-  };
-
-  const isfunction = function (v) {
-    return typeof v === "function";
-  };
-
-  const isnull = function (v) {
-    return v === null;
-  };
-
-  const isundefined = function (v) {
-    return v === undefined;
-  };
-
-  const isundefinednull = function (v) {
-    return v === undefined || v === null;
-  };
-
-  const Type = {
-    string: {
-      is(v) {
-        return isstring(v);
-      },
-
-      isNot(v) {
-        return !isstring(v);
-      },
-
-      isEmpty(v) {
-        return isstring(v) && v.length === 0;
-      },
-
-      isNotEmpty(v) {
-        return isstring(v) && v.length >= 1;
-      },
-
-      safe(v) {
-        return isstring(v) ? v : isundefinednull(v) ? "" : v + "";
-      }
-
-    },
-    number: {
-      is(v) {
-        return isnumber(v);
-      },
-
-      isNot(v) {
-        return !isnumber(v);
-      },
-
-      isInteger(v) {
-        return isnumber(v) && isinteger(v);
-      },
-
-      isNatural(v) {
-        return isnumber(v) && isinteger(v) && v >= 0;
-      },
-
-      safe(v) {
-        if (isnumber(v)) {
-          return v;
-        } else if (isundefinednull(v)) {
-          return 0;
-        } else {
-          v = new Number(v).valueOf();
-
-          if (isnumber(v)) {
-            return v;
-          }
-        }
-
-        return 0;
-      }
-
-    },
-    boolean: {
-      is(v) {
-        return v === true || v === false;
-      },
-
-      isNot(v) {
-        return v !== true && v !== false;
-      }
-
-    },
-    array: {
-      is(v) {
-        return isarray$1(v);
-      },
-
-      isNot(v) {
-        return !isarray$1(v);
-      },
-
-      isEmpty(v) {
-        return isarray$1(v) && v.length === 0;
-      },
-
-      isNotEmpty(v) {
-        return isarray$1(v) && v.length >= 1;
-      },
-
-      safe(v) {
-        return isarray$1(v) ? v : [];
-      },
-
-      pure(v) {
-        if (!isarray$1(v)) {
-          return [];
-        }
-
-        const t = [];
-        v.forEach(item => {
-          if (!isundefinednull(item)) {
-            t.push(item);
-          }
-        });
-        return t;
-      }
-
-    },
-    object: {
-      is(v) {
-        return isobject$1(v);
-      },
-
-      isNot(v) {
-        return !isobject$1(v);
-      },
-
-      isEmpty(v) {
-        return isobject$1(v) && Object.keys(v).length === 0;
-      },
-
-      isNotEmpty(v) {
-        return isobject$1(v) && Object.keys(v).length >= 1;
-      },
-
-      safe(v) {
-        return isobject$1(v) ? v : {};
-      },
-
-      pure(v) {
-        if (!isobject$1(v)) {
-          return {};
-        }
-
-        const t = Object.assign({}, v);
-        Object.keys(t).forEach(k => {
-          if (isundefinednull(t[k])) {
-            delete t[k];
-          }
-        });
-        return t;
-      }
-
-    },
-    func: {
-      is(v) {
-        return isfunction(v);
-      },
-
-      isNot(v) {
-        return !isfunction(v);
-      },
-
-      safe(v, context) {
-        return function () {
-          if (isfunction(v)) {
-            context = context || isnull(context) ? context : this;
-            return v.apply(context, Array.prototype.slice.apply(arguments));
-          }
-        };
-      }
-
-    },
-    undefinedNull: {
-      is(v) {
-        return isundefinednull(v);
-      },
-
-      isNot(v) {
-        return !isundefinednull(v);
-      }
-
-    },
-    nul: {
-      is(v) {
-        return isnull(v);
-      },
-
-      isNot(v) {
-        return !isnull(v);
-      }
-
-    },
-    undefined: {
-      is(v) {
-        return isundefined(v);
-      },
-
-      isNot(v) {
-        return !isundefined(v);
-      }
-
-    }
-  };
-  const phoneReg = new RegExp(/^1\d{10}$/);
-  const emailReg = new RegExp(/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/);
-  const colorReg = new RegExp(/(^#\w{3}$)|(^#\w{6}$)|(^rgb\s*\((\s*\d{1,3}\s*,){2}\s*\d{1,3}\s*\)$)|(^rgba\s*\((\s*\d{1,3}\s*,){3},[01]{1}\.?\d*\s*\)$)/);
-  const versionReg = new RegExp(/(^[vV]\d+$)|(^[vV]((\d+\.)+)(\d+)$)/);
-  const signReg = new RegExp(/^[a-zA-Z_][a-zA-Z_\d]*$/);
-  const numStrReg = new RegExp(/^\d+$/);
-  const commonTimeReg = new RegExp(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?/);
-  const Pattern = {
-    phone: {
-      is(v) {
-        return Type.string.isNotEmpty(v) && phoneReg.test(v);
-      }
-
-    },
-    uri: {
-      is(v) {
-        try {
-          return Type.string.isNotEmpty(v) && Type.object.is(new URL(v));
-        } catch (e) {
-          return false;
-        }
-      }
-
-    },
-    email: {
-      is(v) {
-        return Type.string.isNotEmpty(v) && emailReg.test(v);
-      }
-
-    },
-    color: {
-      is(v) {
-        return Type.string.isNotEmpty(v) && colorReg.test(v);
-      }
-
-    },
-    version: {
-      is(v) {
-        return Type.string.isNotEmpty(v) && versionReg.test(v);
-      }
-
-    },
-    sign: {
-      is(v) {
-        return Type.string.isNotEmpty(v) && signReg.test(v);
-      }
-
-    },
-    numStr: {
-      is(v) {
-        return Type.string.isNotEmpty(v) && numStrReg.test(v);
-      }
-
-    },
-    jsonStr: {
-      is(v) {
-        try {
-          return Type.string.isNotEmpty(v) && JSON.parse(v);
-        } catch (e) {
-          return false;
-        }
-      }
-
-    },
-    time: {
-      is(v) {
-        const timeInfo = new Date(v);
-        return Type.object.is(timeInfo) && timeInfo.toString() !== "Invalid Date";
-      },
-
-      isCommon(v) {
-        return Type.string.isNotEmpty(v) && commonTimeReg.test(v);
-      }
-
-    }
-  };
-
-  class ErrorHint {
-    safeErrorHint(e) {
-      return typeof e === "string" ? e : e && e.message ? e.message : "未知";
-    }
-
-  }
-
-  class VerifyErrorHint extends ErrorHint {
-    constructor() {
-      super();
-      this.propEmptyHint = "对象缺少属性";
-      this.elementEmptyHint = "数组缺少元素";
-      this.propErrorHint = this.propErrorHint.bind(this);
-      this.elementErrorHint = this.elementErrorHint.bind(this);
-    }
-
-    minValueHint(min) {
-      return `小于最小值 ${min}`;
-    }
-
-    maxValueHint(max) {
-      return `大于最大值 ${max}`;
-    }
-
-    minLenHint(min) {
-      return `小于最小长度 ${min}`;
-    }
-
-    maxLenHint(max) {
-      return `大于最大长度 ${max}`;
-    }
-
-    typeNeedHint(type) {
-      return `需要 ${type} 类型`;
-    }
-
-    enumHint(value) {
-      return `${value} 不是有效值之一`;
-    }
-
-    integerHint(value) {
-      return `${value} 不是整数`;
-    }
-
-    naturalHint(value) {
-      return `${value} 不是自然数`;
-    }
-
-    matchHint(value) {
-      return `${value} 未通过正则规则`;
-    }
-
-    patternNeedHint(pattern) {
-      return `需要 ${pattern} 格式`;
-    }
-
-    propNeedHint(key) {
-      return `属性 ${key}: 缺少数据`;
-    }
-
-    propRestrictHint(key) {
-      return `属性 ${key} 不允许`;
-    }
-
-    propErrorHint(key, e) {
-      return `属性 ${key}: ${this.safeErrorHint(e)}`;
-    }
-
-    elementNeedHint(index) {
-      return `第 ${index} 项: 缺少数据`;
-    }
-
-    elementErrorHint(index, e) {
-      return `第 ${index} 项: ${this.safeErrorHint(e)}`;
-    }
-
-    verifyErrorHint(type, customHint, originHint) {
-      return `${type ? type + " " : ""}校验不通过, 错误信息：${customHint || originHint || "未知"}`;
-    }
-
-  }
-
-  var ErrorMsg = new VerifyErrorHint();
-  const TYPES = {
-    string: "string",
-    number: "number",
-    object: "object",
-    array: "array",
-    function: "function",
-    boolean: "boolean",
-    null: "null"
-  };
-  const METHODS = {
-    index: "index",
-    required: "required",
-    type: "type",
-    schema: "schema",
-    custom: "custom",
-    hint: "hint",
-    pattern: "pattern",
-    length: "length",
-    minLength: "minLength",
-    maxLength: "maxLength",
-    min: "min",
-    max: "max",
-    enum: "enum",
-    match: "match",
-    range: "range",
-    integer: "integer",
-    natural: "natural",
-    restrict: "restrict",
-    props: "props",
-    elements: "elements"
-  };
-  const COMMON_METHODS = [METHODS.index, METHODS.required, METHODS.type, METHODS.schema, METHODS.custom, METHODS.hint];
-  const TYPE_METHODS = {
-    string: [METHODS.pattern, METHODS.length, METHODS.enum, METHODS.match, METHODS.minLength, METHODS.maxLength],
-    number: [METHODS.range, METHODS.integer, METHODS.natural, METHODS.enum, METHODS.min, METHODS.max],
-    object: [METHODS.restrict, METHODS.props],
-    array: [METHODS.elements, METHODS.length, METHODS.minLength, METHODS.maxLength],
-    function: [],
-    boolean: [],
-    null: []
-  };
-  const CHECK_METHODS = COMMON_METHODS.slice(0, COMMON_METHODS.length - 2);
-
-  const typeVerify = (data, claim, hint) => {
-    let isPass = false;
-
-    switch (claim) {
-      case TYPES.string:
-        isPass = Type.string.is(data);
-        break;
-
-      case TYPES.number:
-        isPass = Type.number.is(data);
-        break;
-
-      case TYPES.object:
-        isPass = Type.object.is(data);
-        break;
-
-      case TYPES.array:
-        isPass = Type.array.is(data);
-        break;
-
-      case TYPES.function:
-        isPass = Type.func.is(data);
-        break;
-
-      case TYPES.boolean:
-        isPass = Type.boolean.is(data);
-        break;
-
-      case TYPES.null:
-        isPass = Type.nul.is(data);
-        break;
-    }
-
-    if (!isPass) {
-      throw new Error(ErrorMsg.verifyErrorHint(METHODS.type, hint, ErrorMsg.typeNeedHint(claim)));
-    }
-
-    return true;
-  };
-
-  const restrictVerify = (data, claim, propsClaims, hint) => {
-    if (!claim) {
-      return true;
-    }
-
-    const dataKeys = Object.keys(data);
-    let restrictKeys = [];
-
-    for (const item of propsClaims) {
-      if (Type.object.is(item)) {
-        restrictKeys.push(item.index);
-        continue;
-      }
-
-      if (Type.array.is(item)) {
-        restrictKeys.push(item[0].index);
-        continue;
-      }
-    }
-
-    restrictKeys = restrictKeys.filter(s => s);
-
-    for (const key of dataKeys) {
-      if (!restrictKeys.includes(key)) {
-        throw new Error(ErrorMsg.verifyErrorHint(METHODS.restrict, hint, ErrorMsg.propRestrictHint(key)));
-      }
-    }
-
-    return true;
-  };
-
-  const requiredVerify = (data, index, claim, hint) => {
-    if (Type.object.is(data) && !data.hasOwnProperty(index) || Type.array.is(data) && Type.undefined.is(data[index])) {
-      if (claim) {
-        throw new Error(hint);
-      } else {
-        return true;
-      }
-    }
-
-    return false;
-  };
-
-  const patternVerify = (data, claim, hint) => {
-    const isFn = (Pattern[claim] || {}).is;
-    const isPass = typeof isFn === "function" && isFn.call(Pattern[claim], data);
-
-    if (!isPass) {
-      throw new Error(ErrorMsg.verifyErrorHint(METHODS.pattern, hint, ErrorMsg.patternNeedHint(claim)));
-    }
-
-    return true;
-  };
-
-  const lengthVerify = (data, claim, hint) => {
-    const min = claim.min;
-    const max = claim.max;
-    const length = data.length;
-
-    if (Type.number.is(min) && length < min) {
-      throw new Error(ErrorMsg.verifyErrorHint(METHODS.length, hint, ErrorMsg.minLenHint(min)));
-    }
-
-    if (Type.number.is(max) && length > max) {
-      throw new Error(ErrorMsg.verifyErrorHint(METHODS.length, hint, ErrorMsg.maxLenHint(max)));
-    }
-
-    return true;
-  };
-
-  const enumVerify = (data, claim, hint) => {
-    if (!claim.includes(data)) {
-      throw new Error(ErrorMsg.verifyErrorHint(METHODS.enum, hint, ErrorMsg.enumHint(data)));
-    }
-
-    return true;
-  };
-
-  const integerVerify = (data, claim, hint) => {
-    if (claim && !Type.number.isInteger(data)) {
-      throw new Error(ErrorMsg.verifyErrorHint(METHODS.integer, hint, ErrorMsg.integerHint(data)));
-    }
-
-    return true;
-  };
-
-  const naturalVerify = (data, claim, hint) => {
-    if (claim && !Type.number.isNatural(data)) {
-      throw new Error(ErrorMsg.verifyErrorHint(METHODS.natural, hint, ErrorMsg.naturalHint(data)));
-    }
-
-    return true;
-  };
-
-  const matchVerify = (data, claim, hint) => {
-    if (Type.string.is(claim)) {
-      claim = new RegExp(claim);
-    }
-
-    if (!claim.test(data)) {
-      throw new Error(ErrorMsg.verifyErrorHint(METHODS.match, hint, ErrorMsg.matchHint(data)));
-    }
-
-    return true;
-  };
-
-  const rangeVerify = (data, claim, hint) => {
-    const min = claim.min;
-    const max = claim.max;
-
-    if (Type.number.is(min) && data < min) {
-      throw new Error(ErrorMsg.verifyErrorHint(METHODS.range, hint, ErrorMsg.minValueHint(min)));
-    }
-
-    if (Type.number.is(max) && data > max) {
-      throw new Error(ErrorMsg.verifyErrorHint(METHODS.range, hint, ErrorMsg.maxValueHint(max)));
-    }
-
-    return true;
-  };
-
-  const elePropVerify = (data, claims, type) => {
-    const verifyItem = (itemData, itemClaim, index) => {
-      let required;
-      let hint;
-
-      if (Type.array.isNotEmpty(itemClaim)) {
-        const itemItemClaim = itemClaim[0];
-        required = itemItemClaim.required;
-        hint = Type.object.safe(itemItemClaim.hint);
-      } else {
-        required = itemClaim.required;
-        hint = Type.object.safe(itemClaim.hint);
-      }
-
-      const getHint = type === TYPES.object ? ErrorMsg.propNeedHint : ErrorMsg.elementNeedHint;
-      const requiredHint = hint[METHODS.required] || getHint(index);
-      const isRequiredPass = requiredVerify(data, index, required, requiredHint);
-
-      if (isRequiredPass) {
-        return;
-      }
-
-      try {
-        verify(itemData, itemClaim, data);
-      } catch (e) {
-        const getHint = type === TYPES.object ? ErrorMsg.propErrorHint : ErrorMsg.elementErrorHint;
-        throw new Error(getHint(index, e));
-      }
-    };
-
-    const verifyArr = (itemClaim, checkedMap) => {
-      let required;
-      let hint;
-
-      if (Type.array.isNotEmpty(itemClaim)) {
-        const itemItemClaim = itemClaim[0];
-        required = itemItemClaim.required;
-        hint = Type.object.safe(itemItemClaim.hint);
-      } else {
-        required = itemClaim.required;
-        hint = Type.object.safe(itemClaim.hint);
-      }
-
-      const indexArr = type === TYPES.object ? Object.keys(data) : Array.from("a".repeat(data.length)).map((s, i) => i);
-      const emptyHint = type === TYPES.object ? ErrorMsg.propEmptyHint : ErrorMsg.elementEmptyHint;
-
-      if (required && indexArr.length <= 0) {
-        throw new Error(hint[METHODS.required] || emptyHint);
-      }
-
-      for (let index of indexArr) {
-        if (!checkedMap[index]) {
-          const itemData = data[index];
-          verifyItem(itemData, itemClaim, index);
-          checkedMap[index] = true;
-        }
-      }
-    };
-
-    const fn = claims => {
-      const checkedMap = {};
-
-      for (const itemClaim of claims) {
-        let index;
-
-        if (Type.array.isNotEmpty(itemClaim)) {
-          const itemItemClaim = itemClaim[0];
-          index = itemItemClaim.index;
-        } else {
-          index = itemClaim.index;
-        }
-
-        if (Type.number.isNatural(index) || Type.string.isNotEmpty(index)) {
-          const itemData = data[index];
-          verifyItem(itemData, itemClaim, index);
-          checkedMap[index] = true;
-        } else {
-          verifyArr(itemClaim, checkedMap);
-        }
-      }
-    };
-
-    try {
-      fn(claims);
-    } catch (e) {
-      throw e;
-    }
-  };
-
-  const schemaVerify = (data, claim, hint, parent) => {
-    try {
-      claim.verify(data, true, parent);
-    } catch (e) {
-      throw new Error(ErrorMsg.verifyErrorHint(METHODS.schema, hint || `${ErrorMsg.safeErrorHint(e)}`));
-    }
-
-    return true;
-  };
-
-  const customVerify = (data, claim, hint, parent) => {
-    try {
-      const isPass = Type.func.safe(claim)(data, parent);
-
-      if (!isPass) {
-        throw new Error(hint || "未知");
-      }
-    } catch (e) {
-      throw new Error(ErrorMsg.verifyErrorHint(METHODS.custom, `${ErrorMsg.safeErrorHint(e)}`));
-    }
-
-    return true;
-  };
-
-  const claimsVerify = (data, claims, parent) => {
-    const fn = () => {
-      const hint = Type.object.safe(claims.hint);
-      const type = claims.type;
-      const claimMethods = [].concat(CHECK_METHODS, TYPE_METHODS[type]);
-      claimMethods.push(METHODS.custom);
-
-      for (const claimKey of claimMethods) {
-        if (!claims.hasOwnProperty(claimKey)) {
-          continue;
-        }
-
-        const claimValue = claims[claimKey];
-        const propsClaims = claims.props;
-        const claimHint = hint[claimKey];
-
-        switch (claimKey) {
-          case METHODS.type:
-            typeVerify(data, claimValue, claimHint);
-            break;
-
-          case METHODS.restrict:
-            restrictVerify(data, claimValue, propsClaims, claimHint);
-            break;
-
-          case METHODS.pattern:
-            patternVerify(data, claimValue, claimHint);
-            break;
-
-          case METHODS.length:
-            lengthVerify(data, claimValue, claimHint);
-            break;
-
-          case METHODS.enum:
-            enumVerify(data, claimValue, claimHint);
-            break;
-
-          case METHODS.match:
-            matchVerify(data, claimValue, claimHint);
-            break;
-
-          case METHODS.range:
-            rangeVerify(data, claimValue, claimHint);
-            break;
-
-          case METHODS.integer:
-            integerVerify(data, claimValue, claimHint);
-            break;
-
-          case METHODS.natural:
-            naturalVerify(data, claimValue, claimHint);
-            break;
-
-          case METHODS.elements:
-            elePropVerify(data, claimValue, type);
-            break;
-
-          case METHODS.props:
-            elePropVerify(data, claimValue, type);
-            break;
-
-          case METHODS.schema:
-            schemaVerify(data, claimValue, claimHint, parent);
-            break;
-
-          case METHODS.custom:
-            customVerify(data, claimValue, claimHint, parent);
-            break;
-        }
-      }
-    };
-
-    try {
-      fn();
-    } catch (e) {
-      throw e;
-    }
-  };
-
-  const verify = (data, info, parent) => {
-    const fn = claimsInfo => {
-      try {
-        claimsVerify(data, claimsInfo, parent);
-      } catch (e) {
-        throw e;
-      }
-    };
-
-    if (Type.object.is(info)) {
-      fn(info);
-    }
-
-    if (Type.array.is(info)) {
-      const errorMsgs = [];
-
-      for (let i = 0; i < info.length; i++) {
-        try {
-          fn(info[i]);
-          break;
-        } catch (e) {
-          errorMsgs.push(`schema-${i}: ${ErrorMsg.safeErrorHint(e)}`);
-        }
-      }
-
-      if (info.length === errorMsgs.length) {
-        throw new Error(errorMsgs.join(";"));
-      }
-    }
-
-    return true;
-  };
-
-  class SchemaErrorHint extends ErrorHint {
-    constructor() {
-      super();
-      this.propsInfoEmpty = "属性信息不能为空";
-      this.emptyLengthInfo = "空的长度信息";
-      this.emptyEnumInfo = "空的枚举信息";
-      this.errorEnumInfo = "错误的枚举信息";
-      this.emptyHintInfo = "空的提示信息";
-      this.emptyRangeInfo = "空的范围信息";
-    }
-
-    unIdentifyType(v) {
-      return `不可识别的属性类型：${v}`;
-    }
-
-    illegalHintInfo(v) {
-      return `非法的提示信息属性：${v}`;
-    }
-
-    illegalVerifyProps(v) {
-      return `非法的校验属性：${v}`;
-    }
-
-    illegalPatternType(v) {
-      return `非法的格式类型：${v}`;
-    }
-
-  }
-
-  var ErrorMsg$1 = new SchemaErrorHint();
-  const PATTERNS = Object.keys(Pattern);
-
-  const schemaCheck = function (info) {
-    if (Type.object.isNot(info) && !Type.array.isNotEmpty(info)) {
-      throw new Error(ErrorMsg$1.propsInfoEmpty);
-    }
-
-    if (Type.array.isNotEmpty(info)) {
-      const result = [];
-
-      for (let i = 0; i < info.length; i++) {
-        result[i] = schemaCheck(info[i]);
-      }
-
-      return result;
-    }
-
-    if (info instanceof Schema) {
-      info = {
-        schema: info
-      };
-    }
-
-    if (info.hasOwnProperty(METHODS.schema)) {
-      const schema = info[METHODS.schema];
-
-      if (Type.object.isNot(schema) || !(schema instanceof Schema)) {
-        throw new Error(ErrorMsg$1.illegalVerifyProps(METHODS.schema));
-      }
-
-      const schemaRuleInfo = schema.info;
-
-      for (const method of [METHODS.type, METHODS.required, METHODS.index]) {
-        if (!info.hasOwnProperty(method) && schemaRuleInfo.hasOwnProperty(method)) {
-          info[method] = schemaRuleInfo[method];
-        }
-      }
-    }
-
-    const result = Object.assign({}, info);
-    return typeCheck(result);
-  };
-
-  const typeCheck = function (info) {
-    const type = info.type;
-
-    switch (type) {
-      case TYPES.string:
-      case String:
-        info = stringCheck(info);
-        info.type = TYPES.string;
-        break;
-
-      case TYPES.number:
-      case Number:
-        info = numberCheck(info);
-        info.type = TYPES.number;
-        break;
-
-      case TYPES.object:
-      case Object:
-        info = objectCheck(info);
-        info.type = TYPES.object;
-        break;
-
-      case TYPES.array:
-      case Array:
-        info = arrayCheck(info);
-        info.type = TYPES.array;
-        break;
-
-      case TYPES.function:
-      case Function:
-        info.type = TYPES.function;
-        break;
-
-      case TYPES.boolean:
-      case Boolean:
-        info.type = TYPES.boolean;
-        break;
-
-      case TYPES.null:
-      case null:
-        info.type = TYPES.null;
-        break;
-    }
-
-    return typeCommonCheck(info);
-  };
-
-  const typeCommonCheck = info => {
-    const methods = TYPE_METHODS[info.type];
-
-    if (Type.array.isNot(methods)) {
-      throw new Error(ErrorMsg$1.unIdentifyType(methods));
-    }
-
-    for (const key in info) {
-      if (COMMON_METHODS.includes(key) || methods.includes(key)) {
-        continue;
-      } else {
-        throw new Error(ErrorMsg$1.illegalVerifyProps(key));
-      }
-    }
-
-    if (info.hasOwnProperty(METHODS.hint)) {
-      const hint = info[METHODS.hint];
-
-      if (!Type.object.is(hint)) {
-        throw new Error(ErrorMsg$1.illegalVerifyProps(METHODS.hint));
-      }
-
-      for (const key in hint) {
-        if (COMMON_METHODS.includes(key) || methods.includes(key)) {
-          continue;
-        } else {
-          throw new Error(ErrorMsg$1.illegalHintInfo(key));
-        }
-      }
-    }
-
-    if (info.hasOwnProperty(METHODS.custom)) {
-      const custom = info[METHODS.custom];
-
-      if (Type.func.isNot(custom)) {
-        throw new Error(ErrorMsg$1.illegalVerifyProps(METHODS.custom));
-      }
-    }
-
-    if (info.hasOwnProperty(METHODS.index)) {
-      const index = info[METHODS.index];
-
-      if (Type.string.isNot(index) && Type.number.isNot(index)) {
-        throw new Error(ErrorMsg$1.illegalVerifyProps(METHODS.index));
-      }
-    }
-
-    return info;
-  };
-
-  const stringCheck = function (info) {
-    if (info.hasOwnProperty(METHODS.pattern)) {
-      const pattern = info[METHODS.pattern];
-
-      if (!PATTERNS.includes(pattern)) {
-        throw new Error(ErrorMsg$1.illegalPatternType(pattern));
-      }
-    }
-
-    if (info.hasOwnProperty(METHODS.minLength)) {
-      const minLength = info[METHODS.minLength];
-
-      if (Type.number.isNatural(minLength)) {
-        let length = info[METHODS.length];
-        const minInfo = {
-          min: minLength
-        };
-        info[METHODS.length] = Type.object.is(length) ? Object.assign({}, length, minInfo) : minInfo;
-        delete info[METHODS.minLength];
-      }
-    }
-
-    if (info.hasOwnProperty(METHODS.maxLength)) {
-      const maxLength = info[METHODS.maxLength];
-
-      if (Type.number.isNatural(maxLength)) {
-        let length = info[METHODS.length];
-        const maxInfo = {
-          max: maxLength
-        };
-        info[METHODS.length] = Type.object.is(length) ? Object.assign({}, length, maxInfo) : maxInfo;
-        delete info[METHODS.maxLength];
-      }
-    }
-
-    if (info.hasOwnProperty(METHODS.length)) {
-      let length = info[METHODS.length];
-
-      if (!Type.object.isNotEmpty(length) && !Type.number.isNatural(length)) {
-        throw new Error(ErrorMsg$1.emptyLengthInfo);
-      }
-
-      if (Type.number.isNatural(length)) {
-        info[METHODS.length] = {
-          min: length,
-          max: length
-        };
-      } else if (Type.object.isNotEmpty(length)) {
-        if (!Type.number.isNatural(length.min) && !Type.number.isNatural(length.max)) {
-          throw new Error(ErrorMsg$1.emptyLengthInfo);
-        }
-
-        Type.number.isNatural(length.min) && (length.min = +length.min);
-        Type.number.isNatural(length.max) && (length.max = +length.max);
-      }
-    }
-
-    if (info.hasOwnProperty(METHODS.enum)) {
-      const enumData = info[METHODS.enum];
-      let arr;
-
-      if (Type.object.isNotEmpty(enumData)) {
-        arr = Object.keys(enumData).map(key => enumData[key]);
-      }
-
-      if (Type.array.isNotEmpty(enumData)) {
-        arr = enumData;
-      }
-
-      if (!Type.array.isNotEmpty(arr)) {
-        throw new Error(ErrorMsg$1.emptyEnumInfo);
-      }
-
-      const isAllStr = arr.every(s => Type.string.is(s));
-
-      if (!isAllStr) {
-        throw new Error(ErrorMsg$1.errorEnumInfo);
-      }
-
-      info[METHODS.enum] = arr;
-    }
-
-    if (info.hasOwnProperty(METHODS.match)) {
-      const match = info[METHODS.match];
-
-      if (!Type.string.isNotEmpty(match) && !(match instanceof RegExp)) {
-        throw new Error(ErrorMsg$1.illegalVerifyProps(METHODS.match));
-      }
-    }
-
-    return info;
-  };
-
-  const numberCheck = function (info) {
-    if (info.hasOwnProperty(METHODS.min)) {
-      const min = info[METHODS.min];
-
-      if (Type.number.isNatural(min)) {
-        let range = info[METHODS.range];
-        const minInfo = {
-          min
-        };
-        info[METHODS.range] = Type.object.is(range) ? Object.assign({}, range, minInfo) : minInfo;
-        delete info[METHODS.min];
-      }
-    }
-
-    if (info.hasOwnProperty(METHODS.max)) {
-      const max = info[METHODS.max];
-
-      if (Type.number.isNatural(max)) {
-        let range = info[METHODS.range];
-        const maxInfo = {
-          max
-        };
-        info[METHODS.range] = Type.object.is(range) ? Object.assign({}, range, maxInfo) : maxInfo;
-        delete info[METHODS.max];
-      }
-    }
-
-    if (info.hasOwnProperty(METHODS.range)) {
-      const range = info[METHODS.range];
-
-      if (Type.object.isEmpty(range)) {
-        throw new Error(ErrorMsg$1.emptyRangeInfo);
-      }
-
-      if (Type.number.isNot(range.min) && Type.number.isNot(range.max)) {
-        throw new Error(ErrorMsg$1.emptyRangeInfo);
-      }
-
-      range.min = +range.min;
-      range.max = +range.max;
-    }
-
-    if (info.hasOwnProperty(METHODS.integer)) {
-      const integer = info[METHODS.integer];
-
-      if (Type.boolean.isNot(integer)) {
-        throw new Error(ErrorMsg$1.illegalVerifyProps(METHODS.integer));
-      }
-    }
-
-    if (info.hasOwnProperty(METHODS.natural)) {
-      const natural = info[METHODS.natural];
-
-      if (Type.boolean.isNot(natural)) {
-        throw new Error(ErrorMsg$1.illegalVerifyProps(METHODS.natural));
-      }
-    }
-
-    if (info.hasOwnProperty(METHODS.enum)) {
-      const enumData = info[METHODS.enum];
-      let arr;
-
-      if (Type.object.isNotEmpty(enumData)) {
-        arr = Object.keys(enumData).map(key => enumData[key]);
-      }
-
-      if (Type.array.isNotEmpty(enumData)) {
-        arr = enumData;
-      }
-
-      if (!Type.array.isNotEmpty(arr)) {
-        throw new Error(ErrorMsg$1.emptyEnumInfo);
-      }
-
-      const isAllNum = arr.every(s => Type.number.is(s));
-
-      if (!isAllNum) {
-        throw new Error(ErrorMsg$1.errorEnumInfo);
-      }
-
-      info[METHODS.enum] = arr;
-    }
-
-    return info;
-  };
-
-  const objectCheck = function (info) {
-    if (info.hasOwnProperty(METHODS.props)) {
-      const props = info[METHODS.props];
-
-      if (!Type.object.isNotEmpty(props) && !Type.array.is(props)) {
-        throw new Error(ErrorMsg$1.illegalVerifyProps(METHODS.props));
-      }
-
-      const formatObjProps = (props, info) => {
-        if (Type.func.isNot(props[METHODS.type]) && Type.nul.isNot(props[METHODS.type]) && Type.string.isNot(TYPES[props[METHODS.type]]) && !props.hasOwnProperty(METHODS.schema) && !(props instanceof Schema)) {
-          props = Object.keys(props).map(key => {
-            const item = props[key];
-
-            if (key === "$_PROPS_DEFAULT_INFO") {
-              return item;
-            }
-
-            if (Type.object.is(item)) {
-              item[METHODS.index] = key;
-            }
-
-            if (Type.array.is(item) && Type.object.is(item[0])) {
-              item[0][METHODS.index] = key;
-            }
-
-            return item;
-          });
-          formatArrProps(props, info);
-        } else {
-          delete props[METHODS.index];
-          info.props = [schemaCheck(props)];
-        }
-      };
-
-      const formatArrProps = (props, info) => {
-        const propMap = props.reduce((map, item) => {
-          let index;
-
-          if (Type.object.is(item) && item.hasOwnProperty(METHODS.index)) {
-            index = item[METHODS.index];
-
-            if (!Type.string.isNotEmpty(index) && !Type.number.is(index)) {
-              throw new Error(ErrorMsg$1.illegalVerifyProps(METHODS.index));
-            }
-          }
-
-          if (Type.array.is(item) && Type.object.is(item[0])) {
-            index = item[0][METHODS.index];
-
-            if (!Type.string.isNotEmpty(index)) {
-              delete item[0][METHODS.index];
-            }
-          }
-
-          if (!Type.string.isNotEmpty(index)) {
-            index = "$_PROPS_ELEMENTS_DEFAULT_SCHEME_INFO";
-          }
-
-          map[index] = schemaCheck(item);
-          return map;
-        }, {});
-        info[METHODS.props] = Object.keys(propMap).map(key => propMap[key]);
-      };
-
-      if (Type.object.isNotEmpty(props)) {
-        formatObjProps(props, info);
-      } else {
-        formatArrProps(props, info);
-      }
-    }
-
-    if (info.hasOwnProperty(METHODS.restrict)) {
-      const restrict = info[METHODS.restrict];
-      const props = info[METHODS.props];
-
-      if (Type.boolean.isNot(restrict)) {
-        throw new Error(ErrorMsg$1.illegalVerifyProps(METHODS.restrict));
-      }
-
-      if (restrict && Type.array.isNot(props)) {
-        throw new Error(ErrorMsg$1.illegalVerifyProps(METHODS.props));
-      }
-    }
-
-    return info;
-  };
-
-  const arrayCheck = function (info) {
-    if (info.hasOwnProperty(METHODS.elements)) {
-      const elements = info[METHODS.elements];
-
-      if (!Type.object.isNotEmpty(elements) && !Type.array.is(elements)) {
-        throw new Error(ErrorMsg$1.illegalVerifyProps(METHODS.elements));
-      }
-
-      if (Type.object.isNotEmpty(elements)) {
-        delete elements["index"];
-        info.elements = [schemaCheck(elements)];
-      } else {
-        const elementMap = elements.reduce((map, item) => {
-          let index;
-
-          if (Type.object.is(item)) {
-            if (item.hasOwnProperty(METHODS.index) && Type.number.isNot(item.index)) {
-              throw new Error(ErrorMsg$1.illegalVerifyProps(METHODS.index));
-            } else {
-              index = item.index;
-            }
-          }
-
-          if (Type.array.is(item) && Type.object.is(item[0])) {
-            if (item[0].hasOwnProperty(METHODS.index) && Type.number.isNot(item[0].index)) {
-              throw new Error(ErrorMsg$1.illegalVerifyProps(METHODS.index));
-            } else {
-              index = item[0].index;
-            }
-          }
-
-          if (Type.number.isNot(index)) {
-            index = "$_PROPS_ELEMENTS_DEFAULT_SCHEME_INFO";
-          }
-
-          map[index] = schemaCheck(item);
-          return map;
-        }, {});
-        info[METHODS.elements] = Object.keys(elementMap).map(key => elementMap[key]);
-      }
-    }
-
-    if (info.hasOwnProperty(METHODS.minLength)) {
-      const minLength = info[METHODS.minLength];
-
-      if (Type.number.isNatural(minLength)) {
-        let length = info[METHODS.length];
-        const minInfo = {
-          min: minLength
-        };
-        info[METHODS.length] = Type.object.is(length) ? Object.assign({}, length, minInfo) : minInfo;
-        delete info[METHODS.minLength];
-      }
-    }
-
-    if (info.hasOwnProperty(METHODS.maxLength)) {
-      const maxLength = info[METHODS.maxLength];
-
-      if (Type.number.isNatural(maxLength)) {
-        let length = info[METHODS.length];
-        const maxInfo = {
-          max: maxLength
-        };
-        info[METHODS.length] = Type.object.is(length) ? Object.assign({}, length, maxInfo) : maxInfo;
-        delete info[METHODS.maxLength];
-      }
-    }
-
-    if (info.hasOwnProperty(METHODS.length)) {
-      let length = info[METHODS.length];
-
-      if (!Type.object.isNotEmpty(length) && !Type.number.isNatural(length)) {
-        throw new Error(ErrorMsg$1.emptyLengthInfo);
-      }
-
-      if (Type.number.isNatural(length)) {
-        info[METHODS.length] = {
-          min: length,
-          max: length
-        };
-      } else if (Type.object.isNotEmpty(length)) {
-        if (!Type.number.isNatural(length.min) && !Type.number.isNatural(length.max)) {
-          throw new Error(ErrorMsg$1.emptyLengthInfo);
-        }
-
-        Type.number.isNatural(length.min) && (length.min = +length.min);
-        Type.number.isNatural(length.max) && (length.max = +length.max);
-      }
-    }
-
-    return info;
-  };
-
-  class Schema {
-    constructor(info) {
-      this.info = schemaCheck(info);
-      this.verify = this.verify.bind(this);
-    }
-
-    verify(data, throwError, parent) {
-      try {
-        verify(data, this.info, parent);
-        return true;
-      } catch (e) {
-        if (throwError) {
-          throw e;
-        }
-
-        return false;
-      }
-    }
-
-  }
-
-  exports.Pattern = Pattern;
-  exports.Schema = Schema;
-  exports.Type = Type;
-  exports.default = Schema;
-});
-var Schema = unwrapExports(schemaVerify_1);
-var schemaVerify_2 = schemaVerify_1.Pattern;
-var schemaVerify_3 = schemaVerify_1.Schema;
-var schemaVerify_4 = schemaVerify_1.Type;
+var Schema = require('schema-verify');
+var Schema__default = _interopDefault(Schema);
 
 function analyTmpl(tmpl, opts) {
   return tmpl.replace(/\{\{([a-zA-Z_0-9]+)\}\}/g, function (match, key) {
-    if (opts.hasOwnProperty(key) && schemaVerify_4.string.isNotEmpty(opts[key])) {
+    if (opts.hasOwnProperty(key) && Schema.Type.string.isNotEmpty(opts[key])) {
       return opts[key] + " ";
     } else {
       return "";
@@ -1415,10 +17,10 @@ function analyTmpl(tmpl, opts) {
 function argStrArrTrans(arg, otherArgs) {
   let args = [];
 
-  if (schemaVerify_4.array.is(arg)) {
+  if (Schema.Type.array.is(arg)) {
     args = arg;
   } else {
-    otherArgs = schemaVerify_4.array.safe(otherArgs);
+    otherArgs = Schema.Type.array.safe(otherArgs);
     otherArgs.unshift(arg);
     args = otherArgs;
   }
@@ -1512,7 +114,7 @@ const DialectsObj = {
         result = `'${value}'`;
       }
 
-      if (schemaVerify_4.number.is(value)) {
+      if (Schema.Type.number.is(value)) {
         result = `'${value}'`;
       }
 
@@ -1526,7 +128,7 @@ const DialectsObj = {
     safeKey(key) {
       let result;
 
-      if (!schemaVerify_4.string.isNotEmpty(key)) {
+      if (!Schema.Type.string.isNotEmpty(key)) {
         throw new Error(ErrMsg$c.needStr);
       }
 
@@ -1544,7 +146,7 @@ const DialectsObj = {
         result = `'${value}'`;
       }
 
-      if (schemaVerify_4.number.is(value)) {
+      if (Schema.Type.number.is(value)) {
         result = `'${value}'`;
       }
 
@@ -1556,7 +158,7 @@ const DialectsObj = {
     },
 
     safeKey(key) {
-      if (!schemaVerify_4.string.isNotEmpty(key)) {
+      if (!Schema.Type.string.isNotEmpty(key)) {
         throw new Error(ErrMsg$c.needStr);
       }
 
@@ -1573,7 +175,7 @@ const DialectsObj = {
         result = `'${value}'`;
       }
 
-      if (schemaVerify_4.number.is(value)) {
+      if (Schema.Type.number.is(value)) {
         result = `'${value}'`;
       }
 
@@ -1587,7 +189,7 @@ const DialectsObj = {
     safeKey(key) {
       let result;
 
-      if (!schemaVerify_4.string.isNotEmpty(key)) {
+      if (!Schema.Type.string.isNotEmpty(key)) {
         throw new Error(ErrMsg$c.needStr);
       }
 
@@ -1605,7 +207,7 @@ const DialectsObj = {
         result = `'${value}'`;
       }
 
-      if (schemaVerify_4.number.is(value)) {
+      if (Schema.Type.number.is(value)) {
         result = `'${value}'`;
       }
 
@@ -1619,7 +221,7 @@ const DialectsObj = {
     safeKey(key) {
       let result;
 
-      if (!schemaVerify_4.string.isNotEmpty(key)) {
+      if (!Schema.Type.string.isNotEmpty(key)) {
         throw new Error(ErrMsg$c.needStr);
       }
 
@@ -1805,7 +407,7 @@ var DialectModules;
   DialectModules["mssql"] = "mssql";
 })(DialectModules || (DialectModules = {}));
 
-const fieldDataArrSchema = new Schema({
+const fieldDataArrSchema = new Schema__default({
   type: Array,
   elements: {
     type: Object,
@@ -1819,7 +421,7 @@ const fieldDataArrSchema = new Schema({
 });
 const fieldDataArrVerify = fieldDataArrSchema.verify;
 
-const funcInfoSchema = new Schema({
+const funcInfoSchema = new Schema__default({
   type: Object,
   restrict: true,
   props: [{
@@ -1828,7 +430,7 @@ const funcInfoSchema = new Schema({
     type: String
   }]
 });
-const funcInputSchema = new Schema({
+const funcInputSchema = new Schema__default({
   type: Object,
   restrict: true,
   props: [{
@@ -1849,7 +451,7 @@ const funcInputSchema = new Schema({
 const funcInfoVerify = funcInfoSchema.verify;
 const funcInputVerify = funcInputSchema.verify;
 
-const dialectSchema = new Schema({
+const dialectSchema = new Schema__default({
   type: Object,
   restrict: true,
   props: [{
@@ -1862,7 +464,7 @@ const dialectSchema = new Schema({
     type: Function
   }]
 });
-const manualSqlSchema = new Schema([{
+const manualSqlSchema = new Schema__default([{
   type: String,
   minLength: 1
 }, {
@@ -1873,12 +475,12 @@ const manualSqlSchema = new Schema([{
 const dialectVerify = dialectSchema.verify;
 const manualSqlVerify = manualSqlSchema.verify;
 
-const pageSchema = new Schema({
+const pageSchema = new Schema__default({
   type: Number,
   integer: true,
   min: 1
 });
-const limitInfoSchema = new Schema({
+const limitInfoSchema = new Schema__default({
   type: Object,
   restrict: true,
   props: [{
@@ -1896,7 +498,7 @@ const limitInfoSchema = new Schema({
 const pageVerify = pageSchema.verify;
 const limitInfoVerify = limitInfoSchema.verify;
 
-const orderInfoSchema = new Schema({
+const orderInfoSchema = new Schema__default({
   type: Object,
   restrict: true,
   props: [{
@@ -1920,7 +522,7 @@ const orderInfoSchema = new Schema({
     }]]
   }]
 });
-const valueListSchema = new Schema({
+const valueListSchema = new Schema__default({
   type: Array,
   elements: [[{
     type: String,
@@ -1933,7 +535,7 @@ const valueListSchema = new Schema({
 const orderInfoVerify = orderInfoSchema.verify;
 const valueListVerify = valueListSchema.verify;
 
-const termDataSchema = new Schema({
+const termDataSchema = new Schema__default({
   type: Object,
   props: [[{
     required: true,
@@ -1951,21 +553,21 @@ const termDataSchema = new Schema({
     }]]
   }]]
 });
-const termSignSchema = new Schema({
+const termSignSchema = new Schema__default({
   type: String,
   enum: TermSign
 });
-const termLogicSchema = new Schema({
+const termLogicSchema = new Schema__default({
   type: String,
   enum: TermLogic
 });
-const termValueSchema = new Schema([{
+const termValueSchema = new Schema__default([{
   required: true,
   type: String
 }, {
   type: Number
 }]);
-const termInSchema = new Schema({
+const termInSchema = new Schema__default({
   type: Array,
   minLength: 1,
   elements: [[{
@@ -1975,7 +577,7 @@ const termInSchema = new Schema({
     type: Number
   }]]
 });
-const termBetweenSchema = new Schema({
+const termBetweenSchema = new Schema__default({
   type: Array,
   length: 2,
   elements: [[{
@@ -1985,7 +587,7 @@ const termBetweenSchema = new Schema({
     type: Number
   }]]
 });
-const termBracketSchema = new Schema({
+const termBracketSchema = new Schema__default({
   type: Object,
   restrict: true,
   props: [{
@@ -2000,7 +602,7 @@ const termBracketSchema = new Schema({
     enum: TermLogic
   }]
 });
-const termInfoSchema = new Schema({
+const termInfoSchema = new Schema__default({
   type: Object,
   restrict: true,
   props: [{
@@ -2044,7 +646,7 @@ const termBetweenVerify = termBetweenSchema.verify;
 const termBracketVerify = termBracketSchema.verify;
 const termInfoVerify = termInfoSchema.verify;
 
-const updateInfoSchema = new Schema({
+const updateInfoSchema = new Schema__default({
   type: Object,
   props: [[{
     index: "value",
@@ -2061,7 +663,7 @@ const updateInfoSchema = new Schema({
 });
 const updateInfoVerify = updateInfoSchema.verify;
 
-const tableFieldSchema = new Schema({
+const tableFieldSchema = new Schema__default({
   type: Object,
   props: [{
     index: "field",
@@ -2095,7 +697,7 @@ const tableFieldSchema = new Schema({
     type: String
   }]
 });
-const combineKeySchema = new Schema({
+const combineKeySchema = new Schema__default({
   type: Object,
   props: [{
     index: "keyName",
@@ -2113,7 +715,7 @@ const combineKeySchema = new Schema({
     }
   }]
 });
-const tableInfoSchema = new Schema({
+const tableInfoSchema = new Schema__default({
   type: Object,
   props: [{
     index: "tableName",
@@ -2150,7 +752,7 @@ const tableInfoSchema = new Schema({
 });
 const tableInfoVerify = tableInfoSchema.verify;
 
-const alterFieldSchema = new Schema({
+const alterFieldSchema = new Schema__default({
   type: Object,
   props: [{
     index: "field",
@@ -2182,7 +784,7 @@ const alterFieldSchema = new Schema({
     type: String
   }]
 });
-const alterInfosSchema = new Schema({
+const alterInfosSchema = new Schema__default({
   type: Object,
   props: [{
     index: "method",
@@ -2202,7 +804,7 @@ const alterInfosSchema = new Schema({
 });
 const alterInfosVerify = alterInfosSchema.verify;
 
-const fieldsMapSchema = new Schema({
+const fieldsMapSchema = new Schema__default({
   type: Object,
   props: {
     type: Array,
@@ -2213,7 +815,7 @@ const fieldsMapSchema = new Schema({
     }
   }
 });
-const fieldsAsMapSchema = new Schema({
+const fieldsAsMapSchema = new Schema__default({
   type: Object,
   props: {
     type: Object,
@@ -2224,7 +826,7 @@ const fieldsAsMapSchema = new Schema({
     }
   }
 });
-const joinInfoSchema = new Schema({
+const joinInfoSchema = new Schema__default({
   type: Object,
   props: {
     tableName: {
@@ -2261,7 +863,7 @@ const fieldsMapVerify = fieldsMapSchema.verify;
 const fieldsAsMapVerify = fieldsAsMapSchema.verify;
 const joinInfoVerify = joinInfoSchema.verify;
 
-const strArrVerify = new Schema({
+const strArrVerify = new Schema__default({
   type: Array,
   elements: {
     type: String,
@@ -2269,7 +871,7 @@ const strArrVerify = new Schema({
     minLength: 1
   }
 }).verify;
-const strObjVerify = new Schema({
+const strObjVerify = new Schema__default({
   type: Object,
   props: {
     type: String,
@@ -2277,15 +879,15 @@ const strObjVerify = new Schema({
     minLength: 1
   }
 }).verify;
-const naturalVerify = new Schema({
+const naturalVerify = new Schema__default({
   type: Number,
   natural: true
 }).verify;
-const integerVerify = new Schema({
+const integerVerify = new Schema__default({
   type: Number,
   integer: true
 }).verify;
-const fieldDataVerify = new Schema({
+const fieldDataVerify = new Schema__default({
   type: Object,
   props: [[{
     required: true,
@@ -2303,7 +905,7 @@ class Store {
   }
 
   storeSql(query) {
-    if (schemaVerify_4.string.isNotEmpty(query)) {
+    if (Schema.Type.string.isNotEmpty(query)) {
       QUERY_LIST.push(query);
     }
   }
@@ -2402,22 +1004,22 @@ class Base {
   formatManualSql(key) {
     let sql = this[key];
 
-    if (schemaVerify_4.string.is(sql)) {
+    if (Schema.Type.string.is(sql)) {
       return sql;
     }
 
-    if (schemaVerify_4.func.is(sql)) {
+    if (Schema.Type.func.is(sql)) {
       sql = sql();
 
-      if (schemaVerify_4.string.is(sql)) {
+      if (Schema.Type.string.is(sql)) {
         return sql;
       }
     }
 
-    if (schemaVerify_4.object.isNotEmpty(sql) && sql instanceof Base) {
+    if (Schema.Type.object.isNotEmpty(sql) && sql instanceof Base) {
       sql = sql.query;
 
-      if (schemaVerify_4.string.is(sql)) {
+      if (Schema.Type.string.is(sql)) {
         return sql;
       }
     }
@@ -2434,7 +1036,7 @@ class Base {
   }
 
   table(queryTable) {
-    if (!schemaVerify_4.string.isNotEmpty(queryTable)) {
+    if (!Schema.Type.string.isNotEmpty(queryTable)) {
       throw new Error(ErrMsg$c.errorTableName);
     }
 
@@ -2445,7 +1047,7 @@ class Base {
   getQueryTable() {
     const queryTable = this._queryTable;
 
-    if (!schemaVerify_4.string.isNotEmpty(queryTable)) {
+    if (!Schema.Type.string.isNotEmpty(queryTable)) {
       throw new Error(ErrMsg$c.errorTableName);
     }
 
@@ -2459,7 +1061,7 @@ class Base {
       sqlStr = this.build();
     } catch (e) {}
 
-    if (schemaVerify_4.string.isNotEmpty(sqlStr)) {
+    if (Schema.Type.string.isNotEmpty(sqlStr)) {
       Store$1.storeSql(sqlStr);
     }
 
@@ -2472,13 +1074,13 @@ class Base {
 
   exec(sqlStr) {
     const execute = this._execute;
-    const query = schemaVerify_4.string.isNotEmpty(sqlStr) ? sqlStr : this.build();
+    const query = Schema.Type.string.isNotEmpty(sqlStr) ? sqlStr : this.build();
 
-    if (!schemaVerify_4.string.isNotEmpty(query)) {
+    if (!Schema.Type.string.isNotEmpty(query)) {
       throw new Error(ErrMsg$c.emptySqlQuery);
     }
 
-    if (schemaVerify_4.object.isNot(execute) || schemaVerify_4.func.isNot(execute.exec)) {
+    if (Schema.Type.object.isNot(execute) || Schema.Type.func.isNot(execute.exec)) {
       throw new Error(ErrMsg$c.errorExecute);
     }
 
@@ -2487,16 +1089,16 @@ class Base {
 
   execAll(queryList) {
     const execute = this._execute;
-    queryList = schemaVerify_4.array.isNotEmpty(queryList) ? queryList : Store$1.getStore();
+    queryList = Schema.Type.array.isNotEmpty(queryList) ? queryList : Store$1.getStore();
 
-    if (schemaVerify_4.object.isNot(execute) || schemaVerify_4.func.isNot(execute.exec)) {
+    if (Schema.Type.object.isNot(execute) || Schema.Type.func.isNot(execute.exec)) {
       throw new Error(ErrMsg$c.errorExecute);
     }
 
     const promiseArr = [];
 
     for (let query of queryList) {
-      if (!schemaVerify_4.string.isNotEmpty(query)) {
+      if (!Schema.Type.string.isNotEmpty(query)) {
         continue;
       }
 
@@ -2535,20 +1137,20 @@ class Limit {
       throw new Error(ErrMsg$c.errorOffset);
     }
 
-    if (schemaVerify_4.undefined.isNot(step) && !integerVerify(step)) {
+    if (Schema.Type.undefined.isNot(step) && !integerVerify(step)) {
       throw new Error(ErrMsg$c.errorStep);
     }
 
     let limitInfo;
 
-    if (schemaVerify_4.number.is(offset) && schemaVerify_4.number.is(step)) {
+    if (Schema.Type.number.is(offset) && Schema.Type.number.is(step)) {
       limitInfo = {
         offset,
         step
       };
     }
 
-    if (schemaVerify_4.number.is(offset) && !schemaVerify_4.number.is(step)) {
+    if (Schema.Type.number.is(offset) && !Schema.Type.number.is(step)) {
       limitInfo = {
         offset: 0,
         step: offset
@@ -2609,13 +1211,13 @@ class Order extends Base {
   build() {
     const orderSql = this.formatOrderSql();
 
-    if (schemaVerify_4.string.isNotEmpty(orderSql)) {
+    if (Schema.Type.string.isNotEmpty(orderSql)) {
       return orderSql;
     }
 
-    const orderInfos = schemaVerify_4.array.safe(this.orderInfos);
+    const orderInfos = Schema.Type.array.safe(this.orderInfos);
 
-    if (!schemaVerify_4.array.isNotEmpty(orderInfos)) {
+    if (!Schema.Type.array.isNotEmpty(orderInfos)) {
       return "";
     }
 
@@ -2640,7 +1242,7 @@ class Order extends Base {
       ordersArr.push(`${safeField} ${type}`);
     }
 
-    if (!schemaVerify_4.array.isNotEmpty(ordersArr)) {
+    if (!Schema.Type.array.isNotEmpty(ordersArr)) {
       return "";
     }
 
@@ -2652,7 +1254,7 @@ class Order extends Base {
   orderBuild(query) {
     const ordersStr = this.build();
 
-    if (schemaVerify_4.string.isNotEmpty(ordersStr)) {
+    if (Schema.Type.string.isNotEmpty(ordersStr)) {
       query = `${query} ORDER BY ${ordersStr}`;
     }
 
@@ -2670,7 +1272,7 @@ class Order extends Base {
   }
 
   orderField(data) {
-    data = schemaVerify_4.object.safe(data);
+    data = Schema.Type.object.safe(data);
     const fields = Object.keys(data);
     return this.orderCache(fields, OrderTypes.field, data);
   }
@@ -2688,8 +1290,8 @@ class Order extends Base {
       throw new Error(ErrMsg$c.errorFields);
     }
 
-    fieldOrder = schemaVerify_4.object.safe(fieldOrder);
-    const orderInfos = schemaVerify_4.array.safe(this.orderInfos);
+    fieldOrder = Schema.Type.object.safe(fieldOrder);
+    const orderInfos = Schema.Type.array.safe(this.orderInfos);
 
     for (const field of fields) {
       const info = {
@@ -2800,14 +1402,14 @@ class Insert extends Query {
       throw new Error(ErrMsg$c.errorFieldData);
     }
 
-    const insertData = schemaVerify_4.object.safe(this.insertData);
+    const insertData = Schema.Type.object.safe(this.insertData);
     this.insertData = Object.assign({}, insertData, data);
     return this;
   }
 
   fields(arg, ...otherArgs) {
     const args = argStrArrTrans(arg, otherArgs);
-    const insertFields = schemaVerify_4.array.safe(this.insertFields);
+    const insertFields = Schema.Type.array.safe(this.insertFields);
     const result = [].concat(insertFields, args);
     this.insertFields = Array.from(new Set(result));
     return this;
@@ -2818,7 +1420,7 @@ class Insert extends Query {
       throw new Error(ErrMsg$c.errorFieldDataArr);
     }
 
-    const insertDataArr = schemaVerify_4.array.safe(this.insertDataArr);
+    const insertDataArr = Schema.Type.array.safe(this.insertDataArr);
     this.insertDataArr = [].concat(insertDataArr, dataArr);
     return this;
   }
@@ -2854,7 +1456,7 @@ class Insert extends Query {
   }
 
   formatValues(fields) {
-    fields = schemaVerify_4.array.safe(fields);
+    fields = Schema.Type.array.safe(fields);
     let result = "";
     const valuesSql = this.formatValuesSql();
     const insertData = this.insertData;
@@ -2868,7 +1470,7 @@ class Insert extends Query {
 
     const valuesArrStrFormat = arr => {
       for (const data of arr) {
-        if (schemaVerify_4.object.isNotEmpty(data)) {
+        if (Schema.Type.object.isNotEmpty(data)) {
           valuesArr.push(valuesStrFormat(data));
         }
       }
@@ -2876,7 +1478,7 @@ class Insert extends Query {
       return valuesArr.join(", ");
     };
 
-    if (schemaVerify_4.string.isNotEmpty(valuesSql)) {
+    if (Schema.Type.string.isNotEmpty(valuesSql)) {
       result = valuesSql;
     } else if (fieldDataVerify(insertData)) {
       result = valuesStrFormat(insertData);
@@ -2884,7 +1486,7 @@ class Insert extends Query {
       result = valuesArrStrFormat(insertDataArr);
     }
 
-    if (!schemaVerify_4.string.isNotEmpty(result)) {
+    if (!Schema.Type.string.isNotEmpty(result)) {
       throw new Error(ErrMsg$c.errorInsertValues);
     }
 
@@ -2919,18 +1521,18 @@ class Term extends Base {
   termsBuild() {
     const termSql = this.formatTermSql();
 
-    if (schemaVerify_4.string.isNotEmpty(termSql)) {
+    if (Schema.Type.string.isNotEmpty(termSql)) {
       return termSql;
     }
 
     const termInfos = this.termInfos;
     const termBrackets = this.termBrackets;
 
-    if (!schemaVerify_4.array.isNotEmpty(termInfos)) {
+    if (!Schema.Type.array.isNotEmpty(termInfos)) {
       return "";
     }
 
-    const allTermStr = !schemaVerify_4.array.isNotEmpty(termBrackets) ? this.formatTerms(termInfos) : this.formatTermBrackets(termBrackets, termInfos);
+    const allTermStr = !Schema.Type.array.isNotEmpty(termBrackets) ? this.formatTerms(termInfos) : this.formatTermBrackets(termBrackets, termInfos);
     return allTermStr;
   }
 
@@ -2940,8 +1542,8 @@ class Term extends Base {
 
   formatTermBrackets(brackets, terms) {
     let allTermStr = "";
-    brackets = schemaVerify_4.array.safe(brackets);
-    terms = schemaVerify_4.array.safe(terms);
+    brackets = Schema.Type.array.safe(brackets);
+    terms = Schema.Type.array.safe(terms);
     const bracketsLen = brackets.length;
     const termsLen = terms.length;
 
@@ -2972,19 +1574,19 @@ class Term extends Base {
       const needFullBracket = bracketsLen === 1 || i + 1 === bracketsLen || nextPos === termsLen;
       const termStr = this.formatBracketTerm(needFullBracket, curLogic, preTerms, nextTerms);
 
-      if (!schemaVerify_4.string.isNotEmpty(termStr)) {
+      if (!Schema.Type.string.isNotEmpty(termStr)) {
         continue;
       }
 
-      allTermStr = schemaVerify_4.string.isNotEmpty(allTermStr) ? `${allTermStr} ${termStr}` : termStr;
+      allTermStr = Schema.Type.string.isNotEmpty(allTermStr) ? `${allTermStr} ${termStr}` : termStr;
     }
 
     return allTermStr;
   }
 
   formatBracketTerm(needFullBracket, logic, preTerms, nextTerms) {
-    preTerms = schemaVerify_4.array.safe(preTerms);
-    nextTerms = schemaVerify_4.array.safe(nextTerms);
+    preTerms = Schema.Type.array.safe(preTerms);
+    nextTerms = Schema.Type.array.safe(nextTerms);
     const preTermsStr = this.formatTerms(preTerms);
 
     if (preTerms.length <= 0 || nextTerms.length <= 0) {
@@ -3000,7 +1602,7 @@ class Term extends Base {
   }
 
   formatTerms(terms) {
-    terms = schemaVerify_4.array.safe(terms);
+    terms = Schema.Type.array.safe(terms);
     let allTermStr = "";
 
     for (const term of terms) {
@@ -3015,7 +1617,7 @@ class Term extends Base {
       const termValue = this.formatTermValue(value, sign);
       const termStr = `${field} ${sign} ${termValue}`;
 
-      if (!schemaVerify_4.string.isNotEmpty(allTermStr)) {
+      if (!Schema.Type.string.isNotEmpty(allTermStr)) {
         allTermStr = termStr;
         continue;
       }
@@ -3073,7 +1675,7 @@ class Term extends Base {
       throw new Error(ErrMsg$c.errorTermLogic);
     }
 
-    const termInfos = schemaVerify_4.array.safe(this.termInfos);
+    const termInfos = Schema.Type.array.safe(this.termInfos);
     const termsArr = [];
 
     for (const field in data) {
@@ -3118,8 +1720,8 @@ class Term extends Base {
   }
 
   bracketTerm(logic) {
-    const termInfos = schemaVerify_4.array.safe(this.termInfos);
-    const termBrackets = schemaVerify_4.array.safe(this.termBrackets);
+    const termInfos = Schema.Type.array.safe(this.termInfos);
+    const termBrackets = Schema.Type.array.safe(this.termBrackets);
     const termsLen = termInfos.length;
 
     if (termsLen <= 0) {
@@ -3413,10 +2015,10 @@ class Where extends TermApi {
   }
 
   where(sql) {
-    if (schemaVerify_4.undefined.isNot(sql)) {
+    if (Schema.Type.undefined.isNot(sql)) {
       const term = this.getWhereTermCase();
 
-      if (schemaVerify_4.func.is(sql)) {
+      if (Schema.Type.func.is(sql)) {
         sql = sql.bind(this, term);
       }
 
@@ -3436,7 +2038,7 @@ class Where extends TermApi {
     const whereTerm = this.getWhereTermCase();
     const whereSql = whereTerm.termsBuild();
 
-    if (schemaVerify_4.string.isNotEmpty(whereSql)) {
+    if (Schema.Type.string.isNotEmpty(whereSql)) {
       query = `${query} WHERE ${whereSql}`;
     }
 
@@ -3474,10 +2076,10 @@ class Having extends Where {
   }
 
   having(sql) {
-    if (schemaVerify_4.undefined.isNot(sql)) {
+    if (Schema.Type.undefined.isNot(sql)) {
       const term = this.getHavingTermCase();
 
-      if (schemaVerify_4.func.is(sql)) {
+      if (Schema.Type.func.is(sql)) {
         sql = sql.bind(this, term);
       }
 
@@ -3497,7 +2099,7 @@ class Having extends Where {
     const termInstance = this.getHavingTermCase();
     const havingSql = termInstance.termsBuild();
 
-    if (schemaVerify_4.string.isNotEmpty(havingSql)) {
+    if (Schema.Type.string.isNotEmpty(havingSql)) {
       query = `${query} HAVING ${havingSql}`;
     }
 
@@ -3508,8 +2110,8 @@ class Having extends Where {
 
 class Func extends Base {
   funcField(func, field) {
-    const needSafeTrans = schemaVerify_4.string.isNotEmpty(field) && field !== "*";
-    const fieldStr = needSafeTrans ? field : schemaVerify_4.number.is(field) ? field + "" : "*";
+    const needSafeTrans = Schema.Type.string.isNotEmpty(field) && field !== "*";
+    const fieldStr = needSafeTrans ? field : Schema.Type.number.is(field) ? field + "" : "*";
     const safeField = needSafeTrans ? this.safeKey(fieldStr) : fieldStr;
     const funcInfo = {
       funcFeild: `${func}(${safeField})`
@@ -3628,7 +2230,7 @@ class Combine extends Having {
   groupBuild(query) {
     const fields = this.groupByFields;
 
-    if (!schemaVerify_4.array.isNotEmpty(fields)) {
+    if (!Schema.Type.array.isNotEmpty(fields)) {
       return query;
     }
 
@@ -3638,7 +2240,7 @@ class Combine extends Having {
   }
 
   groupBy(...fields) {
-    let groupByFields = schemaVerify_4.array.safe(this.groupByFields);
+    let groupByFields = Schema.Type.array.safe(this.groupByFields);
 
     if (!strArrVerify(fields)) {
       throw new Error(ErrMsg$c.errorFields);
@@ -3662,7 +2264,7 @@ class Combine extends Having {
   }
 
   formatFuncs() {
-    const combineFuncs = schemaVerify_4.array.safe(this.combineFuncs);
+    const combineFuncs = Schema.Type.array.safe(this.combineFuncs);
     let funcs = [];
 
     for (const info of combineFuncs) {
@@ -3679,7 +2281,7 @@ class Combine extends Having {
   }
 
   funcsCache(funcInfo) {
-    const combineFuncs = schemaVerify_4.array.safe(this.combineFuncs);
+    const combineFuncs = Schema.Type.array.safe(this.combineFuncs);
 
     if (funcInfoVerify(funcInfo)) {
       combineFuncs.push(funcInfo);
@@ -3691,7 +2293,7 @@ class Combine extends Having {
 
   funcFeilds(...funcInfos) {
     for (let info of funcInfos) {
-      info = schemaVerify_4.object.safe(info);
+      info = Schema.Type.object.safe(info);
 
       if (funcInfoVerify(info)) {
         this.funcsCache(info);
@@ -3704,7 +2306,7 @@ class Combine extends Having {
         const func = info.func;
         const field = info.field;
 
-        if (schemaVerify_4.object.is(funcCase) && schemaVerify_4.func.is(funcCase[func])) {
+        if (Schema.Type.object.is(funcCase) && Schema.Type.func.is(funcCase[func])) {
           const funcInfo = funcCase[func].call(funcCase, field);
           this.funcsCache(funcInfo);
         }
@@ -3849,31 +2451,31 @@ class Join extends Combine {
   }
 
   getQueryTables() {
-    const queryTables = schemaVerify_4.array.safe(this.queryTables).map(table => {
+    const queryTables = Schema.Type.array.safe(this.queryTables).map(table => {
       return this.safeKey(table);
     }).join(", ");
     return queryTables;
   }
 
   formatJoinFields() {
-    const tableFieldsMap = schemaVerify_4.object.safe(this.tableFieldsMap);
-    const tableFieldsAsMap = schemaVerify_4.object.safe(this.tableFieldsAsMap);
+    const tableFieldsMap = Schema.Type.object.safe(this.tableFieldsMap);
+    const tableFieldsAsMap = Schema.Type.object.safe(this.tableFieldsAsMap);
     const result = [];
 
     for (const table in tableFieldsMap) {
-      const fields = schemaVerify_4.array.safe(tableFieldsMap[table]);
-      const asMap = schemaVerify_4.object.safe(tableFieldsAsMap[table]);
+      const fields = Schema.Type.array.safe(tableFieldsMap[table]);
+      const asMap = Schema.Type.object.safe(tableFieldsAsMap[table]);
       const safeTable = this.safeKey(table);
 
       for (const field of fields) {
-        if (!schemaVerify_4.string.isNotEmpty(field)) {
+        if (!Schema.Type.string.isNotEmpty(field)) {
           continue;
         }
 
         const safeField = this.safeKey(field);
         const tableField = `${safeTable}.${safeField}`;
 
-        if (schemaVerify_4.string.isNotEmpty(asMap[field])) {
+        if (Schema.Type.string.isNotEmpty(asMap[field])) {
           const safeAsField = this.safeKey(asMap[field]);
           result.push(`${tableField} AS ${safeAsField}`);
         } else {
@@ -3886,9 +2488,9 @@ class Join extends Combine {
   }
 
   joinBuild(query) {
-    const joinTypeInfos = schemaVerify_4.array.safe(this.joinTypeInfos);
+    const joinTypeInfos = Schema.Type.array.safe(this.joinTypeInfos);
 
-    if (!schemaVerify_4.array.isNotEmpty(joinTypeInfos)) {
+    if (!Schema.Type.array.isNotEmpty(joinTypeInfos)) {
       return query;
     }
 
@@ -3896,14 +2498,14 @@ class Join extends Combine {
 
     for (const typeInfo of joinTypeInfos) {
       const type = typeInfo.type;
-      const info = schemaVerify_4.object.safe(typeInfo.info);
+      const info = Schema.Type.object.safe(typeInfo.info);
       const tableName = info.tableName;
-      const termInfos = schemaVerify_4.array.safe(info.termInfos);
+      const termInfos = Schema.Type.array.safe(info.termInfos);
       const termStrs = this.joinTermBuild(termInfos);
       const safeTableName = this.safeKey(tableName);
       let joinInfoStr = `${type} JOIN ${safeTableName}`;
 
-      if (schemaVerify_4.array.isNotEmpty(termStrs)) {
+      if (Schema.Type.array.isNotEmpty(termStrs)) {
         const allTermStr = termStrs.join(" AND ");
         joinInfoStr += ` ON ${allTermStr}`;
       }
@@ -3911,7 +2513,7 @@ class Join extends Combine {
       joinStrs.push(joinInfoStr);
     }
 
-    if (!schemaVerify_4.array.isNotEmpty(joinStrs)) {
+    if (!Schema.Type.array.isNotEmpty(joinStrs)) {
       return query;
     }
 
@@ -3933,7 +2535,7 @@ class Join extends Combine {
         const safeTable = this.safeKey(table);
         const safeField = this.safeKey(field);
 
-        if (schemaVerify_4.string.isNotEmpty(termStr)) {
+        if (Schema.Type.string.isNotEmpty(termStr)) {
           termStr += ` ${symbol} `;
         }
 
@@ -3947,12 +2549,12 @@ class Join extends Combine {
   }
 
   multiTables(arg, ...otherArgs) {
-    const queryTables = schemaVerify_4.array.safe(this.queryTables);
+    const queryTables = Schema.Type.array.safe(this.queryTables);
     const args = argStrArrTrans(arg, otherArgs);
     const tables = [];
 
     for (const item of args) {
-      if (schemaVerify_4.string.isNotEmpty(item)) {
+      if (Schema.Type.string.isNotEmpty(item)) {
         tables.push(item);
       }
     }
@@ -3962,7 +2564,7 @@ class Join extends Combine {
   }
 
   tableFields(fieldsMap) {
-    const tableFieldsMap = schemaVerify_4.object.safe(this.tableFieldsMap);
+    const tableFieldsMap = Schema.Type.object.safe(this.tableFieldsMap);
 
     if (!fieldsMapVerify(fieldsMap)) {
       throw new Error(ErrMsg$c.tableFieldsError);
@@ -3973,7 +2575,7 @@ class Join extends Combine {
   }
 
   tableAsMap(asMap) {
-    const tableFieldsAsMap = schemaVerify_4.object.safe(this.tableFieldsAsMap);
+    const tableFieldsAsMap = Schema.Type.object.safe(this.tableFieldsAsMap);
 
     if (!fieldsAsMapVerify(asMap)) {
       throw new Error(ErrMsg$c.tableFieldsAsMapError);
@@ -3984,7 +2586,7 @@ class Join extends Combine {
   }
 
   join(joinInfo, type) {
-    const joinTypeInfos = schemaVerify_4.array.safe(this.joinTypeInfos);
+    const joinTypeInfos = Schema.Type.array.safe(this.joinTypeInfos);
 
     if (!joinInfoVerify(joinInfo)) {
       throw new Error(ErrMsg$c.joinTableInfoError);
@@ -4024,18 +2626,18 @@ class Select extends Join {
   }
 
   formatFields() {
-    const fields = schemaVerify_4.array.safe(this.selectFields);
-    const asMap = schemaVerify_4.object.safe(this.fieldsAsMap);
+    const fields = Schema.Type.array.safe(this.selectFields);
+    const asMap = Schema.Type.object.safe(this.fieldsAsMap);
     const result = [];
 
     for (const field of fields) {
-      if (!schemaVerify_4.string.isNotEmpty(field)) {
+      if (!Schema.Type.string.isNotEmpty(field)) {
         continue;
       }
 
       const safeField = field !== "*" ? this.safeKey(field) : "*";
 
-      if (schemaVerify_4.string.isNotEmpty(asMap[field])) {
+      if (Schema.Type.string.isNotEmpty(asMap[field])) {
         const safeAsField = this.safeKey(asMap[field]);
         result.push(`${safeField} AS ${safeAsField}`);
       } else {
@@ -4053,9 +2655,9 @@ class Select extends Join {
     let result;
 
     if (strArrVerify(fields) || strArrVerify(funcs) || strArrVerify(joinFields)) {
-      fields = schemaVerify_4.array.safe(fields);
-      joinFields = schemaVerify_4.array.safe(joinFields);
-      funcs = schemaVerify_4.array.safe(funcs);
+      fields = Schema.Type.array.safe(fields);
+      joinFields = Schema.Type.array.safe(joinFields);
+      funcs = Schema.Type.array.safe(funcs);
       result = [].concat(fields, joinFields, funcs).join(", ");
     } else {
       result = "*";
@@ -4067,7 +2669,7 @@ class Select extends Join {
   formatTableStr() {
     const tablesStr = this.getQueryTables();
 
-    if (schemaVerify_4.string.isNotEmpty(tablesStr)) {
+    if (Schema.Type.string.isNotEmpty(tablesStr)) {
       return tablesStr;
     }
 
@@ -4089,17 +2691,17 @@ class Select extends Join {
   }
 
   fields(arg, ...otherArgs) {
-    const selectFields = schemaVerify_4.array.safe(this.selectFields);
+    const selectFields = Schema.Type.array.safe(this.selectFields);
     const args = argStrArrTrans(arg, otherArgs);
     const fields = [];
 
     for (const item of args) {
-      if (schemaVerify_4.object.isNotEmpty(item)) {
+      if (Schema.Type.object.isNotEmpty(item)) {
         this.funcFeilds(item);
         continue;
       }
 
-      if (schemaVerify_4.string.isNotEmpty(item)) {
+      if (Schema.Type.string.isNotEmpty(item)) {
         fields.push(item);
       }
     }
@@ -4114,7 +2716,7 @@ class Select extends Join {
   }
 
   asMap(map) {
-    const asMap = schemaVerify_4.object.safe(this.fieldsAsMap);
+    const asMap = Schema.Type.object.safe(this.fieldsAsMap);
 
     if (!strObjVerify(map)) {
       throw new Error(ErrMsg$c.errorFieldMap);
@@ -4161,7 +2763,7 @@ class Update extends Where {
   formatData() {
     const updateInfos = this.updateInfos;
 
-    if (!schemaVerify_4.object.isNotEmpty(updateInfos)) {
+    if (!Schema.Type.object.isNotEmpty(updateInfos)) {
       throw new Error(ErrMsg$c.emptyUpdateInfo);
     }
 
@@ -4194,7 +2796,7 @@ class Update extends Where {
           break;
       }
 
-      if (schemaVerify_4.string.isNotEmpty(infoStr)) {
+      if (Schema.Type.string.isNotEmpty(infoStr)) {
         result.push(infoStr);
       }
     }
@@ -4211,7 +2813,7 @@ class Update extends Where {
       throw new Error(ErrMsg$c.errorFieldData);
     }
 
-    const updateInfos = schemaVerify_4.object.safe(this.updateInfos);
+    const updateInfos = Schema.Type.object.safe(this.updateInfos);
 
     for (const field in data) {
       const value = data[field];
@@ -4283,7 +2885,7 @@ class Create extends Base {
   }
 
   info(tableInfo) {
-    if (schemaVerify_4.string.isNotEmpty(tableInfo)) {
+    if (Schema.Type.string.isNotEmpty(tableInfo)) {
       this.createTableSqlStr = tableInfo;
     } else if (tableInfoVerify(tableInfo, true)) {
       this.createTableInfo = tableInfo;
@@ -4293,7 +2895,7 @@ class Create extends Base {
   }
 
   dataBase(dbName) {
-    if (!schemaVerify_4.string.isNotEmpty(dbName)) {
+    if (!Schema.Type.string.isNotEmpty(dbName)) {
       throw new Error(ErrMsg$c.errorCreateDbName);
     }
 
@@ -4304,7 +2906,7 @@ class Create extends Base {
   build() {
     const createDbName = this.createDbName;
 
-    if (schemaVerify_4.string.isNotEmpty(createDbName)) {
+    if (Schema.Type.string.isNotEmpty(createDbName)) {
       const tmplOpts = {
         dbName: createDbName
       };
@@ -4314,7 +2916,7 @@ class Create extends Base {
 
     const tableSqlStr = this.createTableSqlStr;
 
-    if (schemaVerify_4.string.isNotEmpty(tableSqlStr)) {
+    if (Schema.Type.string.isNotEmpty(tableSqlStr)) {
       return tableSqlStr;
     }
 
@@ -4351,11 +2953,11 @@ class Create extends Base {
     const primaryKeyStr = this.primaryKeyStr(primaryKey);
     const uniqueKeyStr = this.uniqueKeyStr(uniqueKey);
 
-    if (schemaVerify_4.string.isNotEmpty(primaryKeyStr)) {
+    if (Schema.Type.string.isNotEmpty(primaryKeyStr)) {
       feildTmplArr.push(primaryKeyStr);
     }
 
-    if (schemaVerify_4.string.isNotEmpty(uniqueKeyStr)) {
+    if (Schema.Type.string.isNotEmpty(uniqueKeyStr)) {
       feildTmplArr.push(uniqueKeyStr);
     }
 
@@ -4384,11 +2986,11 @@ class Create extends Base {
       tmplOpts["notNull"] = TableOptions.notNull;
     }
 
-    if (schemaVerify_4.string.is(defaultValue) || schemaVerify_4.number.is(defaultValue)) {
+    if (Schema.Type.string.is(defaultValue) || Schema.Type.number.is(defaultValue)) {
       let needSafe = true;
       let upperValue;
 
-      if (schemaVerify_4.string.is(defaultValue)) {
+      if (Schema.Type.string.is(defaultValue)) {
         upperValue = defaultValue.toUpperCase();
         needSafe = !TABLE_OPT_VALUES.includes(upperValue);
       }
@@ -4401,11 +3003,11 @@ class Create extends Base {
       tmplOpts["autoIncrement"] = TableOptions.autoIncrement;
     }
 
-    if (schemaVerify_4.string.isNotEmpty(onUpdate)) {
+    if (Schema.Type.string.isNotEmpty(onUpdate)) {
       tmplOpts["onUpdate"] = `${TableOptions.onUpdate} ${onUpdate}`;
     }
 
-    if (schemaVerify_4.string.isNotEmpty(comment)) {
+    if (Schema.Type.string.isNotEmpty(comment)) {
       comment = this.safeValue(comment);
       tmplOpts["comment"] = `${TableOptions.comment} ${comment}`;
     }
@@ -4418,12 +3020,12 @@ class Create extends Base {
     let result;
     const primaryKey = TableOptions.primaryKey;
 
-    if (schemaVerify_4.string.isNotEmpty(keyInfo)) {
+    if (Schema.Type.string.isNotEmpty(keyInfo)) {
       const value = this.safeKey(keyInfo);
       result = `${value} ${primaryKey} (${value})`;
     }
 
-    if (schemaVerify_4.object.is(keyInfo)) {
+    if (Schema.Type.object.is(keyInfo)) {
       const keyName = this.safeKey(keyInfo.keyName);
       const combineFields = keyInfo.combineFields;
       const combineFieldsStr = combineFields.map(field => this.safeKey(field)).join(",");
@@ -4437,12 +3039,12 @@ class Create extends Base {
     let result;
     const uniqueKey = TableOptions.uniqueKey;
 
-    if (schemaVerify_4.string.isNotEmpty(keyInfo)) {
+    if (Schema.Type.string.isNotEmpty(keyInfo)) {
       const value = this.safeKey(keyInfo);
       result = `${value} ${uniqueKey} (${value})`;
     }
 
-    if (schemaVerify_4.object.is(keyInfo)) {
+    if (Schema.Type.object.is(keyInfo)) {
       const keyName = this.safeKey(keyInfo.keyName);
       const combineFields = keyInfo.combineFields;
       const combineFieldsStr = combineFields.map(field => this.safeKey(field)).join(",");
@@ -4459,25 +3061,25 @@ class Create extends Base {
     const comment = info.comment;
     const tmplOpts = {};
 
-    if (schemaVerify_4.string.isNotEmpty(engine)) {
+    if (Schema.Type.string.isNotEmpty(engine)) {
       const key = TableOptions.engine;
       const value = engine;
       tmplOpts["engine"] = `${key}=${value}`;
     }
 
-    if (schemaVerify_4.number.is(autoIncrement)) {
+    if (Schema.Type.number.is(autoIncrement)) {
       const key = TableOptions.autoIncrement;
       const value = autoIncrement;
       tmplOpts["autoIncrement"] = `${key}=${value}`;
     }
 
-    if (schemaVerify_4.string.isNotEmpty(defaultCharset)) {
+    if (Schema.Type.string.isNotEmpty(defaultCharset)) {
       const key = TableOptions.defaultCharset;
       const value = defaultCharset;
       tmplOpts["defaultCharset"] = `${key}=${value}`;
     }
 
-    if (schemaVerify_4.string.isNotEmpty(comment)) {
+    if (Schema.Type.string.isNotEmpty(comment)) {
       const key = TableOptions.comment;
       const value = this.safeValue(comment);
       tmplOpts["comment"] = `${key}=${value}`;
@@ -4506,7 +3108,7 @@ class Alter extends Base {
   }
 
   add(field, alterField) {
-    if (schemaVerify_4.object.is(field)) {
+    if (Schema.Type.object.is(field)) {
       alterField = field;
       field = alterField.field;
     }
@@ -4529,7 +3131,7 @@ class Alter extends Base {
   }
 
   alterCache(method, field, alterField) {
-    if (AlterMethods.drop !== method && !schemaVerify_4.object.isNotEmpty(alterField)) {
+    if (AlterMethods.drop !== method && !Schema.Type.object.isNotEmpty(alterField)) {
       throw new Error(ErrMsg$c.errorAlterField);
     }
 
@@ -4543,14 +3145,14 @@ class Alter extends Base {
       throw new Error(ErrMsg$c.errorAlterField);
     }
 
-    const alterInfos = schemaVerify_4.array.safe(this.alterInfos);
+    const alterInfos = Schema.Type.array.safe(this.alterInfos);
     alterInfos.push(alterInfo);
     this.alterInfos = alterInfos;
     return this;
   }
 
   build() {
-    const alterInfos = schemaVerify_4.array.safe(this.alterInfos);
+    const alterInfos = Schema.Type.array.safe(this.alterInfos);
     const infosStrArr = [];
 
     for (const item of alterInfos) {
@@ -4571,7 +3173,7 @@ class Alter extends Base {
       infosStrArr.push(alterInfoStr);
     }
 
-    if (!schemaVerify_4.array.isNotEmpty(infosStrArr)) {
+    if (!Schema.Type.array.isNotEmpty(infosStrArr)) {
       throw new Error(ErrMsg$c.emptyAlterInfos);
     }
 
@@ -4596,11 +3198,11 @@ class Alter extends Base {
     let comment = fieldInfo.comment;
     const tmplOpts = {};
 
-    if (schemaVerify_4.string.isNotEmpty(field)) {
+    if (Schema.Type.string.isNotEmpty(field)) {
       tmplOpts["field"] = this.safeKey(field);
     }
 
-    if (schemaVerify_4.string.isNotEmpty(type)) {
+    if (Schema.Type.string.isNotEmpty(type)) {
       tmplOpts["type"] = type.toUpperCase();
     }
 
@@ -4612,11 +3214,11 @@ class Alter extends Base {
       tmplOpts["notNull"] = TableOptions.notNull;
     }
 
-    if (schemaVerify_4.string.is(defaultValue) || schemaVerify_4.number.is(defaultValue)) {
+    if (Schema.Type.string.is(defaultValue) || Schema.Type.number.is(defaultValue)) {
       let needSafe = true;
       let upperValue;
 
-      if (schemaVerify_4.string.is(defaultValue)) {
+      if (Schema.Type.string.is(defaultValue)) {
         upperValue = defaultValue.toUpperCase();
         needSafe = !TABLE_OPT_VALUES.includes(upperValue);
       }
@@ -4629,11 +3231,11 @@ class Alter extends Base {
       tmplOpts["autoIncrement"] = TableOptions.autoIncrement;
     }
 
-    if (schemaVerify_4.string.isNotEmpty(onUpdate)) {
+    if (Schema.Type.string.isNotEmpty(onUpdate)) {
       tmplOpts["onUpdate"] = `${TableOptions.onUpdate} ${onUpdate}`;
     }
 
-    if (schemaVerify_4.string.isNotEmpty(comment)) {
+    if (Schema.Type.string.isNotEmpty(comment)) {
       comment = this.safeValue(comment);
       tmplOpts["comment"] = `${TableOptions.comment} ${comment}`;
     }
@@ -4653,7 +3255,7 @@ const ErrMsg$d = {
 
 const ErrMsg$e = Object.assign({}, ErrMsg$d);
 
-const conConfigSchema = new Schema({
+const conConfigSchema = new Schema__default({
   type: Object,
   props: [{
     index: "host",
@@ -4712,7 +3314,7 @@ class BaseConnect {
     const database = config.database;
     const connectTimeout = config.connectTimeout;
     let connectionLimit = config.connectionLimit;
-    connectionLimit = schemaVerify_4.number.isNatural(connectionLimit) ? connectionLimit : 1;
+    connectionLimit = Schema.Type.number.isNatural(connectionLimit) ? connectionLimit : 1;
     let dbConfig = {
       host,
       user,
@@ -4722,7 +3324,7 @@ class BaseConnect {
       connectTimeout,
       connectionLimit
     };
-    this.dbConfig = schemaVerify_4.object.pure(dbConfig);
+    this.dbConfig = Schema.Type.object.pure(dbConfig);
   }
 
   loadModule(moduleName) {
@@ -4749,7 +3351,7 @@ class MysqlConnect extends BaseConnect {
     let pool = this.pool;
     const dbConfig = this.dbConfig;
 
-    if (schemaVerify_4.object.is(pool) && schemaVerify_4.func.is(pool.getConnection)) {
+    if (Schema.Type.object.is(pool) && Schema.Type.func.is(pool.getConnection)) {
       return pool;
     }
 
@@ -4761,7 +3363,7 @@ class MysqlConnect extends BaseConnect {
   getDbConnect() {
     const pool = this.getPool() || {};
 
-    if (schemaVerify_4.func.isNot(pool.getConnection)) {
+    if (Schema.Type.func.isNot(pool.getConnection)) {
       throw new Error(ErrMsg$e.emptyConnectPool);
     }
 
@@ -4771,7 +3373,7 @@ class MysqlConnect extends BaseConnect {
           reject(err);
         }
 
-        if (!connection || schemaVerify_4.func.isNot(connection.query) || schemaVerify_4.func.isNot(connection.release)) {
+        if (!connection || Schema.Type.func.isNot(connection.query) || Schema.Type.func.isNot(connection.release)) {
           reject(new Error(ErrMsg$e.errorConnect));
         }
 
@@ -4792,7 +3394,7 @@ class MyssqlConnect extends BaseConnect {
     let pool = this.pool;
     const dbConfig = this.dbConfig;
 
-    if (schemaVerify_4.object.is(pool) && schemaVerify_4.func.is(pool.acquire)) {
+    if (Schema.Type.object.is(pool) && Schema.Type.func.is(pool.acquire)) {
       return pool;
     }
 
@@ -4857,7 +3459,7 @@ class Execute {
         break;
     }
 
-    if (schemaVerify_4.undefinedNull.is(connect)) {
+    if (Schema.Type.undefinedNull.is(connect)) {
       throw new Error(ErrMsg$e.errorDialectType);
     }
 
@@ -4867,7 +3469,7 @@ class Execute {
   async exec(query) {
     const connect = this.connect || {};
 
-    if (schemaVerify_4.func.isNot(connect.getDbConnect)) {
+    if (Schema.Type.func.isNot(connect.getDbConnect)) {
       throw new Error(ErrMsg$e.emptyConnectPool);
     }
 
@@ -4993,26 +3595,26 @@ class Builder {
   }
 
   initInstance(type, instance) {
-    instance = schemaVerify_4.object.safe(instance);
+    instance = Schema.Type.object.safe(instance);
     const dialectType = this.dialectType;
     const execute = this.execute;
     const queryTable = this.queryTable;
 
-    if (schemaVerify_4.string.isNotEmpty(queryTable) && schemaVerify_4.func.is(instance.table)) {
+    if (Schema.Type.string.isNotEmpty(queryTable) && Schema.Type.func.is(instance.table)) {
       if (TABLE_QUERY_TYPE.includes(type)) {
         instance.table(queryTable);
       }
     }
 
-    if (schemaVerify_4.func.is(instance.setDialect)) {
+    if (Schema.Type.func.is(instance.setDialect)) {
       instance.setDialect(dialectType);
     }
 
-    if (schemaVerify_4.func.is(instance.checkDialect)) {
+    if (Schema.Type.func.is(instance.checkDialect)) {
       instance.checkDialect();
     }
 
-    if (schemaVerify_4.func.is(instance.setExecute)) {
+    if (Schema.Type.func.is(instance.setExecute)) {
       instance.setExecute(execute);
     }
 
@@ -5020,7 +3622,7 @@ class Builder {
   }
 
   table(tableName) {
-    if (!schemaVerify_4.string.isNotEmpty(tableName)) {
+    if (!Schema.Type.string.isNotEmpty(tableName)) {
       throw new Error(ErrMsg$c.errorTableName);
     }
 
@@ -5033,11 +3635,11 @@ class Builder {
   }
 
   setConnect(config) {
-    if (schemaVerify_4.object.isNot(config)) {
+    if (Schema.Type.object.isNot(config)) {
       return this;
     }
 
-    config = schemaVerify_4.object.safe(config);
+    config = Schema.Type.object.safe(config);
     const execute = new Execute(config);
     this.dialectType = config.dialect || DialectTypes.mysql;
     this.execute = execute;
@@ -5069,10 +3671,10 @@ class Builder {
 function SqlQuery(config) {
   let dialect;
 
-  if (schemaVerify_4.object.isNot(config)) {
+  if (Schema.Type.object.isNot(config)) {
     dialect = DialectTypes.mysql;
 
-    if (schemaVerify_4.string.isNotEmpty(config) && DialectTypes[config]) {
+    if (Schema.Type.string.isNotEmpty(config) && DialectTypes[config]) {
       dialect = config;
     }
 
@@ -5080,7 +3682,7 @@ function SqlQuery(config) {
   }
 
   dialect = config.dialect || DialectTypes.mysql;
-  config = schemaVerify_4.object.safe(config);
+  config = Schema.Type.object.safe(config);
   const execute = new Execute(config);
   const builder = new Builder(dialect, execute);
   return builder;
