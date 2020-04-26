@@ -1,4 +1,4 @@
-const { Builder } = require("../../dist/js-sql-query");
+const { Builder } = require("../../es");
 
 describe("LIMIT", () => {
     const builder = new Builder();
