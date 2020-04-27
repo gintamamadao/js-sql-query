@@ -2,6 +2,7 @@ const util = require("./util");
 const typescript = require("rollup-plugin-typescript2");
 const babel = require("rollup-plugin-babel");
 const commonjs = require("rollup-plugin-commonjs");
+const pkg = require("../package.json");
 
 const extensions = [".js", ".jsx", ".ts", ".tsx"];
 
@@ -21,12 +22,44 @@ const babelOptions = {
     ],
 };
 
-module.exports = {
-    input: util.resolve("src/index.ts"),
-    plugins: [
-        typescript(),
-        commonjs({ extensions, ignore: ["conditional-runtime-dependency"] }),
-        babel(babelOptions),
-    ],
-    external: ["schema-verify"],
-};
+module.exports = [
+    {
+        input: util.resolve("src/index.ts"),
+        output: [
+            { file: pkg.main, format: "cjs" },
+            { file: pkg.module, format: "es" },
+            {
+                name: "js-sql-query",
+                file: "dist/js-sql-query.js",
+                format: "umd",
+            },
+        ],
+        plugins: [
+            typescript(),
+            commonjs({
+                extensions,
+                ignore: ["conditional-runtime-dependency"],
+            }),
+            babel(babelOptions),
+        ],
+        external: ["schema-verify"],
+    },
+    {
+        input: util.resolve("src/index.ts"),
+        output: {
+            file: "dist/js-sql-query.min.js",
+            name: "js-sql-query",
+            format: "umd",
+            sourcemap: true,
+        },
+        plugins: [
+            typescript(),
+            commonjs({
+                extensions,
+                ignore: ["conditional-runtime-dependency"],
+            }),
+            babel(babelOptions),
+        ],
+        external: ["schema-verify"],
+    },
+];

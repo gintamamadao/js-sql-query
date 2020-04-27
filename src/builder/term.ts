@@ -23,7 +23,7 @@ const SQL_NAME = "termSql";
 class Term extends Base {
     protected termInfos: TermInfo[];
     protected termBrackets: TermBracket[];
-    protected termSql: string | Function;
+    protected termSql: string | Function = "";
     constructor() {
         super();
         this.termInfos = [];
@@ -230,7 +230,7 @@ class Term extends Base {
             };
             termsArr.push(term);
         }
-        this.termInfos = [].concat(termInfos, termsArr);
+        this.termInfos = (<TermInfo[]>[]).concat(termInfos, termsArr);
         return this;
     }
 
@@ -239,7 +239,7 @@ class Term extends Base {
         const termBrackets: TermBracket[] = Type.array.safe(this.termBrackets);
         const termsLen: number = termInfos.length;
         if (termsLen <= 0) {
-            return;
+            return this;
         }
         for (const bracket of termBrackets) {
             if (!termBracketVerify(bracket)) {
@@ -247,7 +247,7 @@ class Term extends Base {
             }
             const position: number = bracket.position;
             if (position === termsLen) {
-                return;
+                return this;
             }
         }
         const bracket: TermBracket = {

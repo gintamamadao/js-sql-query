@@ -37,9 +37,9 @@ const TABLE_OPTIONS_TEMPLATE = `{{engine}}{{autoIncrement}}{{defaultCharset}}{{c
 const DATABASE_TEMPLATE = `CREATE DATABASE {{dbName}}`;
 
 class Create extends Base {
-    protected createTableSqlStr: string;
-    protected createDbName: string;
-    protected createTableInfo: TableInfo;
+    protected createTableSqlStr: string = "";
+    protected createDbName: string = "";
+    protected createTableInfo: TableInfo = {} as TableInfo;
     constructor() {
         super();
     }
@@ -102,7 +102,7 @@ class Create extends Base {
 
     protected feildsStr(info: TableInfo): string {
         const primaryKey: string | combineKey = info.primaryKey;
-        const uniqueKey: string | combineKey = info.uniqueKey;
+        const uniqueKey = info.uniqueKey;
         const fields: TableField[] = info.fields;
         const feildTmplArr: string[] = [];
 
@@ -112,7 +112,7 @@ class Create extends Base {
         }
 
         const primaryKeyStr: string = this.primaryKeyStr(primaryKey);
-        const uniqueKeyStr: string = this.uniqueKeyStr(uniqueKey);
+        const uniqueKeyStr: string = this.uniqueKeyStr(<string>uniqueKey);
 
         if (Type.string.isNotEmpty(primaryKeyStr)) {
             feildTmplArr.push(primaryKeyStr);
@@ -128,12 +128,12 @@ class Create extends Base {
     protected feildTmpl(fieldInfo: TableField): string {
         const field: string = this.safeKey(fieldInfo.field);
         const type: string = fieldInfo.type.toUpperCase();
-        const unsigned: boolean = fieldInfo.unsigned;
-        const notNull: boolean = fieldInfo.notNull;
-        let defaultValue: string | number = fieldInfo.default;
-        const autoIncrement: boolean = fieldInfo.autoIncrement;
-        const onUpdate: string = fieldInfo.onUpdate;
-        let comment: string = fieldInfo.comment;
+        const unsigned = fieldInfo.unsigned;
+        const notNull = fieldInfo.notNull;
+        let defaultValue = fieldInfo.default;
+        const autoIncrement = fieldInfo.autoIncrement;
+        const onUpdate = fieldInfo.onUpdate;
+        let comment = fieldInfo.comment;
 
         const tmplOpts: any = {
             field,
@@ -155,7 +155,9 @@ class Create extends Base {
                 upperValue = (<string>defaultValue).toUpperCase();
                 needSafe = !TABLE_OPT_VALUES.includes(upperValue);
             }
-            defaultValue = needSafe ? this.safeValue(defaultValue) : upperValue;
+            defaultValue = needSafe
+                ? this.safeValue(<string>defaultValue)
+                : upperValue;
             tmplOpts["default"] = `${TableOptions.default} ${defaultValue}`;
         }
 
@@ -168,7 +170,7 @@ class Create extends Base {
         }
 
         if (Type.string.isNotEmpty(comment)) {
-            comment = this.safeValue(comment);
+            comment = this.safeValue(<string>comment);
             tmplOpts["comment"] = `${TableOptions.comment} ${comment}`;
         }
 
@@ -178,7 +180,7 @@ class Create extends Base {
     }
 
     protected primaryKeyStr(keyInfo: string | combineKey): string {
-        let result: string;
+        let result: string = "";
         const primaryKey = TableOptions.primaryKey;
 
         if (Type.string.isNotEmpty(keyInfo)) {
@@ -199,7 +201,7 @@ class Create extends Base {
     }
 
     protected uniqueKeyStr(keyInfo: string | combineKey): string {
-        let result: string;
+        let result: string = "";
         const uniqueKey = TableOptions.uniqueKey;
 
         if (Type.string.isNotEmpty(keyInfo)) {
@@ -220,9 +222,9 @@ class Create extends Base {
     }
 
     protected tableOptsStr(info: TableInfo): string {
-        const engine: string = info.engine;
-        const autoIncrement: number = info.autoIncrement;
-        const defaultCharset: string = info.defaultCharset;
+        const engine = info.engine;
+        const autoIncrement = info.autoIncrement;
+        const defaultCharset = info.defaultCharset;
         const comment = info.comment;
         const tmplOpts: any = {};
 
@@ -246,7 +248,7 @@ class Create extends Base {
 
         if (Type.string.isNotEmpty(comment)) {
             const key = TableOptions.comment;
-            const value = this.safeValue(comment);
+            const value = this.safeValue(<string>comment);
             tmplOpts["comment"] = `${key}=${value}`;
         }
         const tableOptionsStr: string = analyTmpl(

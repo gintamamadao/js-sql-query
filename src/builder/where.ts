@@ -6,7 +6,7 @@ import { TermTypes } from "../constant/enum";
 import { WHERE_TERM_API } from "../constant/constant";
 
 class Where extends TermApi {
-    protected whereTerm: Term;
+    protected whereTerm: Term = {} as Term;
 
     constructor() {
         super();
@@ -60,30 +60,30 @@ class Where extends TermApi {
         return query;
     }
 
-    whereEqual: (data: TermData) => this;
-    whereNotEqual: (data: TermData) => this;
-    whereIn: (data: TermData) => this;
-    whereNotIn: (data: TermData) => this;
-    whereMore: (data: TermData) => this;
-    whereLess: (data: TermData) => this;
-    whereMoreEqual: (data: TermData) => this;
-    whereLessEqual: (data: TermData) => this;
-    whereLike: (data: TermData) => this;
-    whereNotLike: (data: TermData) => this;
-    whereBetween: (data: TermData) => this;
-    whereNotBetween: (data: TermData) => this;
-    whereOrEqual: (data: TermData) => this;
-    whereOrNotEqual: (data: TermData) => this;
-    whereOrIn: (data: TermData) => this;
-    whereOrNotIn: (data: TermData) => this;
-    whereOrMore: (data: TermData) => this;
-    whereOrLess: (data: TermData) => this;
-    whereOrMoreEqual: (data: TermData) => this;
-    whereOrLessEqual: (data: TermData) => this;
-    whereOrLike: (data: TermData) => this;
-    whereOrNotLike: (data: TermData) => this;
-    whereOrBetween: (data: TermData) => this;
-    whereOrNotBetween: (data: TermData) => this;
+    whereEqual: (data: TermData) => this = (data) => this;
+    whereNotEqual: (data: TermData) => this = (data) => this;
+    whereIn: (data: TermData) => this = (data) => this;
+    whereNotIn: (data: TermData) => this = (data) => this;
+    whereMore: (data: TermData) => this = (data) => this;
+    whereLess: (data: TermData) => this = (data) => this;
+    whereMoreEqual: (data: TermData) => this = (data) => this;
+    whereLessEqual: (data: TermData) => this = (data) => this;
+    whereLike: (data: TermData) => this = (data) => this;
+    whereNotLike: (data: TermData) => this = (data) => this;
+    whereBetween: (data: TermData) => this = (data) => this;
+    whereNotBetween: (data: TermData) => this = (data) => this;
+    whereOrEqual: (data: TermData) => this = (data) => this;
+    whereOrNotEqual: (data: TermData) => this = (data) => this;
+    whereOrIn: (data: TermData) => this = (data) => this;
+    whereOrNotIn: (data: TermData) => this = (data) => this;
+    whereOrMore: (data: TermData) => this = (data) => this;
+    whereOrLess: (data: TermData) => this = (data) => this;
+    whereOrMoreEqual: (data: TermData) => this = (data) => this;
+    whereOrLessEqual: (data: TermData) => this = (data) => this;
+    whereOrLike: (data: TermData) => this = (data) => this;
+    whereOrNotLike: (data: TermData) => this = (data) => this;
+    whereOrBetween: (data: TermData) => this = (data) => this;
+    whereOrNotBetween: (data: TermData) => this = (data) => this;
 }
 
 export default Where;

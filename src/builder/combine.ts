@@ -16,8 +16,8 @@ interface FuncInput {
 
 class Combine extends Having {
     protected combineFuncs: FuncInfo[];
-    protected funcInstance: Func;
-    protected groupByFields: string[];
+    protected funcInstance: Func = {} as Func;
+    protected groupByFields: string[] = [];
     constructor() {
         super();
         this.combineFuncs = [];

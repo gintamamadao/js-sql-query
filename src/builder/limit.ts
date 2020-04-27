@@ -3,7 +3,7 @@ import {
     integerVerify,
     pageVerify,
     naturalVerify,
-    limitInfoVerify
+    limitInfoVerify,
 } from "../verify/builder/index";
 import ErrMsg from "../error/builder/index";
 
@@ -13,7 +13,7 @@ interface LimitInfo {
 }
 
 class Limit {
-    protected limitInfo: LimitInfo;
+    protected limitInfo: LimitInfo = {} as LimitInfo;
 
     limitBuild(query: string): string {
         const limitInfo: LimitInfo = this.limitInfo;
@@ -38,17 +38,18 @@ class Limit {
         if (Type.undefined.isNot(step) && !integerVerify(step)) {
             throw new Error(ErrMsg.errorStep);
         }
-        let limitInfo: LimitInfo;
+        let limitInfo: LimitInfo = {} as LimitInfo;
         if (Type.number.is(offset) && Type.number.is(step)) {
+            step = step || 0;
             limitInfo = {
                 offset,
-                step
+                step,
             };
         }
         if (Type.number.is(offset) && !Type.number.is(step)) {
             limitInfo = {
                 offset: 0,
-                step: offset
+                step: offset,
             };
         }
         this.limitInfo = limitInfo;
@@ -60,7 +61,7 @@ class Limit {
         }
         this.limitInfo = {
             offset: offset,
-            step: -1
+            step: -1,
         };
     }
 
@@ -70,7 +71,7 @@ class Limit {
         }
         this.limitInfo = {
             offset: 0,
-            step
+            step,
         };
     }
 
@@ -84,7 +85,7 @@ class Limit {
         const offset = (page - 1) * size;
         this.limitInfo = {
             offset,
-            step: size
+            step: size,
         };
     }
 }

@@ -4,7 +4,7 @@ import { ConnectConfig } from "../../constant/interface";
 import ErrMsg from "../../error/execute/index";
 
 class BaseConnect {
-    dbConfig: ConnectConfig;
+    dbConfig: ConnectConfig = {} as ConnectConfig;
     pool: any;
     constructor(config: ConnectConfig) {
         this.setConfig(config);
@@ -16,11 +16,11 @@ class BaseConnect {
         }
         const host: string = config.host;
         const user: string = config.user;
-        const password: string = config.password;
-        const port: string | number = config.port;
+        const password = config.password;
+        const port = config.port;
         const database: string = config.database;
-        const connectTimeout: number = config.connectTimeout;
-        let connectionLimit: number = config.connectionLimit;
+        const connectTimeout = config.connectTimeout;
+        let connectionLimit = config.connectionLimit;
         connectionLimit = Type.number.isNatural(connectionLimit)
             ? connectionLimit
             : 1;

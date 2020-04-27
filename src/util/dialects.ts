@@ -5,7 +5,7 @@ import ErrMsg from "../error/builder/index";
 const DialectsObj: Dialects = {
     mysql: {
         safeValue(value: number | string): string {
-            let result: string;
+            let result: string = "";
             if (typeof value === "string") {
                 value = value
                     .replace(/\'/g, () => "''")
@@ -27,11 +27,11 @@ const DialectsObj: Dialects = {
             }
             result = key.replace(/`/g, "``");
             return "`" + result + "`";
-        }
+        },
     },
     mssql: {
         safeValue(value: number | string): string {
-            let result: string;
+            let result: string = "";
             if (typeof value === "string") {
                 value = value.replace(/\'/g, () => "''");
                 result = `'${value}'`;
@@ -49,11 +49,11 @@ const DialectsObj: Dialects = {
                 throw new Error(ErrMsg.needStr);
             }
             return `[${key}]`;
-        }
+        },
     },
     postgresql: {
         safeValue(value: number | string): string {
-            let result: string;
+            let result: string = "";
             if (typeof value === "string") {
                 value = value.replace(/\'/g, () => "''");
                 result = `'${value}'`;
@@ -73,11 +73,11 @@ const DialectsObj: Dialects = {
             }
             result = key.replace(/\"/g, '""');
             return `"${result}"`;
-        }
+        },
     },
     sqlite: {
         safeValue(value: number | string): string {
-            let result: string;
+            let result: string = "";
             if (typeof value === "string") {
                 value = value.replace(/\'/g, () => "''");
                 result = `'${value}'`;
@@ -97,8 +97,8 @@ const DialectsObj: Dialects = {
             }
             result = key.replace(/`/g, "``");
             return "`" + result + "`";
-        }
-    }
+        },
+    },
 };
 
 export default DialectsObj;

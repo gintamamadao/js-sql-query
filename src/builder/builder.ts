@@ -24,9 +24,9 @@ const TABLE_QUERY_TYPE = [
 ];
 class Builder {
     protected dialectType: DialectTypes;
-    protected execute: Execute;
+    protected execute: Execute | undefined;
     public queryStore: string[];
-    protected queryTable: string;
+    protected queryTable: string = "";
     constructor(dialectType?: DialectTypes, execute?: Execute) {
         this.dialectType = dialectType || DialectTypes.mysql;
         this.execute = execute;
@@ -123,7 +123,7 @@ class Builder {
     ): T {
         instance = Type.object.safe(instance);
         const dialectType: DialectTypes = this.dialectType;
-        const execute: Execute = this.execute;
+        const execute = this.execute;
         const queryTable: string = this.queryTable;
         if (
             Type.string.isNotEmpty(queryTable) &&
@@ -139,7 +139,7 @@ class Builder {
         if (Type.func.is(instance.checkDialect)) {
             instance.checkDialect();
         }
-        if (Type.func.is(instance.setExecute)) {
+        if (Type.func.is(instance.setExecute) && execute) {
             instance.setExecute(execute);
         }
         return instance;

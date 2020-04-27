@@ -6,7 +6,7 @@ import { Type } from "schema-verify";
 import {
     fieldDataVerify,
     fieldDataArrVerify,
-    strArrVerify
+    strArrVerify,
 } from "../verify/builder/index";
 import ErrMsg from "../error/builder/index";
 
@@ -16,7 +16,7 @@ class Insert extends Query {
     protected insertFields: string[];
     protected insertDataArr: FieldData[];
     protected queryType: QueryTypes;
-    protected valuesSql: string | Function;
+    protected valuesSql: string | Function = "";
     constructor() {
         super();
         this.queryType = QueryTypes.insert;
@@ -37,7 +37,7 @@ class Insert extends Query {
     fields(arg: any, ...otherArgs: any[]): this {
         const args: string[] = argStrArrTrans(arg, otherArgs);
         const insertFields: string[] = Type.array.safe(this.insertFields);
-        const result = [].concat(insertFields, args);
+        const result: string[] = (<string[]>[]).concat(insertFields, args);
         this.insertFields = Array.from(new Set(result));
         return this;
     }
@@ -47,7 +47,7 @@ class Insert extends Query {
             throw new Error(ErrMsg.errorFieldDataArr);
         }
         const insertDataArr: FieldData[] = Type.array.safe(this.insertDataArr);
-        this.insertDataArr = [].concat(insertDataArr, dataArr);
+        this.insertDataArr =  (<FieldData[]>[]).concat(insertDataArr, dataArr);
         return this;
     }
 
@@ -64,7 +64,7 @@ class Insert extends Query {
         const insertData: FieldData = this.insertData;
         const insertFields: string[] = this.insertFields;
         const insertDataArr: FieldData[] = this.insertDataArr;
-        let fields: string[];
+        let fields: string[] = [];
 
         if (strArrVerify(insertFields)) {
             fields = insertFields;
@@ -91,7 +91,7 @@ class Insert extends Query {
 
         const valuesStrFormat = (data: FieldData): string => {
             const valuesStr: string = fields
-                .map(field => this.safeValue(data[field]))
+                .map((field) => this.safeValue(data[field]))
                 .join(", ");
             return `( ${valuesStr} )`;
         };
@@ -124,7 +124,7 @@ class Insert extends Query {
 
         const fields: string[] = this.formatFields();
         const valuesStr: string = this.formatValues(fields);
-        const fieldsStr = fields.map(field => this.safeKey(field)).join(", ");
+        const fieldsStr = fields.map((field) => this.safeKey(field)).join(", ");
         let query: string = `${type} INTO ${table} ( ${fieldsStr} )  ${valuesStr}`;
         return query;
     }

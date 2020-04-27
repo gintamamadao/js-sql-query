@@ -26,7 +26,7 @@ interface AlterInfo {
 }
 
 class Alter extends Base {
-    protected alterInfos: AlterInfo[];
+    protected alterInfos: AlterInfo[] = [];
     constructor() {
         super();
     }
@@ -38,10 +38,10 @@ class Alter extends Base {
         }
     }
 
-    add(field: string | AlterField, alterField?: AlterField): this {
+    add(field: string | AlterField, alterField: AlterField = {}): this {
         if (Type.object.is(field)) {
             alterField = <AlterField>field;
-            field = alterField.field;
+            field = alterField.field || "";
         }
         delete alterField["field"];
         return this.alterCache(AlterMethods.add, <string>field, alterField);
@@ -123,23 +123,23 @@ class Alter extends Base {
     }
 
     protected feildTmpl(fieldInfo: AlterField): string {
-        const field: string = fieldInfo.field;
-        const type: string = fieldInfo.type;
-        const unsigned: boolean = fieldInfo.unsigned;
-        const notNull: boolean = fieldInfo.notNull;
-        let defaultValue: string | number = fieldInfo.default;
-        const autoIncrement: boolean = fieldInfo.autoIncrement;
-        const onUpdate: string = fieldInfo.onUpdate;
-        let comment: string = fieldInfo.comment;
+        const field = fieldInfo.field;
+        const type = fieldInfo.type;
+        const unsigned = fieldInfo.unsigned;
+        const notNull = fieldInfo.notNull;
+        let defaultValue = fieldInfo.default;
+        const autoIncrement = fieldInfo.autoIncrement;
+        const onUpdate = fieldInfo.onUpdate;
+        let comment = fieldInfo.comment;
 
         const tmplOpts: any = {};
 
         if (Type.string.isNotEmpty(field)) {
-            tmplOpts["field"] = this.safeKey(field);
+            tmplOpts["field"] = this.safeKey(<string>field);
         }
 
         if (Type.string.isNotEmpty(type)) {
-            tmplOpts["type"] = type.toUpperCase();
+            tmplOpts["type"] = (<string>type).toUpperCase();
         }
 
         if (unsigned === true) {
@@ -157,7 +157,7 @@ class Alter extends Base {
                 upperValue = (<string>defaultValue).toUpperCase();
                 needSafe = !TABLE_OPT_VALUES.includes(upperValue);
             }
-            defaultValue = needSafe ? this.safeValue(defaultValue) : upperValue;
+            defaultValue = needSafe ? this.safeValue(<string>defaultValue) : upperValue;
             tmplOpts["default"] = `${TableOptions.default} ${defaultValue}`;
         }
 
@@ -170,7 +170,7 @@ class Alter extends Base {
         }
 
         if (Type.string.isNotEmpty(comment)) {
-            comment = this.safeValue(comment);
+            comment = this.safeValue(<string>comment);
             tmplOpts["comment"] = `${TableOptions.comment} ${comment}`;
         }
 

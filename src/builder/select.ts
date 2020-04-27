@@ -47,7 +47,7 @@ class Select extends Join {
             fields = Type.array.safe(fields);
             joinFields = Type.array.safe(joinFields);
             funcs = Type.array.safe(funcs);
-            result = [].concat(fields, joinFields, funcs).join(", ");
+            result = (<string[]>[]).concat(fields, joinFields, funcs).join(", ");
         } else {
             result = "*";
         }

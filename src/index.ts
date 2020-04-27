@@ -23,7 +23,6 @@ function SqlQuery(config: ConnectConfig | DialectTypes): Builder {
     return builder;
 }
 
-SqlQuery.Builder = Builder;
-SqlQuery.Execute = Execute;
+export { Builder, Execute };
 
 export default SqlQuery;

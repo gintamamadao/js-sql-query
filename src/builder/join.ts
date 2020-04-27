@@ -18,10 +18,10 @@ import {
 import ErrMsg from "../error/builder/index";
 
 class Join extends Combine {
-    protected queryTables: string[];
-    protected tableFieldsMap: TableFieldsMap;
-    protected tableFieldsAsMap: TableFieldsAsMap;
-    protected joinTypeInfos: JoinTypeInfo[];
+    protected queryTables: string[] = [];
+    protected tableFieldsMap: TableFieldsMap = {};
+    protected tableFieldsAsMap: TableFieldsAsMap = {};
+    protected joinTypeInfos: JoinTypeInfo[] = [];
     constructor() {
         super();
     }

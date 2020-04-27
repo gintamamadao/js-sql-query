@@ -4,8 +4,8 @@ import Limit from "./limit";
 import Order from "./order";
 
 class Query extends Base {
-    protected queryLimit: Limit;
-    protected queryOrder: Order;
+    protected queryLimit: Limit = {} as Limit;
+    protected queryOrder: Order = {} as Order;
 
     protected getLimitCase(): Limit {
         let queryLimit: Limit = this.queryLimit;

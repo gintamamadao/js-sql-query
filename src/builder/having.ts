@@ -6,7 +6,7 @@ import { TermTypes } from "../constant/enum";
 import { HAVING_TERM_API } from "../constant/constant";
 
 class Having extends Where {
-    protected havingTerm: Term;
+    protected havingTerm: Term = {} as Term;
 
     constructor() {
         super();
@@ -60,30 +60,30 @@ class Having extends Where {
         return query;
     }
 
-    havingEqual: (data: TermData) => this;
-    havingNotEqual: (data: TermData) => this;
-    havingIn: (data: TermData) => this;
-    havingNotIn: (data: TermData) => this;
-    havingMore: (data: TermData) => this;
-    havingLess: (data: TermData) => this;
-    havingMoreEqual: (data: TermData) => this;
-    havingLessEqual: (data: TermData) => this;
-    havingLike: (data: TermData) => this;
-    havingNotLike: (data: TermData) => this;
-    havingBetween: (data: TermData) => this;
-    havingNotBetween: (data: TermData) => this;
-    havingOrEqual: (data: TermData) => this;
-    havingOrNotEqual: (data: TermData) => this;
-    havingOrIn: (data: TermData) => this;
-    havingOrNotIn: (data: TermData) => this;
-    havingOrMore: (data: TermData) => this;
-    havingOrLess: (data: TermData) => this;
-    havingOrMoreEqual: (data: TermData) => this;
-    havingOrLessEqual: (data: TermData) => this;
-    havingOrLike: (data: TermData) => this;
-    havingOrNotLike: (data: TermData) => this;
-    havingOrBetween: (data: TermData) => this;
-    havingOrNotBetween: (data: TermData) => this;
+    havingEqual: (data: TermData) => this = (data) => this;
+    havingNotEqual: (data: TermData) => this = (data) => this;
+    havingIn: (data: TermData) => this = (data) => this;
+    havingNotIn: (data: TermData) => this = (data) => this;
+    havingMore: (data: TermData) => this = (data) => this;
+    havingLess: (data: TermData) => this = (data) => this;
+    havingMoreEqual: (data: TermData) => this = (data) => this;
+    havingLessEqual: (data: TermData) => this = (data) => this;
+    havingLike: (data: TermData) => this = (data) => this;
+    havingNotLike: (data: TermData) => this = (data) => this;
+    havingBetween: (data: TermData) => this = (data) => this;
+    havingNotBetween: (data: TermData) => this = (data) => this;
+    havingOrEqual: (data: TermData) => this = (data) => this;
+    havingOrNotEqual: (data: TermData) => this = (data) => this;
+    havingOrIn: (data: TermData) => this = (data) => this;
+    havingOrNotIn: (data: TermData) => this = (data) => this;
+    havingOrMore: (data: TermData) => this = (data) => this;
+    havingOrLess: (data: TermData) => this = (data) => this;
+    havingOrMoreEqual: (data: TermData) => this = (data) => this;
+    havingOrLessEqual: (data: TermData) => this = (data) => this;
+    havingOrLike: (data: TermData) => this = (data) => this;
+    havingOrNotLike: (data: TermData) => this = (data) => this;
+    havingOrBetween: (data: TermData) => this = (data) => this;
+    havingOrNotBetween: (data: TermData) => this = (data) => this;
 }
 
 export default Having;

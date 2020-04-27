@@ -1,1 +1,1 @@
-declare module "schema-verify";
+// declare module "schema-verify";

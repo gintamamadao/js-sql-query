@@ -6,7 +6,7 @@ import Base from "./base";
 import {
     orderInfoVerify,
     valueListVerify,
-    strArrVerify
+    strArrVerify,
 } from "../verify/builder/index";
 import ErrMsg from "../error/builder/index";
 
@@ -14,7 +14,7 @@ const SQL_NAME = "orderSql";
 
 class Order extends Base {
     protected orderInfos: OrderInfo[];
-    protected orderSql: string | Function;
+    protected orderSql: string | Function = "";
     constructor() {
         super();
         this.orderInfos = [];
@@ -36,11 +36,11 @@ class Order extends Base {
             }
             const field: string = info.field;
             const type: OrderTypes = info.type;
-            const list: string[] = info.list;
+            const list = info.list;
             const safeField = this.safeKey(field);
             if (type === OrderTypes.field) {
-                const listStr: string = list
-                    .map(value => this.safeValue(value))
+                const listStr: string = (list || [])
+                    .map((value) => this.safeValue(value))
                     .join(", ");
                 ordersArr.push(`${type}(${safeField}, ${listStr})`);
                 continue;
@@ -100,10 +100,10 @@ class Order extends Base {
         for (const field of fields) {
             const info: OrderInfo = {
                 field,
-                type
+                type,
             };
             if (type === OrderTypes.field) {
-                const list: string[] = fieldOrder[field];
+                const list: string[] = (<FieldOrder>fieldOrder)[field];
                 if (!valueListVerify(list)) {
                     throw new Error(ErrMsg.errorValueList);
                 }

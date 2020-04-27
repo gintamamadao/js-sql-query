@@ -9,7 +9,7 @@ import ErrMsg from "../error/builder/index";
 const TERM_TYPES = Object.values(TermTypes);
 
 class TermApi extends Query {
-    protected termStatus: TermTypes;
+    protected termStatus: TermTypes = "" as TermTypes;
     constructor() {
         super();
         for (const termApi in WHERE_TERM_API) {
@@ -47,7 +47,7 @@ class TermApi extends Query {
     }
 
     protected getTermCase(type: TermTypes): Term {
-        let term: Term =  (<any>this)[type];
+        let term: Term = (<any>this)[type];
         if (!term || !(term instanceof Term)) {
             term = new Term();
             term.setDialect(this.dialectType);
@@ -56,30 +56,30 @@ class TermApi extends Query {
         return term;
     }
 
-    equal: (data: TermData) => this;
-    notEqual: (data: TermData) => this;
-    in: (data: TermData) => this;
-    notIn: (data: TermData) => this;
-    more: (data: TermData) => this;
-    less: (data: TermData) => this;
-    moreEqual: (data: TermData) => this;
-    lessEqual: (data: TermData) => this;
-    like: (data: TermData) => this;
-    notLike: (data: TermData) => this;
-    between: (data: TermData) => this;
-    notBetween: (data: TermData) => this;
-    orEqual: (data: TermData) => this;
-    orNotEqual: (data: TermData) => this;
-    orIn: (data: TermData) => this;
-    orNotIn: (data: TermData) => this;
-    orMore: (data: TermData) => this;
-    orLess: (data: TermData) => this;
-    orMoreEqual: (data: TermData) => this;
-    orLessEqual: (data: TermData) => this;
-    orLike: (data: TermData) => this;
-    orNotLike: (data: TermData) => this;
-    orBetween: (data: TermData) => this;
-    orNotBetween: (data: TermData) => this;
+    equal: (data: TermData) => this = (data) => this;
+    notEqual: (data: TermData) => this = (data) => this;
+    in: (data: TermData) => this = (data) => this;
+    notIn: (data: TermData) => this = (data) => this;
+    more: (data: TermData) => this = (data) => this;
+    less: (data: TermData) => this = (data) => this;
+    moreEqual: (data: TermData) => this = (data) => this;
+    lessEqual: (data: TermData) => this = (data) => this;
+    like: (data: TermData) => this = (data) => this;
+    notLike: (data: TermData) => this = (data) => this;
+    between: (data: TermData) => this = (data) => this;
+    notBetween: (data: TermData) => this = (data) => this;
+    orEqual: (data: TermData) => this = (data) => this;
+    orNotEqual: (data: TermData) => this = (data) => this;
+    orIn: (data: TermData) => this = (data) => this;
+    orNotIn: (data: TermData) => this = (data) => this;
+    orMore: (data: TermData) => this = (data) => this;
+    orLess: (data: TermData) => this = (data) => this;
+    orMoreEqual: (data: TermData) => this = (data) => this;
+    orLessEqual: (data: TermData) => this = (data) => this;
+    orLike: (data: TermData) => this = (data) => this;
+    orNotLike: (data: TermData) => this = (data) => this;
+    orBetween: (data: TermData) => this = (data) => this;
+    orNotBetween: (data: TermData) => this = (data) => this;
 }
 
 export default TermApi;

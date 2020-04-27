@@ -8,10 +8,10 @@ import Execute from "../execute/execute";
 import Store from "./store";
 
 class Base {
-    protected _queryTable: string;
-    protected _dialect: Dialect;
-    protected _dialectType: DialectTypes;
-    protected _execute: Execute;
+    protected _queryTable: string = "";
+    protected _dialect: Dialect = {} as Dialect;
+    protected _dialectType: DialectTypes = "" as DialectTypes;
+    protected _execute: Execute = {} as Execute;
 
     get dialectType(): DialectTypes {
         const dialectType: DialectTypes = this._dialectType;
@@ -55,7 +55,7 @@ class Base {
         }
     }
 
-    protected safeValue: SafeValue = function (value: string): string {
+    protected safeValue: SafeValue = function (value) {
         const _dialectType = this._dialectType;
         let dbModule;
         switch (_dialectType) {
@@ -67,7 +67,7 @@ class Base {
                 value = this._safeValue(value);
                 break;
         }
-        return value;
+        return value + "";
     };
 
     protected safeKey: SafeKey = function (key: string): string {
@@ -142,19 +142,18 @@ class Base {
 
     exec<T = any>(sqlStr?: string): Promise<T> {
         const execute: Execute = this._execute;
-        const query: string = Type.string.isNotEmpty(sqlStr)
-            ? sqlStr
-            : this.build();
+        const query = Type.string.isNotEmpty(sqlStr) ? sqlStr : this.build();
         if (!Type.string.isNotEmpty(query)) {
             throw new Error(ErrMsg.emptySqlQuery);
         }
         if (Type.object.isNot(execute) || Type.func.isNot(execute.exec)) {
             throw new Error(ErrMsg.errorExecute);
         }
-        return execute.exec(query);
+        return execute.exec(query || "");
     }
 
-    execAll<T = any>(queryList?: string[]): Promise<T[]> {
+    execAll<T = any>(queryList?: string[]): Promise<T[][]> {
+        queryList = queryList || [];
         const execute: Execute = this._execute;
         queryList = Type.array.isNotEmpty(queryList)
             ? queryList
@@ -162,7 +161,7 @@ class Base {
         if (Type.object.isNot(execute) || Type.func.isNot(execute.exec)) {
             throw new Error(ErrMsg.errorExecute);
         }
-        const promiseArr = [];
+        const promiseArr: Promise<T[]>[] = [];
         for (let query of queryList) {
             if (!Type.string.isNotEmpty(query)) {
                 continue;

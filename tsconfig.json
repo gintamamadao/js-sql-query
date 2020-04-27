@@ -1,10 +1,20 @@
 {
     "compilerOptions": {
+        "outDir": "./dist/",
         "sourceMap": true,
-        "noImplicitAny": true,
-        "declaration": true,
+        "noImplicitAny": false,
         "module": "es6",
-        "target": "es2017"
+        "target": "esnext",
+        "declaration": true,
+        "declarationDir": "./dist/",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "noImplicitThis": false,
+        "lib": ["es5", "es6", "dom", "es7", "esnext"],
+        "experimentalDecorators": true,
+        "strict": true
     },
-    "include": ["./src/**/*", "global.d.ts"]
+    "include": ["./src/**/*", "global.d.ts"],
+    "exclude": ["node_modules"]
 }
