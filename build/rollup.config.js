@@ -25,7 +25,7 @@ const babelOptions = {
 module.exports = [
     {
         input: util.resolve("src/index.ts"),
-        output: [{ file: pkg.module, format: "es" }],
+        output: [{ file: pkg.module, format: "cjs" }],
         plugins: [
             typescript(),
             commonjs({
