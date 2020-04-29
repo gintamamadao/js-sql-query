@@ -26,7 +26,6 @@ module.exports = [
     {
         input: util.resolve("src/index.ts"),
         output: [
-            { file: pkg.main, format: "cjs" },
             { file: pkg.module, format: "es" },
             {
                 name: "js-sql-query",
@@ -34,24 +33,6 @@ module.exports = [
                 format: "umd",
             },
         ],
-        plugins: [
-            typescript(),
-            commonjs({
-                extensions,
-                ignore: ["conditional-runtime-dependency"],
-            }),
-            babel(babelOptions),
-        ],
-        external: ["schema-verify"],
-    },
-    {
-        input: util.resolve("src/index.ts"),
-        output: {
-            file: "dist/js-sql-query.min.js",
-            name: "js-sql-query",
-            format: "umd",
-            sourcemap: true,
-        },
         plugins: [
             typescript(),
             commonjs({
