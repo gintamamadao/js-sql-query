@@ -1,4 +1,4 @@
-const { Builder } = require("../../dist/js-sql-query");
+const { Builder } = require("../../es/js-sql-query")
 
 describe("REPLACE", () => {
     const builder = new Builder();

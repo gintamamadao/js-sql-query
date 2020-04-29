@@ -25,14 +25,7 @@ const babelOptions = {
 module.exports = [
     {
         input: util.resolve("src/index.ts"),
-        output: [
-            { file: pkg.module, format: "es" },
-            {
-                name: "js-sql-query",
-                file: "dist/js-sql-query.js",
-                format: "umd",
-            },
-        ],
+        output: [{ file: pkg.module, format: "es" }],
         plugins: [
             typescript(),
             commonjs({
