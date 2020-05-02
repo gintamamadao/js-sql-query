@@ -34,7 +34,7 @@
         "typeScript"
     ],
     "dependencies": {
-        "schema-verify": "1.6.7"
+        "schema-verify": "1.6.9"
     },
     "devDependencies": {
         "@babel/core": "~7.4.5",
