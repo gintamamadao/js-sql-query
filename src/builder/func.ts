@@ -15,10 +15,9 @@ class Func extends Base {
         const safeField: string = needSafeTrans
             ? this.safeKey(fieldStr)
             : fieldStr;
-        const funcInfo: FuncInfo = {
-            funcFeild: `${func}(${safeField})`
+        return {
+            funcFeild: `${func}(${safeField})`,
         };
-        return funcInfo;
     }
 
     count(field?: number | string): FuncInfo {

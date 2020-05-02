@@ -36,11 +36,11 @@ class Base {
         this._safeKey = dialect.safeKey;
     }
 
-    protected _safeValue: SafeValue = function (): string {
+    protected _safeValue: SafeValue = (): string => {
         return "";
     };
 
-    protected _safeKey: SafeKey = function (): string {
+    protected _safeKey: SafeKey = (): string => {
         return "";
     };
 

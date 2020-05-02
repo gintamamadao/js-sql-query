@@ -10,11 +10,12 @@ class Having extends Where {
 
     constructor() {
         super();
-        for (const termApi in HAVING_TERM_API) {
+        const termApis = Object.keys(HAVING_TERM_API);
+        for (const api of termApis) {
             const havingTermApi =
-                HAVING_TERM_API[termApi as keyof typeof HAVING_TERM_API];
+                HAVING_TERM_API[api as keyof typeof HAVING_TERM_API];
             (<any>this)[havingTermApi] = function (data: TermData) {
-                return this.havingTermApiFn(termApi, data);
+                return this.havingTermApiFn(api, data);
             };
         }
     }

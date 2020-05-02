@@ -27,13 +27,12 @@ class Join extends Combine {
     }
 
     protected getQueryTables(): string {
-        const queryTables: string = Type.array
+        return Type.array
             .safe(this.queryTables)
             .map((table: string) => {
                 return this.safeKey(table);
             })
             .join(", ");
-        return queryTables;
     }
 
     protected formatJoinFields(): string[] {
@@ -44,7 +43,8 @@ class Join extends Combine {
             this.tableFieldsAsMap
         );
         const result: string[] = [];
-        for (const table in tableFieldsMap) {
+        const tables = Object.keys(tableFieldsMap);
+        for (const table of tables) {
             const fields: string[] = Type.array.safe(tableFieldsMap[table]);
             const asMap: KeyValueStr = Type.object.safe(
                 tableFieldsAsMap[table]
@@ -103,7 +103,8 @@ class Join extends Combine {
             const symbol: string = termInfo.symbol;
             const tableFields: KeyValueStr = termInfo.tableFields;
             let termStr: string = "";
-            for (const table in tableFields) {
+            const tables = Object.keys(tableFields);
+            for (const table of tables) {
                 const field = tableFields[table];
                 const safeTable: string = this.safeKey(table);
                 const safeField: string = this.safeKey(field);

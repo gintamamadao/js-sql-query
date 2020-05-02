@@ -47,7 +47,7 @@ class Insert extends Query {
             throw new Error(ErrMsg.errorFieldDataArr);
         }
         const insertDataArr: FieldData[] = Type.array.safe(this.insertDataArr);
-        this.insertDataArr =  (<FieldData[]>[]).concat(insertDataArr, dataArr);
+        this.insertDataArr = (<FieldData[]>[]).concat(insertDataArr, dataArr);
         return this;
     }
 
@@ -125,8 +125,7 @@ class Insert extends Query {
         const fields: string[] = this.formatFields();
         const valuesStr: string = this.formatValues(fields);
         const fieldsStr = fields.map((field) => this.safeKey(field)).join(", ");
-        let query: string = `${type} INTO ${table} ( ${fieldsStr} )  ${valuesStr}`;
-        return query;
+        return `${type} INTO ${table} ( ${fieldsStr} )  ${valuesStr}`;
     }
 }
 

@@ -39,7 +39,7 @@ class MyssqlConnect extends BaseConnect {
             this.pool = pool;
             const request = pool.request();
             const conn = {
-                query: function (query: any, cb: Function) {
+                query: (query: any, cb: Function) => {
                     request.query(query, (err: Error, result: any) => {
                         if (err) {
                             reject(err);

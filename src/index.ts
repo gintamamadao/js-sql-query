@@ -4,7 +4,7 @@ import { Type } from "schema-verify";
 import { ConnectConfig } from "./constant/interface";
 import { DialectTypes } from "./constant/enum";
 
-function SqlQuery(config: ConnectConfig | DialectTypes): Builder {
+function sqlQuery(config: ConnectConfig | DialectTypes): Builder {
     let dialect: DialectTypes;
     if (Type.object.isNot(config)) {
         dialect = DialectTypes.mysql;
@@ -19,10 +19,9 @@ function SqlQuery(config: ConnectConfig | DialectTypes): Builder {
     dialect = (<ConnectConfig>config).dialect || DialectTypes.mysql;
     config = Type.object.safe(config);
     const execute = new Execute(<ConnectConfig>config);
-    const builder = new Builder(dialect, execute);
-    return builder;
+    return new Builder(dialect, execute);
 }
 
 export { Builder, Execute };
 
-export default SqlQuery;
+export default sqlQuery;

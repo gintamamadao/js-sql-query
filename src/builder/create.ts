@@ -74,8 +74,7 @@ class Create extends Base {
             const tmplOpts = {
                 dbName: createDbName,
             };
-            const query: string = analyTmpl(DATABASE_TEMPLATE, tmplOpts);
-            return query;
+            return analyTmpl(DATABASE_TEMPLATE, tmplOpts);
         }
         const tableSqlStr: string = this.createTableSqlStr;
         if (Type.string.isNotEmpty(tableSqlStr)) {
@@ -83,8 +82,7 @@ class Create extends Base {
         }
         const tableInfo: TableInfo = this.createTableInfo;
         tableInfoVerify(tableInfo, true);
-        const query: string = this.tableTmpl(tableInfo);
-        return query;
+        return this.tableTmpl(tableInfo);
     }
 
     protected tableTmpl(info: TableInfo): string {
@@ -96,8 +94,7 @@ class Create extends Base {
             feildsStr,
             tableOptionsStr,
         };
-        const tableInfoStr: string = analyTmpl(TABLE_TEMPLATE, tmplOpts) + ";";
-        return tableInfoStr;
+        return analyTmpl(TABLE_TEMPLATE, tmplOpts) + ";";
     }
 
     protected feildsStr(info: TableInfo): string {
@@ -174,9 +171,7 @@ class Create extends Base {
             tmplOpts["comment"] = `${TableOptions.comment} ${comment}`;
         }
 
-        const feildStr: string = analyTmpl(FEILD_TEMPLATE, tmplOpts);
-
-        return feildStr;
+        return analyTmpl(FEILD_TEMPLATE, tmplOpts);
     }
 
     protected primaryKeyStr(keyInfo: string | combineKey): string {
@@ -251,11 +246,7 @@ class Create extends Base {
             const value = this.safeValue(<string>comment);
             tmplOpts["comment"] = `${key}=${value}`;
         }
-        const tableOptionsStr: string = analyTmpl(
-            TABLE_OPTIONS_TEMPLATE,
-            tmplOpts
-        );
-        return tableOptionsStr;
+        return analyTmpl(TABLE_OPTIONS_TEMPLATE, tmplOpts);
     }
 }
 

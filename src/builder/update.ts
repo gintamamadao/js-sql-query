@@ -5,7 +5,7 @@ import { Type } from "schema-verify";
 import {
     strArrVerify,
     fieldDataVerify,
-    updateInfoVerify
+    updateInfoVerify,
 } from "../verify/builder/index";
 import ErrMsg from "../error/builder/index";
 
@@ -41,7 +41,8 @@ class Update extends Where {
             throw new Error(ErrMsg.emptyUpdateInfo);
         }
         const result: string[] = [];
-        for (const field in updateInfos) {
+        const fields = Object.keys(updateInfos);
+        for (const field of fields) {
             const info: UpdateInfo = updateInfos[field];
             if (!updateInfoVerify(info)) {
                 continue;
@@ -77,11 +78,12 @@ class Update extends Where {
             throw new Error(ErrMsg.errorFieldData);
         }
         const updateInfos: UpdateInfos = Type.object.safe(this.updateInfos);
-        for (const field in data) {
+        const fields = Object.keys(data);
+        for (const field of fields) {
             const value = data[field];
             const updateInfo = {
                 value,
-                type
+                type,
             };
             if (!updateInfoVerify(updateInfo)) {
                 throw new Error(ErrMsg.errorUpdateInfo);

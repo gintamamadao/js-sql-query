@@ -35,7 +35,7 @@ class Execute {
         }
         const dbConnection = await connect.getDbConnect();
         return new Promise<T>((relsove, reject) => {
-            dbConnection.query(query, function(err: Error, results: T) {
+            dbConnection.query(query, (err: Error, results: T) => {
                 dbConnection.release();
                 if (err) {
                     reject(err);

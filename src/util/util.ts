@@ -2,7 +2,7 @@ import { Type } from "schema-verify";
 
 export function analyTmpl(tmpl: string, opts: any): string {
     return tmpl
-        .replace(/\{\{([a-zA-Z_0-9]+)\}\}/g, function (match, key) {
+        .replace(/\{\{([a-zA-Z_0-9]+)\}\}/g, (match, key) => {
             if (opts.hasOwnProperty(key) && Type.string.isNotEmpty(opts[key])) {
                 return opts[key] + " ";
             } else {

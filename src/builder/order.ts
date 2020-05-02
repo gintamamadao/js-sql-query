@@ -51,8 +51,7 @@ class Order extends Base {
             return "";
         }
         ordersArr = Array.from(new Set(ordersArr));
-        const ordersStr = ordersArr.join(", ");
-        return ordersStr;
+        return ordersArr.join(", ");
     }
 
     orderBuild(query: string): string {

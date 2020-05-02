@@ -10,11 +10,12 @@ class Where extends TermApi {
 
     constructor() {
         super();
-        for (const termApi in WHERE_TERM_API) {
+        const termApis = Object.keys(WHERE_TERM_API);
+        for (const api of termApis) {
             const whereTermApi =
-                WHERE_TERM_API[termApi as keyof typeof WHERE_TERM_API];
+                WHERE_TERM_API[api as keyof typeof WHERE_TERM_API];
             (<any>this)[whereTermApi] = function (data: TermData) {
-                return this.whereTermApiFn(termApi, data);
+                return this.whereTermApiFn(api, data);
             };
         }
     }

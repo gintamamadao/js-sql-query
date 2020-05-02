@@ -118,8 +118,7 @@ class Alter extends Base {
             queryTable,
             alterInfosStr,
         };
-        const query: string = analyTmpl(ALTER_TEMPLATE, tmplOpts);
-        return query;
+        return analyTmpl(ALTER_TEMPLATE, tmplOpts);
     }
 
     protected feildTmpl(fieldInfo: AlterField): string {
@@ -157,7 +156,9 @@ class Alter extends Base {
                 upperValue = (<string>defaultValue).toUpperCase();
                 needSafe = !TABLE_OPT_VALUES.includes(upperValue);
             }
-            defaultValue = needSafe ? this.safeValue(<string>defaultValue) : upperValue;
+            defaultValue = needSafe
+                ? this.safeValue(<string>defaultValue)
+                : upperValue;
             tmplOpts["default"] = `${TableOptions.default} ${defaultValue}`;
         }
 
@@ -174,9 +175,7 @@ class Alter extends Base {
             tmplOpts["comment"] = `${TableOptions.comment} ${comment}`;
         }
 
-        const feildStr: string = analyTmpl(FEILD_TEMPLATE, tmplOpts);
-
-        return feildStr;
+        return analyTmpl(FEILD_TEMPLATE, tmplOpts);
     }
 }
 

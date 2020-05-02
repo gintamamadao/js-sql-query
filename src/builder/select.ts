@@ -47,7 +47,9 @@ class Select extends Join {
             fields = Type.array.safe(fields);
             joinFields = Type.array.safe(joinFields);
             funcs = Type.array.safe(funcs);
-            result = (<string[]>[]).concat(fields, joinFields, funcs).join(", ");
+            result = (<string[]>[])
+                .concat(fields, joinFields, funcs)
+                .join(", ");
         } else {
             result = "*";
         }
@@ -59,8 +61,7 @@ class Select extends Join {
         if (Type.string.isNotEmpty(tablesStr)) {
             return tablesStr;
         }
-        const table: string = this.getQueryTable();
-        return table;
+        return this.getQueryTable();
     }
 
     build(): string {

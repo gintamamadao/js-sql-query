@@ -1,0 +1,11 @@
+{
+    "rulesDirectory": ["node_modules/tslint-microsoft-contrib"],
+    "extends": ["tslint-microsoft-contrib/recommended"],
+    "rules": {
+        "no-relative-imports": false,
+        "import-name": false,
+        "prefer-type-cast": false,
+        "non-literal-require": false,
+        "export-name": false
+    }
+}

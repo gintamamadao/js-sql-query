@@ -44,10 +44,9 @@ class Term extends Base {
         if (!Type.array.isNotEmpty(termInfos)) {
             return "";
         }
-        const allTermStr = !Type.array.isNotEmpty(termBrackets)
+        return !Type.array.isNotEmpty(termBrackets)
             ? this.formatTerms(termInfos)
             : this.formatTermBrackets(termBrackets, termInfos);
-        return allTermStr;
     }
 
     protected formatTermSql(): string {
@@ -200,7 +199,8 @@ class Term extends Base {
         }
         const termInfos: TermInfo[] = Type.array.safe(this.termInfos);
         const termsArr: TermInfo[] = [];
-        for (const field in data) {
+        const fields = Object.keys(data);
+        for (const field of fields) {
             const value = data[field];
             switch (sign) {
                 case TermSign.in:
