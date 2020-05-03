@@ -78,8 +78,7 @@ class Update extends Where {
             throw new Error(ErrMsg.errorFieldData);
         }
         const updateInfos: UpdateInfos = Type.object.safe(this.updateInfos);
-        const fields = Object.keys(data);
-        for (const field of fields) {
+        for (const field of Object.keys(data)) {
             const value = data[field];
             const updateInfo = {
                 value,

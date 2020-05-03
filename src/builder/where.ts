@@ -10,8 +10,7 @@ class Where extends TermApi {
 
     constructor() {
         super();
-        const termApis = Object.keys(WHERE_TERM_API);
-        for (const api of termApis) {
+        for (const api of Object.keys(WHERE_TERM_API)) {
             const whereTermApi =
                 WHERE_TERM_API[api as keyof typeof WHERE_TERM_API];
             (<any>this)[whereTermApi] = function (data: TermData) {

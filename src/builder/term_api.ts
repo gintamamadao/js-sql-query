@@ -12,8 +12,7 @@ class TermApi extends Query {
     protected termStatus: TermTypes = "" as TermTypes;
     constructor() {
         super();
-        const termApis = Object.keys(WHERE_TERM_API);
-        for (const api of termApis) {
+        for (const api of Object.keys(WHERE_TERM_API)) {
             (<any>this)[api] = function (data: TermData) {
                 return this.termApiFn(api, data);
             };

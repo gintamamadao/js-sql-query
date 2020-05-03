@@ -43,8 +43,8 @@ class Join extends Combine {
             this.tableFieldsAsMap
         );
         const result: string[] = [];
-        const tables = Object.keys(tableFieldsMap);
-        for (const table of tables) {
+
+        for (const table of Object.keys(tableFieldsMap)) {
             const fields: string[] = Type.array.safe(tableFieldsMap[table]);
             const asMap: KeyValueStr = Type.object.safe(
                 tableFieldsAsMap[table]
@@ -103,8 +103,7 @@ class Join extends Combine {
             const symbol: string = termInfo.symbol;
             const tableFields: KeyValueStr = termInfo.tableFields;
             let termStr: string = "";
-            const tables = Object.keys(tableFields);
-            for (const table of tables) {
+            for (const table of Object.keys(tableFields)) {
                 const field = tableFields[table];
                 const safeTable: string = this.safeKey(table);
                 const safeField: string = this.safeKey(field);

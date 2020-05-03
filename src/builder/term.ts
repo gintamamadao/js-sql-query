@@ -199,8 +199,7 @@ class Term extends Base {
         }
         const termInfos: TermInfo[] = Type.array.safe(this.termInfos);
         const termsArr: TermInfo[] = [];
-        const fields = Object.keys(data);
-        for (const field of fields) {
+        for (const field of Object.keys(data)) {
             const value = data[field];
             switch (sign) {
                 case TermSign.in:
