@@ -1,8 +1,8 @@
-export declare const termDataVerify: any;
-export declare const termSignVerify: any;
-export declare const termLogicVerify: any;
-export declare const termValueVerify: any;
-export declare const termInVerify: any;
-export declare const termBetweenVerify: any;
-export declare const termBracketVerify: any;
-export declare const termInfoVerify: any;
+export declare const termDataVerify: (data: any, throwError?: boolean | undefined, parent?: any) => boolean;
+export declare const termSignVerify: (data: any, throwError?: boolean | undefined, parent?: any) => boolean;
+export declare const termLogicVerify: (data: any, throwError?: boolean | undefined, parent?: any) => boolean;
+export declare const termValueVerify: (data: any, throwError?: boolean | undefined, parent?: any) => boolean;
+export declare const termInVerify: (data: any, throwError?: boolean | undefined, parent?: any) => boolean;
+export declare const termBetweenVerify: (data: any, throwError?: boolean | undefined, parent?: any) => boolean;
+export declare const termBracketVerify: (data: any, throwError?: boolean | undefined, parent?: any) => boolean;
+export declare const termInfoVerify: (data: any, throwError?: boolean | undefined, parent?: any) => boolean;

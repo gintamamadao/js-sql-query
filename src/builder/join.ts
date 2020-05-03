@@ -28,7 +28,7 @@ class Join extends Combine {
 
     protected getQueryTables(): string {
         return Type.array
-            .safe(this.queryTables)
+            .safe<any>(this.queryTables)
             .map((table: string) => {
                 return this.safeKey(table);
             })

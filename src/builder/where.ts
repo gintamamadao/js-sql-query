@@ -37,7 +37,7 @@ class Where extends TermApi {
     where(sql?: any): this {
         if (Type.undefined.isNot(sql)) {
             const term: Term = this.getWhereTermCase();
-            if (Type.func.is(sql)) {
+            if (Type.func.is<any>(sql)) {
                 sql = sql.bind(this, term);
             }
             term.sqlTerm(sql);

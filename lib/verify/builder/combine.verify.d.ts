@@ -1,2 +1,2 @@
-export declare const funcInfoVerify: any;
-export declare const funcInputVerify: any;
+export declare const funcInfoVerify: (data: any, throwError?: boolean | undefined, parent?: any) => boolean;
+export declare const funcInputVerify: (data: any, throwError?: boolean | undefined, parent?: any) => boolean;

@@ -1,3 +1,3 @@
-export declare const fieldsMapVerify: any;
-export declare const fieldsAsMapVerify: any;
-export declare const joinInfoVerify: any;
+export declare const fieldsMapVerify: (data: any, throwError?: boolean | undefined, parent?: any) => boolean;
+export declare const fieldsAsMapVerify: (data: any, throwError?: boolean | undefined, parent?: any) => boolean;
+export declare const joinInfoVerify: (data: any, throwError?: boolean | undefined, parent?: any) => boolean;

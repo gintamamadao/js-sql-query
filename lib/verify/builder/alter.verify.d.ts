@@ -1,2 +1,2 @@
-export declare const alterFieldVerify: any;
-export declare const alterInfosVerify: any;
+export declare const alterFieldVerify: (data: any, throwError?: boolean | undefined, parent?: any) => boolean;
+export declare const alterInfosVerify: (data: any, throwError?: boolean | undefined, parent?: any) => boolean;

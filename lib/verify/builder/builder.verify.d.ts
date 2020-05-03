@@ -1,5 +1,5 @@
-export declare const strArrVerify: any;
-export declare const strObjVerify: any;
-export declare const naturalVerify: any;
-export declare const integerVerify: any;
-export declare const fieldDataVerify: any;
+export declare const strArrVerify: (data: any, throwError?: boolean | undefined, parent?: any) => boolean;
+export declare const strObjVerify: (data: any, throwError?: boolean | undefined, parent?: any) => boolean;
+export declare const naturalVerify: (data: any, throwError?: boolean | undefined, parent?: any) => boolean;
+export declare const integerVerify: (data: any, throwError?: boolean | undefined, parent?: any) => boolean;
+export declare const fieldDataVerify: (data: any, throwError?: boolean | undefined, parent?: any) => boolean;

@@ -86,7 +86,7 @@ class Base {
         if (Type.string.is(sql)) {
             return sql;
         }
-        if (Type.func.is(sql)) {
+        if (Type.func.is<any>(sql)) {
             sql = sql();
             if (Type.string.is(sql)) {
                 return sql;
