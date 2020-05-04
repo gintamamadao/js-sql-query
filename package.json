@@ -1,6 +1,6 @@
 {
     "name": "js-sql-query",
-    "version": "2.2.1",
+    "version": "2.2.2",
     "description": "Node.js ORM for MySQL and Microsoft SQL Server",
     "main": "./lib/js-sql-query.js",
     "module": "./lib/js-sql-query.js",
@@ -37,7 +37,7 @@
         "typeScript"
     ],
     "dependencies": {
-        "schema-verify": "1.7.3"
+        "schema-verify": "1.7.7"
     },
     "devDependencies": {
         "@babel/core": "~7.4.5",
