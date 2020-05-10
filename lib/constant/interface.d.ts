@@ -35,6 +35,10 @@ export interface FieldData {
 export interface FuncInfo {
     funcFeild: string;
 }
+export interface FuncInput {
+    func: string;
+    field: string | number;
+}
 export interface OrderInfo {
     field: string;
     type: OrderTypes;

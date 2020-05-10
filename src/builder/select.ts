@@ -1,6 +1,6 @@
 import { argStrArrTrans } from "../util/util";
 import Join from "./join";
-import { KeyValueStr } from "../constant/interface";
+import { KeyValueStr, FuncInfo, FuncInput } from "../constant/interface";
 import { QueryTypes } from "../constant/enum";
 import { Type } from "schema-verify";
 import { strArrVerify, strObjVerify } from "../verify/builder/index";
@@ -82,7 +82,7 @@ class Select extends Join {
         const args: any[] = argStrArrTrans(arg, otherArgs);
         const fields: string[] = [];
         for (const item of args) {
-            if (Type.object.isNotEmpty(item)) {
+            if (Type.object.isNotEmpty<FuncInfo>(item)) {
                 this.funcFeilds(item);
                 continue;
             }

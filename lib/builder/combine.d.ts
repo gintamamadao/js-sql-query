@@ -1,10 +1,6 @@
 import Having from "./having";
 import Func from "./func";
-import { FuncInfo } from "../constant/interface";
-interface FuncInput {
-    func: string;
-    field: string | number;
-}
+import { FuncInfo, FuncInput } from "../constant/interface";
 declare class Combine extends Having {
     protected combineFuncs: FuncInfo[];
     protected funcInstance: Func;

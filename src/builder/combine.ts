@@ -1,18 +1,13 @@
 import Having from "./having";
 import Func from "./func";
 import { Type } from "schema-verify";
-import { FuncInfo } from "../constant/interface";
+import { FuncInfo, FuncInput } from "../constant/interface";
 import ErrMsg from "../error/builder/index";
 import {
     strArrVerify,
     funcInfoVerify,
     funcInputVerify,
 } from "../verify/builder/index";
-
-interface FuncInput {
-    func: string;
-    field: string | number;
-}
 
 class Combine extends Having {
     protected combineFuncs: FuncInfo[];
