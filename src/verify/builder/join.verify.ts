@@ -1,5 +1,5 @@
 import Schema from "schema-verify";
-import { TermSign } from "../../constant/enum";
+import { TermSignO } from "../../constant/enum";
 
 const fieldsMapSchema = new Schema({
     type: Object,
@@ -43,7 +43,7 @@ const joinInfoSchema = new Schema({
                         type: String,
                         required: true,
                         minLength: 1,
-                        enum: TermSign
+                        enum: Object.keys(TermSignO).map((k) => TermSignO[k]),
                     },
                     tableFields: {
                         type: Object,

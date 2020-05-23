@@ -44,6 +44,10 @@ export declare enum TermLogic {
     and = "AND",
     or = "OR"
 }
+export declare const TermLogicO: {
+    and: string;
+    or: string;
+};
 export declare enum TermSign {
     equal = "=",
     notEqual = "<>",
@@ -59,6 +63,21 @@ export declare enum TermSign {
     between = "BETWEEN",
     notBetween = "NOT BETWEEN"
 }
+export declare const TermSignO: {
+    equal: string;
+    notEqual: string;
+    more: string;
+    less: string;
+    moreEqual: string;
+    lessEqual: string;
+    like: string;
+    notlike: string;
+    isNot: string;
+    in: string;
+    notIn: string;
+    between: string;
+    notBetween: string;
+};
 export declare enum OrderTypes {
     desc = "DESC",
     asc = "ASC",

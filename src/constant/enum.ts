@@ -2,7 +2,7 @@ export enum DialectTypes {
     mysql = "mysql",
     mssql = "mssql",
     postgresql = "postgresql",
-    sqlite = "sqlite"
+    sqlite = "sqlite",
 }
 
 export enum QueryTypes {
@@ -12,7 +12,7 @@ export enum QueryTypes {
     update = "UPDATE",
     delete = "DELETE",
     create = "CREATE",
-    alter = "ALTER"
+    alter = "ALTER",
 }
 
 export enum FuncTypes {
@@ -40,13 +40,18 @@ export enum FuncTypes {
     rand = "RAND",
     radians = "RADIANS",
     degrees = "DEGREES",
-    distinct = "DISTINCT"
+    distinct = "DISTINCT",
 }
 
 export enum TermLogic {
     and = "AND",
-    or = "OR"
+    or = "OR",
 }
+
+export const TermLogicO = {
+    and: "AND",
+    or: "OR",
+};
 
 export enum TermSign {
     equal = "=",
@@ -61,25 +66,41 @@ export enum TermSign {
     in = "IN",
     notIn = "NOT IN",
     between = "BETWEEN",
-    notBetween = "NOT BETWEEN"
+    notBetween = "NOT BETWEEN",
 }
+
+export const TermSignO = {
+    equal: "=",
+    notEqual: "<>",
+    more: ">",
+    less: "<",
+    moreEqual: ">=",
+    lessEqual: "<=",
+    like: "LIKE",
+    notlike: "NOT LIKE",
+    isNot: "IS NOT",
+    in: "IN",
+    notIn: "NOT IN",
+    between: "BETWEEN",
+    notBetween: "NOT BETWEEN",
+};
 
 export enum OrderTypes {
     desc = "DESC",
     asc = "ASC",
-    field = "FIELD"
+    field = "FIELD",
 }
 
 export enum UpdateTypes {
     set = "SET",
     add = "ADD",
-    minus = "MINUS"
+    minus = "MINUS",
 }
 
 export enum WidgetTypes {
     func = "FUNC",
     term = "TERM",
-    order = "ORDER"
+    order = "ORDER",
 }
 
 export enum SqlDataTypes {
@@ -105,7 +126,7 @@ export enum SqlDataTypes {
     mediumblob = "MEDIUMBLOB",
     mediumtext = "MEDIUMTEXT",
     longblob = "LONGBLOB",
-    longtext = "LONGTEXT"
+    longtext = "LONGTEXT",
 }
 
 export enum TableOptions {
@@ -119,28 +140,28 @@ export enum TableOptions {
     notNull = "NOT NULL",
     default = "DEFAULT",
     onUpdate = "ON UPDATE",
-    constraint = "CONSTRAINT"
+    constraint = "CONSTRAINT",
 }
 
 export enum AlterMethods {
     add = "ADD",
     drop = "DROP",
     modify = "MODIFY",
-    change = "CHANGE"
+    change = "CHANGE",
 }
 
 export enum JoinTypes {
     inner = "INNER",
     left = "LEFT",
-    right = "RIGHT"
+    right = "RIGHT",
 }
 
 export enum TermTypes {
     where = "whereTerm",
-    having = "havingTerm"
+    having = "havingTerm",
 }
 
 export enum DialectModules {
     mysql = "mysql",
-    mssql = "mssql"
+    mssql = "mssql",
 }

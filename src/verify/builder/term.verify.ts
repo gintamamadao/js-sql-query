@@ -1,5 +1,5 @@
 import Schema from "schema-verify";
-import { TermSign, TermLogic } from "../../constant/enum";
+import { TermSignO, TermLogicO } from "../../constant/enum";
 
 const termDataSchema = new Schema({
     type: Object,
@@ -7,10 +7,10 @@ const termDataSchema = new Schema({
         [
             {
                 required: true,
-                type: String
+                type: String,
             },
             {
-                type: Number
+                type: Number,
             },
             {
                 type: Array,
@@ -19,36 +19,36 @@ const termDataSchema = new Schema({
                     [
                         {
                             type: String,
-                            required: true
+                            required: true,
                         },
                         {
-                            type: Number
-                        }
-                    ]
-                ]
-            }
-        ]
-    ]
+                            type: Number,
+                        },
+                    ],
+                ],
+            },
+        ],
+    ],
 });
 
 const termSignSchema = new Schema({
     type: String,
-    enum: TermSign
+    enum: Object.keys(TermSignO).map((k) => TermSignO[k]),
 });
 
 const termLogicSchema = new Schema({
     type: String,
-    enum: TermLogic
+    enum: Object.keys(TermLogicO).map((k) => TermLogicO[k]),
 });
 
 const termValueSchema = new Schema([
     {
         required: true,
-        type: String
+        type: String,
     },
     {
-        type: Number
-    }
+        type: Number,
+    },
 ]);
 
 const termInSchema = new Schema({
@@ -58,13 +58,13 @@ const termInSchema = new Schema({
         [
             {
                 type: String,
-                required: true
+                required: true,
             },
             {
-                type: Number
-            }
-        ]
-    ]
+                type: Number,
+            },
+        ],
+    ],
 });
 
 const termBetweenSchema = new Schema({
@@ -74,13 +74,13 @@ const termBetweenSchema = new Schema({
         [
             {
                 type: String,
-                required: true
+                required: true,
             },
             {
-                type: Number
-            }
-        ]
-    ]
+                type: Number,
+            },
+        ],
+    ],
 });
 
 const termBracketSchema = new Schema({
@@ -91,15 +91,15 @@ const termBracketSchema = new Schema({
             index: "position",
             required: true,
             type: Number,
-            min: 1
+            min: 1,
         },
         {
             index: "logic",
             required: true,
             type: String,
-            enum: TermLogic
-        }
-    ]
+            enum: Object.keys(TermLogicO).map((k) => TermLogicO[k]),
+        },
+    ],
 });
 
 const termInfoSchema = new Schema({
@@ -110,16 +110,16 @@ const termInfoSchema = new Schema({
             index: "field",
             required: true,
             type: String,
-            minLength: 1
+            minLength: 1,
         },
         [
             {
                 index: "value",
                 required: true,
-                type: String
+                type: String,
             },
             {
-                type: Number
+                type: Number,
             },
             {
                 type: Array,
@@ -128,28 +128,28 @@ const termInfoSchema = new Schema({
                     [
                         {
                             type: String,
-                            required: true
+                            required: true,
                         },
                         {
-                            type: Number
-                        }
-                    ]
-                ]
-            }
+                            type: Number,
+                        },
+                    ],
+                ],
+            },
         ],
         {
             index: "sign",
             required: true,
             type: String,
-            enum: TermSign
+            enum: Object.keys(TermSignO).map((k) => TermSignO[k]),
         },
         {
             index: "logic",
             required: true,
             type: String,
-            enum: TermLogic
-        }
-    ]
+            enum: Object.keys(TermLogicO).map((k) => TermLogicO[k]),
+        },
+    ],
 });
 
 export const termDataVerify = termDataSchema.verify;
