@@ -1,7 +1,7 @@
-const { Builder } = require("../../lib/js-sql-query")
+const sqlQuery = require("../../lib/js-sql-query")
 
 describe("ERROR:builder", () => {
-    const builder = new Builder();
+    const builder = new sqlQuery();
     test("table", () => {
         expect(() => builder.table()).toThrowError(
             "错误的表名，需要非空字符串"
@@ -16,7 +16,7 @@ describe("ERROR:builder", () => {
 });
 
 describe("ERROR:select", () => {
-    const builder = new Builder();
+    const builder = new sqlQuery();
     test("table", () => {
         expect(() => builder.select().build()).toThrowError(
             "错误的表名，需要非空字符串"

@@ -1,7 +1,7 @@
-const { Builder } = require("../../lib/js-sql-query")
+const sqlQuery = require("../../lib/js-sql-query")
 
 describe("SELECT:WHERE", () => {
-    const builder = new Builder();
+    const builder = new sqlQuery();
     test("=", () => {
         const QUERY = "SELECT * FROM `table1` WHERE `field1` = 'value1'";
         expect(

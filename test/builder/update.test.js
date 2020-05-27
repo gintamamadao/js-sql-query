@@ -1,7 +1,7 @@
-const { Builder } = require("../../lib/js-sql-query")
+const sqlQuery = require("../../lib/js-sql-query")
 
 describe("UPDATE", () => {
-    const builder = new Builder();
+    const builder = new sqlQuery();
     test("SET", () => {
         const QUERY = "UPDATE `table1` SET `field1` = 'value1'";
         expect(

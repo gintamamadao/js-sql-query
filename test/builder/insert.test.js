@@ -1,7 +1,7 @@
-const { Builder } = require("../../lib/js-sql-query")
+const sqlQuery = require("../../lib/js-sql-query")
 
 describe("INSERT", () => {
-    const builder = new Builder();
+    const builder = new sqlQuery();
     test("*", () => {
         const QUERY =
             "INSERT INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )";

@@ -15,12 +15,10 @@ const babelOptions = {
             "@babel/env",
             {
                 modules: false,
-                targets: {
-                    node: "10.15.3",
-                },
             },
         ],
     ],
+    plugins: ["@babel/transform-runtime"],
 };
 
 module.exports = [
@@ -42,6 +40,6 @@ module.exports = [
                 },
             }),
         ],
-        external: ["schema-verify"],
+        external: ["schema-verify", "@babel/runtime", "regenerator-runtime"],
     },
 ];

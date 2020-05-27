@@ -22,6 +22,4 @@ function sqlQuery(config: ConnectConfig | DialectTypes): Builder {
     return new Builder(dialect, execute);
 }
 
-export { Builder, Execute };
-
 export default sqlQuery;

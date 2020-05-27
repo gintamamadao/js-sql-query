@@ -1,7 +1,7 @@
-const { Builder } = require("../../lib/js-sql-query")
+const sqlQuery = require("../../lib/js-sql-query")
 
 describe("SELECT: base", () => {
-    const builder = new Builder();
+    const builder = new sqlQuery();
     test("*", () => {
         const QUERY = "SELECT * FROM `table1`";
         expect(
@@ -107,7 +107,7 @@ describe("SELECT: base", () => {
 });
 
 describe("SELECT:COMBINE FUNC", () => {
-    const builder = new Builder();
+    const builder = new sqlQuery();
     test("COUNT", () => {
         const QUERY = "SELECT `field1`, COUNT(`field2`) FROM `table1`";
         expect(
@@ -247,7 +247,7 @@ describe("SELECT:COMBINE FUNC", () => {
 });
 
 describe("SELECT: asMap", () => {
-    const builder = new Builder();
+    const builder = new sqlQuery();
     test("fieldAsMap", () => {
         const QUERY = "SELECT `field1` AS `field1_as` FROM `table1`";
         expect(
@@ -281,7 +281,7 @@ describe("SELECT: asMap", () => {
 });
 
 describe("SELECT: multiTables", () => {
-    const builder = new Builder();
+    const builder = new sqlQuery();
     test("multiTables", () => {
         const QUERY = "SELECT * FROM `table1`";
         expect(
@@ -305,7 +305,7 @@ describe("SELECT: multiTables", () => {
 });
 
 describe("SELECT: tableFields", () => {
-    const builder = new Builder();
+    const builder = new sqlQuery();
     test("tableFields", () => {
         const QUERY =
             "SELECT `table1`.`field1`, `table1`.`field2` FROM `table1`";
@@ -338,7 +338,7 @@ describe("SELECT: tableFields", () => {
 });
 
 describe("SELECT: tableAsMap", () => {
-    const builder = new Builder();
+    const builder = new sqlQuery();
     test("tableAsMap", () => {
         const QUERY =
             "SELECT `table1`.`field1` AS `field1_as`, `table1`.`field2` AS `field2_as` FROM `table1`";
@@ -386,7 +386,7 @@ describe("SELECT: tableAsMap", () => {
 });
 
 describe("SELECT: join", () => {
-    const builder = new Builder();
+    const builder = new sqlQuery();
     test("innerJoin", () => {
         const QUERY =
             "SELECT * FROM `table1` INNER JOIN `table2` ON (`table1`.`field1` = `table2`.`field2`)";

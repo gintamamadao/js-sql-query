@@ -1,7 +1,7 @@
-const { Builder } = require("../../lib/js-sql-query")
+const sqlQuery = require("../../lib/js-sql-query")
 
 describe("SELECT:ORDER BY", () => {
-    const builder = new Builder();
+    const builder = new sqlQuery();
     test("ORDER", () => {
         const QUERY = "SELECT * FROM `table1` ORDER BY `field1` DESC";
         expect(

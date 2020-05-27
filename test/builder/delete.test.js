@@ -1,7 +1,7 @@
-const { Builder } = require("../../lib/js-sql-query")
+const sqlQuery = require("../../lib/js-sql-query")
 
 describe("DELETE", () => {
-    const builder = new Builder();
+    const builder = new sqlQuery();
     test("*", () => {
         const QUERY = "DELETE FROM `table1`";
         expect(

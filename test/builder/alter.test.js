@@ -1,7 +1,7 @@
-const { Builder } = require("../../lib/js-sql-query")
+const sqlQuery= require("../../lib/js-sql-query")
 
 describe("ALTER", () => {
-    const builder = new Builder();
+    const builder = new sqlQuery();
     test("ALTER:add", () => {
         const QUERY =
             "ALTER TABLE `table1` ADD COLUMN `field1` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '学生id'";

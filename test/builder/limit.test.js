@@ -1,7 +1,7 @@
-const { Builder } = require("../../lib/js-sql-query")
+const sqlQuery = require("../../lib/js-sql-query")
 
 describe("LIMIT", () => {
-    const builder = new Builder();
+    const builder = new sqlQuery();
     test("OFFSET", () => {
         const QUERY = "SELECT * FROM `table1` OFFSET 1";
         expect(

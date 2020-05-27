@@ -1,7 +1,7 @@
-const { Builder } = require("../../lib/js-sql-query")
+const sqlQuery = require("../../lib/js-sql-query")
 
 describe("CREATE", () => {
-    const builder = new Builder();
+    const builder = new sqlQuery();
     const tableInfo = {
         tableName: "student",
         primaryKey: "id",

@@ -1,7 +1,7 @@
-const { Builder } = require("../../lib/js-sql-query")
+const sqlQuery = require("../../lib/js-sql-query")
 
 describe("REPLACE", () => {
-    const builder = new Builder();
+    const builder = new sqlQuery();
     test("*", () => {
         const QUERY =
             "REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )";
