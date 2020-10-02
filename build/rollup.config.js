@@ -32,13 +32,6 @@ module.exports = [
                 ignore: ["conditional-runtime-dependency"],
             }),
             babel(babelOptions),
-            terser({
-                compress: {
-                    pure_getters: true,
-                    unsafe_comps: true,
-                    warnings: false,
-                },
-            }),
         ],
         external: ["schema-verify", "@babel/runtime", "regenerator-runtime"],
     },

@@ -11,7 +11,6 @@ import Order from "./order";
 import { Type } from "schema-verify";
 import { QueryTypes, DialectTypes, WidgetTypes } from "../constant/enum";
 import ErrMsg from "../error/builder/index";
-import Execute from "../execute/execute";
 import { ConnectConfig } from "../constant/interface";
 import Store from "./store";
 
@@ -24,12 +23,10 @@ const TABLE_QUERY_TYPE = [
 ];
 class Builder {
     protected dialectType: DialectTypes;
-    protected execute: Execute | undefined;
     public queryStore: string[];
     protected queryTable: string = "";
-    constructor(dialectType?: DialectTypes, execute?: Execute) {
+    constructor(dialectType?: DialectTypes) {
         this.dialectType = dialectType || DialectTypes.mysql;
-        this.execute = execute;
         this.queryStore = [];
     }
 
@@ -123,7 +120,6 @@ class Builder {
     ): T {
         instance = Type.object.safe(instance);
         const dialectType: DialectTypes = this.dialectType;
-        const execute = this.execute;
         const queryTable: string = this.queryTable;
         if (
             Type.string.isNotEmpty(queryTable) &&
@@ -138,9 +134,6 @@ class Builder {
         }
         if (Type.func.is(instance.checkDialect)) {
             instance.checkDialect();
-        }
-        if (Type.func.is(instance.setExecute) && execute) {
-            instance.setExecute(execute);
         }
         return instance;
     }
@@ -162,9 +155,7 @@ class Builder {
             return this;
         }
         config = Type.object.safe(config);
-        const execute = new Execute(config);
         this.dialectType = config.dialect || DialectTypes.mysql;
-        this.execute = execute;
         return this;
     }
 

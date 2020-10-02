@@ -1,24 +1,13 @@
 import { Dialects } from "../constant/interface";
 import { Type } from "schema-verify";
 import ErrMsg from "../error/builder/index";
+import sqlstring from 'sqlstring'
+
 
 const DialectsObj: Dialects = {
     mysql: {
         safeValue(value: number | string): string {
-            let result: string = "";
-            if (typeof value === "string") {
-                value = value
-                    .replace(/\'/g, () => "''")
-                    .replace(/\\/g, () => "\\\\");
-                result = `'${value}'`;
-            }
-            if (Type.number.is(value)) {
-                result = `'${value}'`;
-            }
-            if (!result) {
-                throw new Error(ErrMsg.needNumStr);
-            }
-            return result;
+            return sqlstring.escape(value);
         },
         safeKey(key: string): string {
             let result: string;

@@ -1,18 +1,15 @@
 import Dialects from "../util/dialects";
-import { DialectTypes, DialectModules } from "../constant/enum";
+import { DialectTypes } from "../constant/enum";
 import { SafeValue, SafeKey, Dialect, SqlParam } from "../constant/interface";
 import { Type } from "schema-verify";
 import { dialectVerify, manualSqlVerify } from "../verify/builder/index";
 import ErrMsg from "../error/builder/index";
-import Execute from "../execute/execute";
 import Store from "./store";
 
 class Base {
     protected _queryTable: string = "";
     protected _dialect: Dialect = {} as Dialect;
     protected _dialectType: DialectTypes = "" as DialectTypes;
-    protected _execute: Execute = {} as Execute;
-
     get dialectType(): DialectTypes {
         const dialectType: DialectTypes = this._dialectType;
         if (!dialectVerify(Dialects[dialectType])) {
@@ -44,30 +41,9 @@ class Base {
         return "";
     };
 
-    protected loadModule(moduleName: string): void {
-        try {
-            return require(moduleName);
-        } catch (err) {
-            if (err && err.code === "MODULE_NOT_FOUND") {
-                throw new Error(`请先安装模块 ${moduleName}`);
-            }
-            throw err;
-        }
-    }
-
     protected safeValue: SafeValue = function (value) {
         const _dialectType = this._dialectType;
-        let dbModule;
-        switch (_dialectType) {
-            case DialectTypes.mysql:
-                dbModule = this.loadModule(DialectModules.mysql);
-                value = dbModule.escape(value);
-                break;
-            default:
-                value = this._safeValue(value);
-                break;
-        }
-        return value + "";
+        return this._safeValue(value); + "";
     };
 
     protected safeKey: SafeKey = function (key: string): string {
@@ -136,40 +112,7 @@ class Base {
         return this;
     }
 
-    setExecute(execute: Execute): void {
-        this._execute = execute;
-    }
-
-    exec<T = any>(sqlStr?: string): Promise<T> {
-        const execute: Execute = this._execute;
-        const query = Type.string.isNotEmpty(sqlStr) ? sqlStr : this.build();
-        if (!Type.string.isNotEmpty(query)) {
-            throw new Error(ErrMsg.emptySqlQuery);
-        }
-        if (Type.object.isNot(execute) || Type.func.isNot(execute.exec)) {
-            throw new Error(ErrMsg.errorExecute);
-        }
-        return execute.exec(query || "");
-    }
-
-    execAll<T = any>(queryList?: string[]): Promise<T[][]> {
-        queryList = queryList || [];
-        const execute: Execute = this._execute;
-        queryList = Type.array.isNotEmpty(queryList)
-            ? queryList
-            : Store.getStore();
-        if (Type.object.isNot(execute) || Type.func.isNot(execute.exec)) {
-            throw new Error(ErrMsg.errorExecute);
-        }
-        const promiseArr: Promise<T[]>[] = [];
-        for (let query of queryList) {
-            if (!Type.string.isNotEmpty(query)) {
-                continue;
-            }
-            promiseArr.push(execute.exec(query));
-        }
-        return Promise.all(promiseArr);
-    }
+  
 }
 
 export default Base;
