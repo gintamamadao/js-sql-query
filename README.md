@@ -16,7 +16,6 @@
 npm i js-sql-query --save
 ```
 
-
 ---
 
 # 目录
@@ -143,7 +142,7 @@ sqlQuery
     .table("table1")
     .data({
         field1: "value1",
-        field2: "value2"
+        field2: "value2",
     })
     .build();
 ```
@@ -198,7 +197,7 @@ sqlQuery
     .table("table1")
     .data({
         field1: "value1",
-        field2: "value2"
+        field2: "value2",
     })
     .build();
 // 输出 REPLACE INTO `table1` ( `field1`, `field2` )  VALUES ( 'value1', 'value2' )
@@ -220,7 +219,7 @@ sqlQuery
     .table("table1")
     .data({
         field1: "value1",
-        field2: "value2"
+        field2: "value2",
     })
     .storeSql();
 ```
@@ -297,7 +296,7 @@ sqlQuery
     .table("table1")
     .data({
         field1: "value1",
-        field2: "value2"
+        field2: "value2",
     })
     .build();
 ```
@@ -327,13 +326,13 @@ sqlQuery
         {
             field1: "value1",
             field2: "value2",
-            field3: "value3"
+            field3: "value3",
         },
         {
             field1: "value4",
             field2: "value5",
-            field3: "value6"
-        }
+            field3: "value6",
+        },
     ])
     .build();
 ```
@@ -360,10 +359,7 @@ sqlQuery
     .table("table1")
     .fields(["field1", "field2"])
     .values(() =>
-        sqlQuery
-            .select()
-            .table("table1")
-            .fields(["field1", "field2"])
+        sqlQuery.select().table("table1").fields(["field1", "field2"])
     )
     .build();
 ```
@@ -392,7 +388,7 @@ sqlQuery
     .data({
         field1: "value1",
         field2: "value2",
-        field3: "value3"
+        field3: "value3",
     })
     .build();
 ```
@@ -441,11 +437,11 @@ sqlQuery
     .table("table1")
     .set({
         field1: "value1",
-        field2: "value2"
+        field2: "value2",
     })
     .where()
     .equal({
-        field1: "value1"
+        field1: "value1",
     })
     .build();
 ```
@@ -471,11 +467,11 @@ sqlQuery
     .update()
     .table("table1")
     .add({
-        field1: 1
+        field1: 1,
     })
     .where()
     .equal({
-        field1: "value1"
+        field1: "value1",
     })
     .build();
 ```
@@ -501,11 +497,11 @@ sqlQuery
     .update()
     .table("table1")
     .minus({
-        field1: 1
+        field1: 1,
     })
     .where()
     .equal({
-        field1: "value1"
+        field1: "value1",
     })
     .build();
 ```
@@ -589,12 +585,7 @@ _参数_
 _例子_
 
 ```js
-sqlQuery
-    .select()
-    .table("table1")
-    .fields("field1")
-    .count("field2")
-    .build();
+sqlQuery.select().table("table1").fields("field1").count("field2").build();
 ```
 
 ```sql
@@ -643,7 +634,7 @@ sqlQuery
     .table("table1")
     .fields("field1")
     .asMap({
-        field1: "field1_as"
+        field1: "field1_as",
     })
     .build();
 ```
@@ -663,10 +654,7 @@ _参数_
 _例子_
 
 ```js
-sqlQuery
-    .select()
-    .multiTables("table1", "table2")
-    .build();
+sqlQuery.select().multiTables("table1", "table2").build();
 ```
 
 ```sql
@@ -688,7 +676,7 @@ sqlQuery
     .select()
     .table("table1")
     .tableFields({
-        table1: ["field1", "field2"]
+        table1: ["field1", "field2"],
     })
     .build();
 ```
@@ -712,13 +700,13 @@ sqlQuery
     .select()
     .table("table1")
     .tableFields({
-        table1: ["field1", "field2"]
+        table1: ["field1", "field2"],
     })
     .tableAsMap({
         table1: {
             field1: "field1_as",
-            field2: "field2_as"
-        }
+            field2: "field2_as",
+        },
     })
     .build();
 ```
@@ -748,10 +736,10 @@ sqlQuery
                 symbol: "=",
                 tableFields: {
                     table1: "field1",
-                    table2: "field2"
-                }
-            }
-        ]
+                    table2: "field2",
+                },
+            },
+        ],
     })
     .build();
 ```
@@ -804,7 +792,7 @@ sqlQuery
     .table("table1")
     .where()
     .equal({
-        field1: "value1"
+        field1: "value1",
     })
     .build();
 ```
@@ -837,7 +825,7 @@ sqlQuery
     .table("table1")
     .where()
     .equal({
-        field1: "value1"
+        field1: "value1",
     })
     .build();
 ```
@@ -853,7 +841,7 @@ sqlQuery
     .select()
     .table("table1")
     .whereEqual({
-        field1: "value1"
+        field1: "value1",
     })
     .build();
 ```
@@ -878,7 +866,7 @@ sqlQuery
     .table("table1")
     .having()
     .equal({
-        field1: "value1"
+        field1: "value1",
     })
     .build();
 ```
@@ -894,7 +882,7 @@ sqlQuery
     .select()
     .table("table1")
     .havingEqual({
-        field1: "value1"
+        field1: "value1",
     })
     .build();
 ```
@@ -919,7 +907,7 @@ sqlQuery
     .table("table1")
     .where()
     .equal({
-        field1: "value1"
+        field1: "value1",
     })
     .build();
 ```
@@ -946,7 +934,7 @@ sqlQuery
     .table("table1")
     .where()
     .notEqual({
-        field1: "value1"
+        field1: "value1",
     })
     .build();
 ```
@@ -973,7 +961,7 @@ sqlQuery
     .table("table1")
     .where()
     .in({
-        field1: ["value1", "value2"]
+        field1: ["value1", "value2"],
     })
     .build();
 ```
@@ -1000,7 +988,7 @@ sqlQuery
     .table("table1")
     .where()
     .notIn({
-        field1: ["value1", "value2"]
+        field1: ["value1", "value2"],
     })
     .build();
 ```
@@ -1027,7 +1015,7 @@ sqlQuery
     .table("table1")
     .where()
     .more({
-        field1: "value1"
+        field1: "value1",
     })
     .build();
 ```
@@ -1054,7 +1042,7 @@ sqlQuery
     .table("table1")
     .where()
     .less({
-        field1: "value1"
+        field1: "value1",
     })
     .build();
 ```
@@ -1081,7 +1069,7 @@ sqlQuery
     .table("table1")
     .where()
     .moreEqual({
-        field1: "value1"
+        field1: "value1",
     })
     .build();
 ```
@@ -1108,7 +1096,7 @@ sqlQuery
     .table("table1")
     .where()
     .lessEqual({
-        field1: "value1"
+        field1: "value1",
     })
     .build();
 ```
@@ -1135,7 +1123,7 @@ sqlQuery
     .table("table1")
     .where()
     .like({
-        field1: "value1"
+        field1: "value1",
     })
     .build();
 ```
@@ -1162,7 +1150,7 @@ sqlQuery
     .table("table1")
     .where()
     .notLike({
-        field1: "value1"
+        field1: "value1",
     })
     .build();
 ```
@@ -1189,7 +1177,7 @@ sqlQuery
     .table("table1")
     .where()
     .between({
-        field1: ["value1", "value2"]
+        field1: ["value1", "value2"],
     })
     .build();
 ```
@@ -1216,7 +1204,7 @@ sqlQuery
     .table("table1")
     .where()
     .notBetween({
-        field1: ["value1", "value2"]
+        field1: ["value1", "value2"],
     })
     .build();
 ```
@@ -1244,7 +1232,7 @@ sqlQuery
     .where()
     .orEqual({
         field1: "value1",
-        field2: "value2"
+        field2: "value2",
     })
     .build();
 ```
@@ -1272,7 +1260,7 @@ sqlQuery
     .where()
     .orNotEqual({
         field1: "value1",
-        field2: "value2"
+        field2: "value2",
     })
     .build();
 ```
@@ -1300,7 +1288,7 @@ sqlQuery
     .where()
     .orIn({
         field1: ["value1", "value2"],
-        field2: ["value1", "value2"]
+        field2: ["value1", "value2"],
     })
     .build();
 ```
@@ -1328,7 +1316,7 @@ sqlQuery
     .where()
     .orNotIn({
         field1: ["value1", "value2"],
-        field2: ["value1", "value2"]
+        field2: ["value1", "value2"],
     })
     .build();
 ```
@@ -1356,7 +1344,7 @@ sqlQuery
     .where()
     .orMore({
         field1: "value1",
-        field2: "value2"
+        field2: "value2",
     })
     .build();
 ```
@@ -1384,7 +1372,7 @@ sqlQuery
     .where()
     .orLess({
         field1: "value1",
-        field2: "value2"
+        field2: "value2",
     })
     .build();
 ```
@@ -1412,7 +1400,7 @@ sqlQuery
     .where()
     .orMoreEqual({
         field1: "value1",
-        field2: "value2"
+        field2: "value2",
     })
     .build();
 ```
@@ -1440,7 +1428,7 @@ sqlQuery
     .where()
     .orLessEqual({
         field1: "value1",
-        field2: "value2"
+        field2: "value2",
     })
     .build();
 ```
@@ -1468,7 +1456,7 @@ sqlQuery
     .where()
     .orLike({
         field1: "value1",
-        field2: "value2"
+        field2: "value2",
     })
     .build();
 ```
@@ -1496,7 +1484,7 @@ sqlQuery
     .where()
     .orNotLike({
         field1: "value1",
-        field2: "value2"
+        field2: "value2",
     })
     .build();
 ```
@@ -1524,7 +1512,7 @@ sqlQuery
     .where()
     .orBetween({
         field1: ["value1", "value2"],
-        field2: ["value1", "value2"]
+        field2: ["value1", "value2"],
     })
     .build();
 ```
@@ -1552,7 +1540,7 @@ sqlQuery
     .where()
     .orNotBetween({
         field1: ["value1", "value2"],
-        field2: ["value1", "value2"]
+        field2: ["value1", "value2"],
     })
     .build();
 ```
@@ -1579,14 +1567,14 @@ sqlQuery
     .table("table1")
     .where()
     .orEqual({
-        field1: "value1"
+        field1: "value1",
     })
     .orEqual({
-        field2: "value2"
+        field2: "value2",
     })
     .bracket()
     .orEqual({
-        field3: "value3"
+        field3: "value3",
     })
     .build();
 ```
@@ -1614,11 +1602,11 @@ sqlQuery
     .where()
     .equal({
         field1: "value1",
-        field2: "value2"
+        field2: "value2",
     })
     .orBracket()
     .equal({
-        field3: "value3"
+        field3: "value3",
     })
     .build();
 ```
@@ -1646,11 +1634,7 @@ _参数_
 _例子_
 
 ```js
-sqlQuery
-    .select()
-    .table("table1")
-    .descBy("field1")
-    .build();
+sqlQuery.select().table("table1").descBy("field1").build();
 ```
 
 ```sql
@@ -1658,11 +1642,7 @@ SELECT * FROM `table1` ORDER BY `field1` DESC
 ```
 
 ```js
-sqlQuery
-    .select()
-    .table("table1")
-    .descBy("field1", "field2")
-    .build();
+sqlQuery.select().table("table1").descBy("field1", "field2").build();
 ```
 
 ```sql
@@ -1682,11 +1662,7 @@ _参数_
 _例子_
 
 ```js
-sqlQuery
-    .select()
-    .table("table1")
-    .ascBy("field1", "field2")
-    .build();
+sqlQuery.select().table("table1").ascBy("field1", "field2").build();
 ```
 
 ```sql
@@ -1694,12 +1670,7 @@ SELECT * FROM `table1` ORDER BY `field1` ASC, `field2` ASC
 ```
 
 ```js
-sqlQuery
-    .select()
-    .table("table1")
-    .descBy("field1")
-    .ascBy("field2")
-    .build();
+sqlQuery.select().table("table1").descBy("field1").ascBy("field2").build();
 ```
 
 ```sql
@@ -1723,7 +1694,7 @@ sqlQuery
     .select()
     .table("table1")
     .orderField({
-        field1: ["value1", "value2"]
+        field1: ["value1", "value2"],
     })
     .build();
 ```
@@ -1753,7 +1724,7 @@ sqlQuery
             .descBy("field1")
             .ascBy("field2")
             .orderField({
-                field3: ["value1", "value2"]
+                field3: ["value1", "value2"],
             })
     )
     .build();
@@ -1782,11 +1753,7 @@ _参数_
 _例子_
 
 ```js
-sqlQuery
-    .select()
-    .table("table1")
-    .offset(1)
-    .build();
+sqlQuery.select().table("table1").offset(1).build();
 ```
 
 ```sql
@@ -1806,11 +1773,7 @@ _参数_
 _例子_
 
 ```js
-sqlQuery
-    .select()
-    .table("table1")
-    .step(10)
-    .build();
+sqlQuery.select().table("table1").step(10).build();
 ```
 
 ```sql
@@ -1831,11 +1794,7 @@ _参数_
 _例子_
 
 ```js
-sqlQuery
-    .select()
-    .table("table1")
-    .paging(2, 10)
-    .build();
+sqlQuery.select().table("table1").paging(2, 10).build();
 ```
 
 ```sql
@@ -1855,11 +1814,7 @@ _参数_
 _例子_
 
 ```js
-sqlQuery
-    .select()
-    .table("table1")
-    .findOne()
-    .build();
+sqlQuery.select().table("table1").findOne().build();
 ```
 
 ```sql
@@ -1920,7 +1875,7 @@ const tableInfo = {
     primaryKey: "id",
     uniqueKey: {
         keyName: "pk_id",
-        combineFields: ["id", "name"]
+        combineFields: ["id", "name"],
     },
     engine: "InnoDB",
     autoIncrement: 10000,
@@ -1933,14 +1888,14 @@ const tableInfo = {
             unsigned: true,
             notNull: true,
             autoIncrement: true,
-            comment: "学生id"
+            comment: "学生id",
         },
         {
             field: "name",
             type: "varchar(32)",
             default: "",
             notNull: true,
-            comment: "学生名字"
+            comment: "学生名字",
         },
         {
             field: "update_time",
@@ -1948,19 +1903,16 @@ const tableInfo = {
             notNull: true,
             default: "CURRENT_TIMESTAMP",
             onUpdate: "CURRENT_TIMESTAMP",
-            comment: "最后更新时间"
-        }
-    ]
+            comment: "最后更新时间",
+        },
+    ],
 };
 ```
 
 **将 json 数据格式转换成 sql 语句**
 
 ```js
-sqlQuery
-    .create()
-    .info(tableInfo)
-    .build();
+sqlQuery.create().info(tableInfo).build();
 ```
 
 ```sql
@@ -1997,10 +1949,7 @@ _参数_
 _例子_
 
 ```js
-sqlQuery
-    .create()
-    .dataBase("database1")
-    .build();
+sqlQuery.create().dataBase("database1").build();
 ```
 
 ```sql
@@ -2051,7 +2000,7 @@ sqlQuery
         unsigned: true,
         notNull: true,
         autoIncrement: true,
-        comment: "学生id"
+        comment: "学生id",
     })
     .build();
 ```
@@ -2073,11 +2022,7 @@ _参数_
 _例子_
 
 ```js
-sqlQuery
-    .alter()
-    .table("table1")
-    .drop("field1")
-    .build();
+sqlQuery.alter().table("table1").drop("field1").build();
 ```
 
 ```sql
@@ -2102,7 +2047,7 @@ sqlQuery
     .alter()
     .table("table1")
     .modify("field1", {
-        type: "varchar(32)"
+        type: "varchar(32)",
     })
     .build();
 ```
@@ -2130,7 +2075,7 @@ sqlQuery
     .table("table1")
     .change("field1", {
         field: "id",
-        type: "bigint"
+        type: "bigint",
     })
     .build();
 ```
@@ -2151,104 +2096,6 @@ ALTER TABLE `table1` CHANGE COLUMN `field1` `id` BIGINT
 -   notNull，不允许为空
 -   default，设置默认值
 -   onUpdate，数据更新时字段的更新值
-
----
-
-# Connect To Db
-
-> 如果要连接数据库需要在新建对象时传入连接的配置，要执行语句需要调用 `exec` 属性方法。
-
-```js
-var SqlQuery = require("js-sql-query");
-var sqlQuery = SqlQuery({
-    host: "localhost",
-    user: "root",
-    password: "123456",
-    database: "test_db",
-    dialect: "mysql"
-});
-var result = await sqlQuery
-    .select()
-    .table("table1")
-    .fields("field1", "field2")
-    .exec();
-```
-
----
-
-## Connect Config
-
-| 字段            |       类型       | 是否必填 |                              说明 |
-| --------------- | :--------------: | :------: | --------------------------------: |
-| host            |      string      |    是    |                    数据库主机地址 |
-| port            | string or number |    否    |                    数据库主机端口 |
-| user            |      string      |    是    |                      数据库用户名 |
-| password        |      string      |    否    |                    数据库用户密码 |
-| database        |      string      |    是    |                        表所在的库 |
-| dialect         |      string      |    是    |        数据库的类型，默认为 mysql |
-| connectionLimit |      number      |    否    |    连接池的最大连接数，默认为 1。 |
-| connectTimeout  |      number      |    否    | 连接的超时时间，默认为 1000(ms)。 |
-
-> 因为本框架是使用连接池的方式连接数据库，所以 connectionLimit 设置的值越大，那连接池里面缓存的连接数就越多。
-> 同时如果连接池的连接都正在忙，那新的连接请求就会进入队列等待，所以不用担心连接数会超过数据库的最大限制。
-
----
-
-## Connect Api
-
-### `exec`
-
-> 执行 sqlQuery 对象 build 生成的 sql 语句，执行完后返回的是一个 Promise 对象。
-> exec 也可以直接执行 sql 语句。只需要传入 sql 语句作为参数即可。
-
-_参数_
-
-> sql? (String): 如果有，即执行输入 sql 语句，如果无，则执行 sqlQuery 对象 build 生成的 sql 语句。
-
-_例子_
-
-```js
-var result = await sqlQuery
-    .select()
-    .table("table1")
-    .fields("field1", "field2")
-    .exec();
-```
-
-或者
-
-```js
-var result = await sqlQuery.exec("SELECT `field1`, `field2` FROM `table1`");
-```
-
-### `execAll`
-
-> 执行 sqlQuery 缓存的 sql 语句数组，执行完后返回的是一个 Promise 对象。
-> execAll 也可以直接执行 sql 语句。只需要传入 sql 语句数组作为参数即可。
-
-_参数_
-
-> sqls? (String[]): 如果有，即执行输入 sql 语句数组，如果无，则执行 sqlQuery 缓存的 sql 语句数组。
-
-_例子_
-
-```js
-sqlQuery
-    .select()
-    .table("table1")
-    .fields("field1", "field2")
-    .storeSql();
-
-var result = await sqlQuery.execAll();
-```
-
-或者
-
-```js
-var result = await sqlQuery.execAll([
-    "SELECT `field1`, `field2` FROM `table1`"
-]);
-```
 
 ---
 
