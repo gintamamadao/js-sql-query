@@ -6,7 +6,7 @@
 
 ## 项目简介
 
-> `Node.js` `orm` 框架，可以通过链式调用 `api` 快捷地生成 `sql` 语句，并且连接数据库执行。目前支持 `MySQL` 和 `Microsoft SQL Server` 这两种数据库
+> `Node.js` `orm` 框架，可以通过链式调用 `api` 快捷地生成 `sql` 语句
 
 ## 环境安装
 
@@ -16,28 +16,6 @@
 npm i js-sql-query --save
 ```
 
-## 使用例子
-
-```js
-var SqlQuery = require("js-sql-query");
-
-// 配置数据库相关信息，其中dialect 是配置数据类型，如果不配置，默认为 mysql。如果使用的是 Microsoft SQL Server，则配置值为 mssql
-var sqlQuery = SqlQuery({
-    host: "localhost",
-    user: "root",
-    password: "123456",
-    database: "test_db",
-    dialect: "mysql"
-});
-
-// 调用 api 生成 sql 语句 SELECT `field1`, `field2` FROM `table1`，并连接数据库执行语句
-var result = await sqlQuery
-    .select()
-    .table("table1")
-    .fields("field1", "field2")
-    .exec();
-// exec() 返回的是一个 Promise 对象
-```
 
 ---
 
