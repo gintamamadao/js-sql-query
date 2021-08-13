@@ -1,6 +1,6 @@
 {
     "name": "js-sql-query",
-    "version": "3.0.3",
+    "version": "3.0.4",
     "description": "Node.js ORM for MySQL and Microsoft SQL Server",
     "main": "./lib/js-sql-query.js",
     "module": "./lib/js-sql-query.js",
